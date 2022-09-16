@@ -1,0 +1,31 @@
+import { Injectable } from '@angular/core';
+import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
+import { Observable } from 'rxjs';
+import { AuthService } from '../services/auth.service';
+import decode from 'jwt-decode';
+@Injectable({
+  providedIn: 'root'
+})
+export class RoleGuard implements CanActivate {
+
+  constructor(
+    private authService: AuthService,
+    public router: Router){
+
+  }
+  //Verifica si el rol es el indicado para acceder 
+  canActivate(route: ActivatedRouteSnapshot):boolean{
+    const expectedRole = route.data['expectedRole'];
+    const token = localStorage.getItem('token');
+    let decodeToken:any = {}
+    decodeToken = decode(token || '');
+    console.log(decodeToken.role);
+    if(!this.authService.isAuth() || decodeToken.role !== expectedRole){
+      console.log('Usuario no autorizado para la vista');
+      this.router.navigate(['login']);//retorna a login si no lo es
+      return false;
+    }
+    return true;
+  }
+  
+}

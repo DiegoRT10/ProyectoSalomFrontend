@@ -18,7 +18,7 @@ const routes: Routes = [
 {path: 'login', component: LoginComponent},
 {path: 'create', component: CreateComponent},
 {path: 'read', component: ReadComponent},
-{path: 'update', component: UpdateComponent},
+{path: 'update/:id', component: UpdateComponent},
 {path: 'delete', component: DeleteComponent},
 {path: '**', pathMatch: 'full', redirectTo: 'home'}
 ];

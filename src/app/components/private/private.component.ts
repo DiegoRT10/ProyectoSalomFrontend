@@ -1,5 +1,6 @@
 import { CrudService, Users } from './../../services/crud.service';
 import { Component, OnInit } from '@angular/core';
+import { Route, Router } from '@angular/router';
 //import { CrudService } from 'src/app/services/crud.service';
 
 @Component({
@@ -10,13 +11,22 @@ import { Component, OnInit } from '@angular/core';
 export class PrivateComponent implements OnInit {
   
 ListarUsuarios?: Users[];
- 
+UsuarioD: Users={
+  id:'',
+  visible:''
+}
+
   
-  constructor(private crudService: CrudService) { }
+  constructor(private crudService: CrudService,
+    private router: Router
+    ) { }
 
   ngOnInit(): void {
 
    this.listarUsuarios();
+
+
+
   }
 
 listarUsuarios(){
@@ -30,5 +40,24 @@ listarUsuarios(){
     }
   );
 
+}
+
+EliminarUsuario(id:String, visible:number){
+  this.UsuarioD.id=id;
+  this.UsuarioD.visible=0;//eliminacion logica
+  this.crudService.deleteUser(this.UsuarioD).subscribe(
+    res=>{
+      console.log('Equipo eliminado');
+      console.log('Datos: '+this.UsuarioD);
+      console.log('id: '+id+' '+visible);
+      this.listarUsuarios();
+    },
+    err =>{
+      console.log(err);
+    });
+}
+
+ModificarUsuario(id:String){
+  this.router.navigate(['/update/'+id]);
 }
 }

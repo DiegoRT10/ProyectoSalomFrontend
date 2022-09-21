@@ -1,5 +1,8 @@
 <h1>Lista de Usuarios</h1>
-<table class="table">
+
+
+  <button routerLink="/create" type="button" class="btn btn-primary">Agregar</button>
+  <table class="table">
     <thead>
       <tr>
         <th scope="col">Id</th>
@@ -12,6 +15,8 @@
         <th scope="col">Auditor</th>
         <th scope="col">Token</th>
         <th scope="col">Token_Life</th>
+        <th scope="col">Editar</th>
+        <th scope="col">Eliminar</th>
       </tr>
     </thead>
     <tbody>
@@ -21,13 +26,21 @@
         <td>{{user.apppassword}}</td>
         <td>{{user.card}}</td>
         <td>{{user.role}}</td>
-        <td>{{user.visible}}</td>
+        <td>{{user.visible.data}}</td>
         <td>{{user.image}}</td>
         <td>{{user.auditor}}</td>
         <td>{{user.token}}</td>
         <td>{{user.tokenLife}}</td>
+        <td>
+          <button type="button" class="btn btn-warning" (click)="ModificarUsuario(user.id)">Editar</button>
+        </td>
+        <td>
+          <button type="button" class="btn btn-danger" (click)="EliminarUsuario(user.id,user.visible.data)">Eliminar</button>
+        </td>
 
       </tr>
 
     </tbody>
   </table>
+
+

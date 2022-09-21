@@ -25,12 +25,12 @@ export class CrudService {
 
   //Editar un usuario
   editUser(user:any){
-    return this.http.post(`${this.URL}/user/update`,user);
+    return this.http.put(`${this.URL}/user/update`,user);
   }
 
  //Eliminar un usuario
  deleteUser(user:any){
-  return this.http.post(`${this.URL}/user/delete`,user);
+  return this.http.put(`${this.URL}/user/delete`,user);
  }
 
   
@@ -38,16 +38,16 @@ export class CrudService {
 
   export interface Users{
    
-      id?:String,
+      id:String,
       name?:String,
       apppassword?:String,
       card?:Number,
       role?:Number,
       visible?:any,
-      image?:String,
+      image?:any,
       auditor?:Number,
-      token?:String,
-      tokenLife?:String
+      token?:String | null,
+      tokenLife?:String | null
    
   }
 

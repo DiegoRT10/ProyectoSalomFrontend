@@ -1,1 +1,54 @@
-<p>create works!</p>
+<div class="container">
+    <h1>Crear usuario</h1>
+
+    <div class="row" >
+        <div class="col-sm-6">
+            <form>
+                <div class="mb-3">
+                    <label class="form-label">Id</label>
+                    <input [(ngModel)]="AggUsuario.id" type="text" class="form-control" name="id">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Nombre</label>
+                <input [(ngModel)]="AggUsuario.name" type="text" class="form-control" name="name">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Contraseña</label>
+                <input [(ngModel)]="AggUsuario.apppassword" type="text" class="form-control" name="apppassword">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">No facturacion</label>
+                <input [(ngModel)]="AggUsuario.card" type="text" class="form-control" name="card">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Rol</label>
+                <input [(ngModel)]="AggUsuario.role" type="text" class="form-control" name="role">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Imagen</label>
+                <!-- <input [(ngModel)]="AggUsuario.image" type="text" class="form-control" name="image"> -->
+                <input [(ngModel)]="AggUsuario.image" type="file" class="form-control" name="image" accept="image/png, image/jpeg">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Auditor</label>
+                <input [(ngModel)]="AggUsuario.auditor" type="text" class="form-control" name="auditor">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Token</label>
+                <input [(ngModel)]="AggUsuario.token" type="text" class="form-control" name="token">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Token Life</label>
+                <input [(ngModel)]="AggUsuario.tokenLife" type="text" class="form-control" name="tokenLife">
+                </div>
+
+                <div class="mb-3">
+                    <button (click)="AgregarUsuario()" type="button" class="btn btn-success">Guardar</button>
+                </div>
+            </form>
+        </div>
+        <div class="col-sm-6">
+           <img src="{{AggUsuario.image}}" width="100"  alt="">
+        </div>
+    </div>
+</div>

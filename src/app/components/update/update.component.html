@@ -1,1 +1,55 @@
-<p>update works!</p>
+<div class="container">
+    <h1>Editar usuario</h1>
+
+    <div class="row" >
+        <div class="col-sm-6">
+            <form>
+                <div class="mb-3">
+                    <label class="form-label">Id</label>
+                    <input [(ngModel)]="EditUsuario.id" type="text" class="form-control" name="id">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Nombre</label>
+                <input [(ngModel)]="EditUsuario.name" type="text" class="form-control" name="name">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Contraseña</label>
+                <input [(ngModel)]="EditUsuario.apppassword" type="text" class="form-control" name="apppassword">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">No facturacion</label>
+                <input [(ngModel)]="EditUsuario.card" type="text" class="form-control" name="card">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Rol</label>
+                <input [(ngModel)]="EditUsuario.role" type="text" class="form-control" name="role">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Imagen</label>
+                <!-- <input [(ngModel)]="AggUsuario.image" type="text" class="form-control" name="image"> -->
+                <input [(ngModel)]="EditUsuario.image" type="file" class="form-control" name="image" accept="image/png, image/jpeg">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Auditor</label>
+                <input [(ngModel)]="EditUsuario.auditor" type="text" class="form-control" name="auditor">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Token</label>
+                <input [(ngModel)]="EditUsuario.token" type="text" class="form-control" name="token">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Token Life</label>
+                <input [(ngModel)]="EditUsuario.tokenLife" type="text" class="form-control" name="tokenLife">
+                </div>
+
+                <div class="mb-3">
+                    <button (click)="EditarUsuario()" type="button" class="btn btn-success">Guardar</button>
+                </div>
+            </form>
+        </div>
+        <div class="col-sm-6">
+           <img src="{{EditUsuario.image}}" width="100"  alt="">
+        </div>
+    </div>
+</div>
+

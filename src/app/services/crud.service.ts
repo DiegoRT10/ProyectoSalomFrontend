@@ -18,6 +18,11 @@ export class CrudService {
     return this.http.get(`${this.URL}/user/`);
   } 
 
+  //Obtener un usuario
+  getOneUser(user:any){
+    return this.http.post<Users[]>(`${this.URL}/user/oneuser`,user);
+  }
+
   //Agregar un usuario
   addUser(user:any){
     return this.http.post(`${this.URL}/user/create`,user);

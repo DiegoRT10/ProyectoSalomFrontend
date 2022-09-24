@@ -58,6 +58,7 @@ EliminarUsuario(id:String, visible:number){
 }
 
 ModificarUsuario(id:String){
+  console.log('este es el id '+id);
   this.router.navigate(['/update/'+id]);
 }
 }

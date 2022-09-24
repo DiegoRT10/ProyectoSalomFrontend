@@ -9,7 +9,7 @@ import {CrudService, Users } from 'src/app/services/crud.service';
 })
 export class UpdateComponent implements OnInit {
 
-  EditUsuario: Users={
+  EditUsuario: Users ={
     id:'',
     name:'',
     apppassword:'',
@@ -27,13 +27,15 @@ export class UpdateComponent implements OnInit {
               private activatedRoute:ActivatedRoute) { }
 
   ngOnInit(): void {
-    const idEntrante = this.activatedRoute.snapshot.params['id'];
-    console.log('id de entrada: '+idEntrante)
+    const idEntrante = <String>this.activatedRoute.snapshot.params['id'];
+    console.log('id de entrada: '+idEntrante);
+    this.EditUsuario.id = idEntrante;
 
     if(idEntrante){
-      this.CrudService.editUser(idEntrante).subscribe(res=>{
-        
-        //this.EditUsuario = res;
+      this.CrudService.getOneUser(this.EditUsuario).subscribe(res=>{
+        this.EditUsuario = res[0];
+        console.log(res);
+        console.log(this.EditUsuario);
       },
       err =>{
         console.log(err);
@@ -42,7 +44,21 @@ export class UpdateComponent implements OnInit {
   }
 
   EditarUsuario(){
-
+    this.EditUsuario.visible=1;
+    if(!this.EditUsuario.token){
+      this.EditUsuario.token=null;
+    }
+    if(!this.EditUsuario.tokenLife){
+      this.EditUsuario.tokenLife=null
+    }
+    this.CrudService.editUser(this.EditUsuario).subscribe(
+      res=>{
+        console.log('Se edito el usuario');
+        this.router.navigate(['private']);
+      },
+      err =>{
+        console.log(err);
+      });
   };
 
 }

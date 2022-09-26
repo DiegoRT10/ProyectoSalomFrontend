@@ -17,6 +17,7 @@ import { CreateComponent } from './components/create/create.component';
 import { ReadComponent } from './components/read/read.component';
 import { UpdateComponent } from './components/update/update.component';
 import { DeleteComponent } from './components/delete/delete.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { DeleteComponent } from './components/delete/delete.component';
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule
   ],
   providers: [
     //JWT

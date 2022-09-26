@@ -32,7 +32,7 @@ UsuarioD: Users={
 listarUsuarios(){
   this.crudService.getUser().subscribe(
     res=>{
-      this.ListarUsuarios=<any>res;      
+      this.ListarUsuarios=<any>res;     
       console.log(this.ListarUsuarios);
     },
     err =>{

@@ -25,10 +25,15 @@
         <td>{{user.name}}</td>
         <td>{{user.apppassword}}</td>
         <td>{{user.card}}</td>
-        <td>{{user.role}}</td>
-        <td>{{user.visible.data}}</td>
+        <td *ngIf="user.role == 0">Sistemas</td>
+        <td *ngIf="user.role == 1">Gerente</td>
+        <td *ngIf="user.role == 2">Administrador</td>
+        <td *ngIf="user.role == 3">Invitado</td>
+        <td *ngIf="user.visible.data == 0">No visible</td>
+        <td *ngIf="user.visible.data == 1">Visible</td>
         <td>{{user.image}}</td>
-        <td>{{user.auditor}}</td>
+        <td *ngIf="user.auditor == 0">No es auditor</td>
+        <td *ngIf="user.auditor == 1">Es auditor</td> 
         <td>{{user.token}}</td>
         <td>{{user.tokenLife}}</td>
         <td>

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, RouterStateSnapshot } from '@angular/router';
+import { AnyCatcher } from 'rxjs/internal/AnyCatcher';
 import {CrudService, Users } from 'src/app/services/crud.service';
 
 @Component({
@@ -8,6 +9,12 @@ import {CrudService, Users } from 'src/app/services/crud.service';
   styleUrls: ['./update.component.css']
 })
 export class UpdateComponent implements OnInit {
+
+  ngSelect:String = '';
+
+  listaOpAudi:String[] =['Si', 'No'];
+
+  listaOp:String[] = ['Sistemas','Gerente', 'Administrador','Invitado'];
 
   EditUsuario: Users ={
     id:'',
@@ -34,7 +41,22 @@ export class UpdateComponent implements OnInit {
     if(idEntrante){
       this.CrudService.getOneUser(this.EditUsuario).subscribe(res=>{
         this.EditUsuario = res[0];
-        console.log(res);
+
+        console.log('User '+this.EditUsuario.role)
+        let op=1;
+        switch(op){
+          case 1: this.ngSelect=this.listaOp[0];
+          break;
+          case 2: this.ngSelect=this.listaOp[1];
+          break;
+          case 3: this.ngSelect=this.listaOp[2];
+          break;
+          case 4: this.ngSelect=this.listaOp[3];
+          break;
+        }
+
+        console.log('Select '+this.ngSelect);
+        console.log('res '+res);
         console.log(this.EditUsuario);
       },
       err =>{
@@ -44,6 +66,34 @@ export class UpdateComponent implements OnInit {
   }
 
   EditarUsuario(){
+    console.log(this.EditUsuario.role);
+   
+    switch(<any>this.EditUsuario.role){
+      case 'Sistemas':
+        this.EditUsuario.role=0;
+        console.log(this.EditUsuario.role);
+        break
+      case 'Gerente':
+        this.EditUsuario.role=1;
+        console.log(this.EditUsuario.role);
+        break;
+      case 'Administrador':
+        this.EditUsuario.role=2
+        console.log(this.EditUsuario.role);
+        break;
+      case 'Invitado':
+        this.EditUsuario.role=3
+        console.log(this.EditUsuario.role);
+        break;
+    }
+
+    switch(<any>this.EditUsuario.auditor){
+      case 'No': this.EditUsuario.auditor = 0;
+      break;
+      case 'Si': this.EditUsuario.auditor = 1;
+      break; 
+    }
+
     this.EditUsuario.visible=1;
     if(!this.EditUsuario.token){
       this.EditUsuario.token=null;

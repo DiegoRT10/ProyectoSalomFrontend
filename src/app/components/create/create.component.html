@@ -3,6 +3,7 @@
 
     <div class="row" >
         <div class="col-sm-6">
+            <!-- <form [formGroup]="formLogin" (submit)="AgregarUsuario"> -->
             <form>
                 <div class="mb-3">
                     <label class="form-label">Id</label>
@@ -10,7 +11,7 @@
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Nombre</label>
-                <input [(ngModel)]="AggUsuario.name" type="text" class="form-control" name="name">
+                 <input [(ngModel)]="AggUsuario.name" type="text" class="form-control" name="name">
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Contraseña</label>
@@ -22,7 +23,10 @@
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Rol</label>
-                <input [(ngModel)]="AggUsuario.role" type="text" class="form-control" name="role">
+                <!-- <input [(ngModel)]="AggUsuario.role" type="text" class="form-control" name="role"> -->
+                <select  [(ngModel)]="AggUsuario.role" class="form-control" name="rol">
+                    <option  *ngFor="let item of listaOp" >{{item}}</option>
+            </select>
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Imagen</label>
@@ -31,7 +35,10 @@
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Auditor</label>
-                <input [(ngModel)]="AggUsuario.auditor" type="text" class="form-control" name="auditor">
+                <!-- <input [(ngModel)]="AggUsuario.auditor" type="text" class="form-control" name="auditor"> -->
+                <select  [(ngModel)]="AggUsuario.auditor" class="form-control" name="auditor">
+                    <option  *ngFor="let item of listaOpAudi" >{{item}}</option>
+            </select>
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Token</label>

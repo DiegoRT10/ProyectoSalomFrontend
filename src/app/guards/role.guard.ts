@@ -7,7 +7,7 @@ import decode from 'jwt-decode';
   providedIn: 'root'
 })
 export class RoleGuard implements CanActivate {
-
+ 
   constructor(
     private authService: AuthService,
     public router: Router){
@@ -15,16 +15,18 @@ export class RoleGuard implements CanActivate {
   }
   //Verifica si el rol es el indicado para acceder 
   canActivate(route: ActivatedRouteSnapshot):boolean{
-    const expectedRole = route.data['expectedRole'];
+    const expectedRole = route.data['expectedRole'].s;//sistemas
+    const expectedRole2 = route.data['expectedRole'].g;//gerente
     const token = localStorage.getItem('token');
     let decodeToken:any = {}
     decodeToken = decode(token || '');
     console.log(decodeToken.role);
-    if(!this.authService.isAuth() || decodeToken.role !== expectedRole){
+    if(!this.authService.isAuth() || decodeToken.role !== expectedRole && decodeToken.role !== expectedRole2){
       console.log('Usuario no autorizado para la vista');
       this.router.navigate(['login']);//retorna a login si no lo es
       return false;
     }
+   
     return true;
   }
   

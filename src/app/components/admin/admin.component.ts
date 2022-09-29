@@ -7,9 +7,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AdminComponent implements OnInit {
 
+  bandera:boolean=false;
+
   constructor() { }
 
   ngOnInit(): void {
   }
 
+  Activar():void{
+    this.bandera=true;
+  }
 }

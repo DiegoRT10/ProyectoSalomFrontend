@@ -1,3 +1,4 @@
+import { ModuloNominaModule } from './modulo-nomina/modulo-nomina.module';
 import { TokenInterceptorService } from './services/token-interceptor.service';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -9,7 +10,7 @@ import { PrivateComponent } from './components/private/private.component';
 import { AdminComponent } from './components/admin/admin.component';
 import { LoginComponent } from './components/login/login.component';
 
-//Modules 
+//Herramientas
 import { FormsModule } from '@angular/forms';
 import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
@@ -18,6 +19,13 @@ import { ReadComponent } from './components/read/read.component';
 import { UpdateComponent } from './components/update/update.component';
 import { DeleteComponent } from './components/delete/delete.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { HomeGerenteComponent } from './components/home-gerente/home-gerente.component';
+import { InformationComponent } from './components/information/information.component';
+import { HomeSistemasComponent } from './components/home-sistemas/home-sistemas.component';
+
+
+
+
 
 @NgModule({
   declarations: [
@@ -29,14 +37,18 @@ import { ReactiveFormsModule } from '@angular/forms';
     CreateComponent,
     ReadComponent,
     UpdateComponent,
-    DeleteComponent
+    DeleteComponent,
+    HomeGerenteComponent,
+    InformationComponent,
+    HomeSistemasComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ModuloNominaModule
   ],
   providers: [
     //JWT

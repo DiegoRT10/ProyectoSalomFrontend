@@ -1,6 +1,9 @@
+import { RoleGuard } from './../../guards/role.guard';
 import { AuthService } from './../../services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { Route, Router } from '@angular/router';
+import decode from 'jwt-decode';
+import { AppComponent } from 'src/app/app.component';
 
 @Component({
   selector: 'app-login',
@@ -15,7 +18,8 @@ export class LoginComponent implements OnInit {
   }
   constructor(
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private roleGuard: RoleGuard 
     ) { }
 
   ngOnInit(): void {
@@ -25,8 +29,18 @@ export class LoginComponent implements OnInit {
    
     this.authService.singin(this.user).subscribe((res:any) =>{
     
-      localStorage.setItem('token',res.token);
-      this.router.navigate(['private']);
+    localStorage.setItem('token',res.token);
+    const token = localStorage.getItem('token');
+    let decodeToken:any = {}
+    decodeToken = decode(token || '');
+    console.log(decodeToken.role);
+      switch(decodeToken.role){
+        case '0': this.router.navigate(['home-sistemas']);
+        break;
+        case '1' : this.router.navigate(['home-gerente']);
+        break;
+      }
+      AppComponent.Rol(decodeToken.role);
     });
   }
 

@@ -56,7 +56,7 @@ import { HomeSistemasComponent } from './components/home-sistemas/home-sistemas.
     useValue:  JWT_OPTIONS},
     JwtHelperService,
     //Token Interceptor
-    {provide: HTTP_INTERCEPTORS,useClass: TokenInterceptorService,multi:true}
+    {provide: HTTP_INTERCEPTORS,useClass: TokenInterceptorService,multi:true},
   ],
   bootstrap: [AppComponent]
 })

@@ -40,7 +40,7 @@ export class LoginComponent implements OnInit {
         case '1' : this.router.navigate(['home-gerente']);
         break;
       }
-      AppComponent.Rol(decodeToken.role);
+      AppComponent.Rol();
     });
   }
 

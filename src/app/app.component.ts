@@ -17,11 +17,15 @@ export class AppComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-  
+  AppComponent.Rol();
   }
 
-  public static Rol(r:String):void{
-    AppComponent.rol=r;
+  public static Rol():void{
+    const token = localStorage.getItem('token');
+    let decodeToken:any = {}
+    decodeToken = decode(token || '');
+    console.log(decodeToken.role);
+    AppComponent.rol=decodeToken.role;
     console.log('este es el rol ',AppComponent.rol);
   }
 

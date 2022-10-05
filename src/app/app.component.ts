@@ -11,31 +11,43 @@ import decode from 'jwt-decode';
 export class AppComponent implements OnInit {
   title = 'salom-app';
   bandera:boolean=false;
+  EstadoToken:boolean=false;
+
   public static rol:String='';
   constructor(
     private router: Router,
   ) { }
 
   ngOnInit(): void {
-  AppComponent.Rol();
+  
+  if(localStorage.getItem('token')){
+    AppComponent.Rol();
+    this.EstadoToken = true;
+  }else{
+    this.EstadoToken = false;
+    AppComponent.rol=''
+  }
   }
 
   public static Rol():void{
     const token = localStorage.getItem('token');
     let decodeToken:any = {}
     decodeToken = decode(token || '');
-    console.log(decodeToken.role);
     AppComponent.rol=decodeToken.role;
-    console.log('este es el rol ',AppComponent.rol);
+   
   }
 
   get Role(){
-    console.log('este es el rol desde return', AppComponent.rol);
     return AppComponent.rol;
   }
   
   Activar():void{
     this.bandera=true;
+  }
+
+  deletToken():void{
+    localStorage.removeItem('token')
+    this.EstadoToken=false;
   }
 }
 

@@ -6,7 +6,7 @@
                     <form>
                         <div class="mb-3">
                             <label class="form-label">Id</label>
-                            <input [(ngModel)]="EditUsuario.id" type="text" class="form-control" name="id">
+                            <input [(ngModel)]="EditUsuario.id" type="text" class="form-control" name="id" required="[0-9]">
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Nombre</label>
@@ -45,7 +45,7 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Token</label>
-                            <input [(ngModel)]="EditUsuario.token" type="text" class="form-control" name="token">
+                            <input [(ngModel)]="EditUsuario.token" type="text" class="form-control" name="token" >
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Token Life</label>

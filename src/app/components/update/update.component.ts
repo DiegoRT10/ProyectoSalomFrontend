@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormControlDirective, FormGroup, Validators } from '@angular/forms';
+import { Component, LOCALE_ID, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, RouterStateSnapshot } from '@angular/router';
 import { AnyCatcher } from 'rxjs/internal/AnyCatcher';
 import {CrudService, Users } from 'src/app/services/crud.service';
+import { __values } from 'tslib';
 
 @Component({
   selector: 'app-update',
@@ -9,6 +11,7 @@ import {CrudService, Users } from 'src/app/services/crud.service';
   styleUrls: ['./update.component.css']
 })
 export class UpdateComponent implements OnInit {
+  valido:boolean=false;
 
   ngSelect:String = '';
 
@@ -29,9 +32,12 @@ export class UpdateComponent implements OnInit {
     tokenLife:null,
   };
 
+  public FormUpdate!: FormGroup;
+
   constructor(private CrudService:CrudService, 
               private router:Router,
-              private activatedRoute:ActivatedRoute) { }
+              private activatedRoute:ActivatedRoute,
+              private formBuilder:FormBuilder) { }
 
   ngOnInit(): void {
     const idEntrante = <String>this.activatedRoute.snapshot.params['id'];
@@ -63,7 +69,18 @@ export class UpdateComponent implements OnInit {
         console.log(err);
       });
     }
+
+    this.FormUpdate = this.formBuilder.group({
+      id: ['',[Validators.required]],
+      name: ['',[Validators.required]]
+    })
+
+    this.valido = this.FormUpdate.valid;
+    this.FormUpdate.patchValue(this.EditUsuario)
+
   }
+  
+
 
   EditarUsuario(){
     console.log(this.EditUsuario.role);

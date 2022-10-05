@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 //import { CrudService, Users } from './../../services/crud.service';
 import { Route, Router } from '@angular/router';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { DomSanitizer } from '@angular/platform-browser';
 
 
 @Component({
@@ -13,6 +14,10 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 export class CreateComponent implements OnInit {
 
   public formLogin!: FormGroup;
+  public files:any = [];
+  public previous:String='';
+  public loading!: boolean;
+
 
   listaOp:String[] = ['Sistemas','Gerente', 'Administrador','Invitado'];
   listaOpAudi:String[] =['Si', 'No'];
@@ -29,8 +34,9 @@ export class CreateComponent implements OnInit {
     token:null,
     tokenLife:null,
   };
+  rest: any;
 
-  constructor(private CrudService:CrudService, private router:Router, private formBuilder: FormBuilder) { }
+  constructor(private CrudService:CrudService, private router:Router, private formBuilder: FormBuilder, private sanitizer: DomSanitizer) { }
 
   ngOnInit(): void {
 
@@ -87,5 +93,62 @@ export class CreateComponent implements OnInit {
       });
     
   }
-  
+
+
+  capturarFile(event:any):any{
+    const fileCapt = event.target.files[0]; 
+    this.extraerBase64(fileCapt).then((imagen:any) =>{
+      this.previous = imagen.base;
+      console.log(imagen);
+    });
+    this.files.push(fileCapt);
+    // console.log(event.target.files)
+  }
+ 
+  extraerBase64 = async ($event: any) => new Promise((resolve, reject) => {
+    try {
+      const unsafeImg = window.URL.createObjectURL($event);
+      const image = this.sanitizer.bypassSecurityTrustUrl(unsafeImg);
+      const reader = new FileReader();
+      reader.readAsDataURL($event);
+      reader.onload = () => {
+        resolve({
+          base: reader.result
+        });
+      };
+      reader.onerror = error => {
+        resolve({
+          base: null
+        });
+      };
+
+    } catch (e) {
+      return $event;
+    }
+  });
+
+  UploadFile(): any {
+    try {
+      this.loading = true;
+      const formularioDeDatos = new FormData();
+      this.files.forEach((archivo: string | Blob) => {
+        formularioDeDatos.append('file', archivo)
+      })
+      // formularioDeDatos.append('_id', 'MY_ID_123')
+      this.rest.post(`http://localhost:3001/upload`, formularioDeDatos)
+        .subscribe((res: any) => {
+          this.loading = false;
+          console.log('Respuesta del servidor', res);
+
+        }, () => {
+          this.loading = false;
+          alert('Error');
+        })
+    } catch (e) {
+      this.loading = false;
+      console.log('ERROR', e);
+
+    }
+  }
+
 }

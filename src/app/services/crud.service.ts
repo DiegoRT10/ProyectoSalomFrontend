@@ -38,6 +38,9 @@ export class CrudService {
   return this.http.put(`${this.URL}/user/delete`,user);
  }
 
+ uploadFile(file:any){
+  return this.http.post(`${this.URL}/file/upload`,file);
+ }
   
   }
 

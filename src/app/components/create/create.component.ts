@@ -34,7 +34,7 @@ export class CreateComponent implements OnInit {
     token:null,
     tokenLife:null,
   };
-  rest: any;
+ 
 
   constructor(private CrudService:CrudService, private router:Router, private formBuilder: FormBuilder, private sanitizer: DomSanitizer) { }
 
@@ -86,11 +86,40 @@ export class CreateComponent implements OnInit {
     this.CrudService.addUser(this.AggUsuario).subscribe(
       res=>{
         console.log('Se agrego el usuario');
+        try {
+          this.loading = true;
+          const formularioDeDatos = new FormData();
+          this.files.forEach((archivo: string | Blob) => {
+            formularioDeDatos.append('file', archivo)
+          })
+          // formularioDeDatos.append('_id', 'MY_ID_123')
+          console.log('formDatos '+formularioDeDatos);
+          this.AggUsuario.image=formularioDeDatos;
+          console.log('image'+this.AggUsuario.image);
+          this.CrudService.uploadFile(formularioDeDatos)
+            .subscribe((res: any) => {
+              this.loading = false;
+              console.log('Respuesta del servidor', res);
+    
+            }, () => {
+              this.loading = false;
+              alert('Error');
+            })
+        } catch (e) {
+          this.loading = false;
+          console.log('ERROR', e);
+    
+        }
         this.router.navigate(['private']);
       },
       err =>{
         console.log(err);
       });
+
+
+
+      
+
     
   }
 
@@ -99,6 +128,7 @@ export class CreateComponent implements OnInit {
     const fileCapt = event.target.files[0]; 
     this.extraerBase64(fileCapt).then((imagen:any) =>{
       this.previous = imagen.base;
+  
       console.log(imagen);
     });
     this.files.push(fileCapt);
@@ -134,8 +164,12 @@ export class CreateComponent implements OnInit {
       this.files.forEach((archivo: string | Blob) => {
         formularioDeDatos.append('file', archivo)
       })
-      // formularioDeDatos.append('_id', 'MY_ID_123')
-      this.rest.post(`http://localhost:3001/upload`, formularioDeDatos)
+ 
+      formularioDeDatos.append('id', `${this.AggUsuario.id}`);
+      // console.log('formDatos '+formularioDeDatos);
+      // this.AggUsuario.image=formularioDeDatos;
+      // console.log('image'+this.AggUsuario.image);
+      this.CrudService.uploadFile(formularioDeDatos)
         .subscribe((res: any) => {
           this.loading = false;
           console.log('Respuesta del servidor', res);

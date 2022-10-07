@@ -1,43 +1,144 @@
 <div class="main">
-    <div class="section text-center">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-8 ml-auto mr-auto">
-                    <p>home-gerente works!</p>
-                    <!--nav  -->
-                    <div class="nav-tabs-navigation">
-                        <div class="nav-tabs-wrapper">
-                          <ul class="nav nav-tabs" role="tablist">
-                            <li class="nav-item">
-                              <a class="nav-link active" data-toggle="tab" href="#gerencia" role="tab">Gerencia</a>
-                            </li>
-                            <li class="nav-item">
-                              <a class="nav-link" data-toggle="tab" href="#bodega" role="tab">Bodega</a>
-                            </li>
-                            <li class="nav-item">
-                              <a class="nav-link" data-toggle="tab" href="#farmacia" role="tab">Farmacia</a>
-                            </li>
-                          </ul>
-                        </div>
-                      </div>
-                      <!-- End nav -->
-                      <!-- Tab panes -->
-      <div class="tab-content following">
-        <div class="tab-pane active" id="gerenecia" role="tabpanel">
-          <h3 class="text-muted">Aca iran listado personal de gerencia</h3>
-          <button class="btn btn-warning btn-round">Mas detalles</button>
-        </div>
-        <div class="tab-pane text-center" id="bodega" role="tabpanel">
-          <h3 class="text-muted">aca ira el listado personal de bodega</h3>
-          <button class="btn btn-warning btn-round">Mas Detalles</button>
-        </div>
-        <div class="tab-pane text-center" id="farmacia" role="tabpanel">
-          <h3 class="text-muted">Aca iran listado personal de farmacia</h3>
-          <button class="btn btn-warning btn-round">Mas detalles</button>
+  <div class="section text-center">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8 ml-auto mr-auto">
+          <p>home-gerente works!</p>
+          <!--nav  -->
+          <div class="nav-tabs-navigation">
+            <div class="nav-tabs-wrapper">
+              <ul class="nav nav-tabs" role="tablist">
+                <li class="nav-item">
+                  <a class="nav-link active" data-toggle="tab"  href="#gerencia"  role="tab">Gerencia</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link"  data-toggle="tab"  href="#administrador" role="tab">Farmacia</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" data-toggle="tab"  href="#bodega" role="tab">Bodega</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <!-- End nav -->
+          <!-- Tab panes -->
+          <div class="tab-content following">
+            <div  class="tab-pane active" id="gerencia" role="tabpanel"> 
+              <div class="row">
+                <div class="col-md-6 ml-auto mr-auto">
+                  <ul class="list-unstyled follows">
+                    <table>
+                      <tbody>
+                        <tr *ngFor="let user of ListarUsuarios">
+                          <div *ngIf="user.role == 1" class="row">
+                            <div class="col-lg-2 col-md-4 col-4 ml-auto mr-auto">
+                              <img src='http://localhost:3000/uploads/{{user.image}}' alt="Circle Image"
+                                class="img-circle img-no-padding img-responsive">
+                              <!-- <img src="../assets/img/faces/clem-onojeghuo-2.jpg" alt="Circle Image" class="img-circle img-no-padding img-responsive"> -->
+                            </div>
+                            <div class="col-lg-7 col-md-4 col-4  ml-auto mr-auto">
+                              <h6 >{{user.name}}
+                                <br />
+                                <small *ngIf="user.role == 1">Gerente</small>
+                              </h6>
+                            </div>
+                            <div class="col-lg-3 col-md-4 col-4  ml-auto mr-auto">
+                              <div class="form-check">
+                                <label class="form-check-label">
+                                  <input class="form-check-input" type="checkbox" value="" checked>
+                                  <span class="form-check-sign"></span>
+                                </label>
+                              </div>
+                            </div>
+                          </div>
+                        </tr>
+                      </tbody>
+                    </table>
+
+                    <hr />
+                  </ul>
+                </div>
+              </div>
+              <button class="btn btn-warning btn-round">Mas detalles gerente</button>
+            </div>
+            <div class="tab-pane text-center" id="administrador" role="tabpanel">
+              <div class="row">
+                <div class="col-md-6 ml-auto mr-auto">
+                  <ul class="list-unstyled follows">
+                    <table>
+                      <tbody>
+                        <tr *ngFor="let user2 of ListarUsuarios">
+                          <div *ngIf="user2.role == 2" class="row">
+                            <div class="col-lg-2 col-md-4 col-4 ml-auto mr-auto">
+                              <img src='http://localhost:3000/uploads/{{user2.image}}' alt="Circle Image"
+                                class="img-circle img-no-padding img-responsive">
+                              <!-- <img src="../assets/img/faces/clem-onojeghuo-2.jpg" alt="Circle Image" class="img-circle img-no-padding img-responsive"> -->
+                            </div>
+                            <div class="col-lg-7 col-md-4 col-4  ml-auto mr-auto">
+                              <h6 >{{user2.name}}
+                                <br />
+                                <small *ngIf="user2.role == 2">Administrador</small>
+                              </h6>
+                            </div>
+                            <div class="col-lg-3 col-md-4 col-4  ml-auto mr-auto">
+                              <div class="form-check">
+                                <label class="form-check-label">
+                                  <input class="form-check-input" type="checkbox" value="" checked>
+                                  <span class="form-check-sign"></span>
+                                </label>
+                              </div>
+                            </div>
+                          </div>
+                        </tr>
+                      </tbody>
+                    </table>
+
+                    <hr />
+                  </ul>
+                </div>
+              </div>
+              <button class="btn btn-warning btn-round">Mas Detalles</button>
+            </div>
+            <div class="tab-pane text-center" id="bodega" role="tabpanel">
+              <div class="row">
+                <div class="col-md-6 ml-auto mr-auto">
+                  <ul class="list-unstyled follows">
+                    <table>
+                      <tbody>
+                        <tr *ngFor="let user of ListarUsuarios">
+                          <div *ngIf="user.role == 3" class="row">
+                            <div class="col-lg-2 col-md-4 col-4 ml-auto mr-auto">
+                              <img src='http://localhost:3000/uploads/{{user.image}}' alt="Circle Image"
+                                class="img-circle img-no-padding img-responsive">
+                              <!-- <img src="../assets/img/faces/clem-onojeghuo-2.jpg" alt="Circle Image" class="img-circle img-no-padding img-responsive"> -->
+                            </div>
+                            <div class="col-lg-7 col-md-4 col-4  ml-auto mr-auto">
+                              <h6 >{{user.name}}
+                                <br />
+                                <small *ngIf="user.role == 3">Bodega</small>
+                              </h6>
+                            </div>
+                            <div class="col-lg-3 col-md-4 col-4  ml-auto mr-auto">
+                              <div class="form-check">
+                                <label class="form-check-label">
+                                  <input class="form-check-input" type="checkbox" value="" checked>
+                                  <span class="form-check-sign"></span>
+                                </label>
+                              </div>
+                            </div>
+                          </div>
+                        </tr>
+                      </tbody>
+                    </table>
+
+                    <hr />
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!--end Tab panes  -->
         </div>
       </div>
-      <!--end Tab panes  -->
-                </div>
-            </div>
-        </div>
     </div>
+  </div>

@@ -32,10 +32,15 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Imagen</label>
-                            <!-- <input [(ngModel)]="AggUsuario.image" type="text" class="form-control" name="image"> -->
-                            <input [(ngModel)]="EditUsuario.image" type="file" class="form-control" name="image"
-                                accept="image/png, image/jpeg">
+                        <!-- <input [(ngModel)]="AggUsuario.image" type="text" class="form-control" name="image"> -->
+                        <input [(ngModel)]="EditUsuario.image" (change)="capturarFile($event)" type="file" class="form-control" name="image" accept="image/png, image/jpeg">
                         </div>
+                        <div *ngIf="previous" class="mb-3">
+                            <img [src]="previous" width="300"  alt="">
+                         </div>
+                         <div *ngIf="!previous" class="mb-3">
+                            <img src='http://localhost:3000/uploads/{{EditUsuario.image}}' width="300" alt="" name="image">
+                         </div>
                         <div class="mb-3">
                             <label class="form-label">Auditor</label>
                             <!-- <input [(ngModel)]="EditUsuario.auditor" type="text" class="form-control" name="auditor"> -->

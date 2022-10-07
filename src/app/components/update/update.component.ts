@@ -4,6 +4,7 @@ import { Router, ActivatedRoute, RouterStateSnapshot } from '@angular/router';
 import { AnyCatcher } from 'rxjs/internal/AnyCatcher';
 import {CrudService, Users } from 'src/app/services/crud.service';
 import { __values } from 'tslib';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-update',
@@ -11,6 +12,14 @@ import { __values } from 'tslib';
   styleUrls: ['./update.component.css']
 })
 export class UpdateComponent implements OnInit {
+
+  public formLogin!: FormGroup;
+  public files: any = [];
+  public previous: String = '';
+  public loading!: boolean;
+
+
+
   valido:boolean=false;
 
   ngSelect:String = '';
@@ -37,7 +46,8 @@ export class UpdateComponent implements OnInit {
   constructor(private CrudService:CrudService, 
               private router:Router,
               private activatedRoute:ActivatedRoute,
-              private formBuilder:FormBuilder) { }
+              private formBuilder:FormBuilder,
+              private sanitizer: DomSanitizer) { }
 
   ngOnInit(): void {
     const idEntrante = <String>this.activatedRoute.snapshot.params['id'];
@@ -121,11 +131,100 @@ export class UpdateComponent implements OnInit {
     this.CrudService.editUser(this.EditUsuario).subscribe(
       res=>{
         console.log('Se edito el usuario');
+
+        try {
+          this.loading = true;
+          const formularioDeDatos = new FormData();
+          this.files.forEach((archivo: string | Blob) => {
+            formularioDeDatos.append('file', archivo)
+          })
+          // formularioDeDatos.append('_id', 'MY_ID_123')
+          console.log('formDatos ' + formularioDeDatos);
+          this.EditUsuario.image = formularioDeDatos;
+          console.log('image' + this.EditUsuario.image);
+          this.CrudService.uploadFile(formularioDeDatos)
+            .subscribe((res: any) => {
+              this.loading = false;
+              console.log('Respuesta del servidor', res);
+
+            }, () => {
+              this.loading = false;
+              alert('Error');
+            })
+        } catch (e) {
+          this.loading = false;
+          console.log('ERROR', e);
+
+        }
+
+
         this.router.navigate(['private']);
       },
       err =>{
         console.log(err);
       });
   };
+
+
+  capturarFile(event: any): any {
+    const fileCapt = event.target.files[0];
+    this.extraerBase64(fileCapt).then((imagen: any) => {
+      this.previous = imagen.base;
+
+      console.log(imagen);
+    });
+    this.files.push(fileCapt);
+    // console.log(event.target.files)
+  }
+
+  extraerBase64 = async ($event: any) => new Promise((resolve, reject) => {
+    try {
+      const unsafeImg = window.URL.createObjectURL($event);
+      const image = this.sanitizer.bypassSecurityTrustUrl(unsafeImg);
+      const reader = new FileReader();
+      reader.readAsDataURL($event);
+      reader.onload = () => {
+        resolve({
+          base: reader.result
+        });
+      };
+      reader.onerror = error => {
+        resolve({
+          base: null
+        });
+      };
+
+    } catch (e) {
+      return $event;
+    }
+  });
+
+  UploadFile(): any {
+    try {
+      this.loading = true;
+      const formularioDeDatos = new FormData();
+      this.files.forEach((archivo: string | Blob) => {
+        formularioDeDatos.append('file', archivo)
+      })
+
+      formularioDeDatos.append('id', `${this.EditUsuario.id}`);
+      // console.log('formDatos '+formularioDeDatos);
+      // this.AggUsuario.image=formularioDeDatos;
+      // console.log('image'+this.AggUsuario.image);
+      this.CrudService.uploadFile(formularioDeDatos)
+        .subscribe((res: any) => {
+          this.loading = false;
+          console.log('Respuesta del servidor', res);
+
+        }, () => {
+          this.loading = false;
+          alert('Error');
+        })
+    } catch (e) {
+      this.loading = false;
+      console.log('ERROR', e);
+
+    }
+  }
 
 }

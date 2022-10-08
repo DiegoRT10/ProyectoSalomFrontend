@@ -24,13 +24,13 @@ const routes: Routes = [
 {path: 'private', component: PrivateComponent, canActivate: [AuthGuard, RoleGuard],  data: {expectedRole: {s:'0', g:'1'}}}, //puede acceder sistemas o gerente 
 {path: 'admin', component: AdminComponent, canActivate: [AuthGuard, RoleGuard],  data: {expectedRole: {s:'0', g:'2'}}},//puede acceder sistemas o administrador
 {path: 'login', component: LoginComponent},
-{path: 'create', component: CreateComponent},
-{path: 'read', component: ReadComponent},
-{path: 'update/:id', component: UpdateComponent},
-{path: 'delete', component: DeleteComponent},
-{path: 'profile',component: ProfileComponent},
-{path: 'vacaciones', component: VacacionesComponent},
-{path: 'despidos', component: DespidosComponent},
+{path: 'create', component: CreateComponent, canActivate: [AuthGuard, RoleGuard],  data: {expectedRole: {s:'0', g:'1'}}},//puede acceder sistemas o gerente
+{path: 'read', component: ReadComponent, canActivate: [AuthGuard, RoleGuard],  data: {expectedRole: {s:'0', g:'1'}}},//puede acceder sistemas o gerente
+{path: 'update/:id', component: UpdateComponent,canActivate: [AuthGuard, RoleGuard],  data: {expectedRole: {s:'0', g:'1'}}},//puede acceder sistemas o gerente
+{path: 'delete', component: DeleteComponent,canActivate: [AuthGuard, RoleGuard],  data: {expectedRole: {s:'0', g:'1'}}},//puede acceder sistemas o gerente
+{path: 'profile',component: ProfileComponent,canActivate: [AuthGuard, RoleGuard],  data: {expectedRole: {s:'0', g:'1'}}},//puede acceder sistemas o gerente
+{path: 'vacaciones', component: VacacionesComponent,canActivate: [AuthGuard, RoleGuard],  data: {expectedRole: {s:'0', g:'1'}}},//puede acceder sistemas o gerente
+{path: 'despidos', component: DespidosComponent,canActivate: [AuthGuard, RoleGuard],  data: {expectedRole: {s:'0', g:'1'}}},//puede acceder sistemas o gerente
 {path: '**', pathMatch: 'full', redirectTo: 'home'}
 ];
 

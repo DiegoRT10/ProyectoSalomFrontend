@@ -11,6 +11,7 @@ export class HomeGerenteComponent implements OnInit {
   ListarUsuarios?: Users[];
  bandera:number = 1;
 
+
   constructor(private crudService: CrudService,
     private router: Router) { }
 
@@ -29,6 +30,11 @@ export class HomeGerenteComponent implements OnInit {
       }
     );
   
+  }
+
+  goProfileGerencia(id:String):void{
+    localStorage.setItem('id',<string>id);
+    this.router.navigate(['profile-gerencia']);
   }
   
 }

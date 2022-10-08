@@ -45,7 +45,7 @@
                             <div class="col-lg-3 col-md-4 col-4  ml-auto mr-auto">
                               
                                 <label class="form-check-label">
-                                  <button type="button" class="btn btn-info btn-round btn-sm">Ver</button>
+                                  <button type="button" class="btn btn-info btn-round btn-sm" (click)="goProfileGerencia(user.id)">Ver</button>
                                   <span class="form-check-sign"></span>
                                 </label>
                               
@@ -80,12 +80,12 @@
                               </h6>
                             </div>
                             <div class="col-lg-3 col-md-4 col-4  ml-auto mr-auto">
-                              <div class="form-check">
-                                <label class="form-check-label">
-                                  <input class="form-check-input" type="checkbox" value="" checked>
-                                  <span class="form-check-sign"></span>
-                                </label>
-                              </div>
+                              
+                              <label class="form-check-label">
+                                <button type="button" class="btn btn-info btn-round btn-sm">Ver</button>
+                                <span class="form-check-sign"></span>
+                              </label>
+                             
                             </div>
                           </div>
                           <hr *ngIf="user2.role == 2"/>
@@ -117,12 +117,12 @@
                               </h6>
                             </div>
                             <div class="col-lg-3 col-md-4 col-4  ml-auto mr-auto">
-                              <div class="form-check">
-                                <label class="form-check-label">
-                                  <input class="form-check-input" type="checkbox" value="" checked>
-                                  <span class="form-check-sign"></span>
-                                </label>
-                              </div>
+                              
+                              <label class="form-check-label">
+                                <button type="button" class="btn btn-info btn-round btn-sm">Ver</button>
+                                <span class="form-check-sign"></span>
+                              </label>
+                              
                             </div>
                           </div>
                           <hr *ngIf="user.role == 3"/>

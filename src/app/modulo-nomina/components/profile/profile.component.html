@@ -2,13 +2,15 @@
     <div class="container">
       <div class="owner">
         <div class="avatar">
-          <img src="http://localhost:3000/uploads/{{EditUsuario.image}}" alt="Circle Image" class="img-circle img-no-padding img-responsive">
+          <img src="http://localhost:3000/uploads/{{Usuario.image}}" alt="Circle Image" class="img-circle img-no-padding img-responsive">
         </div>
         <div class="name">
-          <h4 class="title">{{EditUsuario.name}}
+          <h4 class="title">{{Usuario.name}}
             <br />
           </h4>
-          <h6 class="description">Gerente</h6>
+          <h6 *ngIf="Usuario.role==1" class="description">Gerente</h6>
+          <h6 *ngIf="Usuario.role==2" class="description">Administrador de Farmacia</h6>
+          <h6 *ngIf="Usuario.role==3" class="description">Bodeguero</h6>
         </div>
       </div>
       <div class="row">

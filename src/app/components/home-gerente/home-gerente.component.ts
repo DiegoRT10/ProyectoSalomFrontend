@@ -34,7 +34,7 @@ export class HomeGerenteComponent implements OnInit {
 
   goProfileGerencia(id:String):void{
     localStorage.setItem('id',<string>id);
-    this.router.navigate(['profile-gerencia']);
+    this.router.navigate(['profile']);
   }
   
 }

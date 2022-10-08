@@ -14,9 +14,8 @@ import { UpdateComponent } from './components/update/update.component';
 import { DeleteComponent } from './components/delete/delete.component';
 import { HomeGerenteComponent } from './components/home-gerente/home-gerente.component';
 import { HomeSistemasComponent } from './components/home-sistemas/home-sistemas.component';
-import { ProfileGerenciaComponent } from './modulo-nomina/components/profile-gerencia/profile-gerencia.component';
-import { ProfileFarmaciaComponent } from './modulo-nomina/components/profile-farmacia/profile-farmacia.component';
-import { ProfileBodegaComponent } from './modulo-nomina/components/profile-bodega/profile-bodega.component';
+import { ProfileComponent } from './modulo-nomina/components/profile/profile.component';
+
 
 const routes: Routes = [
 {path: 'home', component: HomeComponent},//puede acceder cualquier persona
@@ -29,9 +28,7 @@ const routes: Routes = [
 {path: 'read', component: ReadComponent},
 {path: 'update/:id', component: UpdateComponent},
 {path: 'delete', component: DeleteComponent},
-{path: 'profile-gerencia',component: ProfileGerenciaComponent},
-{path: 'profile-farmacia',component: ProfileFarmaciaComponent},
-{path: 'profile-bodega',component: ProfileBodegaComponent},
+{path: 'profile',component: ProfileComponent},
 {path: 'vacaciones', component: VacacionesComponent},
 {path: 'despidos', component: DespidosComponent},
 {path: '**', pathMatch: 'full', redirectTo: 'home'}

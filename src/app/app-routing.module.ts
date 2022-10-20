@@ -15,6 +15,8 @@ import { DeleteComponent } from './components/delete/delete.component';
 import { HomeGerenteComponent } from './components/home-gerente/home-gerente.component';
 import { HomeSistemasComponent } from './components/home-sistemas/home-sistemas.component';
 import { ProfileComponent } from './modulo-nomina/components/profile/profile.component';
+import { ProfilesComponent } from './modulo-nomina/components/profiles/profiles.component';
+import { PuestoComponent } from './modulo-nomina/components/puesto/puesto.component';
 
 
 const routes: Routes = [
@@ -29,6 +31,8 @@ const routes: Routes = [
 {path: 'update/:id', component: UpdateComponent,canActivate: [AuthGuard, RoleGuard],  data: {expectedRole: {s:'0', g:'1'}}},//puede acceder sistemas o gerente
 {path: 'delete', component: DeleteComponent,canActivate: [AuthGuard, RoleGuard],  data: {expectedRole: {s:'0', g:'1'}}},//puede acceder sistemas o gerente
 {path: 'profile',component: ProfileComponent,canActivate: [AuthGuard, RoleGuard],  data: {expectedRole: {s:'0', g:'1'}}},//puede acceder sistemas o gerente
+{path: 'profiles',component: ProfilesComponent,canActivate: [AuthGuard, RoleGuard],  data: {expectedRole: {s:'0', g:'1'}}},//puede acceder sistemas o gerente
+{path: 'puesto',component: PuestoComponent,canActivate: [AuthGuard, RoleGuard],  data: {expectedRole: {s:'0', g:'1'}}},//puede acceder sistemas o gerente
 {path: 'vacaciones', component: VacacionesComponent,canActivate: [AuthGuard, RoleGuard],  data: {expectedRole: {s:'0', g:'1'}}},//puede acceder sistemas o gerente
 {path: 'despidos', component: DespidosComponent,canActivate: [AuthGuard, RoleGuard],  data: {expectedRole: {s:'0', g:'1'}}},//puede acceder sistemas o gerente
 {path: '**', pathMatch: 'full', redirectTo: 'home'}

@@ -1,0 +1,141 @@
+<div class="main">
+    <div class="section text-center">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-8 ml-auto mr-auto">
+            
+            <!--nav  -->
+            <div class="nav-tabs-navigation">
+              <div class="nav-tabs-wrapper">
+                <ul class="nav nav-tabs" role="tablist">
+                  <li class="nav-item">
+                    <a class="nav-link active" data-toggle="tab"  href="#gerencia"  role="tab"><i class="nc-icon nc-briefcase-24"></i>Gerencia</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link"  data-toggle="tab"  href="#administrador" role="tab"><i class="nc-icon nc-shop"></i>Farmacia</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab"  href="#bodega" role="tab"><i class="nc-icon nc-box"></i>Bodega</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <!-- End nav -->
+            <!-- Tab panes -->
+            <div class="tab-content following">
+              <div  class="tab-pane active" id="gerencia" role="tabpanel"> 
+                <div class="row">
+                  <div class="col-md-6 ml-auto mr-auto">
+                    <ul class="list-unstyled follows">
+                      <table>
+                        <tbody>
+                          <tr *ngFor="let user of ListarUsuarios">
+                            <div *ngIf="user.role == 1" class="row">
+                              <div class="col-lg-2 col-md-4 col-4 ml-auto mr-auto">
+                                <img src='http://localhost:3000/uploads/{{user.image}}' alt="Circle Image"
+                                  class="img-circle img-no-padding img-responsive">
+                                <!-- <img src="../assets/img/faces/clem-onojeghuo-2.jpg" alt="Circle Image" class="img-circle img-no-padding img-responsive"> -->
+                              </div>
+                              <div class="col-lg-7 col-md-4 col-4  ml-auto mr-auto">
+                                <h6 >{{user.name}}
+                                  <br />
+                                  <small *ngIf="user.role == 1">Gerente</small>
+                                </h6>
+                              </div>
+                              <div class="col-lg-3 col-md-4 col-4  ml-auto mr-auto">
+                                
+                                  <label class="form-check-label">
+                                    <button type="button" class="btn btn-info btn-round btn-sm" (click)="goProfileGerencia(user.id)">Ver</button>
+                                    <span class="form-check-sign"></span>
+                                  </label>
+                                
+                              </div>
+                            </div>
+                            <hr *ngIf="user.role == 1"/>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </ul>
+                  </div>
+                </div>
+                <button class="btn btn-warning btn-round">Mas detalles gerente</button>
+              </div>
+              <div class="tab-pane text-center" id="administrador" role="tabpanel">
+                <div class="row">
+                  <div class="col-md-6 ml-auto mr-auto">
+                    <ul class="list-unstyled follows">
+                      <table>
+                        <tbody>
+                          <tr *ngFor="let user2 of ListarUsuarios">
+                            <div *ngIf="user2.role == 2" class="row">
+                              <div class="col-lg-2 col-md-4 col-4 ml-auto mr-auto">
+                                <img src='http://localhost:3000/uploads/{{user2.image}}' alt="Circle Image"
+                                  class="img-circle img-no-padding img-responsive">
+                                <!-- <img src="../assets/img/faces/clem-onojeghuo-2.jpg" alt="Circle Image" class="img-circle img-no-padding img-responsive"> -->
+                              </div>
+                              <div class="col-lg-7 col-md-4 col-4  ml-auto mr-auto">
+                                <h6 >{{user2.name}}
+                                  <br />
+                                  <small *ngIf="user2.role == 2">Administrador</small>
+                                </h6>
+                              </div>
+                              <div class="col-lg-3 col-md-4 col-4  ml-auto mr-auto">
+                                
+                                <label class="form-check-label">
+                                  <button type="button" class="btn btn-info btn-round btn-sm" (click)="goProfileGerencia(user2.id)">Ver</button>
+                                  <span class="form-check-sign"></span>
+                                </label>
+                               
+                              </div>
+                            </div>
+                            <hr *ngIf="user2.role == 2"/>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </ul>
+                  </div>
+                </div>
+                <button class="btn btn-warning btn-round">Mas Detalles</button>
+              </div>
+              <div class="tab-pane text-center" id="bodega" role="tabpanel">
+                <div class="row">
+                  <div class="col-md-6 ml-auto mr-auto">
+                    <ul class="list-unstyled follows">
+                      <table>
+                        <tbody>
+                          <tr *ngFor="let user of ListarUsuarios">
+                            <div *ngIf="user.role == 3" class="row">
+                              <div class="col-lg-2 col-md-4 col-4 ml-auto mr-auto">
+                                <img src='http://localhost:3000/uploads/{{user.image}}' alt="Circle Image"
+                                  class="img-circle img-no-padding img-responsive">
+                                <!-- <img src="../assets/img/faces/clem-onojeghuo-2.jpg" alt="Circle Image" class="img-circle img-no-padding img-responsive"> -->
+                              </div>
+                              <div class="col-lg-7 col-md-4 col-4  ml-auto mr-auto">
+                                <h6 >{{user.name}}
+                                  <br />
+                                  <small *ngIf="user.role == 3">Bodega</small>
+                                </h6>
+                              </div>
+                              <div class="col-lg-3 col-md-4 col-4  ml-auto mr-auto">
+                                
+                                <label class="form-check-label">
+                                  <button type="button" class="btn btn-info btn-round btn-sm" (click)="goProfileGerencia(user.id)">Ver</button>
+                                  <span class="form-check-sign"></span>
+                                </label>
+                                
+                              </div>
+                            </div>
+                            <hr *ngIf="user.role == 3"/>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!--end Tab panes  -->
+          </div>
+        </div>
+      </div>
+    </div>

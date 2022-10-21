@@ -32,6 +32,11 @@ export class CrudService {
   editUser(user:any){
     return this.http.put(`${this.URL}/user/update`,user);
   }
+  
+  //Editar un usuario con datos de nomina
+  editUserNomina(user:any){
+    return this.http.put(`${this.URL}/user/updateNomina`,user);
+  }
 
  //Eliminar un usuario
  deleteUser(user:any){
@@ -58,4 +63,19 @@ export class CrudService {
       tokenLife?:String | null
    
   }
+
+  export interface Users2{
+   
+    id:String,
+    name?:String,
+    apppassword?:String,
+    card?:Number,
+    role?:Number,
+    visible?:any,
+    image?:any,
+    auditor?:Number,
+    token?:String | null,
+    tokenLife?:String | null
+ 
+}
 

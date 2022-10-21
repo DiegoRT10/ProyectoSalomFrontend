@@ -14,156 +14,165 @@
 
 
 
+     
 
-        <div class="row">
-            <div class="col-md-7 ml-auto mr-auto">
-                <div class="tab-pane text-center">
-                    <div class="row">
-                        <div class="col-md-12 ml-auto mr-auto">
-                            <h2 class="text-left title">Gerencia</h2>
-                            <button routerLink="/create" type="button"
-                                class="btn btn-primary float-left">Agregar</button>
-                            <br />
-                            <br />
+            <div class="row">
+                <div class="col-md-7 ml-auto mr-auto">
+                    <div class="tab-pane text-center" >
+                        <div class="row">
+                            <div class="col-md-12 ml-auto mr-auto">
+                                <h2 class="text-left title">Gerencia</h2>
+                                <button routerLink="/create" type="button"
+                                    class="btn btn-primary float-left">Agregar</button>
+                                <br />
+                                <br />
+                            </div>
                         </div>
+    
+    
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Nombre</th>
+                                    <th scope="col">Descripcion</th>
+                                    <th scope="col">Departamento</th>
+                                    <th scope="col">Salario Minimo</th>
+                                    <th scope="col">Salario Maximo</th>
+                                    <th scope="col">Editar</th>
+                                    <th scope="col">Eliminar</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let puesto of ListaPuestos">
+                                    
+                                    <th *ngIf="puesto.depto==0">{{puesto.nombre}}</th>
+                                    <td *ngIf="puesto.depto==0">{{puesto.descripcion}}</td>
+                                    <td *ngIf="puesto.depto==0">{{puesto.depto}}</td>
+                                    <td *ngIf="puesto.depto==0">{{puesto.salarioMin | number: '0.0-2' }}</td>
+                                    <td *ngIf="puesto.depto==0">{{puesto.salarioMax | number: '0.0-2' }}</td>
+                                    <td *ngIf="puesto.depto==0">
+                                        <button type="button" class="btn btn-warning">Editar</button>
+                                    </td>
+                                    <td *ngIf="puesto.depto==0">
+                                        <button type="button" class="btn btn-danger">Eliminar</button>
+                                    </td>
+    
+                                </tr>
+    
+                            </tbody>
+                        </table>
+    
                     </div>
-
-
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th scope="col">Nombre</th>
-                                <th scope="col">Descripcion</th>
-                                <th scope="col">Salario Minimo</th>
-                                <th scope="col">Salario Maximo</th>
-                                <th scope="col">Editar</th>
-                                <th scope="col">Eliminar</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <!-- *ngFor="let user of ListarUsuarios" -->
-                                <th>nombre</th>
-                                <td>description</td>
-                                <td>salario minimo</td>
-                                <td>salario maximo</td>
-                                <td>
-                                    <button type="button" class="btn btn-warning">Editar</button>
-                                </td>
-                                <td>
-                                    <button type="button" class="btn btn-danger">Eliminar</button>
-                                </td>
-
-                            </tr>
-
-                        </tbody>
-                    </table>
-
+    
                 </div>
-
+    
             </div>
 
-        </div>
-
-        <div class="row">
-            <div class="col-md-7 ml-auto mr-auto">
-                <div class="tab-pane text-center">
-                    <div class="row">
-                        <div class="col-md-12 ml-auto mr-auto">
-                            <h2 class="text-left title">Farmacia</h2>
-                            <button routerLink="/create" type="button"
-                                class="btn btn-primary float-left">Agregar</button>
-                            <br />
-                            <br />
+            <div class="row">
+                <div class="col-md-7 ml-auto mr-auto">
+                    <div class="tab-pane text-center" >
+                        <div class="row">
+                            <div class="col-md-12 ml-auto mr-auto">
+                                <h2 class="text-left title">Farmacia</h2>
+                                <button routerLink="/create" type="button"
+                                    class="btn btn-primary float-left">Agregar</button>
+                                <br />
+                                <br />
+                            </div>
                         </div>
+    
+    
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Nombre</th>
+                                    <th scope="col">Descripcion</th>
+                                    <th scope="col">Departamento</th>
+                                    <th scope="col">Salario Minimo</th>
+                                    <th scope="col">Salario Maximo</th>
+                                    <th scope="col">Editar</th>
+                                    <th scope="col">Eliminar</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let puesto of ListaPuestos">
+                                    
+                                    <th *ngIf="puesto.depto==1">{{puesto.nombre}}</th>
+                                    <td *ngIf="puesto.depto==1">{{puesto.descripcion}}</td>
+                                    <td *ngIf="puesto.depto==1">{{puesto.depto}}</td>
+                                    <td *ngIf="puesto.depto==1">{{puesto.salarioMin | number: '0.0-2' }}</td>
+                                    <td *ngIf="puesto.depto==1">{{puesto.salarioMax | number: '0.0-2' }}</td>
+                                    <td *ngIf="puesto.depto==1">
+                                        <button type="button" class="btn btn-warning">Editar</button>
+                                    </td>
+                                    <td *ngIf="puesto.depto==1">
+                                        <button type="button" class="btn btn-danger">Eliminar</button>
+                                    </td>
+    
+                                </tr>
+    
+                            </tbody>
+                        </table>
+    
                     </div>
-
-
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th scope="col">Nombre</th>
-                                <th scope="col">Descripcion</th>
-                                <th scope="col">Salario Minimo</th>
-                                <th scope="col">Salario Maximo</th>
-                                <th scope="col">Editar</th>
-                                <th scope="col">Eliminar</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <!-- *ngFor="let user of ListarUsuarios" -->
-                                <th>nombre</th>
-                                <td>description</td>
-                                <td>salario minimo</td>
-                                <td>salario maximo</td>
-                                <td>
-                                    <button type="button" class="btn btn-warning">Editar</button>
-                                </td>
-                                <td>
-                                    <button type="button" class="btn btn-danger">Eliminar</button>
-                                </td>
-
-                            </tr>
-
-                        </tbody>
-                    </table>
-
+    
                 </div>
-
+    
+            </div>
+        
+            <div class="row">
+                <div class="col-md-7 ml-auto mr-auto">
+                    <div class="tab-pane text-center" >
+                        <div class="row">
+                            <div class="col-md-12 ml-auto mr-auto">
+                                <h2 class="text-left title">Bodega</h2>
+                                <button routerLink="/create" type="button"
+                                    class="btn btn-primary float-left">Agregar</button>
+                                <br />
+                                <br />
+                            </div>
+                        </div>
+    
+    
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Nombre</th>
+                                    <th scope="col">Descripcion</th>
+                                    <th scope="col">Departamento</th>
+                                    <th scope="col">Salario Minimo</th>
+                                    <th scope="col">Salario Maximo</th>
+                                    <th scope="col">Editar</th>
+                                    <th scope="col">Eliminar</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let puesto of ListaPuestos">
+                                    
+                                    <th *ngIf="puesto.depto==2">{{puesto.nombre}}</th>
+                                    <td *ngIf="puesto.depto==2">{{puesto.descripcion}}</td>
+                                    <td *ngIf="puesto.depto==2">{{puesto.depto}}</td>
+                                    <td *ngIf="puesto.depto==2">{{puesto.salarioMin | number: '0.0-2' }}</td>
+                                    <td *ngIf="puesto.depto==2">{{puesto.salarioMax | number: '0.0-2' }}</td>
+                                    <td *ngIf="puesto.depto==2">
+                                        <button type="button" class="btn btn-warning">Editar</button>
+                                    </td>
+                                    <td *ngIf="puesto.depto==2">
+                                        <button type="button" class="btn btn-danger">Eliminar</button>
+                                    </td>
+    
+                                </tr>
+    
+                            </tbody>
+                        </table>
+    
+                    </div>
+    
+                </div>
+    
             </div>
 
-        </div>
-
-        <div class="row">
-            <div class="col-md-7 ml-auto mr-auto">
-                <div class="tab-pane text-center">
-                    <div class="row">
-                        <div class="col-md-12 ml-auto mr-auto">
-                            <h2 class="text-left title">Bodega</h2>
-                            <button routerLink="/create" type="button"
-                                class="btn btn-primary float-left">Agregar</button>
-                            <br />
-                            <br />
-                        </div>
-                    </div>
-
-
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th scope="col">Nombre</th>
-                                <th scope="col">Descripcion</th>
-                                <th scope="col">Salario Minimo</th>
-                                <th scope="col">Salario Maximo</th>
-                                <th scope="col">Editar</th>
-                                <th scope="col">Eliminar</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <!-- *ngFor="let user of ListarUsuarios" -->
-                                <th>nombre</th>
-                                <td>description</td>
-                                <td>salario minimo</td>
-                                <td>salario maximo</td>
-                                <td>
-                                    <button type="button" class="btn btn-warning">Editar</button>
-                                </td>
-                                <td>
-                                    <button type="button" class="btn btn-danger">Eliminar</button>
-                                </td>
-
-                            </tr>
-
-                        </tbody>
-                    </table>
-
-                </div>
-
-            </div>
-
-        </div>
+       
 
     </div>
 </div>

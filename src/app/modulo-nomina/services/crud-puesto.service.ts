@@ -17,6 +17,11 @@ export class CrudPuestoService {
     return this.http.get(`${this.URL}/puesto/`);
   } 
 
+  //Agregar un puesto
+  addPuesto(puesto:any){
+    return this.http.post(`${this.URL}/puesto/create`,puesto);
+  }
+
 }
 export interface Puestos{
    
@@ -24,6 +29,6 @@ export interface Puestos{
   nombre?:String,
   descripcion?:String,
   depto?:Number,
-  salarioMin?:number,
-  salarioMax?:number,
+  salarioMin?:any,
+  salarioMax?:any,
 }

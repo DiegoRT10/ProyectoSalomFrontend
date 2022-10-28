@@ -1,0 +1,37 @@
+<div class="main">
+    <div class="section text-center">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 ml-auto mr-auto">
+                    <form>
+                        <div class="mb-3">
+                            <label class="form-label">Puesto</label>
+                         <input [(ngModel)]="AggPuesto.nombre" type="text" class="form-control" name="nombre">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Descripcion</label>
+                        <input [(ngModel)]="AggPuesto.descripcion" type="text" class="form-control" name="descripcion">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Departamento</label>
+                        <input [(ngModel)]="AggPuesto.depto" type="text" class="form-control" name="depto">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Salario Minimo</label>
+                        <input [(ngModel)]="AggPuesto.salarioMin" type="text" class="form-control" name="salarioMin">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Salario Max</label>
+                        <input [(ngModel)]="AggPuesto.salarioMax" type="text" class="form-control" name="salarioMax">
+                        </div>
+                        
+        
+                        <div class="mb-3">
+                            <button  type="button" class="btn btn-success">Guardar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

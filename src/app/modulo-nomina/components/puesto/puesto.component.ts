@@ -10,6 +10,11 @@ import { Route, Router } from '@angular/router';
 export class PuestoComponent implements OnInit {
 
   ListaPuestos?: Puestos[];
+  salarioMax:number=0.0;
+  salarioMin:number=12500.3542;
+
+
+
 
 
 
@@ -24,11 +29,17 @@ export class PuestoComponent implements OnInit {
       res=>{
         this.ListaPuestos=<any>res;     
         console.log(this.ListaPuestos);
+        
+
       },
       err =>{
         console.log(err);
       }
     );
   
+  }
+
+  crear(): void{
+    this.router.navigate(['createPuesto']);
   }
 }

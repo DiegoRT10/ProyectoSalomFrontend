@@ -5,9 +5,10 @@ import { DespidosComponent } from './components/despidos/despidos.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { ProfilesComponent } from './components/profiles/profiles.component';
 import { PuestoComponent } from './components/puesto/puesto.component';
-import { CreatePuestoComponent } from './components/createPuesto/createPuesto.component';
+import { CreatePuestoComponent } from './components/create-puesto/create-puesto.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
+import { UpdatePuestoComponent } from './components/update-puesto/update-puesto.component';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { FormsModule } from '@angular/forms';
     ProfileComponent,
     ProfilesComponent,
     PuestoComponent,
-    CreatePuestoComponent
+    CreatePuestoComponent,
+    UpdatePuestoComponent
   ],
   imports: [
     CommonModule,

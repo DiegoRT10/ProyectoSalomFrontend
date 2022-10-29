@@ -40,6 +40,11 @@ export class PuestoComponent implements OnInit {
   }
 
   crear(): void{
-    this.router.navigate(['createPuesto']);
+    this.router.navigate(['create-puesto']);
+  }
+
+  Editar(id:String):void{
+      localStorage.setItem('idP',<string>id);
+      this.router.navigate(['update-puesto']); 
   }
 }

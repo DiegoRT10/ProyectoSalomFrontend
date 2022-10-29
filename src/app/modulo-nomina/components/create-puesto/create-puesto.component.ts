@@ -5,8 +5,8 @@ import { Route, Router } from '@angular/router';
 
 @Component({
   selector: 'app-create',
-  templateUrl: './createPuesto.component.html',
-  styleUrls: ['./createPuesto.component.css']
+  templateUrl: './create-puesto.component.html',
+  styleUrls: ['./create-puesto.component.css']
 })
 export class CreatePuestoComponent implements OnInit {
 
@@ -29,12 +29,11 @@ export class CreatePuestoComponent implements OnInit {
     this.crudPuestoService.addPuesto(this.AggPuesto).subscribe(
       res => {
         console.log('Se agrego el puesto');
-        this.router.navigate(['private']);
+        this.router.navigate(['puesto']);
       },
       err => {
         console.log(err);
       });
-
   }
  
 }

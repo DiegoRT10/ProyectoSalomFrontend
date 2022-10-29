@@ -1,8 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CreatePuestoComponent } from './createPuesto.component';
+import { CreatePuestoComponent } from './create-puesto.component';
 
-describe('CreateComponent', () => {
+describe('CreatePuestoComponent', () => {
   let component: CreatePuestoComponent;
   let fixture: ComponentFixture<CreatePuestoComponent>;
 
@@ -17,7 +17,7 @@ describe('CreateComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('should createPuesto', () => {
     expect(component).toBeTruthy();
   });
 });

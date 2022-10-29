@@ -17,9 +17,19 @@ export class CrudPuestoService {
     return this.http.get(`${this.URL}/puesto/`);
   } 
 
+  //Obtener un puesto
+  getOnePuesto(puesto:any){
+    return this.http.post<Puestos[]>(`${this.URL}/puesto/onepuesto`,puesto);
+  }
+
   //Agregar un puesto
   addPuesto(puesto:any){
     return this.http.post(`${this.URL}/puesto/create`,puesto);
+  }
+
+  //Editar un puesto
+  editPuesto(puesto:any){
+    return this.http.put(`${this.URL}/puesto/update`,puesto);
   }
 
 }

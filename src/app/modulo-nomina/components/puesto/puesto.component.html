@@ -49,7 +49,7 @@
                                     <td *ngIf="puesto.depto==0">{{puesto.salarioMin | number: '0.0-2' }}</td>
                                     <td *ngIf="puesto.depto==0">{{puesto.salarioMax | number: '0.0-2' }}</td>
                                     <td *ngIf="puesto.depto==0">
-                                        <button type="button" class="btn btn-warning">Editar</button>
+                                        <button type="button" class="btn btn-warning" (click)="Editar(puesto.id)">Editar</button>
                                     </td>
                                     <td *ngIf="puesto.depto==0">
                                         <button type="button" class="btn btn-danger">Eliminar</button>
@@ -72,7 +72,7 @@
                         <div class="row">
                             <div class="col-md-12 ml-auto mr-auto">
                                 <h2 class="text-left title">Farmacia</h2>
-                                <button routerLink="/create" type="button"
+                                <button (click)="crear()" type="button"
                                     class="btn btn-primary float-left">Agregar</button>
                                 <br />
                                 <br />
@@ -122,7 +122,7 @@
                         <div class="row">
                             <div class="col-md-12 ml-auto mr-auto">
                                 <h2 class="text-left title">Bodega</h2>
-                                <button routerLink="/create" type="button"
+                                <button (click)="crear()" type="button"
                                     class="btn btn-primary float-left">Agregar</button>
                                 <br />
                                 <br />

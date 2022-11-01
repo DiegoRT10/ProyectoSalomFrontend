@@ -22,7 +22,7 @@
                         <div class="row">
                             <div class="col-md-12 ml-auto mr-auto">
                                 <h2 class="text-left title">Gerencia</h2>
-                                <button (click)="crear()" type="button"
+                                <button (click)="crear('0')" type="button"
                                     class="btn btn-primary float-left">Agregar</button>
                                 <br />
                                 <br />
@@ -52,7 +52,7 @@
                                         <button type="button" class="btn btn-warning" (click)="Editar(puesto.id)">Editar</button>
                                     </td>
                                     <td *ngIf="puesto.depto==0">
-                                        <button type="button" class="btn btn-danger">Eliminar</button>
+                                        <button type="button" class="btn btn-danger" (click)="Eliminar(puesto.id)">Eliminar</button>
                                     </td>
     
                                 </tr>
@@ -72,7 +72,7 @@
                         <div class="row">
                             <div class="col-md-12 ml-auto mr-auto">
                                 <h2 class="text-left title">Farmacia</h2>
-                                <button (click)="crear()" type="button"
+                                <button (click)="crear('1')" type="button"
                                     class="btn btn-primary float-left">Agregar</button>
                                 <br />
                                 <br />
@@ -102,7 +102,7 @@
                                         <button type="button" class="btn btn-warning">Editar</button>
                                     </td>
                                     <td *ngIf="puesto.depto==1">
-                                        <button type="button" class="btn btn-danger">Eliminar</button>
+                                        <button type="button" class="btn btn-danger" (click)="Eliminar(puesto.id)">Eliminar</button>
                                     </td>
     
                                 </tr>
@@ -122,7 +122,7 @@
                         <div class="row">
                             <div class="col-md-12 ml-auto mr-auto">
                                 <h2 class="text-left title">Bodega</h2>
-                                <button (click)="crear()" type="button"
+                                <button (click)="crear('2')" type="button"
                                     class="btn btn-primary float-left">Agregar</button>
                                 <br />
                                 <br />
@@ -152,7 +152,7 @@
                                         <button type="button" class="btn btn-warning">Editar</button>
                                     </td>
                                     <td *ngIf="puesto.depto==2">
-                                        <button type="button" class="btn btn-danger">Eliminar</button>
+                                        <button type="button" class="btn btn-danger" (click)="Eliminar(puesto.id)">Eliminar</button>
                                     </td>
     
                                 </tr>

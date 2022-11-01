@@ -23,6 +23,8 @@ export class CreatePuestoComponent implements OnInit {
   constructor(private crudPuestoService:CrudPuestoService, private router:Router) { }
 
   ngOnInit(): void {
+    const deptoEntrante = localStorage.getItem('dep');
+    this.AggPuesto.depto=<any>deptoEntrante;
   }
 
   AgregarPuesto():void{

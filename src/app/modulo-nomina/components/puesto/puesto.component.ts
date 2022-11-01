@@ -13,7 +13,15 @@ export class PuestoComponent implements OnInit {
   salarioMax:number=0.0;
   salarioMin:number=12500.3542;
 
-
+  DelPuesto: Puestos ={
+    id:'',
+    nombre:'',
+    descripcion:'',
+    depto:0,
+    salarioMin:0.0,
+    salarioMax:0.0,
+  
+    }
 
 
 
@@ -39,12 +47,27 @@ export class PuestoComponent implements OnInit {
   
   }
 
-  crear(): void{
+  crear(dep:String): void{
+    localStorage.setItem('dep',<string>dep);
     this.router.navigate(['create-puesto']);
   }
 
   Editar(id:String):void{
       localStorage.setItem('idP',<string>id);
       this.router.navigate(['update-puesto']); 
+  }
+
+  Eliminar(id:any):void{
+    console.log('este es el id desde HTML '+id);
+    this.DelPuesto.id=id;
+    console.log('este es el id desde delPuesto '+id);
+    this.crudPuestoService.delPuesto(id).subscribe(
+      res => {
+        console.log('Se elimino el puesto');
+        this.router.navigate(['puesto']);
+      },
+      err => {
+        console.log(err);
+      });
   }
 }

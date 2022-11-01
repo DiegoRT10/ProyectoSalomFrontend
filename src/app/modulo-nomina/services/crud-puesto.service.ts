@@ -32,6 +32,10 @@ export class CrudPuestoService {
     return this.http.put(`${this.URL}/puesto/update`,puesto);
   }
 
+  delPuesto(id:any){
+    console.log('este es el id desde el service '+id);
+    return this.http.delete(`${this.URL}/puesto/delete${id}`);
+  }
 }
 export interface Puestos{
    

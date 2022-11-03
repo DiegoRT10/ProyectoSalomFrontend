@@ -9,6 +9,8 @@ import { CreatePuestoComponent } from './components/create-puesto/create-puesto.
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { UpdatePuestoComponent } from './components/update-puesto/update-puesto.component';
+import { CreateEtapaComponent } from './components/create-etapa/create-etapa.component';
+import { EtapaComponent } from './components/etapa/etapa.component';
 
 
 @NgModule({
@@ -19,7 +21,9 @@ import { UpdatePuestoComponent } from './components/update-puesto/update-puesto.
     ProfilesComponent,
     PuestoComponent,
     CreatePuestoComponent,
-    UpdatePuestoComponent
+    UpdatePuestoComponent,
+    CreateEtapaComponent,
+    EtapaComponent
   ],
   imports: [
     CommonModule,

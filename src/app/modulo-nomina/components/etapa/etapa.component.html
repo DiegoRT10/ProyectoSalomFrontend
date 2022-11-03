@@ -1,0 +1,74 @@
+<!-- main -->
+<div class="main">
+    <div class="section text-center">
+
+
+
+
+        <div class="row">
+            <div class="col-md-8 ml-auto mr-auto">
+                <h1 class="title">Etapas</h1>
+            </div>
+        </div>
+
+
+
+
+     
+
+            <div class="row">
+                <div class="col-md-7 ml-auto mr-auto">
+                    <div class="tab-pane text-center" >
+                        <div class="row">
+                            <div class="col-md-12 ml-auto mr-auto">
+                                <h2 class="text-left title">Etapas</h2>
+                                <button (click)="crear('0')" type="button"
+                                    class="btn btn-primary float-left">Agregar</button>
+                                <br />
+                                <br />
+                            </div>
+                        </div>
+    
+    
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Nombre</th>
+                                    <th scope="col">Descripcion</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let etapa of ListaEtapas">
+                                    
+                                    <th>{{etapa.nombre}}</th>
+                                    <td>{{etapa.descripcion}}</td>
+                                    <td>
+                                        <button type="button" class="btn btn-warning" (click)="Editar(etapa.id)">Editar</button>
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn btn-danger" (click)="Eliminar(etapa.id)">Eliminar</button>
+                                    </td>
+    
+                                </tr>
+    
+                            </tbody>
+                        </table>
+    
+                    </div>
+    
+                </div>
+    
+            </div>
+
+           
+
+       
+
+    </div>
+</div>
+
+
+
+
+
+<!-- end main -->

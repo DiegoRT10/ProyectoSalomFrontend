@@ -25,7 +25,9 @@ export class HomeGerenteComponent implements OnInit {
     this.router.navigate(['puesto']);
   }
 
-
+  Etapa():void{
+    this.router.navigate(['etapa']);
+  }
  
   
 }

@@ -19,6 +19,7 @@ import { ProfilesComponent } from './modulo-nomina/components/profiles/profiles.
 import { PuestoComponent } from './modulo-nomina/components/puesto/puesto.component';
 import { CreatePuestoComponent} from './modulo-nomina/components/create-puesto/create-puesto.component';
 import { UpdatePuestoComponent } from './modulo-nomina/components/update-puesto/update-puesto.component';
+import { EtapaComponent } from './modulo-nomina/components/etapa/etapa.component';
 
 
 
@@ -40,6 +41,7 @@ const routes: Routes = [
 {path: 'despidos', component: DespidosComponent,canActivate: [AuthGuard, RoleGuard],  data: {expectedRole: {s:'0', g:'1'}}},//puede acceder sistemas o gerente
 {path: 'create-puesto', component: CreatePuestoComponent, canActivate: [AuthGuard, RoleGuard],  data: {expectedRole: {s:'0', g:'1'}}},//puede acceder sistemas o gerente
 {path: 'update-puesto', component: UpdatePuestoComponent,canActivate: [AuthGuard, RoleGuard],  data: {expectedRole: {s:'0', g:'1'}}},//puede acceder sistemas o gerente
+{path: 'etapa',component: EtapaComponent,canActivate: [AuthGuard, RoleGuard],  data: {expectedRole: {s:'0', g:'1'}}},//puede acceder sistemas o gerente
 {path: '**', pathMatch: 'full', redirectTo: 'home'}
 ];
 

@@ -35,7 +35,7 @@ editEtapa(etapa:any){
 
 delEtapa(id:any){
   console.log('este es el id desde el service '+id);
-  return this.http.delete(`${this.URL}/puesto/delete${id}`);
+  return this.http.delete(`${this.URL}/etapa/delete${id}`);
 }
 }
 export interface Etapas{

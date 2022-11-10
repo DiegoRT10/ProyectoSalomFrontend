@@ -39,24 +39,23 @@ export class EtapaComponent implements OnInit {
   
   }
 
-  crear(dep:String): void{
-    localStorage.setItem('dep',<string>dep);
-    this.router.navigate(['create-puesto']);
+  crear(): void{
+    this.router.navigate(['create-etapa']);
   }
 
   Editar(id:String):void{
-      localStorage.setItem('idP',<string>id);
-      this.router.navigate(['update-puesto']); 
+      localStorage.setItem('idE',<string>id);
+      this.router.navigate(['update-etapa']); 
   }
 
   Eliminar(id:any):void{
     console.log('este es el id desde HTML '+id);
     this.DelPuesto.id=id;
-    console.log('este es el id desde delPuesto '+id);
+    console.log('este es el id desde de la Etapa '+id);
     this.crudEtapaService.delEtapa(id).subscribe(
       res => {
         console.log('Se elimino el puesto');
-        this.router.navigate(['puesto']);
+        this.listarEtapas();
       },
       err => {
         console.log(err);

@@ -5,15 +5,16 @@
                 <div class="col-md-8 ml-auto mr-auto">
                     <form>
                         <div class="mb-3">
-                            <label class="form-label">Nombre de la etapa</label>
-                         <input [(ngModel)]="AggEtapa.nombre" type="text" class="form-control" name="nombre">
+                            <label class="form-label">Puesto</label>
+                         <input [(ngModel)]="EditEtapa.nombre" type="text" class="form-control" name="nombre">
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Descripcion</label>
-                        <input [(ngModel)]="AggEtapa.descripcion" type="text" class="form-control" name="descripcion">
-                        </div>        
+                        <input [(ngModel)]="EditEtapa.descripcion" type="text" class="form-control" name="descripcion">
+                        </div>
+        
                         <div class="mb-3">
-                            <button  type="button" class="btn btn-success" (click)="AgregarEtapa()">Guardar</button>
+                            <button  type="button" class="btn btn-success" (click)="EditarPuesto()">Guardar</button>
                         </div>
                     </form>
                 </div>
@@ -21,3 +22,4 @@
         </div>
     </div>
 </div>
+

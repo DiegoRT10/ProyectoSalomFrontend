@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Users,CrudService } from 'src/app/services/crud.service';
 
 
@@ -20,7 +21,7 @@ export class ProfileComponent implements OnInit {
     token:null,
     tokenLife:null,
   };
-  constructor(private CrudService:CrudService) { }
+  constructor(private CrudService:CrudService,private router:Router, private activatedRoute:ActivatedRoute) { }
 
   ngOnInit(): void {
 
@@ -38,6 +39,10 @@ export class ProfileComponent implements OnInit {
     }
       
 
+  }
+
+  goUpdateProfile():void{
+    this.router.navigate(['update-profile']);
   }
     
 }

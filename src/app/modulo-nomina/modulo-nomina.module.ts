@@ -11,6 +11,8 @@ import { FormsModule } from '@angular/forms';
 import { UpdatePuestoComponent } from './components/update-puesto/update-puesto.component';
 import { CreateEtapaComponent } from './components/create-etapa/create-etapa.component';
 import { EtapaComponent } from './components/etapa/etapa.component';
+import { UpdateEtapaComponent } from './components/update-etapa/update-etapa.component';
+import { UpdateProfileComponent } from './components/update-profile/update-profile.component';
 
 
 @NgModule({
@@ -23,7 +25,9 @@ import { EtapaComponent } from './components/etapa/etapa.component';
     CreatePuestoComponent,
     UpdatePuestoComponent,
     CreateEtapaComponent,
-    EtapaComponent
+    EtapaComponent,
+    UpdateEtapaComponent,
+    UpdateProfileComponent
   ],
   imports: [
     CommonModule,

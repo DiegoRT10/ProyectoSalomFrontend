@@ -64,7 +64,7 @@ export class PuestoComponent implements OnInit {
     this.crudPuestoService.delPuesto(id).subscribe(
       res => {
         console.log('Se elimino el puesto');
-        this.router.navigate(['puesto']);
+        this.listarPuestos();
       },
       err => {
         console.log(err);

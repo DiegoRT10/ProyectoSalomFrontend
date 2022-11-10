@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { CrudEtapaService, Etapas } from '../../services/crud-etapa.service';
 
 @Component({
   selector: 'app-create-etapa',
@@ -7,9 +9,29 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CreateEtapaComponent implements OnInit {
 
-  constructor() { }
+  
+  AggEtapa: Etapas ={
+    id:'',
+    nombre:'',
+    descripcion:''
 
-  ngOnInit(): void {
+    }
+  
+    constructor(private crudEtapaService:CrudEtapaService, private router:Router) { }
+  
+    ngOnInit(): void {
+    }
+  
+    AgregarEtapa():void{
+      this.crudEtapaService.addEtapa(this.AggEtapa).subscribe(
+        res => {
+          console.log('Se agrego la etapa');
+          this.router.navigate(['etapa']);
+        },
+        err => {
+          console.log(err);
+        });
+    }
+   
   }
-
-}
+  

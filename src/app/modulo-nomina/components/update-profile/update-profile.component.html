@@ -1,0 +1,54 @@
+<div class="main">
+    <div class="section text-center">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 ml-auto mr-auto">
+                    <form>
+                        <div class="mb-3">
+                            <label class="form-label">Locacion</label>
+                            <select  class="form-control" >
+                                <option  *ngFor="let item of listaOpLocations" >{{item.id}}</option>
+                        </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Salario</label>
+                        <input type="number" class="form-control" name="descripcion">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Puesto</label>
+                            <select  class="form-control" >
+                                <option  *ngFor="let item of listaOpPuestos" >{{item.nombre}}</option>
+                        </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Etapas</label>
+                            <select  class="form-control" >
+                                <option  *ngFor="let item of listaOpEtapas" >{{item.nombre}}</option>
+                        </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Fecha Ingreso</label>
+                        <input type="date" class="form-control" name="descripcion">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Fecha Fin</label>
+                        <input type="date" class="form-control" name="descripcion">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Fecha_Pago</label>
+                        <input type="date" class="form-control" name="descripcion">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Estado</label>
+                        <input type="text" class="form-control" name="descripcion">
+                        </div>
+        
+                        <div class="mb-3">
+                            <button  type="button" class="btn btn-success" >Guardar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

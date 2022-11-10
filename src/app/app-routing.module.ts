@@ -20,6 +20,9 @@ import { PuestoComponent } from './modulo-nomina/components/puesto/puesto.compon
 import { CreatePuestoComponent} from './modulo-nomina/components/create-puesto/create-puesto.component';
 import { UpdatePuestoComponent } from './modulo-nomina/components/update-puesto/update-puesto.component';
 import { EtapaComponent } from './modulo-nomina/components/etapa/etapa.component';
+import { CreateEtapaComponent } from './modulo-nomina/components/create-etapa/create-etapa.component';
+import { UpdateEtapaComponent } from './modulo-nomina/components/update-etapa/update-etapa.component';
+import { UpdateProfileComponent } from './modulo-nomina/components/update-profile/update-profile.component';
 
 
 
@@ -42,6 +45,9 @@ const routes: Routes = [
 {path: 'create-puesto', component: CreatePuestoComponent, canActivate: [AuthGuard, RoleGuard],  data: {expectedRole: {s:'0', g:'1'}}},//puede acceder sistemas o gerente
 {path: 'update-puesto', component: UpdatePuestoComponent,canActivate: [AuthGuard, RoleGuard],  data: {expectedRole: {s:'0', g:'1'}}},//puede acceder sistemas o gerente
 {path: 'etapa',component: EtapaComponent,canActivate: [AuthGuard, RoleGuard],  data: {expectedRole: {s:'0', g:'1'}}},//puede acceder sistemas o gerente
+{path: 'create-etapa', component: CreateEtapaComponent, canActivate: [AuthGuard, RoleGuard],  data: {expectedRole: {s:'0', g:'1'}}},//puede acceder sistemas o gerente
+{path: 'update-etapa', component: UpdateEtapaComponent, canActivate: [AuthGuard, RoleGuard],  data: {expectedRole: {s:'0', g:'1'}}},//puede acceder sistemas o gerente
+{path: 'update-profile', component: UpdateProfileComponent, canActivate: [AuthGuard, RoleGuard],  data: {expectedRole: {s:'0', g:'1'}}},//puede acceder sistemas o gerente
 {path: '**', pathMatch: 'full', redirectTo: 'home'}
 ];
 

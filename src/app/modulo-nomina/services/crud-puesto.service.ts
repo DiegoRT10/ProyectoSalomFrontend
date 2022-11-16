@@ -43,6 +43,6 @@ export interface Puestos{
   nombre?:String,
   descripcion?:String,
   depto?:Number,
-  salarioMin?:any,
-  salarioMax?:any,
+  salario_min?:any,
+  salario_max?:any,
 }

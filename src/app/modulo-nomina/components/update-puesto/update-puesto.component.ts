@@ -15,8 +15,8 @@ export class UpdatePuestoComponent implements OnInit {
     nombre:'',
     descripcion:'',
     depto:0,
-    salarioMin:0.0,
-    salarioMax:0.0,
+    salario_min:0.0,
+    salario_max:0.0,
   
     }
 

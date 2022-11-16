@@ -45,6 +45,13 @@ getLocation(){
   return this.http.get(`${this.URL}/profile/locations/`);
 } 
 
+
+//Obtener un usuario con datos de nomina
+getProfileNomina(profile:any){
+  return this.http.post<ProfileNomina[]>(`${this.URL}/profile/profilenomina`,profile);
+}
+
+
 }
 export interface Profiles{
  
@@ -66,5 +73,15 @@ export interface Locations{
   direccion:String
 }
 
-
+export interface ProfileNomina{
+  id:String, 
+  Location:String, 
+  salario:Number, 
+  Puesto:String, 
+  Etapa:String, 
+  fechaIngreso:Date, 
+  fechaFin:Date, 
+  fechaPago:Date, 
+  estado:String
+}
 

@@ -46,12 +46,33 @@
     </div>
     <!-- Tab panes -->
     <div class="tab-content following">
-      <div class="tab-pane active" id="puesto" role="tabpanel">
+      <div class="tab-pane active " id="puesto" role="tabpanel">
         <div class="row">
           <div class="col-md-6 ml-auto mr-auto">
             <ul class="list-unstyled follows">
               <li>
-                <p>Aqui ria descripcion del puesto de trabajo</p>
+                <form class="tab-pane text-center">
+                  <div  class="mb-3">
+                      <label class="form-label" class="h6">Locacion</label>
+                      <br>
+                      <label clas type="text" class="form-label">{{ProfileNomina.Location}}</label>
+                  </div>
+                  <div class="mb-3">
+                      <label class="form-label" class="h6">Puesto</label>
+                      <br>
+                      <label  type="text" class="form-label" >{{ProfileNomina.Puesto}}</label>
+                  </div>    
+                  <div class="mb-3">
+                      <label class="form-label" class="h6">Fecha Ingreso</label>
+                      <br>
+                      <label  type="text" class="form-label" >{{ProfileNomina.fechaIngreso | date: 'shortDate'}}</label>
+                  </div>
+                  <div class="mb-3">
+                      <label class="form-label" class="h6">Fecha Fin</label>
+                      <br>
+                      <label  type="text" class="form-label" >{{ProfileNomina.fechaFin | date: 'shortDate'}}</label>
+                  </div>
+              </form>
               </li>
               <hr />
             </ul>
@@ -63,7 +84,13 @@
           <div class="col-md-6 ml-auto mr-auto">
             <ul class="list-unstyled follows">
               <li>
-                <p>Aqui ria descripcion de la etapa</p>
+                <form>
+                  <div class="mb-3">
+                    <label class="form-label" class="h6">Etapa</label>
+                    <br>
+                    <label  type="text" class="form-label" >{{ProfileNomina.Etapa}} </label>
+                </div>  
+                </form>
               </li>
               <hr />
             </ul>
@@ -75,7 +102,18 @@
           <div class="col-md-6 ml-auto mr-auto">
             <ul class="list-unstyled follows">
               <li>
-                <p>Aqui ria descripcion del salario</p>
+                <form>
+                  <div class="mb-3">
+                    <label class="form-label" class="h6">Salario</label>
+                    <br>
+                    <label  type="text" class="form-label" >{{ProfileNomina.salario}}</label>
+                </div>    
+                <div class="mb-3">
+                    <label class="form-label" class="h6">Fecha Pago</label>
+                    <br>
+                    <label  type="text" class="form-label" >{{ProfileNomina.fechaPago | date: 'shortDate'}}</label>
+                </div>
+              </form>
               </li>
               <hr />
             </ul>
@@ -83,5 +121,6 @@
         </div>
       </div>
     </div>
+    <!-- end tab pane -->
   </div>
 </div>

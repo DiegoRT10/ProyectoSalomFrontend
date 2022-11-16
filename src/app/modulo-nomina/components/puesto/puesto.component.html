@@ -46,8 +46,8 @@
                                     
                                     <th *ngIf="puesto.depto==0">{{puesto.nombre}}</th>
                                     <td *ngIf="puesto.depto==0">{{puesto.descripcion}}</td>
-                                    <td *ngIf="puesto.depto==0">{{puesto.salarioMin | number: '0.0-2' }}</td>
-                                    <td *ngIf="puesto.depto==0">{{puesto.salarioMax | number: '0.0-2' }}</td>
+                                    <td *ngIf="puesto.depto==0">{{puesto.salario_min | number: '0.0-2' }}</td>
+                                    <td *ngIf="puesto.depto==0">{{puesto.salario_max | number: '0.0-2' }}</td>
                                     <td *ngIf="puesto.depto==0">
                                         <button type="button" class="btn btn-warning" (click)="Editar(puesto.id)">Editar</button>
                                     </td>
@@ -96,8 +96,8 @@
                                     
                                     <th *ngIf="puesto.depto==1">{{puesto.nombre}}</th>
                                     <td *ngIf="puesto.depto==1">{{puesto.descripcion}}</td>
-                                    <td *ngIf="puesto.depto==1">{{puesto.salarioMin | number: '0.0-2' }}</td>
-                                    <td *ngIf="puesto.depto==1">{{puesto.salarioMax | number: '0.0-2' }}</td>
+                                    <td *ngIf="puesto.depto==1">{{puesto.salario_min | number: '0.0-2' }}</td>
+                                    <td *ngIf="puesto.depto==1">{{puesto.salario_max | number: '0.0-2' }}</td>
                                     <td *ngIf="puesto.depto==1">
                                         <button type="button" class="btn btn-warning">Editar</button>
                                     </td>
@@ -146,8 +146,8 @@
                                     
                                     <th *ngIf="puesto.depto==2">{{puesto.nombre}}</th>
                                     <td *ngIf="puesto.depto==2">{{puesto.descripcion}}</td>
-                                    <td *ngIf="puesto.depto==2" >{{puesto.salarioMin | number: '0.0-2' }}</td>
-                                    <td *ngIf="puesto.depto==2">{{puesto.salarioMax | number: '0.0-2' }}</td>
+                                    <td *ngIf="puesto.depto==2" >{{puesto.salario_min | number: '0.0-2' }}</td>
+                                    <td *ngIf="puesto.depto==2">{{puesto.salario_max | number: '0.0-2' }}</td>
                                     <td *ngIf="puesto.depto==2">
                                         <button type="button" class="btn btn-warning">Editar</button>
                                     </td>

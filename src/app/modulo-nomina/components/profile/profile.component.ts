@@ -1,6 +1,9 @@
+import { CrudProfileService } from './../../services/crud-profile.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Users,CrudService } from 'src/app/services/crud.service';
+import { ProfileNomina } from '../../services/crud-profile.service';
+
 
 
 @Component({
@@ -9,6 +12,20 @@ import { Users,CrudService } from 'src/app/services/crud.service';
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
+  fecha!: Date;
+
+  ProfileNomina:ProfileNomina ={
+  id:'', 
+  Location:'', 
+  salario:0.0, 
+  Puesto:'', 
+  Etapa:'', 
+  fechaIngreso:this.fecha, 
+  fechaFin:this.fecha, 
+  fechaPago:this.fecha, 
+  estado:''
+  };
+
   Usuario: Users ={
     id:'',
     name:'',
@@ -21,9 +38,20 @@ export class ProfileComponent implements OnInit {
     token:null,
     tokenLife:null,
   };
-  constructor(private CrudService:CrudService,private router:Router, private activatedRoute:ActivatedRoute) { }
+  constructor(private CrudService:CrudService, private CrudProfileService:CrudProfileService, private router:Router, private activatedRoute:ActivatedRoute) { }
 
   ngOnInit(): void {
+
+    this.getUser();
+    this.getProfile();
+
+  }
+
+  goUpdateProfile():void{
+    this.router.navigate(['update-profile']);
+  }
+ 
+  getUser():void{
 
     const idL = localStorage.getItem('id');
     
@@ -37,14 +65,27 @@ export class ProfileComponent implements OnInit {
         console.log(err);
       });
     }
-      
 
   }
 
-  goUpdateProfile():void{
-    this.router.navigate(['update-profile']);
-  }
+  getProfile():void{
+
+    const idL = localStorage.getItem('id');
     
+    this.ProfileNomina.id=<String>idL;
+    if(idL){
+      this.CrudProfileService.getProfileNomina(this.ProfileNomina).subscribe(res=>{
+        this.ProfileNomina = res[0];
+        console.log('datos profile',this.ProfileNomina);
+        console.log('location',this.ProfileNomina.Location);
+      },
+      err =>{
+        console.log(err);
+      });
+    }
+
+  }
+
 }
 
 

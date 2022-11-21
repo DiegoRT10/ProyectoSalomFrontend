@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import decode from 'jwt-decode';
 
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -10,6 +11,8 @@ import decode from 'jwt-decode';
 })
 export class AppComponent implements OnInit {
   title = 'salom-app';
+
+  
   bandera:boolean=false;
   EstadoToken:boolean=false;
 
@@ -20,6 +23,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
   
+
   if(localStorage.getItem('token')){
     AppComponent.Rol();
     this.EstadoToken = true;
@@ -49,6 +53,9 @@ export class AppComponent implements OnInit {
     localStorage.removeItem('token')
     this.EstadoToken=false;
   }
+
+  
+
 }
 
 

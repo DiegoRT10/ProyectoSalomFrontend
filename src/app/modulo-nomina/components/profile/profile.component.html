@@ -17,14 +17,14 @@
     <div class="row">
       <div class="col-md-6 ml-auto mr-auto text-center">
         <p>Esta va hacer una descripcion del sujeto que se haya seleccionado desde el componente de gerencia</p>
-        <br/>
+        <br />
         <!-- <btn class="btn btn-outline-default btn-round"><i class="fa fa-cog"></i> Settings</btn> -->
       </div>
     </div>
     <div>
       <button (click)="goUpdateProfile()" type="button" class="btn btn-primary float-left">Modificar</button>
     </div>
-    <br/>
+    <br />
     <br />
     <div class="nav-tabs-navigation">
       <div class="nav-tabs-wrapper">
@@ -52,27 +52,27 @@
             <ul class="list-unstyled follows">
               <li>
                 <form class="tab-pane text-center">
-                  <div  class="mb-3">
-                      <label class="form-label" class="h6">Locacion</label>
-                      <br>
-                      <label clas type="text" class="form-label">{{ProfileNomina.Location}}</label>
+                  <div class="mb-3">
+                    <label class="form-label" class="h6">Locacion</label>
+                    <br>
+                    <label clas type="text" class="form-label">{{ProfileNomina.Location}}</label>
                   </div>
                   <div class="mb-3">
-                      <label class="form-label" class="h6">Puesto</label>
-                      <br>
-                      <label  type="text" class="form-label" >{{ProfileNomina.Puesto}}</label>
-                  </div>    
-                  <div class="mb-3">
-                      <label class="form-label" class="h6">Fecha Ingreso</label>
-                      <br>
-                      <label  type="text" class="form-label" >{{ProfileNomina.fechaIngreso | date: 'shortDate'}}</label>
+                    <label class="form-label" class="h6">Puesto</label>
+                    <br>
+                    <label type="text" class="form-label">{{ProfileNomina.Puesto}}</label>
                   </div>
                   <div class="mb-3">
-                      <label class="form-label" class="h6">Fecha Fin</label>
-                      <br>
-                      <label  type="text" class="form-label" >{{ProfileNomina.fechaFin | date: 'shortDate'}}</label>
+                    <label class="form-label" class="h6">Fecha Ingreso</label>
+                    <br>
+                    <label type="text" class="form-label">{{ProfileNomina.fechaIngreso | date: 'shortDate'}}</label>
                   </div>
-              </form>
+                  <div class="mb-3">
+                    <label class="form-label" class="h6">Fecha Fin</label>
+                    <br>
+                    <label type="text" class="form-label">{{ProfileNomina.fechaFin | date: 'shortDate'}}</label>
+                  </div>
+                </form>
               </li>
               <hr />
             </ul>
@@ -88,8 +88,8 @@
                   <div class="mb-3">
                     <label class="form-label" class="h6">Etapa</label>
                     <br>
-                    <label  type="text" class="form-label" >{{ProfileNomina.Etapa}} </label>
-                </div>  
+                    <label type="text" class="form-label">{{ProfileNomina.Etapa}} </label>
+                  </div>
                 </form>
               </li>
               <hr />
@@ -106,14 +106,14 @@
                   <div class="mb-3">
                     <label class="form-label" class="h6">Salario</label>
                     <br>
-                    <label  type="text" class="form-label" >{{ProfileNomina.salario}}</label>
-                </div>    
-                <div class="mb-3">
+                    <label type="text" class="form-label">{{ProfileNomina.salario}}</label>
+                  </div>
+                  <div class="mb-3">
                     <label class="form-label" class="h6">Fecha Pago</label>
                     <br>
-                    <label  type="text" class="form-label" >{{ProfileNomina.fechaPago | date: 'shortDate'}}</label>
-                </div>
-              </form>
+                    <label type="text" class="form-label">{{ProfileNomina.fechaPago | date: 'shortDate'}}</label>
+                  </div>
+                </form>
               </li>
               <hr />
             </ul>

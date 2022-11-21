@@ -23,6 +23,7 @@ import { EtapaComponent } from './modulo-nomina/components/etapa/etapa.component
 import { CreateEtapaComponent } from './modulo-nomina/components/create-etapa/create-etapa.component';
 import { UpdateEtapaComponent } from './modulo-nomina/components/update-etapa/update-etapa.component';
 import { UpdateProfileComponent } from './modulo-nomina/components/update-profile/update-profile.component';
+import { LocationsComponent } from './modulo-nomina/components/locations/locations.component';
 
 
 
@@ -48,6 +49,7 @@ const routes: Routes = [
 {path: 'create-etapa', component: CreateEtapaComponent, canActivate: [AuthGuard, RoleGuard],  data: {expectedRole: {s:'0', g:'1'}}},//puede acceder sistemas o gerente
 {path: 'update-etapa', component: UpdateEtapaComponent, canActivate: [AuthGuard, RoleGuard],  data: {expectedRole: {s:'0', g:'1'}}},//puede acceder sistemas o gerente
 {path: 'update-profile', component: UpdateProfileComponent, canActivate: [AuthGuard, RoleGuard],  data: {expectedRole: {s:'0', g:'1'}}},//puede acceder sistemas o gerente
+{path: 'locations', component: LocationsComponent, canActivate: [AuthGuard, RoleGuard],  data: {expectedRole: {s:'0', g:'1'}}},//puede acceder sistemas o gerente
 {path: '**', pathMatch: 'full', redirectTo: 'home'}
 ];
 

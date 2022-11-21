@@ -13,6 +13,7 @@ import { CreateEtapaComponent } from './components/create-etapa/create-etapa.com
 import { EtapaComponent } from './components/etapa/etapa.component';
 import { UpdateEtapaComponent } from './components/update-etapa/update-etapa.component';
 import { UpdateProfileComponent } from './components/update-profile/update-profile.component';
+import { LocationsComponent } from './components/locations/locations.component';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { UpdateProfileComponent } from './components/update-profile/update-profi
     CreateEtapaComponent,
     EtapaComponent,
     UpdateEtapaComponent,
-    UpdateProfileComponent
+    UpdateProfileComponent,
+    LocationsComponent
   ],
   imports: [
     CommonModule,

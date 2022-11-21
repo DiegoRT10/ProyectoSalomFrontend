@@ -28,7 +28,9 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Fecha Ingreso</label>
-                        <input [(ngModel)]="EditProfile.fechaIngreso" type="date" class="form-control" name="fechaIngreso">
+                            <input type='Date' class="form-control" [ngModel]='EditProfile.fechaIngreso | date:"shortDate" ' (ngModelChange)='EditProfile.fechaIngreso=$event' name="fechaIngreso">
+
+                        <!-- <input [(ngModel)]='EditProfile.fechaIngreso' type="date" class="form-control" name="fechaIngreso"> -->
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Fecha Fin</label>

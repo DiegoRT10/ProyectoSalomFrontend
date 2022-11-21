@@ -1,3 +1,4 @@
+import { Locations } from './../../modulo-nomina/services/crud-profile.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -27,6 +28,10 @@ export class HomeGerenteComponent implements OnInit {
 
   Etapa():void{
     this.router.navigate(['etapa']);
+  }
+
+  Locations():void{
+    this.router.navigate(['locations']);
   }
  
   

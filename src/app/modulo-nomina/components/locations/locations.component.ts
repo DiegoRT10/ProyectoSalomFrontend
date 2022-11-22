@@ -1,6 +1,9 @@
 import { Component, OnInit, LOCALE_ID } from '@angular/core';
+import { Router } from '@angular/router';
 import { Map, marker, tileLayer } from 'leaflet';
 import { mapTo } from 'rxjs';
+import { CrudLocationService, Locations } from '../../services/crud-location.service';
+
 
 @Component({
   selector: 'app-locations',
@@ -8,11 +11,25 @@ import { mapTo } from 'rxjs';
   styleUrls: ['./locations.component.css']
 })
 export class LocationsComponent implements OnInit {
+  longitud!:string;
 
-  constructor() { }
+  ListaLocations?: Locations[];
+
+  DelLocation: Locations ={
+    id:'',
+    name:'',
+    address:'',
+    latitud:'',
+    longitud:''
+    }
+
+
+
+  constructor(private crudLocationService:CrudLocationService, private router:Router) { }
 
   ngOnInit(): void {
     this.mapas();
+    this.listarLocations();
   }
 
 
@@ -31,7 +48,54 @@ const farm1 = marker([14.800796, -89.544790]).addTo(map).bindPopup("Doctor Farma
 //   [farm1.getLatLng().lat, farm1.getLatLng().lng]
 // ]);
 
-
   }
- 
+
+  listarLocations(){
+    this.crudLocationService.getLocations().subscribe(
+      res=>{
+        this.ListaLocations=<any>res;     
+        console.log(this.ListaLocations);
+        
+
+      },
+      err =>{
+        console.log(err);
+      }
+    );
+  
+  }
+
+  crear(): void{
+    this.router.navigate(['create-etapa']);
+  }
+
+  Editar(id:String):void{
+      localStorage.setItem('idE',<string>id);
+      this.router.navigate(['update-etapa']); 
+  }
+
+  Eliminar(id:any):void{
+    console.log('este es el id desde HTML '+id);
+    this.DelLocation.id=id;
+    console.log('este es el id desde de la Etapa '+id);
+    this.crudLocationService.delLocation(id).subscribe(
+      res => {
+        console.log('Se elimino el puesto');
+        this.listarLocations();
+      },
+      err => {
+        console.log(err);
+      });
+  }
+
+  Ver(latitud:string,longitud:string){}
+
 }
+
+
+
+
+
+
+  
+

@@ -20,7 +20,7 @@
                                                 <br>
                                                 <br>
                                                 <button  type="button"
-                                                    class="btn btn-primary float-left">Agregar</button>
+                                                    class="btn btn-primary float-left" (click)="crear()">Agregar</button>
                                                 <br />
                                                 <br />
                                             </div>
@@ -42,13 +42,13 @@
                                                     <td>{{location.name}}</td>
                                                     <td>{{location.address}}</td>
                                                     <td>
-                                                        <button type="button" class="btn btn-warning" >Editar</button>
+                                                        <button type="button" class="btn btn-warning" (click)="Editar(location.id)">Editar</button>
                                                     </td>
                                                     <td>
                                                         <button type="button" class="btn btn-danger" >Eliminar</button>
                                                     </td>
                                                     <td>
-                                                        <button type="button" class="btn btn-success" >Ver</button>
+                                                        <button type="button" class="btn btn-success" (click)="Ver(location.latitud,location.longitud,location.name)" >Ver</button>
                                                     </td>
                                                     
                     

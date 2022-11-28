@@ -1,0 +1,36 @@
+<div class="main">
+    <div class="section text-center">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 ml-auto mr-auto">
+                    <form>
+                        <div class="mb-3">
+                            <label class="form-label">id</label>
+                         <input [(ngModel)]="EditLocation.id" type="text" class="form-control" name="id">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Nombre</label>
+                        <input [(ngModel)]="EditLocation.name" type="text" class="form-control" name="name">
+                        </div> 
+                        <div class="mb-3">
+                            <label class="form-label">Direccion</label>
+                        <input  [(ngModel)]="EditLocation.address" type="text" class="form-control" name="address">
+                        </div> 
+                        <div class="mb-3">
+                            <label class="form-label">Latitud</label>
+                        <input [(ngModel)]="EditLocation.latitud" type="text" class="form-control" name="latitud">
+                        </div>  
+                        <div class="mb-3">
+                            <label class="form-label">Longitud</label>
+                        <input [(ngModel)]="EditLocation.longitud" type="text" class="form-control" name="longitud">
+                        </div>    
+                        <div class="mb-3">
+                            <button  type="button" class="btn btn-success" (click)="EditarLocation()">Guardar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

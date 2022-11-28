@@ -14,6 +14,8 @@ import { EtapaComponent } from './components/etapa/etapa.component';
 import { UpdateEtapaComponent } from './components/update-etapa/update-etapa.component';
 import { UpdateProfileComponent } from './components/update-profile/update-profile.component';
 import { LocationsComponent } from './components/locations/locations.component';
+import { CreateLocationComponent } from './components/create-location/create-location.component';
+import { UpdateLocationComponent } from './components/update-location/update-location.component';
 
 
 @NgModule({
@@ -29,7 +31,9 @@ import { LocationsComponent } from './components/locations/locations.component';
     EtapaComponent,
     UpdateEtapaComponent,
     UpdateProfileComponent,
-    LocationsComponent
+    LocationsComponent,
+    CreateLocationComponent,
+    UpdateLocationComponent
   ],
   imports: [
     CommonModule,

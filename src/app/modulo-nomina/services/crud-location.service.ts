@@ -19,18 +19,18 @@ export class CrudLocationService {
     } 
     
     //Obtener un puesto
-    getOneLocation(etapa:any){
-      return this.http.post<Locations[]>(`${this.URL}/location/onelocation`,etapa);
+    getOneLocation(location:any){
+      return this.http.post<Locations[]>(`${this.URL}/location/onelocation`,location);
     }
     
     //Agregar un puesto
     addLocation(etapa:any){
-      return this.http.post(`${this.URL}/location/create`,etapa);
+      return this.http.post(`${this.URL}/location/create`,location);
     }
     
     //Editar un puesto
     editLocation(etapa:any){
-      return this.http.put(`${this.URL}/location/update`,etapa);
+      return this.http.put(`${this.URL}/location/update`,location);
     }
     
     delLocation(id:any){

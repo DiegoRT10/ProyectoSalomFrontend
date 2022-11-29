@@ -24,24 +24,25 @@ export class CrudLocationService {
     }
     
     //Agregar un puesto
-    addLocation(etapa:any){
+    addLocation(location:any){
       return this.http.post(`${this.URL}/location/create`,location);
     }
     
     //Editar un puesto
-    editLocation(etapa:any){
+    editLocation(location:any){
       return this.http.put(`${this.URL}/location/update`,location);
     }
     
-    delLocation(id:any){
-      console.log('este es el id desde el service '+id);
-      return this.http.delete(`${this.URL}/location/delete${id}`);
+    delLocation(location:any){
+      return this.http.put(`${this.URL}/location/delete`,location);
     }
+
     }
     export interface Locations{
     id:String,
     name:String,
     address:String,
     latitud:String,
-    longitud:String
+    longitud:String,
+    visible:String
     }

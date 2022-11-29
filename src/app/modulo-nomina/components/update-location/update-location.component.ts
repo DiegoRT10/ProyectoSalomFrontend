@@ -13,8 +13,8 @@ export class UpdateLocationComponent implements OnInit {
     name:'',
     address:'',
     latitud:'',
-    longitud:''
-
+    longitud:'',
+    visible:''
   }
 
   constructor(private crudLocationService:CrudLocationService, private router:Router) { }

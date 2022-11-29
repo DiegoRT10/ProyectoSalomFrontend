@@ -10,19 +10,19 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Nombre</label>
-                        <input [(ngModel)]="AggLocation.name" type="text" class="form-control" name="descripcion">
+                        <input [(ngModel)]="AggLocation.name" type="text" class="form-control" name="name">
                         </div> 
                         <div class="mb-3">
                             <label class="form-label">Direccion</label>
-                        <input  type="text" class="form-control" name="descripcion">
+                        <input  [(ngModel)]="AggLocation.address" type="text" class="form-control" name="address">
                         </div> 
                         <div class="mb-3">
                             <label class="form-label">Latitud</label>
-                        <input [(ngModel)]="AggLocation.latitud" type="text" class="form-control" name="descripcion">
+                        <input [(ngModel)]="AggLocation.latitud" type="text" class="form-control" name="latitud">
                         </div>  
                         <div class="mb-3">
                             <label class="form-label">Longitud</label>
-                        <input [(ngModel)]="AggLocation.longitud" type="text" class="form-control" name="descripcion">
+                        <input [(ngModel)]="AggLocation.longitud" type="text" class="form-control" name="longitud">
                         </div>    
                         <div class="mb-3">
                             <button  type="button" class="btn btn-success" (click)="AgregarLocation()">Guardar</button>

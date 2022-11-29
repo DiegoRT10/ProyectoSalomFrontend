@@ -22,7 +22,8 @@ export class LocationsComponent implements OnInit {
     name: '',
     address: '',
     latitud: '',
-    longitud: ''
+    longitud: '',
+    visible:''
   }
 
 
@@ -78,11 +79,12 @@ export class LocationsComponent implements OnInit {
     this.router.navigate(['update-location']);
   }
 
-  Eliminar(id: any): void {
+   Eliminar(id: any): void {
     console.log('este es el id desde HTML ' + id);
     this.DelLocation.id = id;
-    console.log('este es el id desde de la Etapa ' + id);
-    this.crudLocationService.delLocation(id).subscribe(
+    this.DelLocation.visible='0';
+    console.log('este es el id desde de la Etapa ' + this.DelLocation.id);
+    this.crudLocationService.delLocation(this.DelLocation).subscribe(
       res => {
         console.log('Se elimino el puesto');
         this.listarLocations();
@@ -98,6 +100,8 @@ export class LocationsComponent implements OnInit {
       [farm.getLatLng().lat, farm.getLatLng().lng]
     ]);
   }
+
+
 
 }
 

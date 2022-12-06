@@ -18,21 +18,14 @@ export class HomeGerenteComponent implements OnInit {
    
   }
 
-  Profiles():void{
-    this.router.navigate(['profiles']);
+  goModuloNomina():void{
+    this.router.navigate(['nomina-gerente']);
   }
 
-  Puesto():void{
-    this.router.navigate(['puesto']);
+  goModuloVenta():void{
+    this.router.navigate(['venta-gerente']);
   }
 
-  Etapa():void{
-    this.router.navigate(['etapa']);
-  }
-
-  Locations():void{
-    this.router.navigate(['locations']);
-  }
  
   
 }

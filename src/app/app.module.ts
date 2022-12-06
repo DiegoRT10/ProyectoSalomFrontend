@@ -1,4 +1,5 @@
 import { ModuloNominaModule } from './modulo-nomina/modulo-nomina.module';
+import { ModuloVentaModule } from './modulo-venta/modulo-venta.module';
 import { TokenInterceptorService } from './services/token-interceptor.service';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -8,7 +9,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
 import { PrivateComponent } from './components/private/private.component';
-import { AdminComponent } from './components/admin/admin.component';
+import { HomeAdministradorComponent } from './components/home-administrador/home-administrador.component';
 import { LoginComponent } from './components/login/login.component';
 
 //Herramientas
@@ -29,12 +30,12 @@ import { HomeSistemasComponent } from './components/home-sistemas/home-sistemas.
 
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     PrivateComponent,
-    AdminComponent,
     LoginComponent,
     CreateComponent,
     ReadComponent,
@@ -42,7 +43,8 @@ import { HomeSistemasComponent } from './components/home-sistemas/home-sistemas.
     DeleteComponent,
     HomeGerenteComponent,
     InformationComponent,
-    HomeSistemasComponent
+    HomeSistemasComponent,
+    HomeAdministradorComponent
   ],
   imports: [
     BrowserModule,
@@ -50,7 +52,8 @@ import { HomeSistemasComponent } from './components/home-sistemas/home-sistemas.
     FormsModule,
     HttpClientModule,
     ReactiveFormsModule,
-    ModuloNominaModule
+    ModuloNominaModule,
+    ModuloVentaModule
   ],
   providers: [
     //JWT

@@ -22,7 +22,7 @@
           <a  *ngIf="!EstadoToken && Role=='0' || Role=='1'" onclick="focusInput()" class="nav-link"  routerLink="private"  routerLinkActive="active" ><i class="nc-icon nc-single-02" ></i>Usuarios</a>
         </li>
         <li class="nav-item">
-          <a *ngIf="!EstadoToken && Role=='0' || Role=='2'" class="nav-link" routerLink="admin" routerLinkActive="active" ><i class="nc-icon nc-badge"></i>Administrador</a>
+          <a *ngIf="!EstadoToken && Role=='0' || Role=='2'" class="nav-link" routerLink="home-administrador" routerLinkActive="active" ><i class="nc-icon nc-badge"></i>Administrador</a>
         </li>
         <li class="nav-item">
           <a *ngIf="!EstadoToken && Role=='0' || Role=='1'" class="nav-link" routerLink="home-gerente" routerLinkActive="active" ><i class="nc-icon nc-briefcase-24"></i>Gerente</a>

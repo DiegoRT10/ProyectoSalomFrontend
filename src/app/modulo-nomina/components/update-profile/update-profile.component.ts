@@ -174,6 +174,13 @@ getOneProfile(): void{
   
   }
 
+  comparar():any{
+    const idEntrante = localStorage.getItem('id');
+    if (this.EditProfile.id==null || idEntrante==null) {
+      return false;
+    }
+    return this.EditProfile.id===idEntrante;
+  }
 
 
   

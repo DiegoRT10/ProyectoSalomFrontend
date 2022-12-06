@@ -39,6 +39,9 @@ export class LoginComponent implements OnInit {
         break;
         case '1' : this.router.navigate(['home-gerente']);
         break;
+        case '2' : this.router.navigate(['admin']);
+        break;
+        case '3' : this.router.navigate(['invitado']);
       }
       AppComponent.Rol();
     });

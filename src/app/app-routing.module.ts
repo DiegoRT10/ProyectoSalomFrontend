@@ -29,6 +29,7 @@ import { UpdateLocationComponent } from './modulo-nomina/components/update-locat
 import { VentaGerenteComponent } from './modulo-venta/components/venta-gerente/venta-gerente.component';
 import { NominaGerenteComponent } from './modulo-nomina/components/nomina-gerente/nomina-gerente.component';
 import { VentaAdministradorComponent } from './modulo-venta/components/venta-administrador/venta-administrador.component';
+import { VentaComponent } from './modulo-venta/components/venta/venta.component';
 
 
 
@@ -36,7 +37,7 @@ import { VentaAdministradorComponent } from './modulo-venta/components/venta-adm
 const routes: Routes = [
 {path: 'home', component: HomeComponent},//puede acceder cualquier persona
 {path: 'home-gerente', component: HomeGerenteComponent, canActivate: [AuthGuard, RoleGuard],  data: {expectedRole: {s:'0', g:'1'}}}, //puede acceder sistemas o gerente 
-{path: 'home-sistemas', component: HomeSistemasComponent, canActivate: [AuthGuard, RoleGuard],  data: {expectedRole: {s:'0', g:'0'}}},//solo puede acceder sistemas
+{path: 'home-sistemas', component: HomeSistemasComponent, canActivate: [AuthGuard, RoleGuard],  data: {expectedRole: {s:'0', g:'1'}}},//solo puede acceder sistemas
 {path: 'private', component: PrivateComponent, canActivate: [AuthGuard, RoleGuard],  data: {expectedRole: {s:'0', g:'1'}}}, //puede acceder sistemas o gerente 
 {path: 'home-administrador', component: HomeAdministradorComponent, canActivate: [AuthGuard, RoleGuard],  data: {expectedRole: {s:'0', g:'2'}}},//puede acceder sistemas o administrador
 {path: 'login', component: LoginComponent},
@@ -61,7 +62,7 @@ const routes: Routes = [
 {path: 'update-location', component: UpdateLocationComponent, canActivate: [AuthGuard, RoleGuard],  data: {expectedRole: {s:'0', g:'1'}}},//puede acceder sistemas o gerente
 {path: 'venta-gerente', component: VentaGerenteComponent, canActivate: [AuthGuard, RoleGuard],  data: {expectedRole: {s:'0', g:'1'}}},//puede acceder sistemas o gerente
 {path: 'venta-administrador', component: VentaAdministradorComponent, canActivate: [AuthGuard, RoleGuard],  data: {expectedRole: {s:'0', g:'2'}}},//puede acceder sistemas o administrador
-
+{path: 'venta', component: VentaComponent, canActivate: [AuthGuard, RoleGuard],  data: {expectedRole: {s:'0', g:'1'}}},//puede acceder sistemas o gerente
 
 {path: '**', pathMatch: 'full', redirectTo: 'home'}
 ];

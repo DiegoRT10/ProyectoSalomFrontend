@@ -5,7 +5,9 @@ import { VentaAdministradorComponent } from './components/venta-administrador/ve
 import { VentaComponent } from './components/venta/venta.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
-
+import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
+import { NgxGaugeModule } from 'ngx-gauge';
 
 @NgModule({
   declarations: [
@@ -16,7 +18,12 @@ import { FormsModule } from '@angular/forms';
   imports: [
     CommonModule,
     BrowserModule,
-    FormsModule
+    BrowserAnimationsModule,
+    FormsModule,
+    NgxChartsModule,
+    NgxGaugeModule
   ]
 })
 export class ModuloVentaModule { }
+
+

@@ -28,6 +28,18 @@ export class VentaDiariaService {
     getMetas(){
       return this.http.get(`${this.URL}/venta/metafarmacia`);
     }
+
+    //Obtener consulta de venta del dia
+    getDatos(venta:any){
+      console.log('entre a getOneVenta');
+      return this.http.post<VentaDiaria[]>(`${this.URL}/venta/DataGarfica`,venta);
+    }
+
+     //Obtener consulta de venta del dia
+     getOneMeta(venta:any){
+      console.log('entre a getOneMeta',venta);
+      return this.http.post<MetaFarmacia[]>(`${this.URL}/venta/onemetafarmacia`,venta);
+    }
 }
 
 export interface VentaDiaria{
@@ -47,4 +59,9 @@ export interface VentaDiaria{
     dateend:Date
   }
   
+
+  export interface DatosGrafica{
+    name:String,
+    value:number
+  }
 

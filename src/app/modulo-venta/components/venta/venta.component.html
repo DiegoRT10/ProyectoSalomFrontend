@@ -22,12 +22,26 @@
                     <div class="row">
                         <div class="col-md-12 ml-auto mr-auto">
                             <!-- <h2 class="text-left title">Etapas</h2> -->
+                            <div class="chart-container">
+                                <div class="spectre-line-chart">
+                            <ngx-charts-bar-vertical [view]="view" [scheme]="colorScheme" [results]="single"
+                                [gradient]="gradient" [xAxis]="showXAxis" [yAxis]="showYAxis" [legend]="showLegend"
+                                [showXAxisLabel]="showXAxisLabel" [showYAxisLabel]="showYAxisLabel"
+                                [xAxisLabel]="xAxisLabel" [yAxisLabel]="yAxisLabel" (select)="onSelect($event)">
+                            </ngx-charts-bar-vertical>
+                        </div>
+                        <div>
+                            <ngx-gauge [value]='pVenta' [thick]='15' 
+                            [label]="farmacia" append="%"></ngx-gauge>
+                        </div>
+                    </div>
                             <br />
                             <br />
                         </div>
                     </div>
 
                     <div class="mb-3">
+
                         <label class="form-label">Selecciona cualquier mes del año actual</label>
                         <input (change)="setMes($event)" type="month" class="form-control" name="mes">
                     </div>
@@ -36,7 +50,7 @@
                             <tr>
                                 <th scope="col">Dia</th>
                                 <th scope="col">Farmacia</th>
-                                <th scope="col">Total</th>
+                                <th scope="col">Venta actual</th>
                                 <th scope="col">Meta (Mes actual)</th>
                                 <th scope="col">Mas detalles</th>
                             </tr>
@@ -47,14 +61,14 @@
                                 <th>{{venta.dia}}</th>
                                 <th>{{venta.host}}</th>
                                 <th>{{venta.total | currency: 'Q'}}</th>
-                                <ng-container *ngFor="let meta of ListaMetas" >
+                                <ng-container *ngFor="let meta of ListaMetas">
                                     <th *ngIf="venta.host==meta.idlocation ">{{meta.monto | currency: 'Q'}}</th>
                                 </ng-container>
-                                
-                            <th>
-                                <button type="button" class="btn btn-just-icon"><i
-                                        class="nc-icon nc-glasses-2"></i></button>
-                            </th>
+
+                                <th>
+                                    <button type="button" class="btn btn-just-icon"><i
+                                            class="nc-icon nc-glasses-2"></i></button>
+                                </th>
 
 
                             </tr>

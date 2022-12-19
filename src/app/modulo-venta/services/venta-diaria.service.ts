@@ -40,10 +40,16 @@ export class VentaDiariaService {
       console.log('entre a getOneMeta',venta);
       return this.http.post<MetaFarmacia[]>(`${this.URL}/venta/onemetafarmacia`,venta);
     }
+
+    getFarmacia(venta:any){
+      console.log('entre a getOneMeta',venta);
+      return this.http.post<MetaFarmacia[]>(`${this.URL}/venta/peoplelocation`,venta);
+    }
+    
 }
 
 export interface VentaDiaria{
-  dia:String,
+  dia:number,
   host:String,
   total:number
   }
@@ -65,3 +71,6 @@ export interface VentaDiaria{
     value:number
   }
 
+  export interface Farmacia{
+    id: string
+  }

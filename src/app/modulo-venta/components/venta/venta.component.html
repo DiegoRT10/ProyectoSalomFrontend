@@ -25,7 +25,7 @@
                             <div class="chart-container">
                                 <div class="spectre-line-chart">
                             <ngx-charts-bar-vertical [view]="view" [scheme]="colorScheme" [results]="single"
-                                [gradient]="gradient" [xAxis]="showXAxis" [yAxis]="showYAxis" [legend]="showLegend"
+                                [gradient]="gradient" [xAxis]="showXAxis" [yAxis]="showYAxis" [legend]="showLegend" 
                                 [showXAxisLabel]="showXAxisLabel" [showYAxisLabel]="showYAxisLabel"
                                 [xAxisLabel]="xAxisLabel" [yAxisLabel]="yAxisLabel" (select)="onSelect($event)">
                             </ngx-charts-bar-vertical>
@@ -33,6 +33,9 @@
                         <div>
                             <ngx-gauge [value]='pVenta' [thick]='15' 
                             [label]="farmacia" append="%"></ngx-gauge>
+                        </div>
+                        <div>
+                            <label>Porcentaje de Meta</label>
                         </div>
                     </div>
                             <br />
@@ -50,28 +53,33 @@
                             <tr>
                                 <th scope="col">Dia</th>
                                 <th scope="col">Farmacia</th>
+                                <th scope="col">%Actual</th>
+                                <th scope="col">%Diario</th>
                                 <th scope="col">Venta actual</th>
                                 <th scope="col">Meta (Mes actual)</th>
                                 <th scope="col">Mas detalles</th>
                             </tr>
                         </thead>
                         <tbody>
+                            <ng-container *ngFor="let meta of ListaMetas">
                             <tr *ngFor="let venta of ListaVenta">
 
-                                <th>{{venta.dia}}</th>
-                                <th>{{venta.host}}</th>
-                                <th>{{venta.total | currency: 'Q'}}</th>
-                                <ng-container *ngFor="let meta of ListaMetas">
+                                <th *ngIf="venta.host==meta.idlocation ">{{venta.dia}}</th>
+                                <th *ngIf="venta.host==meta.idlocation ">{{venta.host}}</th>                                
+                                <th *ngIf="venta.host==meta.idlocation ">{{venta.total/meta.monto | percent: '2.0-2'}}</th>
+                                <th *ngIf="venta.host==meta.idlocation ">{{(venta.dia/31) | percent: '2.0-2'}}</th>
+                                <th *ngIf="venta.host==meta.idlocation ">{{venta.total | currency: 'Q'}}</th>
+                                
                                     <th *ngIf="venta.host==meta.idlocation ">{{meta.monto | currency: 'Q'}}</th>
-                                </ng-container>
-
-                                <th>
+                                
+                                <th *ngIf="venta.host==meta.idlocation " >
                                     <button type="button" class="btn btn-just-icon"><i
-                                            class="nc-icon nc-glasses-2"></i></button>
+                                            class="nc-icon nc-glasses-2" (click)="goFarmacia(venta.host)"></i></button>
                                 </th>
 
 
                             </tr>
+                        </ng-container>
 
 
                         </tbody>

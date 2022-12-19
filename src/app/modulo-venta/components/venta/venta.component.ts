@@ -15,7 +15,7 @@ export class VentaComponent implements OnInit {
   ventaActual: any = 0;
   metaActual: any = 0;
   single?: DatosGrafica[];
-  view: [number,number] = [700, 400];
+  view: [number,number] = [1090, 400];
 
 
   // options
@@ -27,11 +27,12 @@ export class VentaComponent implements OnInit {
   showXAxis = true;
   showYAxis = true;
   gradient = false;
-  showLegend = true;
+  showLegend = false;
   showXAxisLabel = true;
   xAxisLabel = 'Farmacias';
   showYAxisLabel = true;
   yAxisLabel = 'Ventas Actuales';
+  showlegendPosition = 'left';
 
   // colorScheme = {
   //   domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']
@@ -70,7 +71,7 @@ export class VentaComponent implements OnInit {
   ListaMetas?: MetaFarmacia[];
   
   Venta: VentaDiaria = {
-    dia:'',
+    dia:0,
     host:'',
     total:0
   }
@@ -110,7 +111,7 @@ export class VentaComponent implements OnInit {
 
 
     this.Venta.host=cash;
-    this.Venta.dia=ym;
+    this.Venta.dia=<any>ym;
     console.log(this.Venta);
     this.VentaDiariaService.getOneVenta(this.Venta).subscribe(res=>{
       this.ListaVenta=<any>res;
@@ -151,12 +152,19 @@ MetaFarmacia():void{
 }
 
 
-OneMetaFarmacia(meta:string):void{
-  this.metas.idlocation = meta;
+OneMetaFarmacia(id:string, val:any ):void{
+  this.metas.idlocation = id;
   this.VentaDiariaService.getOneMeta(this.metas).subscribe(res=>{
     //this.ListaMetas=<any>res;
     this.metas = res[0];
+    this.metaActual=this.metas.monto;
+    console.log('monto desde one farmacia', this.metaActual);
     console.log('datos desde one meta',res);
+    console.log('dato monto de one select', this.metaActual);
+    this.farmacia=id
+    this.ventaActual=val;
+    this.pVenta=(val/this.metaActual)*100;
+    console.log('Porcentaje de venta',this.pVenta);
   },
   err =>{
     console.log(err);
@@ -165,19 +173,17 @@ OneMetaFarmacia(meta:string):void{
     );
 }
 
+
+goFarmacia(id:String):void{
+  localStorage.setItem('idFar',<string>id);
+  this.router.navigate(['farmacia']);
+}
+
+
 onSelect(data:any): void {
   console.log('Item clicked', JSON.parse(JSON.stringify(data)));
-
-  this.OneMetaFarmacia(data.name);
-  console.log('Farmacia',data.name);
-  this.farmacia=data.name
-  console.log('Monto de la meta',this.metas.monto);
-  this.metaActual=this.metas.monto;
-  this.ventaActual=data.value;
-  console.log("datos desde event",data.value);
-  this.pVenta=(data.value/this.metas.monto)*100;
-  console.log('Porcentaje de venta',this.pVenta);
-  
+  this.OneMetaFarmacia(data.name,data.value);
+ 
 }
 
 onActivate(data:any): void {

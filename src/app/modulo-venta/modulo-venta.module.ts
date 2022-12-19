@@ -8,12 +8,14 @@ import { FormsModule } from '@angular/forms';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { NgxGaugeModule } from 'ngx-gauge';
+import { FarmaciaComponent } from './components/farmacia/farmacia.component';
 
 @NgModule({
   declarations: [
     VentaGerenteComponent,
     VentaAdministradorComponent,
-    VentaComponent
+    VentaComponent,
+    FarmaciaComponent
   ],
   imports: [
     CommonModule,

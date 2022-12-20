@@ -30,13 +30,45 @@
                                 [xAxisLabel]="xAxisLabel" [yAxisLabel]="yAxisLabel" (select)="onSelect($event)">
                             </ngx-charts-bar-vertical>
                         </div>
-                        <div>
-                            <ngx-gauge [value]='pVenta' [thick]='15' 
-                            [label]="farmacia" append="%"></ngx-gauge>
+
+                        <div class="row">
+                            <div class="col-md-4">
+                              <div class="info">
+                                <ngx-gauge [value]='pVenta' [thick]='15' 
+                            [label]="farmacia" append="%">
+                            </ngx-gauge>
+                            <div>
+                                <label>Porcentaje de Meta Actual</label>
+                            </div>
+                              </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="info">
+                                  <ngx-gauge [value]='pVentaDiaria' [thick]='15' 
+                              [label]="farmacia" append="%">
+                              </ngx-gauge>
+                              <div>
+                                  <label>Porcentaje de Meta Diaria</label>
+                              </div>
+                                </div>
+                              </div>
+                              <div class="col-md-4">
+                                <div class="info">
+                                  <ngx-gauge [value]='pProyeccion' [thick]='15' 
+                              [label]="farmacia" append="%">
+                              </ngx-gauge>
+                              <div>
+                                  <label>Porcentaje de Proyeccion</label>
+                              </div>
+                                </div>
+                              </div>
                         </div>
-                        <div>
-                            <label>Porcentaje de Meta</label>
-                        </div>
+
+                        
+                        
+                       
+                        
+                        
                     </div>
                             <br />
                             <br />
@@ -55,8 +87,10 @@
                                 <th scope="col">Farmacia</th>
                                 <th scope="col">%Actual</th>
                                 <th scope="col">%Diario</th>
+                                <th scope="col">%Proyeccion</th>
                                 <th scope="col">Venta actual</th>
                                 <th scope="col">Meta (Mes actual)</th>
+                                <th scope="col">QProyeccion</th>
                                 <th scope="col">Mas detalles</th>
                             </tr>
                         </thead>
@@ -67,10 +101,11 @@
                                 <th *ngIf="venta.host==meta.idlocation ">{{venta.dia}}</th>
                                 <th *ngIf="venta.host==meta.idlocation ">{{venta.host}}</th>                                
                                 <th *ngIf="venta.host==meta.idlocation ">{{venta.total/meta.monto | percent: '2.0-2'}}</th>
-                                <th *ngIf="venta.host==meta.idlocation ">{{(venta.dia/31) | percent: '2.0-2'}}</th>
+                                <th *ngIf="venta.host==meta.idlocation ">{{(venta.dia/noDiasMes) | percent: '2.0-2'}}</th>
+                                <th *ngIf="venta.host==meta.idlocation ">{{((venta.total/venta.dia)*(noDiasMes))/meta.monto| percent: '2.0-2'}}</th>
                                 <th *ngIf="venta.host==meta.idlocation ">{{venta.total | currency: 'Q'}}</th>
-                                
-                                    <th *ngIf="venta.host==meta.idlocation ">{{meta.monto | currency: 'Q'}}</th>
+                                <th *ngIf="venta.host==meta.idlocation ">{{meta.monto | currency: 'Q'}}</th>
+                                <th *ngIf="venta.host==meta.idlocation ">{{(venta.total/venta.dia)*(noDiasMes)| currency: 'Q'}}</th>
                                 
                                 <th *ngIf="venta.host==meta.idlocation " >
                                     <button type="button" class="btn btn-just-icon"><i

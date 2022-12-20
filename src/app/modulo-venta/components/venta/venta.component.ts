@@ -12,10 +12,14 @@ import { Color, ScaleType } from '@swimlane/ngx-charts';
 export class VentaComponent implements OnInit {
   farmacia?: any;
   pVenta: any = 0;
+  pVentaDiaria: any = 0;
+  pProyeccion:any = 0;
   ventaActual: any = 0;
   metaActual: any = 0;
+  noDiasMes: any = 0;
   single?: DatosGrafica[];
-  view: [number,number] = [1090, 400];
+
+  
 
 
   // options
@@ -24,6 +28,7 @@ export class VentaComponent implements OnInit {
   // showLabels: boolean = true;
   // isDoughnut: boolean = false;
   // options
+  view: [number,number] = [1090, 850];
   showXAxis = true;
   showYAxis = true;
   gradient = false;
@@ -34,10 +39,6 @@ export class VentaComponent implements OnInit {
   yAxisLabel = 'Ventas Actuales';
   showlegendPosition = 'left';
 
-  // colorScheme = {
-  //   domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']
-  // };
-
   colorScheme: Color = { 
     domain: ['#99CCE5', '#FF7F7F'], 
     group: ScaleType.Ordinal, 
@@ -45,7 +46,6 @@ export class VentaComponent implements OnInit {
     name: 'Customer Usage', 
 };
 
-//  single = [
 //     {
 //       "name": "Germany",
 //       "value": 8940000
@@ -87,6 +87,7 @@ export class VentaComponent implements OnInit {
     mes: ''
   }
 
+
   // single: DatosGrafica ={
   //   name:'',
   //   value:0
@@ -95,6 +96,9 @@ export class VentaComponent implements OnInit {
   ngOnInit(): void {
     this.VentaDiaria('cash','202212');
     this.MetaFarmacia();
+    let date: Date = new Date();
+  this.noDiasMes = this.diasEnUnMes(date.getMonth()+1,date.getFullYear());//se le suma +1 al mes porque para typescript enero = 0
+  console.log('mes dias',this.noDiasMes);
   }
 
 
@@ -107,8 +111,6 @@ export class VentaComponent implements OnInit {
 
 
   VentaDiaria(cash:string,ym:string):void{
-
-
 
     this.Venta.host=cash;
     this.Venta.dia=<any>ym;
@@ -153,26 +155,51 @@ MetaFarmacia():void{
 
 
 OneMetaFarmacia(id:string, val:any ):void{
-  this.metas.idlocation = id;
-  this.VentaDiariaService.getOneMeta(this.metas).subscribe(res=>{
-    //this.ListaMetas=<any>res;
-    this.metas = res[0];
-    this.metaActual=this.metas.monto;
-    console.log('monto desde one farmacia', this.metaActual);
-    console.log('datos desde one meta',res);
-    console.log('dato monto de one select', this.metaActual);
-    this.farmacia=id
-    this.ventaActual=val;
-    this.pVenta=(val/this.metaActual)*100;
-    console.log('Porcentaje de venta',this.pVenta);
-  },
-  err =>{
-    console.log(err);
-  }
+  //this.metas.idlocation = id;
+  // this.VentaDiariaService.getOneMeta(this.metas).subscribe(res=>{
+  //   //this.ListaMetas=<any>res;
+  //   this.metas = res[0];
+  //   this.metaActual=this.metas.monto;
+  //   console.log('monto desde one farmacia', this.metaActual);
+  //   console.log('datos desde one meta',res);
+  //   console.log('dato monto de one select', this.metaActual);
+  //   this.farmacia=id
+  //   this.ventaActual=val;
+  //   this.pVenta=(val/this.metaActual)*100;
     
-    );
+  //   console.log('Porcentaje de venta',this.pVenta);
+  // },
+  // err =>{
+  //   console.log(err);
+  // }
+    
+  //   );
+
+  
+
+  //porcentaje venta actual
+  for(let i of this.ListaMetas!){
+    if(id == i.idlocation){
+    this.farmacia=i.idlocation
+    this.metaActual = i.monto;
+    this.pVenta=((val/i.monto)*100).toFixed(2);
+    }
+  }
+
+  //Porcentaje venta diaria y porcentaja de proyeccion
+  for(let i of this.ListaVenta!){
+   if(id == i.host){
+    this.pVentaDiaria=((i.dia/this.noDiasMes)*100).toFixed(2);
+    this.pProyeccion=((((i.total/i.dia)*this.noDiasMes)/this.metaActual)*100).toFixed(2);
+   }
+  }
+
+  
 }
 
+ diasEnUnMes(mes:number, año:number) {
+	return new Date(año, mes, 0).getDate();
+}
 
 goFarmacia(id:String):void{
   localStorage.setItem('idFar',<string>id);

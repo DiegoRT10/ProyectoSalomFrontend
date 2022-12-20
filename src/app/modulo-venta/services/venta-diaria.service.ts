@@ -41,10 +41,12 @@ export class VentaDiariaService {
       return this.http.post<MetaFarmacia[]>(`${this.URL}/venta/onemetafarmacia`,venta);
     }
 
-    getFarmacia(venta:any){
+    getPeopleLocation(venta:any){
       console.log('entre a getOneMeta',venta);
-      return this.http.post<MetaFarmacia[]>(`${this.URL}/venta/peoplelocation`,venta);
+      return this.http.post<PeopleLocation[]>(`${this.URL}/venta/peoplelocation`,venta);
     }
+
+    
     
 }
 
@@ -73,4 +75,22 @@ export interface VentaDiaria{
 
   export interface Farmacia{
     id: string
+  }
+
+  export interface PeopleLocation{
+    id:string,
+    name:string,
+    apppassword:string,
+    card:number,
+    role:number,
+    visible:any,
+    image:any,
+    auditor:number,
+    token:string | null,
+    tokenLife?:string | null
+    idpeople: string,
+    idlocation: string,
+    meta: number,
+    nivel: number,
+    dia: number
   }

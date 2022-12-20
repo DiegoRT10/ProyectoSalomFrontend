@@ -66,6 +66,7 @@
 
                         
                         
+                        
                        
                         
                         
@@ -120,13 +121,38 @@
                         </tbody>
                     </table>
 
+                    <div class="card text-bg-light mb-3" >
+                        <div class="card-header">Resumen Venta {{fechaResumen}}</div>
+                        <div class="card-body">
+                            <table class="table">
+                               
+                                    <tr>
+                                        <th>Venta Actual:</th>
+                                        <td>{{totalVentaActual | currency: 'Q'}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Venta Esperada:</th>
+                                        <td>Item 2</td> 
+                                    </tr>
+                                    <tr>
+                                        <th>Meta</th>
+                                        <td>{{totalVentaMeta | currency: 'Q'}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Porcentaje</th>
+                                            <td>Item 4</td>
+                                    </tr>
+                            </table>
+                        </div>
+                      </div>
+
                 </div>
 
             </div>
 
         </div>
 
-
+        
 
 
 

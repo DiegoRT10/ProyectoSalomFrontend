@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MetaFarmacia, VentaDiaria, VentaDiariaService, VentaMes, DatosGrafica } from '../../services/venta-diaria.service';
 import { Color, ScaleType } from '@swimlane/ngx-charts';
+import * as moment from 'moment';
 
 
 @Component({
@@ -17,6 +18,9 @@ export class VentaComponent implements OnInit {
   ventaActual: any = 0;
   metaActual: any = 0;
   noDiasMes: any = 0;
+  fechaResumen: any;
+  totalVentaActual: number = 0;
+  totalVentaMeta: number = 0;
   single?: DatosGrafica[];
 
   
@@ -96,16 +100,15 @@ export class VentaComponent implements OnInit {
   ngOnInit(): void {
     this.VentaDiaria('cash','202212');
     this.MetaFarmacia();
-    let date: Date = new Date();
-  this.noDiasMes = this.diasEnUnMes(date.getMonth()+1,date.getFullYear());//se le suma +1 al mes porque para typescript enero = 0
-  console.log('mes dias',this.noDiasMes);
+    this.setFechaCard();
+    
+   
   }
 
 
   setMes(event:any):void{
     this.ventaMes.mes = event.target.value;
     this.ventaMes.mes = this.ventaMes.mes.slice(0,4)+this.ventaMes.mes.slice(5);
-    console.log('esta es la fecha seleccionada',this.ventaMes.mes)
     this.VentaDiaria('cash',this.ventaMes.mes);
   }
 
@@ -114,11 +117,11 @@ export class VentaComponent implements OnInit {
 
     this.Venta.host=cash;
     this.Venta.dia=<any>ym;
-    console.log(this.Venta);
     this.VentaDiariaService.getOneVenta(this.Venta).subscribe(res=>{
       this.ListaVenta=<any>res;
+      
       //this.Venta = res[0];
-      console.log(res);
+      
     },
     err =>{
       console.log(err);
@@ -129,7 +132,7 @@ export class VentaComponent implements OnInit {
       this.VentaDiariaService.getDatos(this.Venta).subscribe(res=>{
         this.single=<any>res;
         //this.Venta = res[0];
-        console.log('Datos consulta para la garfica',res);
+        
       },
       err =>{
         console.log(err);
@@ -144,7 +147,7 @@ MetaFarmacia():void{
   this.VentaDiariaService.getMetas().subscribe(res=>{
     this.ListaMetas=<any>res;
     //this.Venta = res[0];
-    console.log(res);
+    this.DatosCard();
   },
   err =>{
     console.log(err);
@@ -195,6 +198,25 @@ OneMetaFarmacia(id:string, val:any ):void{
   }
 
   
+}
+
+setFechaCard():void{
+  let date: Date = new Date();
+  this.fechaResumen = moment.utc(date).format('DD/MM/YYYY');
+  this.noDiasMes = this.diasEnUnMes(date.getMonth()+1,date.getFullYear());//se le suma +1 al mes porque para typescript enero = 0
+}
+
+
+DatosCard():void{
+  for(let i of this.ListaMetas!){
+  for(let j of this.ListaVenta!){
+    if(i.idlocation == j.host){
+      this.totalVentaActual += j.total;
+      this.totalVentaMeta += i.monto;
+    }
+   }
+   }
+
 }
 
  diasEnUnMes(mes:number, año:number) {

@@ -31,6 +31,7 @@ import { HomeSistemasComponent } from './components/home-sistemas/home-sistemas.
 
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -44,7 +45,9 @@ import { HomeSistemasComponent } from './components/home-sistemas/home-sistemas.
     HomeGerenteComponent,
     InformationComponent,
     HomeSistemasComponent,
-    HomeAdministradorComponent
+    HomeAdministradorComponent,
+    
+    
   ],
   imports: [
     BrowserModule,
@@ -54,6 +57,7 @@ import { HomeSistemasComponent } from './components/home-sistemas/home-sistemas.
     ReactiveFormsModule,
     ModuloNominaModule,
     ModuloVentaModule,
+    
     
   ],
   providers: [

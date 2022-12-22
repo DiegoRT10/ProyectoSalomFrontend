@@ -127,20 +127,20 @@
                             <table class="table">
                                
                                     <tr>
-                                        <th>Venta Actual:</th>
-                                        <td>{{totalVentaActual | currency: 'Q'}}</td>
+                                        <th class="font-card-th">Venta Actual:</th>
+                                        <td class="font-card-td">{{totalVentaActual | currency: 'Q'}}</td>
                                     </tr>
                                     <tr>
-                                        <th>Venta Esperada:</th>
-                                        <td>Item 2</td> 
+                                        <th class="font-card-th">Venta Esperada:</th>
+                                        <td class="font-card-td">{{(totalVentaActual/diaRestantes)*noDiasMes | currency: 'Q'}}</td> 
                                     </tr>
                                     <tr>
-                                        <th>Meta</th>
-                                        <td>{{totalVentaMeta | currency: 'Q'}}</td>
+                                        <th class="font-card-th">Meta</th>
+                                        <td class="font-card-td">{{totalVentaMeta | currency: 'Q'}}</td>
                                     </tr>
                                     <tr>
-                                        <th>Porcentaje</th>
-                                            <td>Item 4</td>
+                                        <th class="font-card-th">Porcentaje</th>
+                                        <td class="font-card-td">{{((totalVentaActual/diaRestantes)*noDiasMes)/totalVentaMeta | percent: '2.0-2'}}</td>
                                     </tr>
                             </table>
                         </div>

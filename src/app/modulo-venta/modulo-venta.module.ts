@@ -9,7 +9,7 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { NgxGaugeModule } from 'ngx-gauge';
 import { FarmaciaComponent } from './components/farmacia/farmacia.component';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
 
 @NgModule({
   declarations: [
@@ -23,7 +23,6 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     BrowserModule,
     BrowserAnimationsModule,
     FormsModule,
-    NgbModule,
     NgxChartsModule,
     NgxGaugeModule
   ]

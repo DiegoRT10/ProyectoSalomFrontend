@@ -22,8 +22,8 @@ export class VentaComponent implements OnInit {
   totalVentaActual: number = 0;
   totalVentaMeta: number = 0;
   single?: DatosGrafica[];
-
-  
+  date: Date = new Date();
+  diaRestantes:number = this.date.getDate();
 
 
   // options

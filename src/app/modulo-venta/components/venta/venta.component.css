@@ -19,3 +19,11 @@
     float: left;
     overflow: visible;
 }
+
+.font-card-td {
+    font-size: 18px;
+}
+
+.font-card-th {
+   font-size: 20px; 
+}

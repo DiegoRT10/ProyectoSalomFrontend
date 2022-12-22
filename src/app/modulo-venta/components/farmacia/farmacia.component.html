@@ -1,8 +1,14 @@
 <div class="main">
     <div class="section text-center">
+        <div class="row">
+            <div class="col-md-8 ml-auto mr-auto">
+                <h1 class="title">Ventas diarias correspondiente al dia {{fechaDia}}</h1>
+            </div>
+        </div>
+
         <div class="container">
             <div class="row">
-                <div class="col-4">
+                <div class="col-4 ml-auto mr-auto">
                     <div class="card text-bg-light mb-3" >
                         <div class="card-header">Sucursal {{idEntrante}}</div>
                         <div class="card-body table-card">
@@ -22,36 +28,62 @@
                                     </th>
                                 </tr>
                                 <tr>
-                                    <th>Venta Actual:</th>
-                                    <td>Item 2</td> 
+                                    <th>Venta Actual</th>
+                                    <td>{{Venta.total | currency: 'Q'}}</td> 
                                 </tr>
                                 <tr>
                                     <th>Meta</th>
-                                    <td>Item 3</td>
+                                    <td>{{metas.monto | currency: 'Q'}}</td>
                                 </tr>
                                 <tr>
                                     <th>Falta para la meta</th>
-                                        <td>Item 4</td>
+                                        <td>{{faltante | currency: 'Q'}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Dias restantes</th>
+                                        <td>{{diasRestantes}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Venta Necesaria</th>
+                                        <td>{{ventaNecesaria | currency: 'Q'}}</td>
                                 </tr>
                         </table>
                         </div>
                       </div>
                 </div>
-                <div class="col-4">
+                <div class="col-4 ml-auto mr-auto">
                     <div class="card text-bg-light mb-3" >
-                        <div class="card-header">Header 2</div>
-                        <div class="card-body">
-                          <h5 class="card-title">Light card title</h5>
-                          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        <div class="card-header">Venta Diaria</div>
+                        <div class="card-body table-card">
+                            <table class="table">
+                                <thead>
+                                    <tr class='table-dark'>
+                                        <th scope="col">Dia</th>
+                                        <th scope="col">Venta</th>
+                                        <th scope="col">Acumulado</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    
+                                    <tr *ngFor="let venta of ListaVentaPorDia; let i = index">
+                                        <td>{{venta.dia}}</td>
+                                        <td>{{venta.titular | currency: 'Q' }}</td> 
+                                        <td *ngIf="i==0">{{setAcumulado(venta.titular) | currency: 'Q' }}</td>
+                                        <td *ngIf="i!=0">{{getAcumulado(venta.titular) | currency: 'Q'}}</td>
+                                        
+                                    </tr>
+                                
+        
+                                </tbody>
+                        </table>
                         </div>
                       </div>
                 </div>
-                <div class="col-4">
+                <div class="col-4 ml-auto mr-auto">
                     <div class="card text-bg-light mb-3" >
-                        <div class="card-header">Header 3</div>
-                        <div class="card-body">
-                          <h5 class="card-title">Light card title</h5>
-                          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        <div class="card-header">Cierres</div>
+                        <div class="card-body table-card">
+                            
                         </div>
                       </div>
                 </div>

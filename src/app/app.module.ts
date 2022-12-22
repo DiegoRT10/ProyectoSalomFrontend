@@ -53,7 +53,8 @@ import { HomeSistemasComponent } from './components/home-sistemas/home-sistemas.
     HttpClientModule,
     ReactiveFormsModule,
     ModuloNominaModule,
-    ModuloVentaModule
+    ModuloVentaModule,
+    
   ],
   providers: [
     //JWT

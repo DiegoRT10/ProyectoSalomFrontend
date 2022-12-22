@@ -102,12 +102,14 @@ export class VentaComponent implements OnInit {
     this.MetaFarmacia();
     this.setFechaCard();
     
+    
    
   }
 
 
   setMes(event:any):void{
     this.ventaMes.mes = event.target.value;
+    console.log(this.ventaMes.mes);
     this.ventaMes.mes = this.ventaMes.mes.slice(0,4)+this.ventaMes.mes.slice(5);
     this.VentaDiaria('cash',this.ventaMes.mes);
   }

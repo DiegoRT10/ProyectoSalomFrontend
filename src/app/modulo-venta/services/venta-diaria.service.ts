@@ -46,7 +46,11 @@ export class VentaDiariaService {
       return this.http.post<PeopleLocation[]>(`${this.URL}/venta/peoplelocation`,venta);
     }
 
-    
+     //Obtener consulta de venta del dia
+     getVentaDia(venta:any){
+      console.log('entre a getOneMeta',venta);
+      return this.http.post<VentaPorDia[]>(`${this.URL}/venta/ventapordia`,venta);
+    }
     
 }
 
@@ -93,4 +97,15 @@ export interface VentaDiaria{
     meta: number,
     nivel: number,
     dia: number
+  }
+
+  export interface VentaPorDia{
+    dia:number,
+    titular:number 
+  }
+
+  export interface dataVenta{
+    host:string,
+    ym:string,
+    pay:string
   }

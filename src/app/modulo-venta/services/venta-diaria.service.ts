@@ -51,6 +51,12 @@ export class VentaDiariaService {
       console.log('entre a getOneMeta',venta);
       return this.http.post<VentaPorDia[]>(`${this.URL}/venta/ventapordia`,venta);
     }
+
+    //Obtener consulta de cierres
+    getCierres(venta:any){
+      console.log('entre a getOneMeta',venta);
+      return this.http.post<Cierres[]>(`${this.URL}/venta/cierres`,venta);
+    }
     
 }
 
@@ -108,4 +114,21 @@ export interface VentaDiaria{
     host:string,
     ym:string,
     pay:string
+  }
+
+  export interface dataCierres{
+    host:string,
+    ym:string,
+  }
+
+  export interface Cierres{
+    money:string,
+    seq:number,
+    dia:number,
+    dateend:Date,
+    venta:number,
+    apertura:number,
+    cierre:number,
+    gastos:number,
+    ingresos:number
   }

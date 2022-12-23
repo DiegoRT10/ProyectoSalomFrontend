@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { MetaFarmacia, VentaDiaria, VentaDiariaService, VentaMes, DatosGrafica, PeopleLocation, VentaPorDia, dataVenta } from '../../services/venta-diaria.service';
+import { MetaFarmacia, VentaDiaria, VentaDiariaService, VentaMes, DatosGrafica, PeopleLocation, VentaPorDia, dataVenta, Cierres, dataCierres } from '../../services/venta-diaria.service';
 import * as moment from 'moment';
 
 
@@ -9,6 +9,7 @@ import * as moment from 'moment';
   selector: 'app-farmacia',
   templateUrl: './farmacia.component.html',
   styleUrls: ['./farmacia.component.css'],
+  
 })
 
 
@@ -23,6 +24,9 @@ export class FarmaciaComponent implements OnInit {
   date: Date = new Date();
   fechaDia:string = moment.utc(this.date).format('DD/MM/YYYY');
 
+  items = ['Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5'];
+  expandedIndex = 0;
+
   constructor(private router: Router, private VentaDiariaService: VentaDiariaService) { }
   fecha!: Date;
   ListaVenta?: VentaDiaria[];
@@ -30,6 +34,7 @@ export class FarmaciaComponent implements OnInit {
   ListaPeopleLocation?: PeopleLocation[]; 
   ListaVentaPorDia?: VentaPorDia[]; 
   single?: DatosGrafica[];
+  ListaCierres?: Cierres[];
 
   Venta: VentaDiaria = {
     dia:0,
@@ -77,6 +82,23 @@ export class FarmaciaComponent implements OnInit {
     titular:0
   }
 
+  cierres: Cierres ={
+    money:'',
+    seq: 0,
+    dia: 0,
+    dateend: this.date,
+    venta: 0,
+    apertura: 0,
+    cierre: 0,
+    gastos: 0,
+    ingresos: 0
+  }
+
+  dataCierre: dataCierres ={
+    host:'',
+    ym:'',
+  }
+  
   ngOnInit(): void {
     let date: Date = new Date();
     this.noDiasMes = this.diasEnUnMes(date.getMonth()+1,date.getFullYear());//se le suma +1 al mes porque para typescript enero = 0
@@ -84,6 +106,7 @@ export class FarmaciaComponent implements OnInit {
     this.peopleLocation();
     this.MetaFarmacia();
     this.VentaPorDia();
+    this.VentCierres();
     
     
   }
@@ -119,7 +142,7 @@ export class FarmaciaComponent implements OnInit {
           this.Venta.total = i.total;
           this.metas.monto = j.monto;
           this.faltante = j.monto - i.total;
-          
+  
           this.diasRestantes = this.noDiasMes - date.getDate();
           this.ventaNecesaria = this.faltante/this.diasRestantes
         }
@@ -163,6 +186,18 @@ VentaPorDia():void{
   }
     
     );
+ }
+
+ VentCierres():void{
+  this.dataCierre.ym=this.setFecha();
+  this.dataCierre.host=this.idEntrante;
+  this.VentaDiariaService.getCierres(this.dataCierre).subscribe(res=>{
+    this.ListaCierres=<any>res;
+    console.log('cierres',this.ListaCierres);
+  },
+  err=>{
+    console.log(err);
+  });
  }
 
 

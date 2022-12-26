@@ -81,34 +81,48 @@
                       </div>
                 </div>
                 <div class="col-4 ml-auto mr-auto">
-                    <div class="card text-bg-light mb-3" >
+                    <div class="card text-bg-light mb-3 " style="width: 25rem;">
                         <div class="card-header">Cierres</div>
                         <div class="card-body table-card">
                            
                           <cdk-accordion class="example-accordion">
                             <cdk-accordion-item
-                              *ngFor="let item of ListaCierres; let index = index;"
+                              *ngFor="let item of ListaCierres; let i = index"
                               #accordionItem="cdkAccordionItem"
                               class="example-accordion-item"
                               role="button"
                               tabindex="0"
-                              [attr.id]="'accordion-header-' + index"
+                              [attr.id]="'accordion-header-' + item.money"
                               [attr.aria-expanded]="accordionItem.expanded"
-                              [attr.aria-controls]="'accordion-body-' + index">
-                              <div class="example-accordion-item-header" (click)="accordionItem.toggle()">
-                                {{'#'+item.seq+' '}}{{ item.dateend  | date:"shortDate"}}<strong>{{' '+item.venta | currency: 'Q'}}</strong>
+                              [attr.aria-controls]="'accordion-body-' + item.money">  
+                            
+                              
+
+                             
+                              <div   class="example-accordion-item-header" (click)="accordionItem.toggle()">
+                                
+                                {{'#'+item.seq+' '}}{{ item.dateend  | date:"shortDate"}}<strong>{{' '+ (item.apertura + item.venta + item.gastos + item.ingresos + item.cierre) | currency: 'Q'}}</strong>
                                 <span class="example-accordion-item-description">
                                   Click para {{ accordionItem.expanded ? 'cerrar' : 'abrir' }}
                                 </span>
                               </div>
+                            
                               <div
                                 class="example-accordion-item-body"
                                 role="region"
                                 [style.display]="accordionItem.expanded ? '' : 'none'"
-                                [attr.id]="'accordion-body-' + index"
-                                [attr.aria-labelledby]="'accordion-header-' + index">
+                                [attr.id]="'accordion-body-' + item.money"
+                                [attr.aria-labelledby]="'accordion-header-' + item.money">
                                 <table class="table">
-                                  
+                                   
+                                    <ng-container *ngIf="i <21">
+                                       hola 
+                                
+                                    </ng-container>
+                                    
+
+                                    <ng-container *ngFor="let dep of ListaDepositos">
+                                       
                                   <tr>
                                       <th>Apertura</th>
                                       <td>{{item.apertura | currency: 'Q'}}</td> 
@@ -131,12 +145,40 @@
                                   </tr>
                                   <tr>
                                     <th>Deposito</th>
-                                        <td></td>
+                                        <!-- <td>{{item.apertura + item.venta + item.gastos + item.ingresos + item.cierre | currency: 'Q'}}</td> -->
+                                        <td>{{dep.total}}</td>
                                 </tr>
+                            </ng-container>
                           </table>
+                          <div>
+                            <table class="table">  
+                                <tr>
+                                    <td colspan="3" class="text-center fw-bold table-dark" >Depositos Registrados</td>
+                                </tr>
+                                <tr>
+                                    <th>Numero</th>
+                                    <th>Monto</th>
+                                    <th>Estado</th>
+                                </tr>
+                                
+                                        <tr>
+                                            <td>numero</td>
+                                            <td>monto</td>                                                                        
+                                            <td>estado</td>                                                                                                
+                                        </tr>
+                                        
+                                    <tr>
+                                        <td colspan="3" class="text-center">No hay depositos registrados </td>
+                                    </tr>
+                               
+                            </table>
+                          </div>
                               </div>
+                            <!-- </ng-container> -->
                             </cdk-accordion-item>
                           </cdk-accordion>
+
+                          
 
                         </div>
                       </div>

@@ -21,7 +21,6 @@ export class VentaDiariaService {
     
     //Obtener consulta de venta del dia
     getOneVenta(venta:any){
-      console.log('entre a getOneVenta');
       return this.http.post<VentaDiaria[]>(`${this.URL}/venta/`,venta);
     }
 
@@ -31,31 +30,31 @@ export class VentaDiariaService {
 
     //Obtener consulta de venta del dia
     getDatos(venta:any){
-      console.log('entre a getOneVenta');
       return this.http.post<VentaDiaria[]>(`${this.URL}/venta/DataGarfica`,venta);
     }
 
      //Obtener consulta de venta del dia
      getOneMeta(venta:any){
-      console.log('entre a getOneMeta',venta);
       return this.http.post<MetaFarmacia[]>(`${this.URL}/venta/onemetafarmacia`,venta);
     }
 
     getPeopleLocation(venta:any){
-      console.log('entre a getOneMeta',venta);
       return this.http.post<PeopleLocation[]>(`${this.URL}/venta/peoplelocation`,venta);
     }
 
      //Obtener consulta de venta del dia
      getVentaDia(venta:any){
-      console.log('entre a getOneMeta',venta);
       return this.http.post<VentaPorDia[]>(`${this.URL}/venta/ventapordia`,venta);
     }
 
     //Obtener consulta de cierres
     getCierres(venta:any){
-      console.log('entre a getOneMeta',venta);
       return this.http.post<Cierres[]>(`${this.URL}/venta/cierres`,venta);
+    }
+
+    getDepositos(venta:any){
+      console.log('entre a Depositos',venta);
+      return this.http.post<Depositos[]>(`${this.URL}/venta/deposito`,venta);
     }
     
 }
@@ -130,5 +129,21 @@ export interface VentaDiaria{
     apertura:number,
     cierre:number,
     gastos:number,
-    ingresos:number
+    ingresos:number,
+    // id:number, 
+    // numero:number, 
+    // moneyId:string,  
+    // monto:number,
+    // fecha:Date,
+    // estado:number
+    // total:number
+  }
+
+  export interface Depositos{
+    total:number, 
+    id:number, 
+    numero:number, 
+    money:string, 
+    fecha:Date, 
+    estado:number
   }

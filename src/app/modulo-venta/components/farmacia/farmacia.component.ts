@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { MetaFarmacia, VentaDiaria, VentaDiariaService, VentaMes, DatosGrafica, PeopleLocation, VentaPorDia, dataVenta, Cierres, dataCierres } from '../../services/venta-diaria.service';
+import { MetaFarmacia, VentaDiaria, VentaDiariaService, VentaMes, DatosGrafica, PeopleLocation, VentaPorDia, dataVenta, Cierres, dataCierres, Depositos } from '../../services/venta-diaria.service';
 import * as moment from 'moment';
 
 
@@ -23,9 +23,14 @@ export class FarmaciaComponent implements OnInit {
   ym:string='';
   date: Date = new Date();
   fechaDia:string = moment.utc(this.date).format('DD/MM/YYYY');
+  bandera:boolean = true; //sirve para no sobrepasar el limite de registros de cierre
 
   items = ['Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5'];
   expandedIndex = 0;
+
+  money:string ='';
+
+  size:number=0;
 
   constructor(private router: Router, private VentaDiariaService: VentaDiariaService) { }
   fecha!: Date;
@@ -35,6 +40,7 @@ export class FarmaciaComponent implements OnInit {
   ListaVentaPorDia?: VentaPorDia[]; 
   single?: DatosGrafica[];
   ListaCierres?: Cierres[];
+  ListaDepositos?: Depositos[];
 
   Venta: VentaDiaria = {
     dia:0,
@@ -91,7 +97,14 @@ export class FarmaciaComponent implements OnInit {
     apertura: 0,
     cierre: 0,
     gastos: 0,
-    ingresos: 0
+    ingresos: 0,
+    // id:0, 
+    // numero:0, 
+    // moneyId:'',  
+    // monto:0,
+    // fecha:this.date,
+    // estado:0,
+    // total:0
   }
 
   dataCierre: dataCierres ={
@@ -99,6 +112,17 @@ export class FarmaciaComponent implements OnInit {
     ym:'',
   }
   
+  depositos: Depositos ={
+      total:0, 
+      id:0, 
+      numero:0, 
+      money:'', 
+      fecha:this.date, 
+      estado:0
+    
+  }
+
+
   ngOnInit(): void {
     let date: Date = new Date();
     this.noDiasMes = this.diasEnUnMes(date.getMonth()+1,date.getFullYear());//se le suma +1 al mes porque para typescript enero = 0
@@ -106,8 +130,8 @@ export class FarmaciaComponent implements OnInit {
     this.peopleLocation();
     this.MetaFarmacia();
     this.VentaPorDia();
-    this.VentCierres();
-    
+    this.VentaCierres();
+    //this.VentaDeposito('4a193dce-d354-45c9-957c-b281a4ca5384');
     
   }
 
@@ -188,17 +212,43 @@ VentaPorDia():void{
     );
  }
 
- VentCierres():void{
+ VentaCierres():void{
   this.dataCierre.ym=this.setFecha();
   this.dataCierre.host=this.idEntrante;
   this.VentaDiariaService.getCierres(this.dataCierre).subscribe(res=>{
     this.ListaCierres=<any>res;
+    this.size = this.ListaCierres!.length;
     console.log('cierres',this.ListaCierres);
   },
   err=>{
     console.log(err);
   });
  }
+
+  VentaDeposito(money:string, index:number){
+  this.dataCierre.host=money;
+  
+  console.log('index',index);
+  console.log('size',this.size);
+  if(this.size > 0){
+    this.VentaDiariaService.getDepositos(this.dataCierre).subscribe(res=>{
+      //this.ListaDepositos=<any>res;
+      this.depositos = res[0];
+      this.size--;
+      return this.depositos.total;
+      
+    },
+    err =>{
+      console.log(err);
+    }
+      
+      );
+  }else{
+    console.log('--------------------------------')
+  }
+    
+ }
+
 
 
 diasEnUnMes(mes:number, año:number) {
@@ -220,4 +270,12 @@ setAcumulado(titular:number){
 this.acumulado = titular;
 return this.acumulado;
 }
+
+getMoney(money:string):any{
+    console.log(money);
+    return money;
+}
+
+
+
 }

@@ -15,6 +15,7 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
 import { CdkAccordionModule } from '@angular/cdk/accordion';
 
 
+
 @NgModule({
   declarations: [
     VentaGerenteComponent,

@@ -1,3 +1,4 @@
+import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
@@ -52,11 +53,22 @@ export class VentaDiariaService {
       return this.http.post<Cierres[]>(`${this.URL}/venta/cierres`,venta);
     }
 
-    getDepositos(venta:any){
-      console.log('entre a Depositos',venta);
-      return this.http.post<Depositos[]>(`${this.URL}/venta/deposito`,venta);
+    getDepositos (money:any): Observable<Depositos[]>{
+      console.log('entre a Depositos',money);
+      return this.http.post<Depositos[]>(`${this.URL}/venta/deposito`,money);
     }
-    
+
+  //    fetchAllEmployees = async (url: string): Promise<Depositos[]> => {
+  //     const response = await fetch(url)
+  //     const { data } = await response.json()
+  //     return data
+  // }
+
+  
+  getTransacciones (money:any): Observable<Depositos[]>{
+    console.log('entre a Depositos',money);
+    return this.http.post<Depositos[]>(`${this.URL}/venta/transacciones`,money);
+  }
 }
 
 export interface VentaDiaria{
@@ -120,6 +132,11 @@ export interface VentaDiaria{
     ym:string,
   }
 
+  export interface dataDepositos{
+    money:string
+  }
+
+
   export interface Cierres{
     money:string,
     seq:number,
@@ -130,6 +147,7 @@ export interface VentaDiaria{
     cierre:number,
     gastos:number,
     ingresos:number,
+
     // id:number, 
     // numero:number, 
     // moneyId:string,  
@@ -140,10 +158,10 @@ export interface VentaDiaria{
   }
 
   export interface Depositos{
-    total:number, 
     id:number, 
     numero:number, 
     money:string, 
+    monto:number,
     fecha:Date, 
     estado:number
   }

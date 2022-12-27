@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
-import { MetaFarmacia, VentaDiaria, VentaDiariaService, VentaMes, DatosGrafica, PeopleLocation, VentaPorDia, dataVenta, Cierres, dataCierres, Depositos } from '../../services/venta-diaria.service';
+import { MetaFarmacia, VentaDiaria, VentaDiariaService, VentaMes, DatosGrafica, PeopleLocation, VentaPorDia, dataVenta, Cierres, dataCierres, Depositos, dataDepositos } from '../../services/venta-diaria.service';
 import * as moment from 'moment';
-
+import { Observable, Subscription, finalize } from 'rxjs';
 
 
 @Component({
@@ -14,6 +14,8 @@ import * as moment from 'moment';
 
 
 export class FarmaciaComponent implements OnInit {
+  
+  
   idEntrante:string='';
   faltante:number=0;
   diasRestantes:number=0;
@@ -23,7 +25,7 @@ export class FarmaciaComponent implements OnInit {
   ym:string='';
   date: Date = new Date();
   fechaDia:string = moment.utc(this.date).format('DD/MM/YYYY');
-  bandera:boolean = true; //sirve para no sobrepasar el limite de registros de cierre
+  bandera:boolean = false; //sirve para no sobrepasar el limite de registros de cierre
 
   items = ['Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5'];
   expandedIndex = 0;
@@ -31,6 +33,10 @@ export class FarmaciaComponent implements OnInit {
   money:string ='';
 
   size:number=0;
+
+total:string = 'cargando datos..';
+  
+  // clientesSubscription: Subscription = new Subscription;
 
   constructor(private router: Router, private VentaDiariaService: VentaDiariaService) { }
   fecha!: Date;
@@ -41,6 +47,8 @@ export class FarmaciaComponent implements OnInit {
   single?: DatosGrafica[];
   ListaCierres?: Cierres[];
   ListaDepositos?: Depositos[];
+
+
 
   Venta: VentaDiaria = {
     dia:0,
@@ -98,6 +106,7 @@ export class FarmaciaComponent implements OnInit {
     cierre: 0,
     gastos: 0,
     ingresos: 0,
+    
     // id:0, 
     // numero:0, 
     // moneyId:'',  
@@ -113,15 +122,21 @@ export class FarmaciaComponent implements OnInit {
   }
   
   depositos: Depositos ={
-      total:0, 
       id:0, 
       numero:0, 
       money:'', 
+      monto:0,
       fecha:this.date, 
       estado:0
     
   }
 
+  setDepositos: any = '';
+
+
+  dataDeposito: dataDepositos ={
+    money:''
+  }
 
   ngOnInit(): void {
     let date: Date = new Date();
@@ -131,9 +146,14 @@ export class FarmaciaComponent implements OnInit {
     this.MetaFarmacia();
     this.VentaPorDia();
     this.VentaCierres();
-    //this.VentaDeposito('4a193dce-d354-45c9-957c-b281a4ca5384');
+   
     
   }
+
+  // ngOnDestroy() {
+  //   // acciones de destrucción
+  //   this.clientesSubscription.unsubscribe();
+  // }
 
   
  peopleLocation():void{
@@ -215,37 +235,40 @@ VentaPorDia():void{
  VentaCierres():void{
   this.dataCierre.ym=this.setFecha();
   this.dataCierre.host=this.idEntrante;
+
+
+    
   this.VentaDiariaService.getCierres(this.dataCierre).subscribe(res=>{
     this.ListaCierres=<any>res;
     this.size = this.ListaCierres!.length;
-    console.log('cierres',this.ListaCierres);
+    // this.depos();
   },
   err=>{
     console.log(err);
   });
+
+
  }
 
-  VentaDeposito(money:string, index:number){
-  this.dataCierre.host=money;
+
+
+VentaDeposito(money:string, index:number):void{
   
+  this.dataDeposito.money = money;
   console.log('index',index);
   console.log('size',this.size);
-  if(this.size > 0){
-    this.VentaDiariaService.getDepositos(this.dataCierre).subscribe(res=>{
+
+    this.VentaDiariaService.getDepositos(this.dataDeposito).pipe(finalize( () => this.depos(''))).subscribe(res=>{
       //this.ListaDepositos=<any>res;
       this.depositos = res[0];
       this.size--;
-      return this.depositos.total;
-      
+      console.log('depositos arreglo ',this.depositos);
     },
     err =>{
       console.log(err);
     }
       
       );
-  }else{
-    console.log('--------------------------------')
-  }
     
  }
 
@@ -276,6 +299,63 @@ getMoney(money:string):any{
     return money;
 }
 
+
+verDepositos(){
+ this.bandera = true;
+  console.log('ver ',  this.setDepositos);
+  
+ 
+}
+
+
+depos(money:string):Observable<any>{
+  let j =0;
+  //for (const i of this.ListaCierres!) {
+    
+      //this.dataDeposito.money = i.money;
+      this.dataDeposito.money = money;
+      this.VentaDiariaService.getDepositos(this.dataDeposito)
+      .pipe(finalize(() => {
+       
+        this.verDepositos();
+    }))
+      .subscribe(res=>{
+        this.ListaDepositos=<any>res;
+        this.depositos = res[0];
+        console.log('depositos arreglo ',this.depositos);
+
+        for (const j of this.ListaDepositos!) {
+          //this.setDepositos!.push(this.depositos); 
+         this.total = j.monto.toString();
+        }
+        //this.setDepositos!.push(this.depositos);  
+      },
+      err =>{
+        console.log(err);
+      }
+        
+        );
+
+    
+    console.log('total',this.depositos.monto);
+    j++;
+   return <any>this.total;
+//}
+}
+
+Transacciones(money:string):void{
+  this.dataDeposito.money = money;
+  this.VentaDiariaService.getTransacciones(this.dataDeposito).subscribe(res=>{
+    this.ListaDepositos=<any>res;
+    //this.Venta = res[0];
+   console.log(this.ListaDepositos)
+  },
+  err =>{
+    console.log(err);
+  }
+    
+    );
+}
 
 
 }

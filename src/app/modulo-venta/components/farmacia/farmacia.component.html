@@ -4,6 +4,7 @@
             <div class="col-md-8 ml-auto mr-auto">
                 <h1 class="title">Ventas diarias correspondiente al dia {{fechaDia}}</h1>
                 
+                
             </div>
         </div>
 
@@ -96,14 +97,18 @@
                               [attr.aria-expanded]="accordionItem.expanded"
                               [attr.aria-controls]="'accordion-body-' + item.money">  
                             
-                              
-
-                             
+                              <ng-container *ngIf="bandera">
+                                {{depos(item.money)}}
+                                {{total}}
+                            </ng-container>
                               <div   class="example-accordion-item-header" (click)="accordionItem.toggle()">
                                 
                                 {{'#'+item.seq+' '}}{{ item.dateend  | date:"shortDate"}}<strong>{{' '+ (item.apertura + item.venta + item.gastos + item.ingresos + item.cierre) | currency: 'Q'}}</strong>
                                 <span class="example-accordion-item-description">
-                                  Click para {{ accordionItem.expanded ? 'cerrar' : 'abrir' }}
+                                  <!-- Click para {{ accordionItem.expanded ? 'cerrar' : 'abrir' }} -->
+                                  <i *ngIf="accordionItem.expanded" class="nc-icon nc-simple-remove"><strong>Cerrar</strong></i>
+                                  <i *ngIf="!accordionItem.expanded" class="nc-icon nc-simple-add"><strong>Abrir</strong></i>
+                                  
                                 </span>
                               </div>
                             
@@ -114,15 +119,7 @@
                                 [attr.id]="'accordion-body-' + item.money"
                                 [attr.aria-labelledby]="'accordion-header-' + item.money">
                                 <table class="table">
-                                   
-                                    <ng-container *ngIf="i <21">
-                                       hola 
-                                
-                                    </ng-container>
-                                    
-
-                                    <ng-container *ngFor="let dep of ListaDepositos">
-                                       
+                                            
                                   <tr>
                                       <th>Apertura</th>
                                       <td>{{item.apertura | currency: 'Q'}}</td> 
@@ -145,32 +142,23 @@
                                   </tr>
                                   <tr>
                                     <th>Deposito</th>
-                                        <!-- <td>{{item.apertura + item.venta + item.gastos + item.ingresos + item.cierre | currency: 'Q'}}</td> -->
-                                        <td>{{dep.total}}</td>
+                                        <td>{{item.apertura + item.venta + item.gastos + item.ingresos + item.cierre | currency: 'Q'}}</td>
+                                       
                                 </tr>
-                            </ng-container>
+                            
                           </table>
                           <div>
                             <table class="table">  
                                 <tr>
                                     <td colspan="3" class="text-center fw-bold table-dark" >Depositos Registrados</td>
                                 </tr>
-                                <tr>
-                                    <th>Numero</th>
-                                    <th>Monto</th>
-                                    <th>Estado</th>
-                                </tr>
+                                <br>
+                               <tr>
+                                <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#exampleModalLong" (click)="Transacciones(item.money)">
+                                    mas detalles
+                                  </button>
+                               </tr>
                                 
-                                        <tr>
-                                            <td>numero</td>
-                                            <td>monto</td>                                                                        
-                                            <td>estado</td>                                                                                                
-                                        </tr>
-                                        
-                                    <tr>
-                                        <td colspan="3" class="text-center">No hay depositos registrados </td>
-                                    </tr>
-                               
                             </table>
                           </div>
                               </div>
@@ -183,6 +171,57 @@
                         </div>
                       </div>
                 </div>
+
+
+<!-- dialog -->
+<!-- Button trigger modal -->
+
+  
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Depositos Registrados</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Numero</th>
+                        <th scope="col">Monto</th>
+                        <th scope="col">Estado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                    <tr *ngFor="let dep of ListaDepositos">
+
+                        <th >{{dep.numero}}</th>
+                        <th >{{dep.monto | currency: 'Q'}}</th>                                
+                        <th *ngIf="dep.estado == 0">Verificar</th>
+                        <th *ngIf="dep.estado == 1">Acreditar</th>
+                        
+                    </tr>
+               
+
+
+                </tbody>
+            </table>
+        </div>
+        <!-- <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div> -->
+      </div>
+    </div>
+  </div>
+<!--  -->
+
+
             </div>
         </div>
     </div>

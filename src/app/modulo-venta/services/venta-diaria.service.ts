@@ -54,20 +54,16 @@ export class VentaDiariaService {
     }
 
     getDepositos (money:any): Observable<Depositos[]>{
-      console.log('entre a Depositos',money);
       return this.http.post<Depositos[]>(`${this.URL}/venta/deposito`,money);
     }
-
-  //    fetchAllEmployees = async (url: string): Promise<Depositos[]> => {
-  //     const response = await fetch(url)
-  //     const { data } = await response.json()
-  //     return data
-  // }
-
   
   getTransacciones (money:any): Observable<Depositos[]>{
-    console.log('entre a Depositos',money);
     return this.http.post<Depositos[]>(`${this.URL}/venta/transacciones`,money);
+  }
+
+
+  putDepositos(data:any,){
+    return this.http.put(`${this.URL}/venta/depositoCambio`,data);
   }
 }
 
@@ -165,3 +161,5 @@ export interface VentaDiaria{
     fecha:Date, 
     estado:number
   }
+
+ 

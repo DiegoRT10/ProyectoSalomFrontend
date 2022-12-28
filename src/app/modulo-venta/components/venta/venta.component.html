@@ -97,8 +97,10 @@
                         </thead>
                         <tbody>
                             <ng-container *ngFor="let meta of ListaMetas">
-                            <tr *ngFor="let venta of ListaVenta">
-
+                                <ng-container *ngFor="let venta of ListaVenta">
+                                    
+                                    
+                            <tr  >
                                 <th *ngIf="venta.host==meta.idlocation ">{{venta.dia}}</th>
                                 <th *ngIf="venta.host==meta.idlocation ">{{venta.host}}</th>                                
                                 <th *ngIf="venta.host==meta.idlocation ">{{venta.total/meta.monto | percent: '2.0-2'}}</th>
@@ -112,9 +114,9 @@
                                     <button type="button" class="btn btn-just-icon"><i
                                             class="nc-icon nc-glasses-2" (click)="goFarmacia(venta.host)"></i></button>
                                 </th>
-
-
                             </tr>
+
+                        </ng-container>
                         </ng-container>
 
 

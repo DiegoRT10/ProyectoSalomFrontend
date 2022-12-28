@@ -24,8 +24,8 @@ export class VentaComponent implements OnInit {
   single?: DatosGrafica[];
   date: Date = new Date();
   diaRestantes:number = this.date.getDate();
-
-
+  check:string='';
+  dia=new Date().getDate();
   // options
   // gradient: boolean = true;
   // showLegend: boolean = true;
@@ -101,7 +101,7 @@ export class VentaComponent implements OnInit {
     this.VentaDiaria('cash','202212');
     this.MetaFarmacia();
     this.setFechaCard();
-    
+    console.log('este es el dia actual ',this.dia);
     
    
   }
@@ -224,6 +224,13 @@ DatosCard():void{
  diasEnUnMes(mes:number, año:number) {
 	return new Date(año, mes, 0).getDate();
 }
+
+
+ 
+
+
+
+
 
 goFarmacia(id:String):void{
   localStorage.setItem('idFar',<string>id);

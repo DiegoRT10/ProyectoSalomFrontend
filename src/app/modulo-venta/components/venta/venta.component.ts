@@ -98,7 +98,7 @@ export class VentaComponent implements OnInit {
   // }; 
 
   ngOnInit(): void {
-    this.VentaDiaria('cash','202212');
+    this.VentaDiaria('cash',this.setFecha());
     this.MetaFarmacia();
     this.setFechaCard();
     console.log('este es el dia actual ',this.dia);
@@ -228,7 +228,10 @@ DatosCard():void{
 
  
 
-
+setFecha(): string {
+  let date: Date = new Date();
+  return moment.utc(date).format('YYYYMM');
+}
 
 
 

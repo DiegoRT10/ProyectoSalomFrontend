@@ -1,0 +1,43 @@
+<div class="main">
+    <div class="section text-center">
+      <div class="container">
+        <table class="table">
+            <thead>
+                
+                <tr>
+                    <th scope="col">No.</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Acumulado</th>
+                    
+                </tr>
+            </thead>
+            <tbody>
+                <ng-container *ngFor="let es of ListaEstimulos;let i = index">
+                <tr>
+
+                    <th>{{i+1}}</th>
+                    <th>{{es.name}}</th>
+                    <th>{{es.total | currency: 'Q'}}</th>
+                    
+                <!-- </tr>
+                <tr >
+                    <th>
+                        <div>
+                            <form>
+                                <div>
+                                    <label class="form-label">Numero</label>
+                                    <input type="number" class="form-control" name="" required="[0-9]">
+                                    <br>
+                                    <button type="button" class="btn btn-success" >Guardar</button>
+                                </div>
+                            </form>
+                        </div>
+                    </th>  -->
+                </tr>
+            </ng-container>
+
+            </tbody>
+        </table>
+      </div>
+    </div>
+  </div>

@@ -67,6 +67,7 @@ export class ProfileComponent implements OnInit {
     }
 
   }
+  
 
   getProfile():void{
 

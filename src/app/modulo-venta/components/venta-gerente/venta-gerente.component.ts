@@ -17,4 +17,8 @@ export class VentaGerenteComponent implements OnInit {
   goVentaDiaria():void{
     this.router.navigate(['venta']);
   }
+
+  goEstimulo():void{
+    this.router.navigate(['estimulo-gerente']);
+  }
 }

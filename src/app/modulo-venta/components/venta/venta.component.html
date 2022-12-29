@@ -100,7 +100,7 @@
                                 <ng-container *ngFor="let venta of ListaVenta">
                                     
                                     
-                            <tr  >
+                            <tr class="{{venta.dia === dia ? 'table-info' : ''}}">
                                 <th *ngIf="venta.host==meta.idlocation ">{{venta.dia}}</th>
                                 <th *ngIf="venta.host==meta.idlocation ">{{venta.host}}</th>                                
                                 <th *ngIf="venta.host==meta.idlocation ">{{venta.total/meta.monto | percent: '2.0-2'}}</th>

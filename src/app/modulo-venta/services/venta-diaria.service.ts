@@ -61,10 +61,14 @@ export class VentaDiariaService {
     return this.http.post<Depositos[]>(`${this.URL}/venta/transacciones`,money);
   }
 
-
   putDepositos(data:any,){
     return this.http.put(`${this.URL}/venta/depositoCambio`,data);
   }
+
+  getEstimulos(ym:any){
+    return this.http.post<Estimulos[]>(`${this.URL}/venta/estimulos`,ym);
+  }
+
 }
 
 export interface VentaDiaria{
@@ -160,6 +164,12 @@ export interface VentaDiaria{
     monto:number,
     fecha:Date, 
     estado:number
+  }
+
+  export interface Estimulos{
+    name:string,
+    pe:string,
+    total:number
   }
 
  

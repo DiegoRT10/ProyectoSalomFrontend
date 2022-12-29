@@ -13,6 +13,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 //import { AccordionComponent } from './accordion/accordion.component';
 import { CdkAccordionModule } from '@angular/cdk/accordion';
+import { EstimuloGerenteComponent } from './components/estimulo-gerente/estimulo-gerente.component';
 
 
 
@@ -21,7 +22,8 @@ import { CdkAccordionModule } from '@angular/cdk/accordion';
     VentaGerenteComponent,
     VentaAdministradorComponent,
     VentaComponent,
-    FarmaciaComponent
+    FarmaciaComponent,
+    EstimuloGerenteComponent
     //AccordionComponent,
   ],
   imports: [

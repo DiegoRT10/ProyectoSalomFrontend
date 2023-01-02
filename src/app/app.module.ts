@@ -24,6 +24,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HomeGerenteComponent } from './components/home-gerente/home-gerente.component';
 import { InformationComponent } from './components/information/information.component';
 import { HomeSistemasComponent } from './components/home-sistemas/home-sistemas.component';
+import { LoadingComponent } from './loading/loading.component';
 
 
 
@@ -46,6 +47,7 @@ import { HomeSistemasComponent } from './components/home-sistemas/home-sistemas.
     InformationComponent,
     HomeSistemasComponent,
     HomeAdministradorComponent,
+    LoadingComponent,
     
     
   ],

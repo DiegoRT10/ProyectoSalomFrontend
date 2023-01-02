@@ -18,7 +18,7 @@ export class UpdateComponent implements OnInit {
   public previous: String = '';
   public loading!: boolean;
 
-
+  patIMG:string = '';
 
   valido:boolean=false;
 
@@ -50,6 +50,10 @@ export class UpdateComponent implements OnInit {
               private sanitizer: DomSanitizer) { }
 
   ngOnInit(): void {
+    this.Usuarios();
+  }
+  
+  Usuarios():void{
     const idEntrante = <String>this.activatedRoute.snapshot.params['id'];
     console.log('id de entrada: '+idEntrante);
     this.EditUsuario.id = idEntrante;
@@ -58,22 +62,13 @@ export class UpdateComponent implements OnInit {
       this.CrudService.getOneUser(this.EditUsuario).subscribe(res=>{
         this.EditUsuario = res[0];
 
-        console.log('User '+this.EditUsuario.role)
-        let op=1;
-        switch(op){
-          case 1: this.ngSelect=this.listaOp[0];
-          break;
-          case 2: this.ngSelect=this.listaOp[1];
-          break;
-          case 3: this.ngSelect=this.listaOp[2];
-          break;
-          case 4: this.ngSelect=this.listaOp[3];
-          break;
-        }
-
-        console.log('Select '+this.ngSelect);
-        console.log('res '+res);
-        console.log(this.EditUsuario);
+        
+        let opRol=this.EditUsuario.role;
+        let opAudi=this.EditUsuario.auditor;
+        this.AsignarRol(opRol);
+        console.log('Audi? '+this.EditUsuario.auditor)
+        this.AsignarAuditor(opAudi);
+        this.patIMG = this.EditUsuario.image;
       },
       err =>{
         console.log(err);
@@ -89,12 +84,12 @@ export class UpdateComponent implements OnInit {
     this.FormUpdate.patchValue(this.EditUsuario)
 
   }
-  
-
 
   EditarUsuario(){
-    console.log(this.EditUsuario.role);
-   
+    console.log('Role a editar',this.EditUsuario.role);
+    console.log('Audi a editar',this.EditUsuario.auditor);
+    console.log('Imagen ',this.EditUsuario.image);
+
     switch(<any>this.EditUsuario.role){
       case 'Sistemas':
         this.EditUsuario.role=0;
@@ -132,6 +127,8 @@ export class UpdateComponent implements OnInit {
       res=>{
         console.log('Se edito el usuario');
 
+        if(this.EditUsuario.image != this.patIMG){
+
         try {
           this.loading = true;
           const formularioDeDatos = new FormData();
@@ -156,7 +153,7 @@ export class UpdateComponent implements OnInit {
           console.log('ERROR', e);
 
         }
-
+      }
 
         this.router.navigate(['private']);
       },
@@ -200,6 +197,11 @@ export class UpdateComponent implements OnInit {
   });
 
   UploadFile(): any {
+
+    if(this.EditUsuario.image != this.patIMG){
+
+   
+
     try {
       this.loading = true;
       const formularioDeDatos = new FormData();
@@ -226,5 +228,56 @@ export class UpdateComponent implements OnInit {
 
     }
   }
+
+  }
+
+  setRol(event:any):void{
+    let data = event.target.value;
+    this.EditUsuario.role = data;
+    console.log('rol ', data);
+  }
+
+  AsignarRol(op:any):void{
+    console.log('esta es una opcion',op);
+    if(op==0){
+      this.EditUsuario.role = 'Sistemas';
+      console.log('funcion rol',this.EditUsuario.role);
+    }
+    if(op==1){
+      this.EditUsuario.role = 'Gerente';
+      console.log('funcion rol',this.EditUsuario.role);
+    }
+    if(op==2){
+      this.EditUsuario.role = 'Administrador';
+      console.log('funcion rol',this.EditUsuario.role);
+    }
+    if(op==3){
+      this.EditUsuario.role = 'Invitado';
+      console.log('funcion rol',this.EditUsuario.role);
+    }
+
+    }
+
+
+
+    setAuditor(event:any):void{
+      let data = event.target.value;
+      this.EditUsuario.auditor = data;
+      console.log('Auditor ', data);
+    }
+
+    AsignarAuditor(op:any):void{
+      console.log('esta es una opcion',op);
+      if(op==0){
+        this.EditUsuario.auditor = 'No';
+        console.log('funcion audi',this.EditUsuario.auditor);
+      }
+      if(op==1){
+        this.EditUsuario.auditor = 'Si';
+        console.log('funcion audi',this.EditUsuario.auditor);
+      }
+  
+      }
+  
 
 }

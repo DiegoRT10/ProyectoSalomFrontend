@@ -3,6 +3,10 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-8 ml-auto mr-auto">
+
+                    
+                    
+
                     <form>
                         <div class="mb-3">
                             <label class="form-label">Id</label>
@@ -22,12 +26,12 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Rol</label>
-                            <!-- <input [(ngModel)]="EditUsuario.role" type="text" class="form-control" name="role"> -->
-                            <!-- [selected]="ngSelect" [value]="item" -->
-                            <select [(ngModel)]="EditUsuario.role" class="form-control" name="rol">
-                                <option [selected]="item === ngSelect" [value]="item" *ngFor="let item of listaOp">{{item}}
+
+                            <select (change)="setRol($event)" class="form-control" [value]="EditUsuario.role">
+                                <option  [value]="item" *ngFor="let item of listaOp">{{item}}
                                 </option>
                             </select>
+                            
         
                         </div>
                         <div class="mb-3">
@@ -44,9 +48,14 @@
                         <div class="mb-3">
                             <label class="form-label">Auditor</label>
                             <!-- <input [(ngModel)]="EditUsuario.auditor" type="text" class="form-control" name="auditor"> -->
-                            <select [(ngModel)]="EditUsuario.auditor" class="form-control" name="auditor">
+                            <!-- <select [(ngModel)]="EditUsuario.auditor" class="form-control" name="auditor">
                                 <option *ngFor="let item of listaOpAudi">{{item}}</option>
+                            </select> -->
+
+                            <select (change)="setAuditor($event)" class="form-control" [value]="EditUsuario.auditor">
+                                <option  [value]="item" *ngFor="let item of listaOpAudi">{{item}}</option>
                             </select>
+                            
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Token</label>

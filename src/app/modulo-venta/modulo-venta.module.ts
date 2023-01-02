@@ -14,6 +14,7 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
 //import { AccordionComponent } from './accordion/accordion.component';
 import { CdkAccordionModule } from '@angular/cdk/accordion';
 import { EstimuloGerenteComponent } from './components/estimulo-gerente/estimulo-gerente.component';
+import { LoadingComponent } from './components/loading/loading.component';
 
 
 
@@ -23,7 +24,8 @@ import { EstimuloGerenteComponent } from './components/estimulo-gerente/estimulo
     VentaAdministradorComponent,
     VentaComponent,
     FarmaciaComponent,
-    EstimuloGerenteComponent
+    EstimuloGerenteComponent,
+    LoadingComponent,
     //AccordionComponent,
   ],
   imports: [

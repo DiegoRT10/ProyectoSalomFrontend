@@ -10,13 +10,18 @@
                 <h1 class="title">Ventas Globales</h1>
             </div>
         </div>
-
-
-
-
-
-
+        <br>
         <div class="row">
+            <div class="col-md-12 ml-auto mr-auto">
+              <app-loading *ngIf="loading1 && loading2 && loading3"></app-loading>
+            </div>
+          </div>
+
+
+
+
+
+        <div class="row" *ngIf="!loading1 && !loading2 && !loading3">
             <div class="col-md-7 ml-auto mr-auto">
                 <div class="tab-pane text-center">
                     <div class="row">
@@ -79,19 +84,19 @@
                     <div class="mb-3">
 
                         <label class="form-label">Selecciona cualquier mes del año actual</label>
-                        <input (change)="setMes($event)" type="month" class="form-control" name="mes">
+                        <input  (change)="setMes($event)" type="month" class="form-control" [value]="ventaMes.mes">
                     </div>
                     <table class="table">
                         <thead>
                             <tr>
                                 <th scope="col">Dia</th>
                                 <th scope="col">Farmacia</th>
-                                <th scope="col">%Actual</th>
-                                <th scope="col">%Diario</th>
-                                <th scope="col">%Proyeccion</th>
+                                <th scope="col">% Actual</th>
+                                <th scope="col">% Diario</th>
+                                <th scope="col">% Proyeccion</th>
                                 <th scope="col">Venta actual</th>
                                 <th scope="col">Meta (Mes actual)</th>
-                                <th scope="col">QProyeccion</th>
+                                <th scope="col">Proyeccion</th>
                                 <th scope="col">Mas detalles</th>
                             </tr>
                         </thead>

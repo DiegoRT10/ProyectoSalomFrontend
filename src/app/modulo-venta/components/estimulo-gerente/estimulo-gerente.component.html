@@ -1,6 +1,19 @@
 <div class="main">
     <div class="section text-center">
-      <div class="container">
+        
+        <div class="row">
+            <div class="col-md-12 ml-auto mr-auto">
+              <h1>Estimulos</h1>
+            </div>
+          </div>
+          <br>
+        <div class="row">
+            <div class="col-md-12 ml-auto mr-auto">
+              <app-loading *ngIf="loading"></app-loading>
+            </div>
+          </div>
+
+      <div *ngIf="!loading" class="container">
         <table class="table">
             <thead>
                 
@@ -8,6 +21,7 @@
                     <th scope="col">No.</th>
                     <th scope="col">Nombre</th>
                     <th scope="col">Acumulado</th>
+                    <th scope="col">Mas detalles</th>
                     
                 </tr>
             </thead>
@@ -18,7 +32,7 @@
                     <th>{{i+1}}</th>
                     <th>{{es.name}}</th>
                     <th>{{es.total | currency: 'Q'}}</th>
-                    
+                    <th>boton</th>
                 <!-- </tr>
                 <tr >
                     <th>

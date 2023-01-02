@@ -1,9 +1,14 @@
 <!-- main -->
+
 <div class="main">
   <div class="section text-center">
 
 
+    
 
+
+
+   
 
       <div class="row">
           <div class="col-md-12 ml-auto mr-auto">
@@ -14,9 +19,13 @@
 
 
 
-   
+      <div class="row">
+        <div class="col-md-12 ml-auto mr-auto">
+          <app-loading *ngIf="loading"></app-loading>
+        </div>
+      </div>
 
-          <div class="row">
+          <div *ngIf="!loading" class="row">
               <div class="col-md-12 ml-auto mr-auto">
                   <div class="tab-pane text-center" >
                       <div class="row">
@@ -92,75 +101,3 @@
 
 
 
-<!-- end main -->
-
-
-
-
-
-
-
-
-
-
-<!-- main -->
-<!-- <div class="main" >
-  <div class="section text-center">
-
-    <h1>Lista de Usuarios</h1>
-
-
-    <button routerLink="/create" type="button" class="btn btn-primary">Agregar</button>
-    <table class="table">
-      <thead>
-        <tr>
-          <th scope="col">Id</th>
-          <th scope="col">Nombre</th>
-          <th scope="col">Contraseña</th>
-          <th scope="col">Facturacion</th>
-          <th scope="col">rol</th>
-          <th scope="col">Visible</th>
-          <th scope="col">Imagen</th>
-          <th scope="col">Auditor</th>
-          <th scope="col">Token</th>
-          <th scope="col">Token_Life</th>
-          <th scope="col">Editar</th>
-          <th scope="col">Eliminar</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let user of ListarUsuarios">
-          <th>{{user.id}}</th>
-          <td>{{user.name}}</td>
-          <td>{{user.apppassword}}</td>
-          <td>{{user.card}}</td>
-          <td *ngIf="user.role == 0">Sistemas</td>
-          <td *ngIf="user.role == 1">Gerente</td>
-          <td *ngIf="user.role == 2">Administrador</td>
-          <td *ngIf="user.role == 3">Invitado</td>
-          <td *ngIf="user.visible.data == 0">No visible</td>
-          <td *ngIf="user.visible.data == 1">Visible</td>
-          <td><img src='http://localhost:3000/uploads/{{user.image}}' width="75" alt=""></td>
-          <td *ngIf="user.auditor == 0">No es auditor</td>
-          <td *ngIf="user.auditor == 1">Es auditor</td>
-          <td>{{user.token}}</td>
-          <td>{{user.tokenLife}}</td>
-          <td>
-            <button type="button" class="btn btn-warning" (click)="ModificarUsuario(user.id)">Editar</button>
-          </td>
-          <td>
-            <button type="button" class="btn btn-danger"
-              (click)="EliminarUsuario(user.id,user.visible.data)">Eliminar</button>
-          </td>
-
-        </tr>
-
-      </tbody>
-    </table>
-  </div>
-</div> -->
-
-
-
-
-<!-- end main -->

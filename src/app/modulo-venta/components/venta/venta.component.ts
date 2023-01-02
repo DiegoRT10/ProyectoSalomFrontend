@@ -26,6 +26,10 @@ export class VentaComponent implements OnInit {
   diaRestantes:number = this.date.getDate();
   check:string='';
   dia=new Date().getDate();
+  loading1?:boolean;
+  loading2?:boolean;
+  loading3?:boolean;
+  loading4?:boolean;
   // options
   // gradient: boolean = true;
   // showLegend: boolean = true;
@@ -68,7 +72,12 @@ export class VentaComponent implements OnInit {
 //     }
 //   ];
 
-  constructor(private router: Router, private VentaDiariaService: VentaDiariaService) { }
+  constructor(private router: Router, private VentaDiariaService: VentaDiariaService) { 
+    this.loading1=true;
+    this.loading2=true;
+    this.loading3=true;
+    this.loading4=true;
+  }
 
   fecha!: Date;
   ListaVenta?: VentaDiaria[];
@@ -98,7 +107,9 @@ export class VentaComponent implements OnInit {
   // }; 
 
   ngOnInit(): void {
-    this.VentaDiaria('cash',this.setFecha());
+    this.ventaMes.mes = this.setFecha();
+    this.VentaDiaria('cash',this.ventaMes.mes);
+    this.ventaMes.mes=this.setFechaEvent();
     this.MetaFarmacia();
     this.setFechaCard();
     console.log('este es el dia actual ',this.dia);
@@ -109,9 +120,10 @@ export class VentaComponent implements OnInit {
 
   setMes(event:any):void{
     this.ventaMes.mes = event.target.value;
-    console.log(this.ventaMes.mes);
+    console.log("venta seleccionada",this.ventaMes.mes);
     this.ventaMes.mes = this.ventaMes.mes.slice(0,4)+this.ventaMes.mes.slice(5);
     this.VentaDiaria('cash',this.ventaMes.mes);
+    this.ventaMes.mes=this.setFechaEvent();
   }
 
 
@@ -121,7 +133,7 @@ export class VentaComponent implements OnInit {
     this.Venta.dia=<any>ym;
     this.VentaDiariaService.getOneVenta(this.Venta).subscribe(res=>{
       this.ListaVenta=<any>res;
-      
+      this.loading1=false;
       //this.Venta = res[0];
       
     },
@@ -134,7 +146,7 @@ export class VentaComponent implements OnInit {
       this.VentaDiariaService.getDatos(this.Venta).subscribe(res=>{
         this.single=<any>res;
         //this.Venta = res[0];
-        
+        this.loading2=false;
       },
       err =>{
         console.log(err);
@@ -150,6 +162,7 @@ MetaFarmacia():void{
     this.ListaMetas=<any>res;
     //this.Venta = res[0];
     this.DatosCard();
+    this.loading3=false;
   },
   err =>{
     console.log(err);
@@ -160,27 +173,6 @@ MetaFarmacia():void{
 
 
 OneMetaFarmacia(id:string, val:any ):void{
-  //this.metas.idlocation = id;
-  // this.VentaDiariaService.getOneMeta(this.metas).subscribe(res=>{
-  //   //this.ListaMetas=<any>res;
-  //   this.metas = res[0];
-  //   this.metaActual=this.metas.monto;
-  //   console.log('monto desde one farmacia', this.metaActual);
-  //   console.log('datos desde one meta',res);
-  //   console.log('dato monto de one select', this.metaActual);
-  //   this.farmacia=id
-  //   this.ventaActual=val;
-  //   this.pVenta=(val/this.metaActual)*100;
-    
-  //   console.log('Porcentaje de venta',this.pVenta);
-  // },
-  // err =>{
-  //   console.log(err);
-  // }
-    
-  //   );
-
-  
 
   //porcentaje venta actual
   for(let i of this.ListaMetas!){
@@ -233,6 +225,10 @@ setFecha(): string {
   return moment.utc(date).format('YYYYMM');
 }
 
+setFechaEvent(): string {
+  let date: Date = new Date();
+  return moment.utc(date).format('YYYY-MM');
+}
 
 
 goFarmacia(id:String):void{

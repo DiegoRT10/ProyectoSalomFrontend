@@ -136,6 +136,9 @@ export interface VentaDiaria{
     money:string
   }
 
+  export interface YM{
+    ym:string
+  }
 
   export interface Cierres{
     money:string,

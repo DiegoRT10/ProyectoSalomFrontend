@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import * as moment from 'moment';
-import { MetaFarmacia, VentaDiaria, VentaDiariaService, VentaMes, DatosGrafica, PeopleLocation, VentaPorDia, dataVenta, Cierres, dataCierres, Depositos, dataDepositos, Estimulos } from '../../services/venta-diaria.service';
+import { MetaFarmacia, VentaDiaria, VentaDiariaService, VentaMes, DatosGrafica, PeopleLocation, VentaPorDia, dataVenta, Cierres, dataCierres, Depositos, dataDepositos, Estimulos, YM } from '../../services/venta-diaria.service';
 @Component({
   selector: 'app-estimulo-gerente',
   templateUrl: './estimulo-gerente.component.html',
@@ -8,10 +8,12 @@ import { MetaFarmacia, VentaDiaria, VentaDiariaService, VentaMes, DatosGrafica, 
 })
 export class EstimuloGerenteComponent implements OnInit{
 
+  loading?:boolean;
 
-  constructor(private VentaDiariaService: VentaDiariaService){}
+  constructor(private VentaDiariaService: VentaDiariaService){
+    this.loading=true;
+  }
 
-  ym:string = "";
 
   ListaEstimulos?: Estimulos[];
   DataEstimulos: Estimulos ={
@@ -20,15 +22,21 @@ export class EstimuloGerenteComponent implements OnInit{
     total:0
   }
 
+ym: YM ={
+  ym:''
+}
+
   ngOnInit():void{
-    this.ym = this.getFecha();
+    
     this.peopleEstimulos();
   }
 
   peopleEstimulos(): void {
-
+    this.ym.ym = this.getFecha();
+    console.log('fecha estimulo', this.ym);
     this.VentaDiariaService.getEstimulos(this.ym).subscribe(res => {
       this.ListaEstimulos = <any>res; 
+      this.loading=false;
     },
       err => {
         console.log(err);

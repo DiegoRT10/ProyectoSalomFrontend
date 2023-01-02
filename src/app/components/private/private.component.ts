@@ -10,6 +10,7 @@ import { Route, Router } from '@angular/router';
 })
 export class PrivateComponent implements OnInit {
   
+loading?:boolean;  
 ListarUsuarios?: Users[];
 UsuarioD: Users={
   id:'',
@@ -17,9 +18,8 @@ UsuarioD: Users={
 }
 
   
-  constructor(private crudService: CrudService,
-    private router: Router
-    ) { }
+  constructor(private crudService: CrudService, private router: Router) { 
+    this.loading=true;}
 
   ngOnInit(): void {
 
@@ -34,6 +34,7 @@ listarUsuarios(){
     res=>{
       this.ListarUsuarios=<any>res;     
       console.log(this.ListarUsuarios);
+      this.loading=false;
     },
     err =>{
       console.log(err);

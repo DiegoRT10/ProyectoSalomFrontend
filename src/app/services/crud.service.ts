@@ -55,10 +55,10 @@ export class CrudService {
       name?:String,
       apppassword?:String,
       card?:Number,
-      role?:Number,
+      role?:any,
       visible?:any,
       image?:any,
-      auditor?:Number,
+      auditor?:any,
       token?:String | null,
       tokenLife?:String | null
    

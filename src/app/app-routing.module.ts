@@ -32,6 +32,7 @@ import { VentaAdministradorComponent } from './modulo-venta/components/venta-adm
 import { VentaComponent } from './modulo-venta/components/venta/venta.component';
 import { FarmaciaComponent } from './modulo-venta/components/farmacia/farmacia.component';
 import { EstimuloGerenteComponent } from './modulo-venta/components/estimulo-gerente/estimulo-gerente.component';
+import { VentaSucursalComponent } from './modulo-venta/components/venta-sucursal/venta-sucursal.component';
 
 
 
@@ -67,6 +68,7 @@ const routes: Routes = [
 {path: 'venta', component: VentaComponent, canActivate: [AuthGuard, RoleGuard],  data: {expectedRole: {s:'0', g:'1'}}},//puede acceder sistemas o gerente
 {path: 'farmacia', component: FarmaciaComponent, canActivate: [AuthGuard, RoleGuard],  data: {expectedRole: {s:'0', g:'1'}}},//puede acceder sistemas o gerente
 {path: 'estimulo-gerente', component: EstimuloGerenteComponent, canActivate: [AuthGuard, RoleGuard],  data: {expectedRole: {s:'0', g:'1'}}},//puede acceder sistemas o gerente
+{path: 'venta-sucursal', component: VentaSucursalComponent, canActivate: [AuthGuard, RoleGuard],  data: {expectedRole: {s:'0', g:'2'}}},//puede acceder sistemas o gerente
 
 {path: '**', pathMatch: 'full', redirectTo: 'home'}
 ];

@@ -1,8 +1,64 @@
-
 <div class="main">
-    <div class="section text-center">
-      <div class="container">
-        <p>venta-sucursal works!</p>
+  <div class="section text-center">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8 ml-auto mr-auto">
+          <h2 class="title">Mi venta</h2>
+          <br>
+          <a href="#paper-kit" class="btn btn-info btn-round">Mas detalles</a>
+        </div>
+      </div>
+      <br/>
+      <br/>
+      <div *ngFor="let sucursal of ListaVentaSucursal" class="row">
+        <div class="col-md-6">
+          <div class="info">
+            
+            <div  class="card text-bg-light mb-3">
+              <div class="card-header">Sucursal </div>
+              <div class="card-body table-card">
+                  <table class="table">
+                      <tr class='table-dark'>
+                          <th colspan='2'>
+                             {{sucursal.pname}}
+                          </th>
+                      </tr>
+                      <tr>
+                          <th>Mi venta actual</th>
+                          <td>{{sucursal.venta | currency: 'Q'}}</td>
+                      </tr>
+                      <tr>
+                          <th>Mi promedio de venta (diaria)</th>
+                          <td>{{sucursal.venta/day! | currency: 'Q'}}</td>
+                      </tr>
+                      <tr>
+                          <th>Mi meta</th>
+                          <td>{{sucursal.meta | currency: 'Q'}}</td>
+                      </tr>
+                      <tr>
+                          <th>Me falta para mi meta</th>
+                          <td>{{sucursal.meta-sucursal.venta | currency: 'Q'}}</td>
+                      </tr>
+                      <tr>
+                          <th>Porcentaje Alcanzado</th>
+                          <td>{{(sucursal.venta)/(sucursal.meta) | percent: '2.0-2'}}</td>
+                      </tr>
+                      <tr>
+                        <th>Mi meta diaria de venta</th>
+                        <td>{{sucursal.meta - sucursal.venta}}</td>
+                    </tr>
+                  </table>
+              </div>
+          </div>
+
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="info">
+           grafica
+          </div>
+        </div>
       </div>
     </div>
   </div>
+</div>

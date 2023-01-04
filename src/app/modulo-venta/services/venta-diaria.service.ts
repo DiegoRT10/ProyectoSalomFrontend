@@ -69,6 +69,14 @@ export class VentaDiariaService {
     return this.http.post<Estimulos[]>(`${this.URL}/venta/estimulos`,ym);
   }
 
+  getVentaSucursal(data:any){
+    return this.http.post<Estimulos[]>(`${this.URL}/venta/ventaSucursal`,data);
+  }
+
+  getOnPeople(data:any){
+    return this.http.post<PeopleLocation2[]>(`${this.URL}/venta/onePeopleLocation`,data);
+  }
+
 }
 
 export interface VentaDiaria{
@@ -95,6 +103,10 @@ export interface VentaDiaria{
   }
 
   export interface Farmacia{
+    id: string
+  }
+
+  export interface Administrador{
     id: string
   }
 
@@ -173,6 +185,23 @@ export interface VentaDiaria{
     name:string,
     pe:string,
     total:number
+  }
+
+  export interface VentaSucursal{
+    pid:string,
+    pname:string,
+    venta:number,
+    meta:number,
+    meta_farm:number,
+    idlocation:string
+  }
+
+  export interface PeopleLocation2{
+    idpeolple:string;
+    idlocation:string;
+    meta:number;
+    nivel:number;
+    dia:number
   }
 
  

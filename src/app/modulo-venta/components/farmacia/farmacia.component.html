@@ -21,7 +21,10 @@
                                     </th>
                                 </tr>
                                 <tr *ngFor="let p of ListaPeopleLocation">
-                                    <th>Titular</th>
+                                    <th *ngIf="p.nivel==0">Titular Temporal</th>
+                                    <th *ngIf="p.nivel==1 || p.nivel==2">Titular</th>
+                                    <th *ngIf="p.nivel==3">Titular segundo</th>
+                                    <th *ngIf="p.nivel>3">Apoyo</th>
                                     <td>{{p.name}}</td>
                                 </tr>
                                 <tr class='table-dark'>

@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
-import { MetaFarmacia, VentaDiaria, VentaDiariaService, VentaMes, DatosGrafica, PeopleLocation, VentaPorDia, dataVenta, Cierres, dataCierres, Depositos, dataDepositos } from '../../services/venta-diaria.service';
+import { MetaFarmacia, DataVentaDiaria, VentaDiariaService, VentaMes, DatosGrafica, PeopleLocation, VentaPorDia, dataVenta, Cierres, dataCierres, Depositos, dataDepositos } from '../../services/venta-diaria.service';
 import * as moment from 'moment';
 import { Observable, Subscription, finalize } from 'rxjs';
 
@@ -42,7 +42,7 @@ export class FarmaciaComponent implements OnInit {
 
   constructor(private router: Router, private VentaDiariaService: VentaDiariaService) { }
   fecha!: Date;
-  ListaVenta?: VentaDiaria[];
+  ListaVenta?: DataVentaDiaria[];
   ListaMetas?: MetaFarmacia[];
   ListaPeopleLocation?: PeopleLocation[];
   ListaVentaPorDia?: VentaPorDia[];
@@ -52,7 +52,7 @@ export class FarmaciaComponent implements OnInit {
 
   cambioEstado: boolean = false;
 
-  Venta: VentaDiaria = {
+  Venta: DataVentaDiaria = {
     dia: 0,
     host: '',
     total: 0

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import * as moment from 'moment';
-import { MetaFarmacia, VentaDiaria, VentaDiariaService, VentaMes, DatosGrafica, PeopleLocation, VentaPorDia, dataVenta, Cierres, dataCierres, Depositos, dataDepositos, Estimulos, YM } from '../../services/venta-diaria.service';
+import { MetaFarmacia, DataVentaDiaria, VentaDiariaService, VentaMes, DatosGrafica, PeopleLocation, VentaPorDia, dataVenta, Cierres, dataCierres, Depositos, dataDepositos, Estimulos, YM } from '../../services/venta-diaria.service';
 @Component({
   selector: 'app-estimulo-gerente',
   templateUrl: './estimulo-gerente.component.html',

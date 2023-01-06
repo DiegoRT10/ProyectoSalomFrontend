@@ -3,6 +3,11 @@
     <div class="container">
       <div class="row">
         <div class="col-md-8 ml-auto mr-auto">
+          <div *ngIf="bandera" class="alert alert-danger" role="alert"><i class="nc-icon nc-bell-55"></i>Usuario no encontrado
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close" (click)="cerrar()">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
           <div class="mb-3">
             <label for="exampleFormControlInput1" class="form-label"><i class="nc-icon nc-single-02"></i>Username</label>
             <input [(ngModel)]="user.username" type="email" class="form-control">
@@ -17,3 +22,4 @@
     </div>
   </div>
 </div>
+

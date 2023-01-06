@@ -22,7 +22,7 @@ export class VentaDiariaService {
     
     //Obtener consulta de venta del dia
     getOneVenta(venta:any){
-      return this.http.post<VentaDiaria[]>(`${this.URL}/venta/`,venta);
+      return this.http.post<DataVentaDiaria[]>(`${this.URL}/venta/`,venta);
     }
 
     getMetas(){
@@ -31,7 +31,7 @@ export class VentaDiariaService {
 
     //Obtener consulta de venta del dia
     getDatos(venta:any){
-      return this.http.post<VentaDiaria[]>(`${this.URL}/venta/DataGarfica`,venta);
+      return this.http.post<DataVentaDiaria[]>(`${this.URL}/venta/DataGarfica`,venta);
     }
 
      //Obtener consulta de venta del dia
@@ -77,9 +77,13 @@ export class VentaDiariaService {
     return this.http.post<PeopleLocation2[]>(`${this.URL}/venta/onePeopleLocation`,data);
   }
 
+  getVentaDiaria(data:any){
+    return this.http.post<VentaDiariaAdmin[]>(`${this.URL}/venta/ventaDiaria`,data);
+  }
+
 }
 
-export interface VentaDiaria{
+export interface DataVentaDiaria{
   dia:number,
   host:String,
   total:number
@@ -202,6 +206,12 @@ export interface VentaDiaria{
     meta:number;
     nivel:number;
     dia:number
+  }
+
+  export interface VentaDiariaAdmin{
+    dia:number;
+    titular:number;
+    apoyo:number;
   }
 
  

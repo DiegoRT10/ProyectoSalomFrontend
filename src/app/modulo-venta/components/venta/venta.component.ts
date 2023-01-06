@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { MetaFarmacia, VentaDiaria, VentaDiariaService, VentaMes, DatosGrafica } from '../../services/venta-diaria.service';
+import { MetaFarmacia, DataVentaDiaria, VentaDiariaService, VentaMes, DatosGrafica } from '../../services/venta-diaria.service';
 import { Color, ScaleType } from '@swimlane/ngx-charts';
 import * as moment from 'moment';
 
@@ -80,10 +80,10 @@ export class VentaComponent implements OnInit {
   }
 
   fecha!: Date;
-  ListaVenta?: VentaDiaria[];
+  ListaVenta?: DataVentaDiaria[];
   ListaMetas?: MetaFarmacia[];
   
-  Venta: VentaDiaria = {
+  Venta: DataVentaDiaria = {
     dia:0,
     host:'',
     total:0

@@ -15,7 +15,7 @@
           <div class="info">
             
             <div  class="card text-bg-light mb-3">
-              <div class="card-header">Sucursal </div>
+              <div class="card-header">{{sucursal.idlocation}}</div>
               <div class="card-body table-card">
                   <table class="table">
                       <tr class='table-dark'>
@@ -25,27 +25,28 @@
                       </tr>
                       <tr>
                           <th>Mi venta actual</th>
-                          <td>{{sucursal.venta | currency: 'Q'}}</td>
+                          <th>{{sucursal.venta | currency: 'Q'}}</th>
                       </tr>
                       <tr>
                           <th>Mi promedio de venta (diaria)</th>
-                          <td>{{sucursal.venta/day! | currency: 'Q'}}</td>
+                          <th>{{sucursal.venta/day! | currency: 'Q'}}</th>
                       </tr>
                       <tr>
                           <th>Mi meta</th>
-                          <td>{{sucursal.meta | currency: 'Q'}}</td>
+                          <th>{{sucursal.meta | currency: 'Q'}}</th>
                       </tr>
                       <tr>
                           <th>Me falta para mi meta</th>
-                          <td>{{sucursal.meta-sucursal.venta | currency: 'Q'}}</td>
+                          <th>{{sucursal.meta-sucursal.venta | currency: 'Q'}}</th>
                       </tr>
                       <tr>
                           <th>Porcentaje Alcanzado</th>
-                          <td>{{(sucursal.venta)/(sucursal.meta) | percent: '2.0-2'}}</td>
+                          <th>{{(sucursal.venta)/(sucursal.meta) | percent: '2.0-2'}}</th>
                       </tr>
                       <tr>
                         <th>Mi meta diaria de venta</th>
-                        <td>{{sucursal.meta - sucursal.venta}}</td>
+                        <th *ngIf="noDiasMes!-day! != 0">{{(sucursal.meta - sucursal.venta)/(noDiasMes!-day!) | currency: 'Q'}}</th>
+                        <th *ngIf="noDiasMes!-day! == 0">{{(sucursal.meta - sucursal.venta)/1 | currency: 'Q'}}</th>
                     </tr>
                   </table>
               </div>
@@ -55,10 +56,94 @@
         </div>
         <div class="col-md-6">
           <div class="info">
-           grafica
+            <div class="chart-container">
+              
+
+              <div class="row">
+                  <div class="col-md-6">
+                      <div class="info">
+                          <ngx-gauge [value]='redondear(((sucursal.venta)/(sucursal.meta))*100)' [thick]='15'  append="%">
+                          </ngx-gauge>
+                          <div>
+                              <label>Porcentaje de mi venta</label>
+                          </div>
+                      </div>
+                  </div>
+                  
+                  <div class="col-md-6">
+                      <div class="info">
+                          <ngx-gauge [value]='redondear(((sucursal.venta)/(sucursal.meta))*100)' [thick]='15' append="%">
+                          </ngx-gauge>
+                          <div>
+                              <label>Porcentaje alcanzao</label>
+                          </div>
+                      </div>
+                  </div>
+                  
+              </div>
+
+
+
+
+
+
+
           </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6"> 
+          
+          <div  class="card text-bg-light mb-3">
+            <div class="card-header">Mi venta (fecha)</div>
+
+            <table class="table">
+            
+
+
+              <thead>
+                  <tr>
+                      <th scope="col">Dia</th>
+                      <th scope="col">Titular</th>
+                      <th scope="col">Apoyo</th>
+                      <th scope="col">Acumulado</th>
+                  </tr>
+              </thead>
+              <tbody>
+                <ng-container *ngFor="let venta of ListaVentaDiaria; let i = index">
+                            <tr>
+                              <th>{{venta.dia}}</th>
+                              <th>{{venta.titular | currency: 'Q'}}</th>
+                              <th>{{venta.apoyo | currency: 'Q'}}</th>
+                              <th *ngIf="i==0">{{setAcumulado(venta.titular+venta.apoyo) | currency: 'Q'}}</th>
+                              <th *ngIf="i>0">{{getAcumulado(venta.titular+venta.apoyo) | currency: 'Q'}}</th>
+                          </tr>
+                </ng-container>
+                
+                <tr>
+                  <th>Total</th>
+                  <th>{{acumuladoTitular | currency: 'Q'}}</th>
+                  <th>{{acumuladoApoyo | currency: 'Q'}}</th>
+                  <th>{{acumulado | currency: 'Q'}}</th>
+                </tr>
+             
+                             
+                                
+                              
+              </tbody>
+          </table>
+
+            <div class="card-body table-card">
+            </div>
+          </div>
+
+          
         </div>
       </div>
     </div>
   </div>
 </div>
+

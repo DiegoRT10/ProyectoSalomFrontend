@@ -16,11 +16,12 @@ export class LoginComponent implements OnInit {
     username: '',
     pass: ''
   }
-  constructor(
-    private authService: AuthService,
-    private router: Router,
-    private roleGuard: RoleGuard 
-    ) { }
+
+  bandera?:boolean;
+
+  constructor( private authService: AuthService, private router: Router, private roleGuard: RoleGuard ) { 
+    this.bandera = false;
+  }
 
   ngOnInit(): void {
   }
@@ -29,11 +30,14 @@ export class LoginComponent implements OnInit {
    
     this.authService.singin(this.user).subscribe((res:any) =>{
     
+    if(res.token ){
     localStorage.setItem('token',res.token);
     const token = localStorage.getItem('token');
     let decodeToken:any = {}
     decodeToken = decode(token || '');
     console.log(decodeToken.role);
+    localStorage.setItem('rol',decodeToken.role);
+
       switch(decodeToken.role){
         case '0': this.router.navigate(['home-sistemas']);
         break;
@@ -43,8 +47,16 @@ export class LoginComponent implements OnInit {
         break;
         case '3' : this.router.navigate(['invitado']);
       }
-      AppComponent.Rol();
+      AppComponent.verificarRol();
+    } else{
+      this.bandera = true;
+    } 
+    
     });
+  }
+
+  cerrar():void{
+    this.bandera = false;
   }
 
 }

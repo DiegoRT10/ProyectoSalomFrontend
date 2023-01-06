@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Administrador, dataCierres, PeopleLocation2, VentaDiariaService, VentaSucursal } from '../../services/venta-diaria.service';
+import { Administrador, dataCierres, PeopleLocation2, VentaDiariaAdmin, VentaDiariaService, VentaSucursal } from '../../services/venta-diaria.service';
 import decode from 'jwt-decode';
 import * as moment from 'moment';
 
@@ -11,6 +11,11 @@ import * as moment from 'moment';
 })
 export class VentaSucursalComponent implements OnInit {
   day?:number;
+  noDiasMes?:number;
+  acumulado:number =0;
+  acumuladoTitular:number=0;
+  acumuladoApoyo:number=0;
+
   constructor(private router: Router, private VentaDiariaService: VentaDiariaService) {
    
     this.day = new Date().getDate(); 
@@ -19,6 +24,7 @@ export class VentaSucursalComponent implements OnInit {
 
   ListaVentaSucursal?:VentaSucursal[];
   ListPeolpeLocation?:PeopleLocation2[];
+  ListaVentaDiaria?:VentaDiariaAdmin[];
 
 
   onPeopleLocation:PeopleLocation2 ={
@@ -48,10 +54,15 @@ export class VentaSucursalComponent implements OnInit {
     id:''
   }
 
+  VentaDiaria: VentaDiariaAdmin ={
+    dia:0,
+    titular:0,
+    apoyo:0
+  }
 
   ngOnInit(): void {
     this.PeopleLocation();
-    
+    this.setNoDiasMes();
   }
 
 
@@ -62,6 +73,7 @@ export class VentaSucursalComponent implements OnInit {
       //this.ListaVentaSucursal=<any>res;
       this.onPeopleLocation = res[0];
       this.VentaAdministrador();
+      this.VentaAdminApoyo();
     },
     err =>{
       console.log(err);
@@ -102,6 +114,53 @@ export class VentaSucursalComponent implements OnInit {
     return moment.utc(date).format('YYYYMM');
   }
 
-  
 
+  redondear(valor:number):number{
+    return Number(valor.toFixed(2));
+  }
+
+
+  setNoDiasMes():void{
+    let date: Date = new Date();
+    this.noDiasMes = this.diasEnUnMes(date.getMonth()+1,date.getFullYear());//se le suma +1 al mes porque para typescript enero = 0
+  }
+
+  diasEnUnMes(mes:number, año:number) {
+    return new Date(año, mes, 0).getDate();
+  }
+
+  VentaAdminApoyo():void{
+    this.data.host=this.onPeopleLocation.idlocation;
+    this.data.ym=this.getFecha();
+
+      this.VentaDiariaService.getVentaDiaria(this.data).subscribe(res=>{
+      this.ListaVentaDiaria=<any>res;
+      console.log(this.ListaVentaDiaria);
+      this.totalesVenta();
+      //this.Venta = res[0];
+    },
+    err =>{
+      console.log(err);
+    }
+      
+      );
+  }
+
+  setAcumulado(data: number) {
+    this.acumulado = data;
+    return this.acumulado;
+  }
+
+  getAcumulado(venta: number) {
+    return this.acumulado += venta;
+  }
+
+  totalesVenta():void{
+  for (const i of this.ListaVentaDiaria!) {
+    console.log(i.titular, i.apoyo);
+    (i.titular == 0 ? this.acumuladoTitular= 0 : this.acumuladoTitular += i.titular);
+    (i.apoyo == 0 ? this.acumuladoApoyo = 0 : this.acumuladoApoyo += i.apoyo);
+    
+  }
+  }
 }

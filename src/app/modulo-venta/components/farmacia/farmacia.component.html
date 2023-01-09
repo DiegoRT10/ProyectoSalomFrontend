@@ -99,9 +99,7 @@
 
                                     <div class="example-accordion-item-header" (click)="accordionItem.toggle()">
 
-                                        {{'#'+item.seq+' '}}{{ item.dateend | date:"shortDate"}}<strong>{{' '+
-                                            (item.apertura + item.venta + item.gastos + item.ingresos + item.cierre) |
-                                            currency: 'Q'}}</strong>
+                                        {{'#'+item.seq+' '}}{{ item.dateend | date:"shortDate"}}<strong>{{' '+(item.apertura + item.venta + item.gastos + item.ingresos + item.cierre) |currency: 'Q'}}</strong>
                                         <span class="example-accordion-item-description">
                                             <!-- Click para {{ accordionItem.expanded ? 'cerrar' : 'abrir' }} -->
                                             <i *ngIf="accordionItem.expanded"

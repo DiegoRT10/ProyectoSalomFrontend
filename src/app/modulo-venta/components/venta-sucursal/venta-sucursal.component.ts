@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Administrador, dataCierres, PeopleLocation2, VentaDiariaAdmin, VentaDiariaService, VentaSucursal } from '../../services/venta-diaria.service';
+import { Cierres, Administrador, dataCierres, PeopleLocation2, VentaDiariaAdmin, VentaDiariaService, VentaSucursal, dataDepositos, Depositos } from '../../services/venta-diaria.service';
 import decode from 'jwt-decode';
 import * as moment from 'moment';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-venta-sucursal',
@@ -15,6 +16,7 @@ export class VentaSucursalComponent implements OnInit {
   acumulado:number =0;
   acumuladoTitular:number=0;
   acumuladoApoyo:number=0;
+  private subs?: Subscription;
 
   constructor(private router: Router, private VentaDiariaService: VentaDiariaService) {
    
@@ -22,10 +24,18 @@ export class VentaSucursalComponent implements OnInit {
     console.log('fecha dia',this.day)
    }
 
+
+
   ListaVentaSucursal?:VentaSucursal[];
   ListPeolpeLocation?:PeopleLocation2[];
   ListaVentaDiaria?:VentaDiariaAdmin[];
+  ListaCierres?:Cierres[];
+  ListaDepositos?: Depositos[];
 
+  dataCierre: dataCierres = {
+    host: '',
+    ym: '',
+  }
 
   onPeopleLocation:PeopleLocation2 ={
     idpeolple:'',
@@ -60,6 +70,10 @@ export class VentaSucursalComponent implements OnInit {
     apoyo:0
   }
 
+  dataDeposito: dataDepositos = {
+    money: ''
+  }
+
   ngOnInit(): void {
     this.PeopleLocation();
     this.setNoDiasMes();
@@ -74,6 +88,7 @@ export class VentaSucursalComponent implements OnInit {
       this.onPeopleLocation = res[0];
       this.VentaAdministrador();
       this.VentaAdminApoyo();
+      this.VentaCierres();
     },
     err =>{
       console.log(err);
@@ -81,6 +96,22 @@ export class VentaSucursalComponent implements OnInit {
       
       );
   }
+
+  VentaCierres(): void {
+    this.dataCierre.ym = this.getFecha();
+    this.dataCierre.host = this.onPeopleLocation.idlocation;
+    this.VentaDiariaService.getCierresAdmin(this.dataCierre).subscribe(res => {
+      this.ListaCierres = <any>res;
+      console.log('Cierres ',this.ListaCierres);
+      // this.depos();
+    },
+      err => {
+        console.log(err);
+      });
+
+
+  }
+
 
 
 
@@ -162,5 +193,19 @@ export class VentaSucursalComponent implements OnInit {
     (i.apoyo == 0 ? this.acumuladoApoyo = 0 : this.acumuladoApoyo += i.apoyo);
     
   }
+  }
+
+  Transacciones(money: string): void {
+    this.dataDeposito.money = money;
+    this.VentaDiariaService.getTransacciones(this.dataDeposito).subscribe(res => {
+      this.ListaDepositos = <any>res;
+      //this.Venta = res[0];
+      console.log("depositos",this.ListaDepositos)
+    },
+      err => {
+        console.log(err);
+      }
+
+    );
   }
 }

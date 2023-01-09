@@ -142,6 +142,93 @@
 
           
         </div>
+        <div class="col-md-6"> 
+          
+          <div  class="card text-bg-light mb-3">
+            <div class="card-header">Mis Cierres</div>
+            <div class="card-body table-card">
+
+              <cdk-accordion class="example-accordion">
+                <cdk-accordion-item *ngFor="let item of ListaCierres; let i = index"
+                    #accordionItem="cdkAccordionItem" class="example-accordion-item" role="button"
+                    tabindex="0" [attr.id]="'accordion-header-' + item.money"
+                    [attr.aria-expanded]="accordionItem.expanded"
+                    [attr.aria-controls]="'accordion-body-' + item.money">
+
+                   {{i<9 ? Transacciones(item.money) : ngOnDestroy()}}
+                    <div  class="example-accordion-item-header" (click)="accordionItem.toggle()">
+
+                        {{'#'+item.seq+' '}}{{ item.dateend | date:"shortDate"}}<strong>{{' '+(item.apertura + item.venta + item.gastos + item.ingresos + item.cierre) |currency: 'Q'}}</strong>
+                        <span class="example-accordion-item-description">
+                            <!-- Click para {{ accordionItem.expanded ? 'cerrar' : 'abrir' }} -->
+                            <i *ngIf="accordionItem.expanded"
+                                class="nc-icon nc-simple-remove"><strong>Cerrar</strong></i>
+                            <i *ngIf="!accordionItem.expanded"
+                                class="nc-icon nc-simple-add"><strong>Abrir</strong></i>
+
+                        </span>
+                    </div>
+
+                    <div class="example-accordion-item-body" role="region"
+                        [style.display]="accordionItem.expanded ? '' : 'none'"
+                        [attr.id]="'accordion-body-' + item.money"
+                        [attr.aria-labelledby]="'accordion-header-' + item.money">
+                        <table class="table">
+
+                            <tr>
+                                <th>Apertura</th>
+                                <td>{{item.apertura | currency: 'Q'}}</td>
+                            </tr>
+                            <tr>
+                                <th>Venta</th>
+                                <td>{{item.venta | currency: 'Q'}}</td>
+                            </tr>
+                            <tr>
+                                <th>Ingresos</th>
+                                <td>{{item.ingresos | currency: 'Q'}}</td>
+                            </tr>
+                            <tr>
+                                <th>Gastos</th>
+                                <td>{{item.gastos | currency: 'Q'}}</td>
+                            </tr>
+                            <tr>
+                                <th>Cierre</th>
+                                <td>{{item.cierre | currency: 'Q'}}</td>
+                            </tr>
+                            <tr >
+                                <th>Deposito</th>
+                                <td>{{item.apertura + item.venta + item.gastos + item.ingresos + item.cierre | currency: 'Q'}}</td>
+
+                            </tr>
+
+                        </table>
+                        <div>
+                            <table class="table">
+                                <tr>
+                                    <td colspan="3" class="text-center fw-bold table-dark">Depositos
+                                        Registrados</td>
+                                </tr>
+                                <br>
+                                <tr>
+                                    <button type="button" class="btn btn-dark" data-toggle="modal"
+                                        data-target="#exampleModalLong"
+                                        (click)="Transacciones(item.money)">
+                                        mas detalles
+                                    </button>
+                                </tr>
+
+                            </table>
+                        </div>
+                    </div>
+                    <!-- </ng-container> -->
+                </cdk-accordion-item>
+            </cdk-accordion>
+
+            </div>
+          </div>
+
+          
+        </div>
       </div>
     </div>
   </div>

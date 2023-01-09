@@ -81,6 +81,10 @@ export class VentaDiariaService {
     return this.http.post<VentaDiariaAdmin[]>(`${this.URL}/venta/ventaDiaria`,data);
   }
 
+  getCierresAdmin(data:any){
+    return this.http.post<Cierres[]>(`${this.URL}/venta/CierresAdministrador`,data);
+  }
+
 }
 
 export interface DataVentaDiaria{

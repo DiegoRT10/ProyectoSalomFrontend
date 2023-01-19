@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { Cierres, Administrador, dataCierres, PeopleLocation2, VentaDiariaAdmin, VentaDiariaService, VentaSucursal, dataDepositos, Depositos } from '../../services/venta-diaria.service';
 import decode from 'jwt-decode';
 import * as moment from 'moment';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-venta-sucursal',
@@ -17,6 +17,11 @@ export class VentaSucursalComponent implements OnInit {
   acumuladoTitular:number=0;
   acumuladoApoyo:number=0;
   private subs?: Subscription;
+  cambioEstado: boolean = false;
+  bandera: boolean = false; //sirve para no sobrepasar el limite de registros de cierre
+  banderaDeposito: boolean = false; //sirve como bandera para saber si se quiere agregar un deposito
+  date: Date = new Date();
+  fechaDia: string = moment.utc(this.date).format('DD/MM/YYYY');
 
   constructor(private router: Router, private VentaDiariaService: VentaDiariaService) {
    
@@ -54,6 +59,17 @@ export class VentaSucursalComponent implements OnInit {
     meta_farm:0,
     idlocation:''
   }
+
+  depositos: Depositos = {
+    id: 0,
+    numero: 0,
+    money: '',
+    monto: 0,
+    fecha: this.date,
+    estado: 0
+
+  }
+
 
   data: dataCierres = {
     host:'',
@@ -200,7 +216,7 @@ export class VentaSucursalComponent implements OnInit {
     this.VentaDiariaService.getTransacciones(this.dataDeposito).subscribe(res => {
       this.ListaDepositos = <any>res;
       //this.Venta = res[0];
-      console.log("depositos",this.ListaDepositos)
+      console.log("depositos ",this.ListaDepositos)
     },
       err => {
         console.log(err);
@@ -208,4 +224,55 @@ export class VentaSucursalComponent implements OnInit {
 
     );
   }
+
+  CambioDeposito(depos: any, estado: number): void {
+    this.depositos = depos;
+    this.depositos.estado = estado;
+    console.log(this.depositos);
+    if (estado == 0 || estado == 1) {
+      this.VentaDiariaService.putDepositos(this.depositos).subscribe(res => {
+        //this.ListaDepositos=<any>res;
+        //this.Venta = res[0];
+        console.log(this.ListaDepositos);
+        console.log('entre a cambio deposito');
+        this.cambioEstado = false;
+        this.Transacciones(this.depositos.money);
+      },
+        err => {
+          console.log(err);
+        }
+
+      );
+
+    } else if (estado == 2) {
+      console.log('entre a cambio deposito 2');
+      this.cambioEstado = true;
+    }
+
+  }
+
+  VisibleNumero(f: boolean, depos: any) {
+    this.bandera = f;
+    //this.idDeposito = id;
+    // this.depositos = depos;
+    // console.log('depos ', this.depositos);
+    this.OpenRegistroDeposito(false);
+  }
+
+  OpenRegistroDeposito(x:boolean):void{
+    this.depositos.numero=0;
+    this.depositos.monto=0;
+    //console.log("Datos a envaiar de deposito ",this.depositos.money," ",this.depositos.numero," ",this.depositos.monto);
+    this.banderaDeposito = x;
+  }
+
+  SaveRegistroDeposito():void{
+    this.depositos.money = this.dataDeposito.money;
+    console.log("Datos a envaiar de deposito ",this.depositos.money," ",this.depositos.numero," ",this.depositos.monto);
+    this.OpenRegistroDeposito(false);
+  this.depositos.numero=0;
+  this.depositos.monto=0;
+
+  }
+
 }

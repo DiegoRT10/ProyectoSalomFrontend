@@ -16,6 +16,7 @@ import { CdkAccordionModule } from '@angular/cdk/accordion';
 import { EstimuloGerenteComponent } from './components/estimulo-gerente/estimulo-gerente.component';
 import { LoadingComponent } from './components/loading/loading.component';
 import { VentaSucursalComponent } from './components/venta-sucursal/venta-sucursal.component';
+import { MdbAccordionModule } from 'mdb-angular-ui-kit/accordion';
 
 
 
@@ -39,7 +40,8 @@ import { VentaSucursalComponent } from './components/venta-sucursal/venta-sucurs
     NgxGaugeModule,
     MatSlideToggleModule,
     DragDropModule,
-    CdkAccordionModule
+    CdkAccordionModule,
+    MdbAccordionModule
   ],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })

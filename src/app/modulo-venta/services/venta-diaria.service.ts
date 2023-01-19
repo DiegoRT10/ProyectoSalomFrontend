@@ -57,7 +57,7 @@ export class VentaDiariaService {
       return this.http.post<Depositos[]>(`${this.URL}/venta/deposito`,money);
     }
   
-  getTransacciones (money:any): Observable<Depositos[]>{
+  getTransacciones (money:any){
     return this.http.post<Depositos[]>(`${this.URL}/venta/transacciones`,money);
   }
 

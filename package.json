@@ -28,6 +28,8 @@
     "d3-scale": "^4.0.2",
     "jwt-decode": "^3.1.2",
     "leaflet": "^1.9.3",
+    "mdb-angular-ui-kit": "^4.0.0",
+    "mdb-ui-kit": "^6.1.0",
     "moment": "^2.29.4",
     "ngx-gauge": "^6.0.0",
     "rxjs": "~7.5.0",

@@ -49,6 +49,7 @@ export class FarmaciaComponent implements OnInit {
   single?: DatosGrafica[];
   ListaCierres?: Cierres[];
   ListaDepositos?: Depositos[];
+ 
 
   cambioEstado: boolean = false;
 
@@ -243,6 +244,9 @@ export class FarmaciaComponent implements OnInit {
 
     this.VentaDiariaService.getCierres(this.dataCierre).subscribe(res => {
       this.ListaCierres = <any>res;
+      
+
+
       this.size = this.ListaCierres!.length;
       // this.depos();
     },
@@ -261,7 +265,7 @@ export class FarmaciaComponent implements OnInit {
     console.log('index', index);
     console.log('size', this.size);
 
-    this.VentaDiariaService.getDepositos(this.dataDeposito).pipe(finalize(() => this.depos(''))).subscribe(res => {
+    this.VentaDiariaService.getDepositos(this.dataDeposito).subscribe(res => {
       //this.ListaDepositos=<any>res;
       this.depositos = res[0];
       this.size--;

@@ -17,6 +17,7 @@ import { EstimuloGerenteComponent } from './components/estimulo-gerente/estimulo
 import { LoadingComponent } from './components/loading/loading.component';
 import { VentaSucursalComponent } from './components/venta-sucursal/venta-sucursal.component';
 import { MdbAccordionModule } from 'mdb-angular-ui-kit/accordion';
+import { MovimientosAdministradorComponent } from './components/movimientos-administrador/movimientos-administrador.component';
 
 
 
@@ -29,6 +30,7 @@ import { MdbAccordionModule } from 'mdb-angular-ui-kit/accordion';
     EstimuloGerenteComponent,
     LoadingComponent,
     VentaSucursalComponent,
+    MovimientosAdministradorComponent,
     //AccordionComponent,
   ],
   imports: [

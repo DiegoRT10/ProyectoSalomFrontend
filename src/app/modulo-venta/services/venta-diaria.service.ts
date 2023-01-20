@@ -85,6 +85,19 @@ export class VentaDiariaService {
     return this.http.post<Cierres[]>(`${this.URL}/venta/CierresAdministrador`,data);
   }
 
+  
+  //Agregar deposito
+  addDeposito(deposito:any){
+  return this.http.post(`${this.URL}/venta/createDeposito`,deposito);
+}
+
+  //Editar numero de deposito
+  editDeposito(deposito:any){
+  return this.http.put(`${this.URL}/venta/updateDeposito`,deposito);
+}
+
+
+
 }
 
 export interface DataVentaDiaria{

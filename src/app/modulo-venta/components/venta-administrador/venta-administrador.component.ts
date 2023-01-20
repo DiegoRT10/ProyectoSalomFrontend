@@ -17,4 +17,8 @@ export class VentaAdministradorComponent implements OnInit {
     this.router.navigate(['venta-sucursal']);
   }
 
+  goMovimientos():void{
+    this.router.navigate(['movimientos-administrador']);
+  }
+
 }

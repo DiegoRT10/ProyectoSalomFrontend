@@ -157,8 +157,8 @@
 
 
                         <div class="example-accordion-item-header" (click)="accordionItem.toggle()">
-                            {{item.money}}
-                            <!-- {{'#'+item.seq+' '}}{{ item.dateend | date:"shortDate"}}<strong>{{' '+(item.apertura + item.venta + item.gastos + item.ingresos + item.cierre) |currency: 'Q'}}</strong> -->
+                            <!-- {{item.money}} -->
+                            {{'#'+item.seq+' '}}{{ item.dateend | date:"shortDate"}}<strong>{{' '+(item.apertura + item.venta + item.gastos + item.ingresos + item.cierre) |currency: 'Q'}}</strong>
                             <span class="example-accordion-item-description">
                                 <!-- Click para {{ accordionItem.expanded ? 'cerrar' : 'abrir' }} -->
                                 <i *ngIf="accordionItem.expanded"
@@ -240,7 +240,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLongTitle">Depositos Registrados</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="VisibleNumero(false,null)" (click)="OpenRegistroDeposito(false)">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="VisibleNumero(false,null,0,0)" >
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -254,6 +254,7 @@
                 <table class="table">
                     <thead>
                         <tr>
+                            <th scope="col">Id</th>
                             <th scope="col">Numero</th>
                             <th scope="col">Monto</th>
                             <th scope="col">Editar</th>
@@ -262,8 +263,10 @@
                     </thead>
                     <tbody>
 
+                    
                         <tr *ngFor="let dep of ListaDepositos">
 
+                            <th>{{dep.id}}</th>
                             <th>{{dep.numero}}</th>
                             <th>{{dep.monto | currency: 'Q'}}</th>
                             <!-- <th *ngIf="dep.estado == 0 && !cambioEstado">
@@ -276,7 +279,7 @@
                                 <i>Verificado y Acreditado</i>
                             </th> -->
                             <th>
-                                <button *ngIf="!bandera" type="button" class="btn btn-warning" (click)="VisibleNumero(true,dep)">Editar</button>
+                                <button *ngIf="!bandera" type="button" class="btn btn-warning" (click)="VisibleNumero(true,dep,dep.id,dep.numero)">Editar</button>
                                 <i *ngIf="bandera">Editando..</i>
                             </th> 
 
@@ -287,9 +290,9 @@
                                     <form>
                                         <div>
                                             <label class="form-label">Numero</label>
-                                            <input type="number" class="form-control" name="" required="[0-9]">
+                                            <input [(ngModel)]="depositos.numero" type="number" class="form-control" required="[0-9]" name="numero" >
                                             <br>
-                                            <button type="button" class="btn btn-success" (click)="VisibleNumero(true,null)">Guardar</button>
+                                            <button type="button" class="btn btn-success" (click)="UpdataRegistroDeposito()">Guardar</button>
                                         </div>
                                     </form>
                                 </div>

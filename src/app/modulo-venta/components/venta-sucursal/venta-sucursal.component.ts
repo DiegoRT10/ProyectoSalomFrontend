@@ -178,7 +178,8 @@ export class VentaSucursalComponent implements OnInit {
 
   VentaAdminApoyo():void{
     this.data.host=this.onPeopleLocation.idlocation;
-    this.data.ym=this.getFecha();
+    // this.data.ym=this.getFecha(); descomentar cunado se realice la prueba 
+    this.data.ym='202203';
 
       this.VentaDiariaService.getVentaDiaria(this.data).subscribe(res=>{
       this.ListaVentaDiaria=<any>res;
@@ -251,12 +252,15 @@ export class VentaSucursalComponent implements OnInit {
 
   }
 
-  VisibleNumero(f: boolean, depos: any) {
+  VisibleNumero(f: boolean, depos: any, idDepo:number, numeroDepo:number) {
+    this.depositos.id = idDepo;
+    this.depositos.numero = numeroDepo;
     this.bandera = f;
+    console.log('este es el numero de deposito ',this.depositos.numero);
     //this.idDeposito = id;
     // this.depositos = depos;
     // console.log('depos ', this.depositos);
-    this.OpenRegistroDeposito(false);
+    
   }
 
   OpenRegistroDeposito(x:boolean):void{
@@ -269,10 +273,46 @@ export class VentaSucursalComponent implements OnInit {
   SaveRegistroDeposito():void{
     this.depositos.money = this.dataDeposito.money;
     console.log("Datos a envaiar de deposito ",this.depositos.money," ",this.depositos.numero," ",this.depositos.monto);
-    this.OpenRegistroDeposito(false);
-  this.depositos.numero=0;
-  this.depositos.monto=0;
+
+    this.VentaDiariaService.addDeposito(this.depositos).subscribe(
+      res => {
+        console.log('Se agrego el deposito correctamente');
+        this.OpenRegistroDeposito(false);
+        this.Transacciones(this.depositos.money);
+        this.depositos.numero=0;
+        this.depositos.monto=0;
+      },
+      err => {
+        console.log(err);
+      });
 
   }
+
+  UpdataRegistroDeposito():void{
+   
+  
+    this.depositos.money = this.dataDeposito.money;
+    console.log("Datos a envaiar de deposito ",this.depositos.money," ",this.depositos.numero," ",this.depositos.monto);
+
+    this.VentaDiariaService.editDeposito(this.depositos).subscribe(
+      res => {
+        console.log('Se edito el deposito correctamente');
+        this.Transacciones(this.depositos.money);
+        this.depositos.numero=0;
+        this.depositos.monto=0;
+        this.bandera = true;
+        this.OpenRegistroDeposito(false);
+        this.VisibleNumero(false,null,0,0);
+      },
+      err => {
+        console.log(err);
+      });
+
+
+  }
+
+  
+
+
 
 }

@@ -18,6 +18,7 @@ import { LoadingComponent } from './components/loading/loading.component';
 import { VentaSucursalComponent } from './components/venta-sucursal/venta-sucursal.component';
 import { MdbAccordionModule } from 'mdb-angular-ui-kit/accordion';
 import { MovimientosAdministradorComponent } from './components/movimientos-administrador/movimientos-administrador.component';
+import { NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 
@@ -43,7 +44,8 @@ import { MovimientosAdministradorComponent } from './components/movimientos-admi
     MatSlideToggleModule,
     DragDropModule,
     CdkAccordionModule,
-    MdbAccordionModule
+    MdbAccordionModule,
+    NgbTypeaheadModule
   ],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })

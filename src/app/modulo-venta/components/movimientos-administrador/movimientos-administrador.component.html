@@ -1,7 +1,51 @@
 <div class="main">
     <div class="section text-center">
       <div class="container">
-       <p>Movimientos entre farmacias</p>
+        <div class="row">
+          <div class="col-md-8 ml-auto mr-auto">
+              <h1 class="title">Movimientos de productos entre farmacias</h1>
+
+
+          </div>
+      </div>
+        <!-- <select (change)="setProducto($event)" class="form-control" [value]="ObjectViewProducts.id">
+          <option  [value]="item" *ngFor="let item of ListaViewsProducts">{{item}}</option>
+      </select> -->
+
+      <!-- <div class="input-group">
+        <div id="search-autocomplete" class="form-outline">
+          <input type="search" id="form1" class="form-control" />
+          <label class="form-label" for="form1">Search</label>
+        </div>
+        <button type="button" class="btn btn-primary">
+          <i class="fas fa-search"></i>
+        </button>
+      </div> -->
+
+      
+      <label for="typeahead-focus">Buscar producto a enviar</label>
+      <input
+        id="typeahead-focus"
+        type="text"
+        class="form-control"
+        [(ngModel)]="model"
+        [ngbTypeahead]="search"
+        (focus)="focus$.next($any($event).target.value)"
+        (click)="click$.next($any($event).target.value)"
+        #instance="ngbTypeahead"
+      />
+      <br>
+      <label for="typeahead-focus">Buscar farmacia a enviar</label>
+      <input
+        id="typeahead-focus"
+        type="text"
+        class="form-control"
+        [(ngModel)]="model2"
+        [ngbTypeahead]="search2"
+        (focus)="focus2$.next($any($event).target.value)"
+        (click)="click2$.next($any($event).target.value)"
+        #instance2="ngbTypeahead"
+      />
       </div>
     </div> 
 </div>

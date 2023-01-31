@@ -1,10 +1,11 @@
+import { Movimientos2 } from './../../services/products.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgbTypeahead, NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
 import { Observable, Subject, merge, OperatorFunction } from 'rxjs';
 import { debounceTime, distinctUntilChanged, filter, map } from 'rxjs/operators';
 import { FormsModule } from '@angular/forms';
 import { JsonPipe } from '@angular/common';
-import { LocationsId, Products, ProductsService, ViewProducts, ViewProducts2 } from '../../services/products.service';
+import { LocationsId, Movimientos, Products, ProductsService, ViewProducts, ViewProducts2 } from '../../services/products.service';
 
 
 
@@ -20,13 +21,27 @@ import { LocationsId, Products, ProductsService, ViewProducts, ViewProducts2 } f
 export class MovimientosAdministradorComponent implements OnInit{
   product = [''];
   state = [''];
-  model: any;
+  tableMovimiento?:Movimientos[];
+  model!: string;
   model2: any;
+  idProd:string='';
+  CadenaMovimiento = [''];
+  DatosMovimiento = [''];
+  cadena:string ='';
+  sic = 0;
+  sfc = 0;
+  sil = 0;
+  sfl = 0;
+  sica = 0;
+  sfca = 0;
 
   ListaProductos?:Products[];
   ListaViewsProducts?:ViewProducts[];
   ListaProductsCodeName?:ViewProducts2[];
   ListaLocationsId?:LocationsId[];
+  ListaMovimientos: Movimientos2[] = [];
+  ListaMov:Array<any> =[];
+  
 
   ObjectViewProducts:ViewProducts={
     id:'',
@@ -45,6 +60,19 @@ export class MovimientosAdministradorComponent implements OnInit{
     code_name:''
   }
   
+  ObjectMovimientos:Movimientos={
+    idProducto:'',
+    idLocation:'',
+    cantidad:0
+  }
+
+  ObjectMovimientos2:Movimientos2={
+    idProducto:'',
+    idLocation:'',
+    cantidad:0
+  }
+
+ 
 
 
   
@@ -74,7 +102,7 @@ export class MovimientosAdministradorComponent implements OnInit{
     this.products.getViewsProducts().subscribe(res => {
       this.ObjectViewProducts = <any>res;
       this.ListaViewsProducts = <any>res;
-      console.log(this.ListaViewsProducts);
+      
     },
       err => {
         console.log(err);
@@ -89,7 +117,7 @@ export class MovimientosAdministradorComponent implements OnInit{
 
       for (const i of this.ListaProductsCodeName!) {
         this.product.push( <any>i.code_name);
-        console.log(this.product);  
+         
       }
       
     },
@@ -131,7 +159,7 @@ export class MovimientosAdministradorComponent implements OnInit{
 
       for (const i of this.ListaLocationsId!) {
         this.state.push( <any>i.id);
-        console.log(this.state);  
+        
       }
       
     },
@@ -158,5 +186,116 @@ export class MovimientosAdministradorComponent implements OnInit{
 			),
 		);
 	};
+
+
+  MoverProducto():void{
+
+    this.ObjectMovimientos.idLocation = this.model2;
+
+    for (let i = 0; i < this.model.length; i++) {
+      let ascii = this.model.toUpperCase().charCodeAt(i);
+      
+      if(!(ascii > 64 && ascii < 91)){
+       if(!(this.model.charAt(i) == ' ')){
+        this.ObjectMovimientos.idProducto += this.model.charAt(i); 
+       }else{break;}
+      }else{break;}
+    }
+   
+    
+    console.log('Producto a mover ', this.ObjectMovimientos.idProducto);
+    console.log('Farmacia destino ', this.ObjectMovimientos.idLocation);
+    console.log('Cantida de producto ',this.ObjectMovimientos.cantidad);
+    console.log('Objeto a anadir ',this.ObjectMovimientos);
+
+
+      this.DatosMovimiento.push(`${this.ObjectMovimientos.idProducto}`);   
+      this.DatosMovimiento.push(`${this.ObjectMovimientos.idLocation}`); 
+      this.DatosMovimiento.push(`${this.ObjectMovimientos.cantidad}`);
+   
+    this.cadena = this.ObjectMovimientos.idProducto+' '+this.ObjectMovimientos.idLocation+' '+this.ObjectMovimientos.cantidad;
+    //this.cadena = `${this.ObjectMovimientos.idProducto}' '${this.ObjectMovimientos.idLocation}' '${this.ObjectMovimientos.cantidad}`
+    console.log('cadena ', this.cadena);
+
+    if(this.CadenaMovimiento.push(this.cadena)){
+      console.log('Lista Movimientos ',this.CadenaMovimiento);
+      this.Limpiar();
+    }
+
+    
+      let codigo = '';
+      let location = '';
+      let cantidad = '';
+
+    
+    for (let i = 0; i < this.CadenaMovimiento.length; i++) { //recorro cadena con valores de idProducto, 
+      let cadena = this.CadenaMovimiento[i];
+      
+      for(let j = 0; j < cadena.length; j++){
+        if(cadena.charAt(j) != ' '){
+          codigo += cadena.charAt(j)
+        }else{
+          this.sic = 0;
+          this.sfc = j;
+          break;} 
+      }
+      for(let k = codigo.length+1; k < cadena.length; k++){
+        if(cadena.charAt(k) != ' '){
+          location += cadena.charAt(k)
+        }else{
+          this.sil = codigo.length+1;
+          this.sfl = k;
+          break;}  
+      }
+      for(let m = codigo.length+location.length+2; m < cadena.length; m++){
+        if(cadena.charAt(m) != ' '){
+          cantidad += cadena.charAt(m)
+        }else{break;}  
+          this.sica = codigo.length+location.length+2;
+          this.sfca = cadena.length;
+          console.log('tamano inicio cantidad '+this.sica);
+          console.log('tamano fin cantidad '+this.sfca);
+      }
+      console.log('cadena codigo '+codigo);
+      console.log('cadena location '+location);
+      console.log('cadena cantidad '+cantidad);
+
+      this.ObjectMovimientos2.idProducto = codigo; 
+      this.ObjectMovimientos2.idLocation = location; 
+      this.ObjectMovimientos2.cantidad = <any>cantidad; 
+
+      
+      
+      
+    
+    }
+
+    // if(this.ListaMovimientos.push(this.ObjectMovimientos)){
+    //   console.log('Lista Movimientos ',this.ListaMov);
+    // }
+    
+
+    
+
+  }
+
+Limpiar():void{
+  this.ObjectMovimientos.idProducto =''; 
+  this.ObjectMovimientos.idLocation =''; 
+  this.ObjectMovimientos.cantidad =0; 
+}
+
+
+  DatosTable():void{
+
+    const table = document.getElementById("rwd-table-id") as HTMLTableElement;
+   for (let i = 0, row; row = table.rows[i]; i++) {
+      console.log('dato table ',row);
+    }
+  }
+
+  
+
+   
 
 }

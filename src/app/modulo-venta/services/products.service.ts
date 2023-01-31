@@ -34,6 +34,8 @@ export class ProductsService {
          getLocationsId(){
           return this.http.get(`${this.URL}/producto/ViewLocationsId`);
         } 
+
+     
 }
 
 export interface Products{
@@ -96,3 +98,19 @@ export interface ViewProducts2{
 export interface LocationsId{
   id:string
 }
+
+export interface Movimientos{
+  idProducto?:string,
+  idLocation?:string,
+  cantidad?:number
+}
+
+export interface Movimientos2{
+  idProducto?:string,
+  idLocation?:string,
+  cantidad?:number
+}
+
+
+
+

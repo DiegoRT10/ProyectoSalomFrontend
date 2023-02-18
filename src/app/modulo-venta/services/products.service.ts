@@ -35,7 +35,9 @@ export class ProductsService {
           return this.http.get(`${this.URL}/producto/ViewLocationsId`);
         } 
 
-     
+        searchProductoCode(code:any){
+          return this.http.post(`${this.URL}/producto/productsViewProducts`,code);
+        }
 }
 
 export interface Products{
@@ -91,6 +93,21 @@ export interface ViewProducts{
   supplier:string,
 }
 
+export interface productsViewProducts{
+  code:string
+  id:string,
+  codigopf:string,
+  bono:number,
+  codin:string,
+  nombre:string,
+  uom:string,
+  costo:number,
+  precio:number,
+  margen:number,
+  supplier:string,
+}
+
+
 export interface ViewProducts2{
   code_name:string
 }
@@ -111,6 +128,8 @@ export interface Movimientos2{
   cantidad?:number
 }
 
-
+export interface ProductoCode{
+  code:string
+}
 
 

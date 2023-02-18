@@ -1,4 +1,4 @@
-import { Movimientos2 } from './../../services/products.service';
+import { Movimientos2, ProductoCode, productsViewProducts } from './../../services/products.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgbTypeahead, NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
 import { Observable, Subject, merge, OperatorFunction } from 'rxjs';
@@ -6,6 +6,7 @@ import { debounceTime, distinctUntilChanged, filter, map } from 'rxjs/operators'
 import { FormsModule } from '@angular/forms';
 import { JsonPipe } from '@angular/common';
 import { LocationsId, Movimientos, Products, ProductsService, ViewProducts, ViewProducts2 } from '../../services/products.service';
+import { DetalleTraslado, Traslado, TrasladoService } from '../../services/traslado.service';
 
 
 
@@ -19,6 +20,9 @@ import { LocationsId, Movimientos, Products, ProductsService, ViewProducts, View
   styleUrls: ['./movimientos-administrador.component.css']
 })
 export class MovimientosAdministradorComponent implements OnInit{
+  
+  date!: Date;
+  blob!:Blob;
   product = [''];
   state = [''];
   tableMovimiento?:Movimientos[];
@@ -41,6 +45,9 @@ export class MovimientosAdministradorComponent implements OnInit{
   ListaLocationsId?:LocationsId[];
   ListaMovimientos: Movimientos2[] = [];
   ListaMov:Array<any> =[];
+  ListaTraslados?:Traslado[];
+  ListaDetalleTRaslado?:DetalleTraslado[];
+  ListaProductsViewProducts?:productsViewProducts[];
   
 
   ObjectViewProducts:ViewProducts={
@@ -72,15 +79,73 @@ export class MovimientosAdministradorComponent implements OnInit{
     cantidad:0
   }
 
- 
+  ObjectNotaTraslado:Traslado={
+    id:"",
+    id_encargado:"", 
+    id_autorizado:"", 
+    no:0, 
+    fecha:this.date, 
+    id_location_origen:"", 
+    id_location_destino:"", 
+    motivo:"", 
+    estado:""
+  }
+
+  ObjectDetalleTraslado:DetalleTraslado={
+    id: '',
+    id_nota_traslado: '',
+    id_producto: '',
+    cantidad: 0,
+    estado: 0
+  }
+
+  ObjectProduct:Products={
+    id: '',
+    reference: '',
+    code: '',
+    codetype: '',
+    name: '',
+    pricebuy: 0,
+    pricesell: 0,
+    category: '',
+    taxcat: 0,
+    attributeset_id: '',
+    stockcost: 0,
+    stockvolumen: 0,
+    image: this.blob,
+    iscom: undefined,
+    isscale: undefined,
+    isconstant: undefined,
+    printkb: undefined,
+    sendstatus: undefined,
+    isservice: undefined,
+    attributes: this.blob,
+    display: '',
+    isvprice: 0,
+    isverpatrib: 0,
+    texttip: '',
+    warranty: 0,
+    stockunits: 0,
+    printto: '',
+    supplier: '',
+    uom: '',
+    memodate: undefined,
+    concentracion: '',
+    forma: '',
+    codigopf: '',
+    updated: undefined,
+    bono: 0,
+    visible: 0
+  }
+
+  ObjectProductoCode:ProductoCode={
+    code: ''
+  }
 
 
   
 
-
-  
-
-  constructor( private products:ProductsService) { }
+  constructor( private products:ProductsService, private trasladoService:TrasladoService) { }
 
   ngOnInit(): void {
     // this.getProducts();
@@ -89,14 +154,10 @@ export class MovimientosAdministradorComponent implements OnInit{
   }
 
 
-	
-
-
-
-  setProducto():void{
+   
     
-    console.log('Producto seleccionado ', this.model);
-  }
+  
+
 
   getProducts(): void {
     this.products.getViewsProducts().subscribe(res => {
@@ -128,6 +189,23 @@ export class MovimientosAdministradorComponent implements OnInit{
     );
   }
 
+  SaveNotaTraslado():void{
+    
+
+    this.trasladoService.addNotaTraslado(this.ObjectNotaTraslado).subscribe(
+      res => {
+        console.log('Se agrego el deposito correctamente');
+      },
+      err => {
+        console.log(err);
+      });
+
+  }
+
+
+
+
+
 
   @ViewChild('instance', { static: true }) instance: NgbTypeahead | undefined;
 	focus$ = new Subject<string>();
@@ -148,10 +226,7 @@ export class MovimientosAdministradorComponent implements OnInit{
 
   
 
-  setProucto(event:any):void{
-    //let data = event.target.value;
-    console.log('Este es el evento de setProduct ',event);
-  }
+
 
   getLocationsId(): void {
     this.products.getLocationsId().subscribe(res => {
@@ -208,8 +283,50 @@ export class MovimientosAdministradorComponent implements OnInit{
     console.log('Cantida de producto ',this.ObjectMovimientos.cantidad);
     console.log('Objeto a anadir ',this.ObjectMovimientos);
 
+    this.ObjectProductoCode.code = <any>this.ObjectMovimientos.idProducto;
+    this.products.searchProductoCode(this.ObjectProductoCode).subscribe(res => {
+    this.ListaProductsViewProducts = <any>res;
+    },
+      err => {
+        console.log(err);
+      }
 
-      this.DatosMovimiento.push(`${this.ObjectMovimientos.idProducto}`);   
+    );
+
+
+    
+
+
+  }
+
+Limpiar():void{
+  this.ObjectMovimientos.idProducto =''; 
+  this.ObjectMovimientos.idLocation =''; 
+  this.ObjectMovimientos.cantidad =0; 
+}
+
+
+  DatosTable():void{
+
+    const table = document.getElementById("rwd-table-id") as HTMLTableElement;
+   for (let i = 0, row; row = table.rows[i]; i++) {
+      console.log('dato table ',row);
+    }
+  }
+
+  
+
+
+
+
+   
+
+}
+
+
+
+
+/**this.DatosMovimiento.push(`${this.ObjectMovimientos.idProducto}`);   
       this.DatosMovimiento.push(`${this.ObjectMovimientos.idLocation}`); 
       this.DatosMovimiento.push(`${this.ObjectMovimientos.cantidad}`);
    
@@ -272,30 +389,4 @@ export class MovimientosAdministradorComponent implements OnInit{
 
     // if(this.ListaMovimientos.push(this.ObjectMovimientos)){
     //   console.log('Lista Movimientos ',this.ListaMov);
-    // }
-    
-
-    
-
-  }
-
-Limpiar():void{
-  this.ObjectMovimientos.idProducto =''; 
-  this.ObjectMovimientos.idLocation =''; 
-  this.ObjectMovimientos.cantidad =0; 
-}
-
-
-  DatosTable():void{
-
-    const table = document.getElementById("rwd-table-id") as HTMLTableElement;
-   for (let i = 0, row; row = table.rows[i]; i++) {
-      console.log('dato table ',row);
-    }
-  }
-
-  
-
-   
-
-}
+    // } */

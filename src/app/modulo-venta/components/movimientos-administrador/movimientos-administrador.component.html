@@ -50,17 +50,19 @@
           <thead>
               <tr>
                   <th scope="col">Codigo</th>
+                  <th scope="col">Producto</th>
                   <th scope="col">Farmacia</th>
                   <th scope="col">Cantidad</th>
               </tr>
           </thead>
           <tbody>
-                      <tr *ngFor="let item of CadenaMovimiento; let i = index">
+                      <tr *ngFor="let item of ListaProductsViewProducts; let i = index">
                     
                         
-                          <th>{{item.slice(sic,sfc)}}</th>
-                          <th>{{item.slice(sil,sfl)}}</th>
-                          <th>{{item.slice(sica,sfca)}}</th>
+                          <th>{{item.code}}</th>
+                          <th>{{item.nombre}}</th>
+                          <th>{{ObjectMovimientos.idLocation}}</th>
+                          <th>{{ObjectMovimientos.cantidad}}</th>
                       </tr>
           </tbody>
       </table>

@@ -1,0 +1,45 @@
+import { Injectable } from '@angular/core';
+import { JwtHelperService } from '@auth0/angular-jwt';
+import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class TrasladoService {
+
+  private URL = 'http://localhost:3000';
+
+  constructor(private http: HttpClient,
+    private jwtHelper: JwtHelperService) { }
+
+    //Agregar deposito
+  addNotaTraslado(notaTraslado:any){
+    return this.http.post(`${this.URL}/traslados/createNotaTraslado`,notaTraslado);
+  }
+
+ addDetalleNotaTraslado(detalleNotaTraslado:any){
+  return this.http.post(`${this.URL}/traslados/createDetalleNotaTraslado`,detalleNotaTraslado);
+ }
+
+}
+
+export interface Traslado {
+  id:string,
+  id_encargado:string, 
+  id_autorizado:string, 
+  no:number, 
+  fecha:any, 
+  id_location_origen:string, 
+  id_location_destino:string, 
+  motivo:string 
+  estado:string
+}
+
+export interface DetalleTraslado{
+  id:string,
+  id_nota_traslado:string,
+  id_producto:string,
+  cantidad:number,
+  estado:number,
+}

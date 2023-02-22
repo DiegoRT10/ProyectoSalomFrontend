@@ -2,118 +2,96 @@
   <div class="section text-center">
     <div class="container">
       <div class="row">
+
+        <div class="col-md-8 ml-auto mr-auto">
+          <h1 class="title">Nota de Traslado</h1>
+          <br>
+        </div>
+
+        <div class="col-md-12">
+          <form>
+            <div class="mb-3">
+              <label class="form-label">Fecha</label>
+              <input  type="date" class="form-control"  [(ngModel)]="ObjectNotaTraslado.fecha" name="fecha">
+            </div>
+            <div class="mb-3">
+              <label for="typeahead-focus">Origen</label>
+              <input id="typeahead-focus" type="text" class="form-control" [(ngModel)]="ObjectNotaTraslado.id_location_origen" [ngbTypeahead]="search2"
+                (focus)="focus2$.next($any($event).target.value)" (click)="click2$.next($any($event).target.value)"
+                #instance2="ngbTypeahead" name="id_location_origen" />
+            </div>
+            <div class="mb-3">
+              <label for="typeahead-focus">Destino</label>
+              <input id="typeahead-focus" type="text" class="form-control" [(ngModel)]="ObjectNotaTraslado.id_location_destino" [ngbTypeahead]="search3"
+                (focus)="focus3$.next($any($event).target.value)" (click)="click3$.next($any($event).target.value)"
+                #instance3="ngbTypeahead" name="id_location_destino" />
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Motivo</label>
+              <input type="text" class="form-control"  [(ngModel)]="ObjectNotaTraslado.motivo"  name="motivo">
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <div class="row">
         <div class="col-md-6">
-        <!-- <div class="col-md-8 ml-auto mr-auto"> -->
+
+
+
           <form>
 
             <div class="mb-3">
               <label for="typeahead-focus">Buscar producto a enviar</label>
-              <input id="typeahead-focus" 
-                      type="text" class="form-control" 
-                      [(ngModel)]="model" 
-                      [ngbTypeahead]="search"
-                      (focus)="focus$.next($any($event).target.value)" 
-                      (click)="click$.next($any($event).target.value)"
-                      #instance="ngbTypeahead" 
-                      name="model"/>
-            </div>
-
-            <div class="mb-3">
-              <label for="typeahead-focus">Buscar farmacia a enviar</label>
-              <input id="typeahead-focus" 
-                     type="text" class="form-control" 
-                     [(ngModel)]="model2" 
-                     [ngbTypeahead]="search2"
-                     (focus)="focus2$.next($any($event).target.value)" 
-                     (click)="click2$.next($any($event).target.value)"
-                     #instance2="ngbTypeahead" 
-                     name="model2"/>
+              <input id="typeahead-focus" type="text" class="form-control" [(ngModel)]="model" [ngbTypeahead]="search"
+                (focus)="focus$.next($any($event).target.value)" (click)="click$.next($any($event).target.value)"
+                #instance="ngbTypeahead" name="model" />
             </div>
 
 
             <div class="mb-3">
               <label class="form-label">Cantidad de producto</label>
-              <input [(ngModel)]="ObjectMovimientos.cantidad" type="number" class="form-control" required="[0-9]" name="cantidad">
+              <input [(ngModel)]="ObjectMovimientos.cantidad" type="number" class="form-control" required="[0-9]"
+                name="cantidad">
             </div>
 
             <div class="mb-3">
-              <button  type="button" class="btn btn-success" (click)="MoverProducto()">Enviar</button>
-          </div>
+              <button type="button" class="btn btn-success" (click)="MoverProducto()">Agregar</button>
+            </div>
 
 
           </form>
-        <!-- </div>> -->
-      </div>
-      <div class="col-md-6">
+          <!-- </div>> -->
+        </div>
+        <div class="col-md-6">
 
-        <table class="table">
-          <thead>
+          <table class="table">
+            <thead>
               <tr>
-                  <th scope="col">Codigo</th>
-                  <th scope="col">Producto</th>
-                  <th scope="col">Farmacia</th>
-                  <th scope="col">Cantidad</th>
+                <th scope="col">Codigo</th>
+                <th scope="col">Producto</th>
+                <th scope="col">Farmacia</th>
+                <th scope="col">Cantidad</th>
               </tr>
-          </thead>
-          <tbody>
-                      <tr *ngFor="let item of ListaProductsViewProducts; let i = index">
-                    
-                        
-                          <th>{{item.code}}</th>
-                          <th>{{item.nombre}}</th>
-                          <th>{{ObjectMovimientos.idLocation}}</th>
-                          <th>{{ObjectMovimientos.cantidad}}</th>
-                      </tr>
-          </tbody>
-      </table>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of ListaProductsViewProducts; let i = index">
 
-      
 
-        <!-- <table class="table" id="table-move">
-          <thead>
-              <tr>
-                  <th colspan='3'>Datos a enviar</th>
+                <th>{{item.code}}</th>
+                <th>{{item.nombre}}</th>
+                <th>{{ObjectMovimientos.idLocation}}</th>
+                <th>{{ObjectMovimientos.cantidad}}</th>
               </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let i of DatosMovimiento">
-              <td *ngIf="i != '' "> {{i}} </td>
-            </tr>
-          </tbody>
-      </table>  -->
+            </tbody>
+          </table>
 
 
-      <!-- <table class="table">
-        <tr class='table-dark'>
-            <th colspan='3'>
-                Productos a enviar
-            </th>
-        </tr>
-        
-        <ng-container *ngFor="let item of DatosMovimiento; let i = index">
-        <tr >
-            <th>Codigo</th>
-            <td>{{item}}</td>
-        </tr>
-        <tr >
-            <th>Locacion</th>
-            <td>{{item}}</td>
-        </tr>
-        <tr >
-            <th>Cantidad</th>
-            <td>{{item}}</td>
-        </tr>
-      </ng-container>
-    </table> -->
 
-<!-- 
-      Codigo Locacion Cantidad
-      <ul  *ngFor="let item of CadenaMovimiento">
-        <li *ngIf="item != '' ">{{item}}</li>
-      </ul> -->
 
+
+        </div>
       </div>
-    </div>
     </div>
   </div>
 </div>

@@ -7,8 +7,9 @@ import { FormsModule } from '@angular/forms';
 import { JsonPipe } from '@angular/common';
 import { LocationsId, Movimientos, Products, ProductsService, ViewProducts, ViewProducts2 } from '../../services/products.service';
 import { DetalleTraslado, Traslado, TrasladoService } from '../../services/traslado.service';
-
-
+import * as moment from 'moment';
+import { Administrador, Farmacia, VentaDiariaService } from '../../services/venta-diaria.service';
+import decode from 'jwt-decode';
 
 
 
@@ -21,13 +22,14 @@ import { DetalleTraslado, Traslado, TrasladoService } from '../../services/trasl
 })
 export class MovimientosAdministradorComponent implements OnInit{
   
-  date!: Date;
+  date: Date = new Date();
   blob!:Blob;
   product = [''];
   state = [''];
   tableMovimiento?:Movimientos[];
   model!: string;
   model2: any;
+  model3: any;
   idProd:string='';
   CadenaMovimiento = [''];
   DatosMovimiento = [''];
@@ -38,6 +40,8 @@ export class MovimientosAdministradorComponent implements OnInit{
   sfl = 0;
   sica = 0;
   sfca = 0;
+  fechaDia!: string;
+
 
   ListaProductos?:Products[];
   ListaViewsProducts?:ViewProducts[];
@@ -48,6 +52,9 @@ export class MovimientosAdministradorComponent implements OnInit{
   ListaTraslados?:Traslado[];
   ListaDetalleTRaslado?:DetalleTraslado[];
   ListaProductsViewProducts?:productsViewProducts[];
+  ListaPeopleLocation?:Administrador[];
+  ListaFarmacia?:Farmacia[];
+  
   
 
   ObjectViewProducts:ViewProducts={
@@ -68,9 +75,9 @@ export class MovimientosAdministradorComponent implements OnInit{
   }
   
   ObjectMovimientos:Movimientos={
-    idProducto:'',
-    idLocation:'',
-    cantidad:0
+    idProducto: '',
+    idLocation: '',
+    cantidad: 0
   }
 
   ObjectMovimientos2:Movimientos2={
@@ -138,19 +145,46 @@ export class MovimientosAdministradorComponent implements OnInit{
     visible: 0
   }
 
+  ObjectProductsViewProducts:productsViewProducts ={
+    code: '',
+    id: '',
+    codigopf: '',
+    bono: 0,
+    codin: '',
+    nombre: '',
+    uom: '',
+    costo: 0,
+    precio: 0,
+    margen: 0,
+    supplier: '',
+    taxcat: '',
+    visible: 0
+  }
+
+
   ObjectProductoCode:ProductoCode={
     code: ''
   }
 
+  ObjectPeopleLocation:Administrador={
+    id: ''
+  }
 
+  ObjectFarmacia:Farmacia={
+    id: ''
+  }
   
 
-  constructor( private products:ProductsService, private trasladoService:TrasladoService) { }
+  constructor( private products:ProductsService, private trasladoService:TrasladoService, private ventaDiariaService: VentaDiariaService) { }
 
   ngOnInit(): void {
     // this.getProducts();
+    this.fechaDia = moment.utc(this.date).format('yyyy-MM-DD');
+    this.ObjectNotaTraslado.fecha = this.fechaDia;
+    console.log(this.fechaDia);
     this.getProductsCodeName();
     this.getLocationsId();
+    this.getPeopleLocation();
   }
 
 
@@ -263,9 +297,28 @@ export class MovimientosAdministradorComponent implements OnInit{
 	};
 
 
+
+
+  @ViewChild('instance', { static: true }) instance3: NgbTypeahead | undefined;
+	focus3$ = new Subject<string>();
+	click3$ = new Subject<string>();
+
+	search3: OperatorFunction<string, readonly string[]> = (text3$: Observable<string>) => {
+		const debouncedText$ = text3$.pipe(debounceTime(200), distinctUntilChanged());
+		const clicksWithClosedPopup$ = this.click3$.pipe(filter(() => this.instance!.isPopupOpen()));
+		const inputFocus$ = this.focus3$;
+   
+
+		return merge(debouncedText$, inputFocus$, clicksWithClosedPopup$).pipe(
+			map((term) =>
+				(term === '' ? this.state : this.state.filter((v) => v.toLowerCase().indexOf(term.toLowerCase()) > -1)).slice(0, 10),
+			),
+		);
+	};
+
+
   MoverProducto():void{
 
-    this.ObjectMovimientos.idLocation = this.model2;
 
     for (let i = 0; i < this.model.length; i++) {
       let ascii = this.model.toUpperCase().charCodeAt(i);
@@ -279,13 +332,15 @@ export class MovimientosAdministradorComponent implements OnInit{
    
     
     console.log('Producto a mover ', this.ObjectMovimientos.idProducto);
-    console.log('Farmacia destino ', this.ObjectMovimientos.idLocation);
+    console.log('Farmacia origen ', this.ObjectNotaTraslado.id_location_origen);
+    console.log('Farmacia destino', this.ObjectNotaTraslado.id_location_destino);
     console.log('Cantida de producto ',this.ObjectMovimientos.cantidad);
     console.log('Objeto a anadir ',this.ObjectMovimientos);
 
     this.ObjectProductoCode.code = <any>this.ObjectMovimientos.idProducto;
     this.products.searchProductoCode(this.ObjectProductoCode).subscribe(res => {
-    this.ListaProductsViewProducts = <any>res;
+    this.ObjectProductsViewProducts = res[0];
+    console.log("producto "+ this.ObjectProductsViewProducts.id);
     },
       err => {
         console.log(err);
@@ -298,6 +353,30 @@ export class MovimientosAdministradorComponent implements OnInit{
 
 
   }
+
+  getPeopleLocation(): void {
+    const token = localStorage.getItem('token');
+    let decodeToken:any = {}
+    decodeToken = decode(token || '');
+
+    console.log("tocken "+decodeToken.id);
+    this.ObjectPeopleLocation.id = decodeToken.id
+
+    this.ventaDiariaService.PeopleLocation(this.ObjectPeopleLocation).subscribe(res => {
+      this.ObjectFarmacia = res[0];
+      
+
+      console.log("El usuario "+this.ObjectPeopleLocation.id+" pertenece a "+this.ObjectFarmacia.id);
+      this.ObjectNotaTraslado.id_location_origen = this.ObjectFarmacia.id;
+      
+    },
+      err => {
+        console.log(err);
+      }
+
+    );
+  }
+
 
 Limpiar():void{
   this.ObjectMovimientos.idProducto =''; 

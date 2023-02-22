@@ -36,7 +36,7 @@ export class ProductsService {
         } 
 
         searchProductoCode(code:any){
-          return this.http.post(`${this.URL}/producto/productsViewProducts`,code);
+          return this.http.post<productsViewProducts[]>(`${this.URL}/producto/SearchProductsViewProducts`,code);
         }
 }
 
@@ -94,17 +94,19 @@ export interface ViewProducts{
 }
 
 export interface productsViewProducts{
-  code:string
-  id:string,
-  codigopf:string,
-  bono:number,
-  codin:string,
-  nombre:string,
-  uom:string,
-  costo:number,
-  precio:number,
-  margen:number,
-  supplier:string,
+    code: string,
+    id: string,
+    codigopf: string,
+    bono: number,
+    codin: string,
+    nombre: string,
+    uom: string,
+    costo: number,
+    precio: number,
+    margen: number,
+    supplier: string,
+    taxcat: string,
+    visible: number
 }
 
 
@@ -117,9 +119,9 @@ export interface LocationsId{
 }
 
 export interface Movimientos{
-  idProducto?:string,
-  idLocation?:string,
-  cantidad?:number
+  idProducto:string,
+  idLocation:string,
+  cantidad:number
 }
 
 export interface Movimientos2{

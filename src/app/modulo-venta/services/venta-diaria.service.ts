@@ -96,6 +96,11 @@ export class VentaDiariaService {
   return this.http.put(`${this.URL}/venta/updateDeposito`,deposito);
 }
 
+//Consula location id 
+PeopleLocation(id:any){
+  console.log("entre a la consulta")
+  return this.http.post<Farmacia[]>(`${this.URL}/venta/SearchPeopleLocation`,id);
+}
 
 
 

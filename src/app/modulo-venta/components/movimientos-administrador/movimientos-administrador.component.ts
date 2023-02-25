@@ -8,7 +8,7 @@ import { JsonPipe } from '@angular/common';
 import { LocationsId, Movimientos, Products, ProductsService, ViewProducts, ViewProducts2 } from '../../services/products.service';
 import { DetalleTraslado, Traslado, TrasladoService } from '../../services/traslado.service';
 import * as moment from 'moment';
-import { Administrador, Farmacia, VentaDiariaService } from '../../services/venta-diaria.service';
+import { Administrador, Farmacia, PeopleLocation, VentaDiariaService } from '../../services/venta-diaria.service';
 import decode from 'jwt-decode';
 
 
@@ -26,6 +26,7 @@ export class MovimientosAdministradorComponent implements OnInit{
   blob!:Blob;
   product = [''];
   state = [''];
+  searchPeople = [''];
   tableMovimiento?:Movimientos[];
   model!: string;
   model2: any;
@@ -41,6 +42,8 @@ export class MovimientosAdministradorComponent implements OnInit{
   sica = 0;
   sfca = 0;
   fechaDia!: string;
+  inputDestino:any;
+  bandera:boolean = false;
 
 
   ListaProductos?:Products[];
@@ -53,6 +56,7 @@ export class MovimientosAdministradorComponent implements OnInit{
   ListaDetalleTRaslado?:DetalleTraslado[];
   ListaProductsViewProducts?:productsViewProducts[];
   ListaPeopleLocation?:Administrador[];
+  ListaPeopleLocation2?: PeopleLocation[];
   ListaFarmacia?:Farmacia[];
   
   
@@ -87,15 +91,17 @@ export class MovimientosAdministradorComponent implements OnInit{
   }
 
   ObjectNotaTraslado:Traslado={
-    id:"",
-    id_encargado:"", 
-    id_autorizado:"", 
-    no:0, 
-    fecha:this.date, 
-    id_location_origen:"", 
-    id_location_destino:"", 
-    motivo:"", 
-    estado:""
+    id: '',
+    id_entrega: '',
+    id_recibe: '',
+    id_encargado: '',
+    id_autorizado: '',
+    no: 0,
+    fecha: this.date,
+    id_location_origen: '',
+    id_location_destino: '',
+    motivo: '',
+    estado: ''
   }
 
   ObjectDetalleTraslado:DetalleTraslado={
@@ -161,6 +167,25 @@ export class MovimientosAdministradorComponent implements OnInit{
     visible: 0
   }
 
+  people: PeopleLocation = {
+    id: '',
+    name: '',
+    apppassword: '',
+    card: 0,
+    role: 0,
+    visible: 0,
+    image: '',
+    auditor: 0,
+    token: '',
+    tokenLife: '',
+    idpeople: '',
+    idlocation: '',
+    meta: 0,
+    nivel: 0,
+    dia: 0
+  }
+
+
 
   ObjectProductoCode:ProductoCode={
     code: ''
@@ -180,11 +205,12 @@ export class MovimientosAdministradorComponent implements OnInit{
   ngOnInit(): void {
     // this.getProducts();
     this.fechaDia = moment.utc(this.date).format('yyyy-MM-DD');
-    this.ObjectNotaTraslado.fecha = this.fechaDia;
+    this.ObjectNotaTraslado.fecha = <any>this.fechaDia;
     console.log(this.fechaDia);
     this.getProductsCodeName();
     this.getLocationsId();
     this.getPeopleLocation();
+    this.ActualizaInputRecibe();
   }
 
 
@@ -316,6 +342,51 @@ export class MovimientosAdministradorComponent implements OnInit{
 		);
 	};
 
+  @ViewChild('instance', { static: true }) instance4: NgbTypeahead | undefined;
+	focus4$ = new Subject<string>();
+	click4$ = new Subject<string>();
+
+	search4: OperatorFunction<string, readonly string[]> = (text4$: Observable<string>) => {
+		const debouncedText$ = text4$.pipe(debounceTime(200), distinctUntilChanged());
+		const clicksWithClosedPopup$ = this.click4$.pipe(filter(() => this.instance!.isPopupOpen()));
+		const inputFocus$ = this.focus4$;
+   
+
+		return merge(debouncedText$, inputFocus$, clicksWithClosedPopup$).pipe(
+			map((term) =>
+				(term === '' ? this.searchPeople : this.searchPeople.filter((v) => v.toLowerCase().indexOf(term.toLowerCase()) > -1)).slice(0, 10),
+			),
+		);
+	};
+
+
+  ActualizaInputRecibe():void{
+    console.log("entre a ActualizaInputRecibe");
+    this.people.idlocation = this.ObjectNotaTraslado.id_location_destino;
+    console.log("id location a buscar ",this.people.idlocation);
+    this.ventaDiariaService.getPeopleLocation(this.people).subscribe(res => {
+      this.ListaPeopleLocation2 = <any>res;
+      for (const i of this.ListaPeopleLocation2!) {
+        this.searchPeople.push( <any>i.idpeople);
+      }
+
+      for (const j of this.ListaPeopleLocation2!) {
+      if(j.role==1 || j.role==2){
+        this.ObjectNotaTraslado.id_recibe = j.id;
+      }  
+      }
+      
+    },
+      err => {
+        console.log(err);
+      }
+
+    );
+  }
+
+  
+
+
 
   MoverProducto():void{
 
@@ -341,6 +412,7 @@ export class MovimientosAdministradorComponent implements OnInit{
     this.products.searchProductoCode(this.ObjectProductoCode).subscribe(res => {
     this.ObjectProductsViewProducts = res[0];
     console.log("producto "+ this.ObjectProductsViewProducts.id);
+    this.bandera = true;
     },
       err => {
         console.log(err);
@@ -348,10 +420,22 @@ export class MovimientosAdministradorComponent implements OnInit{
 
     );
 
+  }
 
+  AgregarNotaTraslado(){
+
+   
     
-
-
+    // this.trasladoService.addNotaTraslado(this.ObjectNotaTraslado).subscribe(res => {
+    //   console.log("Datos enviados");
+    // },
+    //   err => {
+    //     console.log(err);
+    //   }
+  
+    // );
+  
+    
   }
 
   getPeopleLocation(): void {
@@ -361,7 +445,7 @@ export class MovimientosAdministradorComponent implements OnInit{
 
     console.log("tocken "+decodeToken.id);
     this.ObjectPeopleLocation.id = decodeToken.id
-
+    this.ObjectNotaTraslado.id_entrega = decodeToken.id;
     this.ventaDiariaService.PeopleLocation(this.ObjectPeopleLocation).subscribe(res => {
       this.ObjectFarmacia = res[0];
       
@@ -394,6 +478,16 @@ Limpiar():void{
   }
 
   
+
+  getIdLogin():string{
+    const token = localStorage.getItem('token');
+    let decodeToken:any = {}
+    decodeToken = decode(token || '');
+    console.log('Este es el token',decodeToken.id);
+    return decodeToken.id;
+  }
+
+
 
 
 

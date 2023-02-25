@@ -13,26 +13,32 @@ export class TrasladoService {
   constructor(private http: HttpClient,
     private jwtHelper: JwtHelperService) { }
 
-    //Agregar deposito
+    //Agregar Nota de traslado
   addNotaTraslado(notaTraslado:any){
     return this.http.post(`${this.URL}/traslados/createNotaTraslado`,notaTraslado);
   }
-
+  
+  
+  //agregar detalle de nota de traslado 
  addDetalleNotaTraslado(detalleNotaTraslado:any){
   return this.http.post(`${this.URL}/traslados/createDetalleNotaTraslado`,detalleNotaTraslado);
  }
 
+
+ 
 }
 
 export interface Traslado {
-  id:string,
+  id:string, 
+  id_entrega:string, 
+  id_recibe:string, 
   id_encargado:string, 
   id_autorizado:string, 
   no:number, 
-  fecha:any, 
+  fecha:Date, 
   id_location_origen:string, 
   id_location_destino:string, 
-  motivo:string 
+  motivo:string, 
   estado:string
 }
 

@@ -102,7 +102,9 @@ PeopleLocation(id:any){
   return this.http.post<Farmacia[]>(`${this.URL}/venta/SearchPeopleLocation`,id);
 }
 
-
+SearchPeopleLocationAll(idLocation:any){
+  return this.http.post<PeopleLocation2[]>(`${this.URL}/ventas/SearchPeopleLocationAll`,idLocation);
+ }
 
 
 }

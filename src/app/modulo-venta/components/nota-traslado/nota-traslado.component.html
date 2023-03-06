@@ -1,0 +1,88 @@
+<div class="main">
+    <div class="section text-center">
+      <div class="container">
+        <div class="row">
+  
+          <div class="col-md-8 ml-auto mr-auto">
+            <h1 *ngIf="!bandera" class="title">Nota de Traslado</h1>
+            <h1 *ngIf="bandera" class="title">Detalle Nota de Traslado</h1>
+            <br>
+          </div>
+  
+          <div class="col-md-12">
+            <form *ngIf="!bandera">
+              <div class="mb-3">
+                <label class="form-label">Fecha</label>
+                <input  type="date" class="form-control"  [(ngModel)]="ObjectNotaTraslado.fecha" name="fecha">
+              </div>
+              <div class="mb-3">
+                <label for="typeahead-focus">Origen</label>
+  
+                <input id="typeahead-focus" type="text" class="form-control" [(ngModel)]="ObjectNotaTraslado.id_location_origen" [ngbTypeahead]="search2"
+                  (focus)="focus2$.next($any($event).target.value)" (click)="click2$.next($any($event).target.value)" 
+                  #instance2="ngbTypeahead" name="id_location_origen" disabled/>
+              </div>
+              <div class="mb-3">
+                <label for="typeahead-focus">Destino</label>
+                <input id="typeahead-focus" type="text" class="form-control" [(ngModel)]="ObjectNotaTraslado.id_location_destino" (ngModelChange)="ActualizaInputRecibe()" [ngbTypeahead]="search3"
+                  (focus)="focus3$.next($any($event).target.value)" (click)="click3$.next($any($event).target.value)"
+                  #instance3="ngbTypeahead" name="id_location_destino" />
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Motivo</label>
+                <input type="text" class="form-control"  [(ngModel)]="ObjectNotaTraslado.motivo"  name="motivo">
+              </div>
+  
+              <div  class="mb-3">
+                <label class="form-label">Entrega</label>
+                <input  type="text" class="form-control"  [(ngModel)]="ObjectNotaTraslado.id_entrega" name="id_entrega" disabled>
+              </div>
+              <div  class="mb-3">
+                <label for="typeahead-focus">Recibe</label>
+                <input id="typeahead-focus" type="text" class="form-control" [(ngModel)]="ObjectNotaTraslado.id_recibe"  [ngbTypeahead]="search4"
+                  (focus)="focus4$.next($any($event).target.value)" (click)="click4$.next($any($event).target.value)"
+                  #instance4="ngbTypeahead" name="id_recibe" />
+              </div>
+              <div  class="mb-3">
+                <label for="typeahead-focus">Encargado</label>
+                <input id="typeahead-focus" type="text" class="form-control" [(ngModel)]="ObjectNotaTraslado.id_encargado"  [ngbTypeahead]="search5"
+                  (focus)="focus5$.next($any($event).target.value)" (click)="click5$.next($any($event).target.value)"
+                  #instance5="ngbTypeahead" name="id_encargado" />
+              </div>
+              <div  class="mb-3">
+                <label for="typeahead-focus">Autorizado por</label>
+                <input type="text" class="form-control" [(ngModel)]="ObjectNotaTraslado.id_autorizado" name="id_autorizado" disabled/>
+              </div>
+  
+            </form>
+            <button *ngIf="!bandera" type="button" class="btn btn-outline-primary float-left"  (click)="AgregarNotaTraslado()" > Guardar </button>
+            <button *ngIf="bandera" type="button" class="btn btn-outline-primary float-left" data-toggle="modal" data-target="#exampleModalLong" > Agregar </button>
+  
+            <table *ngIf="bandera" class="table">
+              <thead>
+                <tr>
+                  <th scope="col">Codigo</th>
+                  <th scope="col">Producto</th>
+                  <th scope="col">Cantidad</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of ListaProductsViewProducts; let i = index">
+  
+  
+                  <th>{{item.code}}</th>
+                  <th>{{item.nombre}}</th>
+                  <th>{{ObjectMovimientos.cantidad}}</th>
+                </tr>
+              </tbody>
+            </table>
+  
+           
+  
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  

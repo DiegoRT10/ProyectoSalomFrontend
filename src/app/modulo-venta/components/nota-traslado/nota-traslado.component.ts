@@ -10,23 +10,20 @@ import { DetalleTraslado, Traslado, TrasladoService } from '../../services/trasl
 import * as moment from 'moment';
 import { Administrador, Farmacia, PeopleLocation, VentaDiariaService } from '../../services/venta-diaria.service';
 import decode from 'jwt-decode';
-
-
+import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-movimientos-administrador',
-  templateUrl: './movimientos-administrador.component.html',
-  // standalone: true,
-  // imports: [NgbTypeaheadModule, FormsModule, JsonPipe],
-  styleUrls: ['./movimientos-administrador.component.css']
+  selector: 'app-nota-traslado',
+  templateUrl: './nota-traslado.component.html',
+  styleUrls: ['./nota-traslado.component.css']
 })
-export class MovimientosAdministradorComponent implements OnInit{
-  
+export class NotaTrasladoComponent {
   date: Date = new Date();
   blob!:Blob;
   product = [''];
   state = [''];
   searchPeople = [''];
+  searchPeople2 = [''];
   tableMovimiento?:Movimientos[];
   model!: string;
   model2: any;
@@ -44,7 +41,7 @@ export class MovimientosAdministradorComponent implements OnInit{
   fechaDia!: string;
   inputDestino:any;
   bandera?:boolean;
-
+ 
 
 
   ListaProductos?:Products[];
@@ -201,7 +198,7 @@ export class MovimientosAdministradorComponent implements OnInit{
   }
   
 
-  constructor( private products:ProductsService, private trasladoService:TrasladoService, private ventaDiariaService: VentaDiariaService) { }
+  constructor( private products:ProductsService, private trasladoService:TrasladoService, private ventaDiariaService: VentaDiariaService, private router: Router) { }
 
   ngOnInit(): void {
     // this.getProducts();
@@ -212,6 +209,8 @@ export class MovimientosAdministradorComponent implements OnInit{
     this.getLocationsId();
     this.getPeopleLocation();
     this.ActualizaInputRecibe();
+    this.ActualizaInputEncargado();
+    this.ObjectNotaTraslado.id_autorizado="GUZMANM";
   }
 
 
@@ -268,22 +267,22 @@ export class MovimientosAdministradorComponent implements OnInit{
 
 
 
-  @ViewChild('instance', { static: true }) instance: NgbTypeahead | undefined;
-	focus$ = new Subject<string>();
-	click$ = new Subject<string>();
+  // @ViewChild('instance', { static: true }) instance: NgbTypeahead | undefined;
+	// focus$ = new Subject<string>();
+	// click$ = new Subject<string>();
 
-	search: OperatorFunction<string, readonly string[]> = (text$: Observable<string>) => {
-		const debouncedText$ = text$.pipe(debounceTime(200), distinctUntilChanged());
-		const clicksWithClosedPopup$ = this.click$.pipe(filter(() => this.instance!.isPopupOpen()));
-		const inputFocus$ = this.focus$;
+	// search: OperatorFunction<string, readonly string[]> = (text$: Observable<string>) => {
+	// 	const debouncedText$ = text$.pipe(debounceTime(200), distinctUntilChanged());
+	// 	const clicksWithClosedPopup$ = this.click$.pipe(filter(() => this.instance!.isPopupOpen()));
+	// 	const inputFocus$ = this.focus$;
    
 
-		return merge(debouncedText$, inputFocus$, clicksWithClosedPopup$).pipe(
-			map((term) =>
-				(term === '' ? this.product : this.product.filter((v) => v.toLowerCase().indexOf(term.toLowerCase()) > -1)).slice(0, 10),
-			),
-		);
-	};
+	// 	return merge(debouncedText$, inputFocus$, clicksWithClosedPopup$).pipe(
+	// 		map((term) =>
+	// 			(term === '' ? this.product : this.product.filter((v) => v.toLowerCase().indexOf(term.toLowerCase()) > -1)).slice(0, 10),
+	// 		),
+	// 	);
+	// };
 
   
 
@@ -306,7 +305,7 @@ export class MovimientosAdministradorComponent implements OnInit{
     );
   }
 
-  @ViewChild('instance', { static: true }) instance2: NgbTypeahead | undefined;
+  @ViewChild('instance', { static: true }) instance: NgbTypeahead | undefined;
 	focus2$ = new Subject<string>();
 	click2$ = new Subject<string>();
 
@@ -361,6 +360,25 @@ export class MovimientosAdministradorComponent implements OnInit{
 	};
 
 
+  @ViewChild('instance', { static: true }) instance5: NgbTypeahead | undefined;
+	focus5$ = new Subject<string>();
+	click5$ = new Subject<string>();
+
+	search5: OperatorFunction<string, readonly string[]> = (text5$: Observable<string>) => {
+		const debouncedText$ = text5$.pipe(debounceTime(200), distinctUntilChanged());
+		const clicksWithClosedPopup$ = this.click5$.pipe(filter(() => this.instance!.isPopupOpen()));
+		const inputFocus$ = this.focus5$;
+   
+
+		return merge(debouncedText$, inputFocus$, clicksWithClosedPopup$).pipe(
+			map((term) =>
+				(term === '' ? this.searchPeople2 : this.searchPeople2.filter((v) => v.toLowerCase().indexOf(term.toLowerCase()) > -1)).slice(0, 10),
+			),
+		);
+	};
+
+
+
   ActualizaInputRecibe():void{
     console.log("entre a ActualizaInputRecibe");
     this.people.idlocation = this.ObjectNotaTraslado.id_location_destino;
@@ -386,7 +404,22 @@ export class MovimientosAdministradorComponent implements OnInit{
   }
 
   
+  ActualizaInputEncargado():void{
 
+    this.ventaDiariaService.getPeopleLocation2().subscribe(res => {
+      this.ListaPeopleLocation2 = <any>res;
+      for (const i of this.ListaPeopleLocation2!) {
+        this.searchPeople2.push( <any>i.idpeople);
+        console.log("Encargado ",i.idpeople);
+      }
+      
+    },
+      err => {
+        console.log(err);
+      }
+
+    );
+  }
 
 
   MoverProducto():void{
@@ -429,8 +462,13 @@ export class MovimientosAdministradorComponent implements OnInit{
 
    
     this.bandera=true;
+    this.ObjectNotaTraslado.estado = "1";
+    console.log("Datos a agregar nota de traslado ",this.ObjectNotaTraslado);
     this.trasladoService.addNotaTraslado(this.ObjectNotaTraslado).subscribe(res => {
       console.log("Datos enviados");
+      console.log("este es el id traslado ",res);
+      localStorage.setItem("idTraslado", <any>res);
+      this.goDetalleNotaTraslado()
     },
       err => {
         console.log(err);
@@ -491,8 +529,9 @@ Limpiar():void{
   }
 
 
-
-
+  goDetalleNotaTraslado():void{
+    this.router.navigate(['detalle-nota-traslado']);
+  }
 
 
    

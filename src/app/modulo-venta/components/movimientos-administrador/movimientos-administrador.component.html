@@ -4,12 +4,13 @@
       <div class="row">
 
         <div class="col-md-8 ml-auto mr-auto">
-          <h1 class="title">Nota de Traslado</h1>
+          <h1 *ngIf="!bandera" class="title">Nota de Traslado</h1>
+          <h1 *ngIf="bandera" class="title">Detalle Nota de Traslado</h1>
           <br>
         </div>
 
         <div class="col-md-12">
-          <form>
+          <form *ngIf="!bandera">
             <div class="mb-3">
               <label class="form-label">Fecha</label>
               <input  type="date" class="form-control"  [(ngModel)]="ObjectNotaTraslado.fecha" name="fecha">
@@ -31,10 +32,31 @@
               <label class="form-label">Motivo</label>
               <input type="text" class="form-control"  [(ngModel)]="ObjectNotaTraslado.motivo"  name="motivo">
             </div>
-          </form>
-          <button type="button" class="btn btn-outline-primary float-left" data-toggle="modal" data-target="#exampleModalLong" > Agregar </button>
 
-          <table class="table">
+            <div  class="mb-3">
+              <label class="form-label">Entrega</label>
+              <input  type="text" class="form-control"  [(ngModel)]="ObjectNotaTraslado.id_entrega" name="id_entrega">
+            </div>
+            <div  class="mb-3">
+              <label for="typeahead-focus">Recibe</label>
+              <input id="typeahead-focus" type="text" class="form-control" [(ngModel)]="ObjectNotaTraslado.id_recibe"  [ngbTypeahead]="search4"
+                (focus)="focus4$.next($any($event).target.value)" (click)="click4$.next($any($event).target.value)"
+                #instance4="ngbTypeahead" name="id_recibe" />
+            </div>
+            <div  class="mb-3">
+              <label for="typeahead-focus">Encargado Traslado</label>
+              <input type="text" class="form-control" [(ngModel)]="ObjectNotaTraslado.id_encargado" name="id_encargado"/>
+            </div>
+            <div  class="mb-3">
+              <label for="typeahead-focus">Autorizado por</label>
+              <input type="text" class="form-control" [(ngModel)]="ObjectNotaTraslado.id_autorizado" name="id_autorizado" />
+            </div>
+
+          </form>
+          <button *ngIf="!bandera" type="button" class="btn btn-outline-primary float-left"  (click)="AgregarNotaTraslado()" > Guardar </button>
+          <button *ngIf="bandera" type="button" class="btn btn-outline-primary float-left" data-toggle="modal" data-target="#exampleModalLong" > Agregar </button>
+
+          <table *ngIf="bandera" class="table">
             <thead>
               <tr>
                 <th scope="col">Codigo</th>
@@ -53,27 +75,7 @@
             </tbody>
           </table>
 
-          <form>
-            <div *ngIf="bandera" class="mb-3">
-              <label class="form-label">Entrega</label>
-              <input  type="text" class="form-control"  [(ngModel)]="ObjectNotaTraslado.id_entrega" name="id_entrega">
-            </div>
-            <div *ngIf="bandera" class="mb-3">
-              <label for="typeahead-focus">Recibe</label>
-              <input id="typeahead-focus" type="text" class="form-control" [(ngModel)]="ObjectNotaTraslado.id_recibe"  [ngbTypeahead]="search4"
-                (focus)="focus4$.next($any($event).target.value)" (click)="click4$.next($any($event).target.value)"
-                #instance4="ngbTypeahead" name="id_location_destino" />
-            </div>
-            <div *ngIf="bandera" class="mb-3">
-              <label for="typeahead-focus">Encargado Traslado</label>
-              <input type="text" class="form-control" [(ngModel)]="ObjectNotaTraslado.id_encargado" name="id_encargado"/>
-            </div>
-            <div *ngIf="bandera" class="mb-3">
-              <label for="typeahead-focus">Autorizado por</label>
-              <input type="text" class="form-control" [(ngModel)]="ObjectNotaTraslado.id_autorizado" name="id_autorizado" />
-            </div>
-           
-          </form>
+         
 
         </div>
       </div>

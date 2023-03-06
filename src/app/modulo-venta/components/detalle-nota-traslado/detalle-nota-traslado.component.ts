@@ -6,22 +6,18 @@ import { debounceTime, distinctUntilChanged, filter, map } from 'rxjs/operators'
 import { FormsModule } from '@angular/forms';
 import { JsonPipe } from '@angular/common';
 import { LocationsId, Movimientos, Products, ProductsService, ViewProducts, ViewProducts2 } from '../../services/products.service';
-import { DetalleTraslado, Traslado, TrasladoService } from '../../services/traslado.service';
+import { DetalleTraslado, IdDetalleTraslado, Traslado, TrasladoService } from '../../services/traslado.service';
 import * as moment from 'moment';
 import { Administrador, Farmacia, PeopleLocation, VentaDiariaService } from '../../services/venta-diaria.service';
 import decode from 'jwt-decode';
-
-
+import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-movimientos-administrador',
-  templateUrl: './movimientos-administrador.component.html',
-  // standalone: true,
-  // imports: [NgbTypeaheadModule, FormsModule, JsonPipe],
-  styleUrls: ['./movimientos-administrador.component.css']
+  selector: 'app-detalle-nota-traslado',
+  templateUrl: './detalle-nota-traslado.component.html',
+  styleUrls: ['./detalle-nota-traslado.component.css']
 })
-export class MovimientosAdministradorComponent implements OnInit{
-  
+export class DetalleNotaTrasladoComponent {
   date: Date = new Date();
   blob!:Blob;
   product = [''];
@@ -35,30 +31,19 @@ export class MovimientosAdministradorComponent implements OnInit{
   CadenaMovimiento = [''];
   DatosMovimiento = [''];
   cadena:string ='';
-  sic = 0;
-  sfc = 0;
-  sil = 0;
-  sfl = 0;
-  sica = 0;
-  sfca = 0;
   fechaDia!: string;
   inputDestino:any;
   bandera?:boolean;
-
+  
 
 
   ListaProductos?:Products[];
   ListaViewsProducts?:ViewProducts[];
   ListaProductsCodeName?:ViewProducts2[];
-  ListaLocationsId?:LocationsId[];
-  ListaMovimientos: Movimientos2[] = [];
-  ListaMov:Array<any> =[];
   ListaTraslados?:Traslado[];
-  ListaDetalleTRaslado?:DetalleTraslado[];
+  ListaDetalleTraslado?:DetalleTraslado[];
   ListaProductsViewProducts?:productsViewProducts[];
-  ListaPeopleLocation?:Administrador[];
-  ListaPeopleLocation2?: PeopleLocation[];
-  ListaFarmacia?:Farmacia[];
+
   
   
 
@@ -200,8 +185,11 @@ export class MovimientosAdministradorComponent implements OnInit{
     id: ''
   }
   
+  ObjectDetalleTrasladoId:IdDetalleTraslado={
+    id: ''
+  }
 
-  constructor( private products:ProductsService, private trasladoService:TrasladoService, private ventaDiariaService: VentaDiariaService) { }
+  constructor( private products:ProductsService, private trasladoService:TrasladoService, private ventaDiariaService: VentaDiariaService, private router: Router) { }
 
   ngOnInit(): void {
     // this.getProducts();
@@ -209,9 +197,8 @@ export class MovimientosAdministradorComponent implements OnInit{
     this.ObjectNotaTraslado.fecha = <any>this.fechaDia;
     console.log(this.fechaDia);
     this.getProductsCodeName();
-    this.getLocationsId();
     this.getPeopleLocation();
-    this.ActualizaInputRecibe();
+    this.getDetalleTraslado();
   }
 
 
@@ -250,10 +237,10 @@ export class MovimientosAdministradorComponent implements OnInit{
     );
   }
 
-  SaveNotaTraslado():void{
+  SaveDetalleNotaTraslado():void{
     
 
-    this.trasladoService.addNotaTraslado(this.ObjectNotaTraslado).subscribe(
+    this.trasladoService.addDetalleNotaTraslado(this.ObjectNotaTraslado).subscribe(
       res => {
         console.log('Se agrego el deposito correctamente');
       },
@@ -262,9 +249,6 @@ export class MovimientosAdministradorComponent implements OnInit{
       });
 
   }
-
-
-
 
 
 
@@ -285,26 +269,7 @@ export class MovimientosAdministradorComponent implements OnInit{
 		);
 	};
 
-  
 
-
-
-  getLocationsId(): void {
-    this.products.getLocationsId().subscribe(res => {
-      this.ListaLocationsId = <any>res;
-
-      for (const i of this.ListaLocationsId!) {
-        this.state.push( <any>i.id);
-        
-      }
-      
-    },
-      err => {
-        console.log(err);
-      }
-
-    );
-  }
 
   @ViewChild('instance', { static: true }) instance2: NgbTypeahead | undefined;
 	focus2$ = new Subject<string>();
@@ -312,7 +277,7 @@ export class MovimientosAdministradorComponent implements OnInit{
 
 	search2: OperatorFunction<string, readonly string[]> = (text2$: Observable<string>) => {
 		const debouncedText$ = text2$.pipe(debounceTime(200), distinctUntilChanged());
-		const clicksWithClosedPopup$ = this.click2$.pipe(filter(() => this.instance!.isPopupOpen()));
+		const clicksWithClosedPopup$ = this.click2$.pipe(filter(() => this.instance2!.isPopupOpen()));
 		const inputFocus$ = this.focus2$;
    
 
@@ -332,7 +297,7 @@ export class MovimientosAdministradorComponent implements OnInit{
 
 	search3: OperatorFunction<string, readonly string[]> = (text3$: Observable<string>) => {
 		const debouncedText$ = text3$.pipe(debounceTime(200), distinctUntilChanged());
-		const clicksWithClosedPopup$ = this.click3$.pipe(filter(() => this.instance!.isPopupOpen()));
+		const clicksWithClosedPopup$ = this.click3$.pipe(filter(() => this.instance3!.isPopupOpen()));
 		const inputFocus$ = this.focus3$;
    
 
@@ -349,7 +314,7 @@ export class MovimientosAdministradorComponent implements OnInit{
 
 	search4: OperatorFunction<string, readonly string[]> = (text4$: Observable<string>) => {
 		const debouncedText$ = text4$.pipe(debounceTime(200), distinctUntilChanged());
-		const clicksWithClosedPopup$ = this.click4$.pipe(filter(() => this.instance!.isPopupOpen()));
+		const clicksWithClosedPopup$ = this.click4$.pipe(filter(() => this.instance4!.isPopupOpen()));
 		const inputFocus$ = this.focus4$;
    
 
@@ -361,29 +326,7 @@ export class MovimientosAdministradorComponent implements OnInit{
 	};
 
 
-  ActualizaInputRecibe():void{
-    console.log("entre a ActualizaInputRecibe");
-    this.people.idlocation = this.ObjectNotaTraslado.id_location_destino;
-    console.log("id location a buscar ",this.people.idlocation);
-    this.ventaDiariaService.getPeopleLocation(this.people).subscribe(res => {
-      this.ListaPeopleLocation2 = <any>res;
-      for (const i of this.ListaPeopleLocation2!) {
-        this.searchPeople.push( <any>i.idpeople);
-      }
 
-      for (const j of this.ListaPeopleLocation2!) {
-      if(j.role==1 || j.role==2){
-        this.ObjectNotaTraslado.id_recibe = j.id;
-      }  
-      }
-      
-    },
-      err => {
-        console.log(err);
-      }
-
-    );
-  }
 
   
 
@@ -410,11 +353,15 @@ export class MovimientosAdministradorComponent implements OnInit{
     console.log('Objeto a anadir ',this.ObjectMovimientos);
 
     this.ObjectProductoCode.code = <any>this.ObjectMovimientos.idProducto;
+    
+    this.ObjectDetalleTraslado.id_nota_traslado=<any>localStorage.getItem("idTraslado");
+    this.ObjectDetalleTraslado.estado = 1; //creado
+
     this.products.searchProductoCode(this.ObjectProductoCode).subscribe(res => {
     this.ObjectProductsViewProducts = res[0];
     this.ObjectDetalleTraslado.id_producto = this.ObjectProductsViewProducts.id;
     console.log("producto "+ this.ObjectProductsViewProducts.id);
-    
+    this.AgregarDetalleNotaTraslado();
       
     },
       err => {
@@ -425,12 +372,16 @@ export class MovimientosAdministradorComponent implements OnInit{
 
   }
 
-  AgregarNotaTraslado(){
+  AgregarDetalleNotaTraslado(){
 
    
     this.bandera=true;
-    this.trasladoService.addNotaTraslado(this.ObjectNotaTraslado).subscribe(res => {
+    this.trasladoService.addDetalleNotaTraslado(this.ObjectDetalleTraslado).subscribe(res => {
       console.log("Datos enviados");
+      localStorage.setItem("idDetalleTraslado", <any>res);
+      this.getDetalleTraslado();
+      this.ObjectMovimientos.idProducto = "";
+      this.ObjectMovimientos.cantidad = 0;
     },
       err => {
         console.log(err);
@@ -440,6 +391,22 @@ export class MovimientosAdministradorComponent implements OnInit{
   
     
   }
+
+  getDetalleTraslado(){
+    this.ObjectDetalleTrasladoId.id = <any>localStorage.getItem("idTraslado");
+    this.trasladoService.searchDetalleTraslado(this.ObjectDetalleTrasladoId).subscribe(res => {
+      console.log("Datos enviados");
+      this.ListaDetalleTraslado = res;
+      console.log("detalle traslado +",this.ListaDetalleTraslado);
+    },
+      err => {
+        console.log(err);
+      }
+  
+    );
+  
+  }
+
 
   getPeopleLocation(): void {
     const token = localStorage.getItem('token');
@@ -491,7 +458,9 @@ Limpiar():void{
   }
 
 
-
+  goDetalleNotaTraslado():void{
+    this.router.navigate(['lista-nota-traslado']);
+  }
 
 
 

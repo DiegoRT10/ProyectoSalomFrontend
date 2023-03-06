@@ -24,7 +24,10 @@ export class TrasladoService {
   return this.http.post(`${this.URL}/traslados/createDetalleNotaTraslado`,detalleNotaTraslado);
  }
 
-
+ searchDetalleTraslado(id:any){
+  return this.http.post<DetalleTraslado[]>(`${this.URL}/traslados/detalleTraslado`,id);
+}
+ 
  
 }
 
@@ -48,4 +51,8 @@ export interface DetalleTraslado{
   id_producto:string,
   cantidad:number,
   estado:number,
+}
+
+export interface IdDetalleTraslado{
+  id:string
 }

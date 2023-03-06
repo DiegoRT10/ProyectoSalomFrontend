@@ -43,6 +43,10 @@ export class VentaDiariaService {
       return this.http.post<PeopleLocation[]>(`${this.URL}/venta/peoplelocation`,venta);
     }
 
+    getPeopleLocation2(){
+      return this.http.get<PeopleLocation[]>(`${this.URL}/venta/peoplelocation2`);
+    }    
+
      //Obtener consulta de venta del dia
      getVentaDia(venta:any){
       return this.http.post<VentaPorDia[]>(`${this.URL}/venta/ventapordia`,venta);

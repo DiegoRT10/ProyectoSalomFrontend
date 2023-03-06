@@ -19,6 +19,9 @@ import { VentaSucursalComponent } from './components/venta-sucursal/venta-sucurs
 import { MdbAccordionModule } from 'mdb-angular-ui-kit/accordion';
 import { MovimientosAdministradorComponent } from './components/movimientos-administrador/movimientos-administrador.component';
 import { NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
+import { NotaTrasladoComponent } from './components/nota-traslado/nota-traslado.component';
+import { DetalleNotaTrasladoComponent } from './components/detalle-nota-traslado/detalle-nota-traslado.component';
+import { ListaNotaTrasladoComponent } from './components/lista-nota-traslado/lista-nota-traslado.component';
 
 
 
@@ -32,6 +35,9 @@ import { NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
     LoadingComponent,
     VentaSucursalComponent,
     MovimientosAdministradorComponent,
+    NotaTrasladoComponent,
+    DetalleNotaTrasladoComponent,
+    ListaNotaTrasladoComponent,
     //AccordionComponent,
   ],
   imports: [

@@ -34,6 +34,9 @@ import { FarmaciaComponent } from './modulo-venta/components/farmacia/farmacia.c
 import { EstimuloGerenteComponent } from './modulo-venta/components/estimulo-gerente/estimulo-gerente.component';
 import { VentaSucursalComponent } from './modulo-venta/components/venta-sucursal/venta-sucursal.component';
 import { MovimientosAdministradorComponent } from './modulo-venta/components/movimientos-administrador/movimientos-administrador.component';
+import { NotaTrasladoComponent } from './modulo-venta/components/nota-traslado/nota-traslado.component';
+import { DetalleNotaTrasladoComponent } from './modulo-venta/components/detalle-nota-traslado/detalle-nota-traslado.component';
+import { ListaNotaTrasladoComponent } from './modulo-venta/components/lista-nota-traslado/lista-nota-traslado.component';
 
 
 
@@ -71,6 +74,10 @@ const routes: Routes = [
 {path: 'estimulo-gerente', component: EstimuloGerenteComponent, canActivate: [AuthGuard, RoleGuard],  data: {expectedRole: {s:'0', g:'1'}}},//puede acceder sistemas o gerente
 {path: 'venta-sucursal', component: VentaSucursalComponent, canActivate: [AuthGuard, RoleGuard],  data: {expectedRole: {s:'0', g:'2'}}},//puede acceder sistemas administrador
 {path: 'movimientos-administrador', component: MovimientosAdministradorComponent, canActivate: [AuthGuard, RoleGuard],  data: {expectedRole: {s:'0', g:'2'}}},//puede acceder sistemas administrador
+{path: 'nota-traslado', component: NotaTrasladoComponent, canActivate: [AuthGuard, RoleGuard],  data: {expectedRole: {s:'0', g:'2'}}},//puede acceder sistemas administrador
+{path: 'detalle-nota-traslado', component: DetalleNotaTrasladoComponent, canActivate: [AuthGuard, RoleGuard],  data: {expectedRole: {s:'0', g:'2'}}},//puede acceder sistemas administrador
+{path: 'lista-nota-traslado', component: ListaNotaTrasladoComponent, canActivate: [AuthGuard, RoleGuard],  data: {expectedRole: {s:'0', g:'2'}}},//puede acceder sistemas administrador
+
 
 {path: '**', pathMatch: 'full', redirectTo: 'home'}
 ];

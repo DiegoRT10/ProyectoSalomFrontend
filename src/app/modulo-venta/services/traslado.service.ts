@@ -35,6 +35,10 @@ searchDetalleTraslado2(id:any){
 updateDetalleTraslado(id:any){
     return this.http.put(`${this.URL}/traslados/updateDetalleTraslado`,id);
   }
+
+updateTraslado(id:any){
+  return this.http.put(`${this.URL}/traslados/updateTraslado`,id);  
+}
  
 }
 

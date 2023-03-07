@@ -92,8 +92,6 @@ getPeopleLocation(): void {
 }
 
 
-isNumber(num:number):boolean{
-return !isNaN(num);
-}
+
 
 }

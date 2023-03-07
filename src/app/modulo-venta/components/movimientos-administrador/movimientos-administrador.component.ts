@@ -102,7 +102,7 @@ export class MovimientosAdministradorComponent implements OnInit{
     id_location_origen: '',
     id_location_destino: '',
     motivo: '',
-    estado: ''
+    estado: 0
   }
 
   ObjectDetalleTraslado:DetalleTraslado={

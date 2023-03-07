@@ -99,7 +99,7 @@ export class NotaTrasladoComponent {
     id_location_origen: '',
     id_location_destino: '',
     motivo: '',
-    estado: ''
+    estado: 0
   }
 
   ObjectDetalleTraslado:DetalleTraslado={
@@ -267,22 +267,22 @@ export class NotaTrasladoComponent {
 
 
 
-  // @ViewChild('instance', { static: true }) instance: NgbTypeahead | undefined;
-	// focus$ = new Subject<string>();
-	// click$ = new Subject<string>();
+  @ViewChild('instance', { static: true }) instance: NgbTypeahead | undefined;
+	focus$ = new Subject<string>();
+	click$ = new Subject<string>();
 
-	// search: OperatorFunction<string, readonly string[]> = (text$: Observable<string>) => {
-	// 	const debouncedText$ = text$.pipe(debounceTime(200), distinctUntilChanged());
-	// 	const clicksWithClosedPopup$ = this.click$.pipe(filter(() => this.instance!.isPopupOpen()));
-	// 	const inputFocus$ = this.focus$;
+	search: OperatorFunction<string, readonly string[]> = (text$: Observable<string>) => {
+		const debouncedText$ = text$.pipe(debounceTime(200), distinctUntilChanged());
+		const clicksWithClosedPopup$ = this.click$.pipe(filter(() => this.instance!.isPopupOpen()));
+		const inputFocus$ = this.focus$;
    
 
-	// 	return merge(debouncedText$, inputFocus$, clicksWithClosedPopup$).pipe(
-	// 		map((term) =>
-	// 			(term === '' ? this.product : this.product.filter((v) => v.toLowerCase().indexOf(term.toLowerCase()) > -1)).slice(0, 10),
-	// 		),
-	// 	);
-	// };
+		return merge(debouncedText$, inputFocus$, clicksWithClosedPopup$).pipe(
+			map((term) =>
+				(term === '' ? this.product : this.product.filter((v) => v.toLowerCase().indexOf(term.toLowerCase()) > -1)).slice(0, 10),
+			),
+		);
+	};
 
   
 
@@ -305,7 +305,7 @@ export class NotaTrasladoComponent {
     );
   }
 
-  @ViewChild('instance', { static: true }) instance: NgbTypeahead | undefined;
+  @ViewChild('instance', { static: true }) instance2: NgbTypeahead | undefined;
 	focus2$ = new Subject<string>();
 	click2$ = new Subject<string>();
 
@@ -462,7 +462,7 @@ export class NotaTrasladoComponent {
 
    
     this.bandera=true;
-    this.ObjectNotaTraslado.estado = "1";
+    this.ObjectNotaTraslado.estado = 1;
     console.log("Datos a agregar nota de traslado ",this.ObjectNotaTraslado);
     this.trasladoService.addNotaTraslado(this.ObjectNotaTraslado).subscribe(res => {
       console.log("Datos enviados");

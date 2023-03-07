@@ -27,7 +27,14 @@ export class TrasladoService {
  searchDetalleTraslado(id:any){
   return this.http.post<DetalleTraslado[]>(`${this.URL}/traslados/detalleTraslado`,id);
 }
+
+searchDetalleTraslado2(id:any){
+  return this.http.post<Traslado[]>(`${this.URL}/traslados/NotaTraslado`,id);
+}
  
+updateDetalleTraslado(id:any){
+    return this.http.put(`${this.URL}/traslados/updateDetalleTraslado`,id);
+  }
  
 }
 
@@ -42,7 +49,7 @@ export interface Traslado {
   id_location_origen:string, 
   id_location_destino:string, 
   motivo:string, 
-  estado:string
+  estado:number
 }
 
 export interface DetalleTraslado{

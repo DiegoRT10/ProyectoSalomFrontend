@@ -87,7 +87,7 @@ export class DetalleNotaTrasladoComponent {
     id_location_origen: '',
     id_location_destino: '',
     motivo: '',
-    estado: ''
+    estado: 0
   }
 
   ObjectDetalleTraslado:DetalleTraslado={
@@ -441,12 +441,28 @@ Limpiar():void{
 
   DatosTable():void{
 
-    const table = document.getElementById("rwd-table-id") as HTMLTableElement;
+    const table = document.getElementById("detalle") as HTMLTableElement;
    for (let i = 0, row; row = table.rows[i]; i++) {
       console.log('dato table ',row);
     }
   }
 
+  setRevisado(){
+  for (const i of this.ListaDetalleTraslado!) {
+    this.ObjectDetalleTrasladoId.id = i.id;
+    this.trasladoService.updateDetalleTraslado(this.ObjectDetalleTrasladoId).subscribe(res => {
+      console.log("Datos enviados");
+    },
+      err => {
+        console.log(err);
+      }
+  
+    );
+    console.log("detalle a enviar ",i.id_producto);
+}
+    this.getDetalleTraslado();
+    this.goListaNotaTraslado();
+  }
   
 
   getIdLogin():string{
@@ -458,7 +474,7 @@ Limpiar():void{
   }
 
 
-  goDetalleNotaTraslado():void{
+  goListaNotaTraslado():void{
     this.router.navigate(['lista-nota-traslado']);
   }
 

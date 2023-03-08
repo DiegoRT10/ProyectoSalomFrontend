@@ -22,6 +22,7 @@ import { NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
 import { NotaTrasladoComponent } from './components/nota-traslado/nota-traslado.component';
 import { DetalleNotaTrasladoComponent } from './components/detalle-nota-traslado/detalle-nota-traslado.component';
 import { ListaNotaTrasladoComponent } from './components/lista-nota-traslado/lista-nota-traslado.component';
+import { ListaSalidasComponent } from './components/lista-salidas/lista-salidas.component';
 
 
 
@@ -38,6 +39,7 @@ import { ListaNotaTrasladoComponent } from './components/lista-nota-traslado/lis
     NotaTrasladoComponent,
     DetalleNotaTrasladoComponent,
     ListaNotaTrasladoComponent,
+    ListaSalidasComponent,
     //AccordionComponent,
   ],
   imports: [

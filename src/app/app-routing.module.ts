@@ -37,6 +37,7 @@ import { MovimientosAdministradorComponent } from './modulo-venta/components/mov
 import { NotaTrasladoComponent } from './modulo-venta/components/nota-traslado/nota-traslado.component';
 import { DetalleNotaTrasladoComponent } from './modulo-venta/components/detalle-nota-traslado/detalle-nota-traslado.component';
 import { ListaNotaTrasladoComponent } from './modulo-venta/components/lista-nota-traslado/lista-nota-traslado.component';
+import { ListaSalidasComponent } from './modulo-venta/components/lista-salidas/lista-salidas.component';
 
 
 
@@ -77,7 +78,7 @@ const routes: Routes = [
 {path: 'nota-traslado', component: NotaTrasladoComponent, canActivate: [AuthGuard, RoleGuard],  data: {expectedRole: {s:'0', g:'2'}}},//puede acceder sistemas administrador
 {path: 'detalle-nota-traslado', component: DetalleNotaTrasladoComponent, canActivate: [AuthGuard, RoleGuard],  data: {expectedRole: {s:'0', g:'2'}}},//puede acceder sistemas administrador
 {path: 'lista-nota-traslado', component: ListaNotaTrasladoComponent, canActivate: [AuthGuard, RoleGuard],  data: {expectedRole: {s:'0', g:'2'}}},//puede acceder sistemas administrador
-
+{path: 'lista-salidas', component: ListaSalidasComponent, canActivate: [AuthGuard, RoleGuard],  data: {expectedRole: {s:'0', g:'1'}}},//puede acceder sistemas administrador
 
 {path: '**', pathMatch: 'full', redirectTo: 'home'}
 ];

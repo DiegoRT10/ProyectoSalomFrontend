@@ -1,0 +1,52 @@
+<div class="main">
+    <div class="section text-center">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-8 ml-auto mr-auto">
+            <h2 class="title">Lista de moviemientos entre farmacias</h2>
+          </div>
+        </div>
+        <br/>
+        <br/>
+        <div class="mb-3">
+            <label for="typeahead-focus">Farmacia</label>
+            <input id="typeahead-focus" type="text" class="form-control" [(ngModel)]="ObjectNotaTraslado.id_location_destino" (ngModelChange)="ActualizaInputRecibe()" [ngbTypeahead]="search"
+              (focus)="focus$.next($any($event).target.value)" (click)="click$.next($any($event).target.value)"
+              #instance="ngbTypeahead" name="id_location_destino" />
+          </div>
+        <div class="row">
+            <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">No</th>
+                    <th scope="col">Entrega</th>
+                    <th scope="col">Recibe</th>
+                    <th scope="col">Encargado</th>
+                    <th scope="col">Autoriza</th>
+                    <th scope="col">Fecha</th>
+                    <th scope="col">Destino</th>
+                    <th scope="col">Estado</th>
+                    <th scope="col">Salida</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <ng-container *ngFor="let i of ListaNotaTraslado">
+                  <tr>    
+                    <td>{{i.no}}</td>
+                    <td>{{i.id_entrega}}</td>
+                    <td>{{i.id_recibe}}</td>
+                    <td>{{i.id_encargado}}</td>
+                    <td>{{i.id_autorizado}}</td>
+                    <td>{{i.fecha | date:'dd/MM/yyyy'}}</td>
+                    <td>{{i.id_location_destino}}</td>
+                    <td *ngIf="i.estado == 0">NULL</td>
+                    <td *ngIf="i.estado == 1">Pendiente Aprobacion</td>
+                    <td *ngIf="i.estado == 2">Autorizado</td>
+                    <td *ngIf="i.estado < 2"><button type="button" class="btn btn-success" (click)="setRevisado(i.id)">Autorizar</button></td>
+                  </tr>
+                  </ng-container>
+                </tbody>
+              </table>
+        </div>
+      </div>
+    </div>

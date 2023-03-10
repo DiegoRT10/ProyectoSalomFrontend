@@ -439,6 +439,7 @@ export class NotaTrasladoComponent {
     console.log('Producto a mover ', this.ObjectMovimientos.idProducto);
     console.log('Farmacia origen ', this.ObjectNotaTraslado.id_location_origen);
     console.log('Farmacia destino', this.ObjectNotaTraslado.id_location_destino);
+    localStorage.setItem("idTrasladoDestino", this.ObjectNotaTraslado.id_location_destino);
     console.log('Cantida de producto ',this.ObjectMovimientos.cantidad);
     console.log('Objeto a anadir ',this.ObjectMovimientos);
 

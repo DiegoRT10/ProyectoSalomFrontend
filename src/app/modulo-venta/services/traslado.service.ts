@@ -40,6 +40,10 @@ updateTraslado(id:any){
   return this.http.put(`${this.URL}/traslados/updateTraslado`,id);  
 }
  
+ //agregar stockdiary 
+ addStockDiary(stockdiary:any){
+  return this.http.post(`${this.URL}/traslados/stockdiary`,stockdiary);
+ }
 
 
 
@@ -70,4 +74,16 @@ export interface DetalleTraslado{
 
 export interface IdDetalleTraslado{
   id:string
+}
+
+export interface stockDiary{
+  id:string, 
+  datenew:Date, 
+  reason:string, 
+  location:string, 
+  product:string, 
+  units:number, 
+  price:number, 
+  appuser:string, 
+  supplier:string
 }

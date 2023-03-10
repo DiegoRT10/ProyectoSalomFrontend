@@ -38,6 +38,10 @@ export class ProductsService {
         searchProductoCode(code:any){
           return this.http.post<productsViewProducts[]>(`${this.URL}/producto/SearchProductsViewProducts`,code);
         }
+
+        searchPriceSell(id:any){
+          return this.http.post<PriceSell[]>(`${this.URL}/producto/PriceSell`,id);
+        }
 }
 
 export interface Products{
@@ -134,4 +138,10 @@ export interface ProductoCode{
   code:string
 }
 
+export interface ProductoId{
+  id:string  
+}
 
+export interface PriceSell{
+  pricesell:number;
+}

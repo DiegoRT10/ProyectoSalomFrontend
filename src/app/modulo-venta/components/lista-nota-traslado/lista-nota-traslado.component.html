@@ -36,7 +36,7 @@
                     <td *ngIf="i.estado == 0">NULL</td>
                     <td *ngIf="i.estado == 1">Pendiente Aprobacion</td>
                     <td *ngIf="i.estado == 2">Autorizado</td>
-                    <td *ngIf="i.estado == 2"><button type="button" class="btn btn-success">Dar Salida</button></td>
+                    <td *ngIf="i.estado == 2"><button type="button" class="btn btn-success" (click)="insertStockDiary(i.id,i.id_location_destino)" >Dar Salida</button></td>
                   </tr>
                   </ng-container>
                 </tbody>

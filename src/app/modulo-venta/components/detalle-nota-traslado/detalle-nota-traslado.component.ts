@@ -6,7 +6,7 @@ import { debounceTime, distinctUntilChanged, filter, map } from 'rxjs/operators'
 import { FormsModule } from '@angular/forms';
 import { JsonPipe } from '@angular/common';
 import { LocationsId, Movimientos, Products, ProductsService, ViewProducts, ViewProducts2 } from '../../services/products.service';
-import { DetalleTraslado, IdDetalleTraslado, Traslado, TrasladoService } from '../../services/traslado.service';
+import { DetalleTraslado, IdDetalleTraslado, IdDetalleTraslado1, Traslado, TrasladoService } from '../../services/traslado.service';
 import * as moment from 'moment';
 import { Administrador, Farmacia, PeopleLocation, VentaDiariaService } from '../../services/venta-diaria.service';
 import decode from 'jwt-decode';
@@ -185,8 +185,8 @@ export class DetalleNotaTrasladoComponent {
     id: ''
   }
   
-  ObjectDetalleTrasladoId:IdDetalleTraslado={
-    id: ''
+  ObjectDetalleTrasladoId:IdDetalleTraslado1={
+    id: '',
   }
 
   constructor( private products:ProductsService, private trasladoService:TrasladoService, private ventaDiariaService: VentaDiariaService, private router: Router) { }

@@ -143,5 +143,6 @@ export interface ProductoId{
 }
 
 export interface PriceSell{
-  pricesell:number;
+  id:string,
+  pricesell:number
 }

@@ -73,9 +73,13 @@ export interface DetalleTraslado{
 }
 
 export interface IdDetalleTraslado{
-  id:string
+  id:string,
+  estado:number
 }
 
+export interface IdDetalleTraslado1{
+  id:string,
+}
 export interface stockDiary{
   id:string, 
   datenew:Date, 

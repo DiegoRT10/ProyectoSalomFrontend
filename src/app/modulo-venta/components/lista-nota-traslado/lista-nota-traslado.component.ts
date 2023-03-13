@@ -14,10 +14,12 @@ export class ListaNotaTrasladoComponent {
 
   date: Date = new Date();
   decodeToken:any = {}
-  
+  bandera:boolean = true;
+  estado!:number;
+
   ListaNotaTraslado!:Traslado[];
   ListaDetalleTraslado?:DetalleTraslado[];
-  
+  listaOp: String[] = ['Creados','Autorizados','Salientes', 'Entrantes'];
   
   ObjectStockDiary:stockDiary={
     id: '',
@@ -46,7 +48,8 @@ export class ListaNotaTrasladoComponent {
   }
 
   ObjectDetalleTrasladoId:IdDetalleTraslado={
-    id: ''
+    id: '',
+    estado:0
   }
 
   ObjectPeopleLocation:Administrador={
@@ -59,6 +62,7 @@ export class ListaNotaTrasladoComponent {
   }
 
   ObjectProduct:PriceSell={
+    id:"",
     pricesell: 0
   }
 
@@ -77,50 +81,87 @@ export class ListaNotaTrasladoComponent {
 
 
 insertStockDiary(idTraslado:string,destino:string){
-  this.getDetalleTraslado(idTraslado);
-  this.ObjectStockDiary.id = '';
-  // this.ObjectStockDiary.datenew = this.date;
 
-  for (const i of this.ListaDetalleTraslado!) {
-    
-  this.ObjectStockDiary.reason = "-8";
-  this.ObjectStockDiary.location= this.ObjectFarmacia.id;
-  this.ObjectStockDiary.product= i.id_producto;
-  this.ObjectStockDiary.units= i.cantidad;
-  this.ObjectStockDiary.appuser= this.decodeToken.id;
-  this.ObjectStockDiary.supplier=destino;
-    
-  this.ObjectProducto.id = i.id_producto;
-  console.log("id producto ", this.ObjectProducto.id);
-  this.productService.searchPriceSell(this.ObjectProducto).subscribe(res => {
-    this.ObjectProduct = res[0];
-    this.ObjectStockDiary.price=this.ObjectProduct.pricesell;
-    console.log("precio ",this.ObjectStockDiary.price);
-    this.trasladoService.addStockDiary(this.ObjectStockDiary).subscribe(
-      res => {
-        console.log("Datos enviados");
-      },
-      err =>{
+  this.ObjectDetalleTrasladoId.id = idTraslado;
+  this.trasladoService.searchDetalleTraslado(this.ObjectDetalleTrasladoId).subscribe(res => {
+    console.log("Datos enviados");
+    this.ListaDetalleTraslado = res;
+    console.log("detalle traslado1",this.ListaDetalleTraslado);
+    this.ObjectStockDiary.id = '';
+    // this.ObjectStockDiary.datenew = this.date;
+  
+    for (const i of this.ListaDetalleTraslado!) {
+      
+    this.ObjectStockDiary.reason = "-8";
+    this.ObjectStockDiary.location= this.ObjectFarmacia.id;
+    this.ObjectStockDiary.product= i.id_producto;
+    this.ObjectStockDiary.units= i.cantidad;
+    this.ObjectStockDiary.appuser= this.decodeToken.id;
+    this.ObjectStockDiary.supplier=destino;
+      
+    this.ObjectProducto.id = i.id_producto;
+    console.log("id producto ", this.ObjectProducto.id);
+    this.productService.searchPriceSell(this.ObjectProducto).subscribe(res => {
+      this.ObjectProduct = res[0];
+      this.ObjectStockDiary.price=this.ObjectProduct.pricesell;
+      this.ObjectStockDiary.product=this.ObjectProduct.id;
+      console.log("este es el producto a enviar ",this.ObjectStockDiary.product, " precio ",this.ObjectStockDiary.price);
+      this.trasladoService.addStockDiary(this.ObjectStockDiary).subscribe(
+        res => {
+          console.log("Datos enviados");
+        },
+        err =>{
+          console.log(err);
+        }
+      );
+    },
+      err => {
         console.log(err);
       }
+  
     );
+    
+  }
+
+
+
   },
     err => {
       console.log(err);
     }
 
   );
+
+
+
+ 
+}
+
+
+getTraslado(data:any){
+  let op;
+  console.log("estado de la bandera ",this.bandera);
+  this.bandera ?  op = data.target.value: op = data
+
+  switch (op) {
+    case 'Creados' : this.estado=0;
+    break;
+    case 'Autorizados' : this.estado=1;
+    break;
+    case 'Salientes' : this.estado=2;
+    break;
+    case 'Entrantes' : this.estado=3;
+    break;
+  }
   
-}
-}
 
-
-getTraslado(){
   this.ObjectDetalleTrasladoId.id = this.ObjectFarmacia.id;
+  this.ObjectDetalleTrasladoId.estado = <any>this.estado;
   this.trasladoService.searchDetalleTraslado2(this.ObjectDetalleTrasladoId).subscribe(res => {
     console.log("Datos enviados");
     this.ListaNotaTraslado = res;
     console.log("detalle traslado +",this.ListaNotaTraslado);
+    this.bandera = true;
   },
     err => {
       console.log(err);
@@ -143,7 +184,10 @@ getPeopleLocation(): void {
 
     console.log("El usuario "+this.ObjectPeopleLocation.id+" pertenece a "+this.ObjectFarmacia.id);
     this.ObjectNotaTraslado.id_location_origen = this.ObjectFarmacia.id;
-    this.getTraslado();
+    this.bandera = false;
+    this.getTraslado('Creados');
+
+   
   },
     err => {
       console.log(err);
@@ -167,6 +211,10 @@ getDetalleTraslado(id:string){
 
 }
 
+tipoTraslado(data:any){
+  console.log('este es el dato de sde op ', data.target.value);
+  data.target.value='Salientes' ? this.bandera=true : this.bandera=false;
+}
 
   
 

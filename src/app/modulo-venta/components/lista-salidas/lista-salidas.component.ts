@@ -63,7 +63,8 @@ export class ListaSalidasComponent {
 
 
   ObjectDetalleTrasladoId:IdDetalleTraslado={
-    id: ''
+    id: '',
+    estado:0
   }
 
   ObjectPeopleLocation:Administrador={

@@ -23,6 +23,7 @@ import { NotaTrasladoComponent } from './components/nota-traslado/nota-traslado.
 import { DetalleNotaTrasladoComponent } from './components/detalle-nota-traslado/detalle-nota-traslado.component';
 import { ListaNotaTrasladoComponent } from './components/lista-nota-traslado/lista-nota-traslado.component';
 import { ListaSalidasComponent } from './components/lista-salidas/lista-salidas.component';
+import { MovimientosInicioComponent } from './components/movimientos-inicio/movimientos-inicio.component';
 
 
 
@@ -40,6 +41,7 @@ import { ListaSalidasComponent } from './components/lista-salidas/lista-salidas.
     DetalleNotaTrasladoComponent,
     ListaNotaTrasladoComponent,
     ListaSalidasComponent,
+    MovimientosInicioComponent,
     //AccordionComponent,
   ],
   imports: [

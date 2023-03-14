@@ -79,6 +79,7 @@ export interface IdDetalleTraslado{
 
 export interface IdDetalleTraslado1{
   id:string,
+  estado:number
 }
 export interface stockDiary{
   id:string, 

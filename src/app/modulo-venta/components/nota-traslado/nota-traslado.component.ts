@@ -463,7 +463,7 @@ export class NotaTrasladoComponent {
 
    
     this.bandera=true;
-    this.ObjectNotaTraslado.estado = 1;
+    this.ObjectNotaTraslado.estado = 0;
     console.log("Datos a agregar nota de traslado ",this.ObjectNotaTraslado);
     this.trasladoService.addNotaTraslado(this.ObjectNotaTraslado).subscribe(res => {
       console.log("Datos enviados");
@@ -477,7 +477,6 @@ export class NotaTrasladoComponent {
   
     );
   
-    
   }
 
   getPeopleLocation(): void {

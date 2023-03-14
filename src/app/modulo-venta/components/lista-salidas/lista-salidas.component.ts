@@ -19,13 +19,18 @@ import { Router } from '@angular/router';
 })
 export class ListaSalidasComponent {
   date: Date = new Date();
-  
-  state = [''];
+  bandera:boolean = true;
+  estado!:number;
+  estado2:string ="";
 
+  state = [''];
+  listaOp: String[] = ['Creados','Pendientes','Autorizados','Salientes', 'Entrantes'];
 
   ListaNotaTraslado!:Traslado[];
   ListaPeopleLocation2?: PeopleLocation[];
   ListaLocationsId?:LocationsId[];
+
+
   searchPeople = [''];
 
   ObjectNotaTraslado:Traslado={
@@ -64,7 +69,7 @@ export class ListaSalidasComponent {
 
   ObjectDetalleTrasladoId:IdDetalleTraslado={
     id: '',
-    estado:0
+    estado:1
   }
 
   ObjectPeopleLocation:Administrador={
@@ -152,7 +157,11 @@ getPeopleLocation(): void {
 
     console.log("El usuario "+this.ObjectPeopleLocation.id+" pertenece a "+this.ObjectFarmacia.id);
     this.ObjectNotaTraslado.id_location_origen = this.ObjectFarmacia.id;
-    this.getDetalleTraslado();
+    this.bandera = false;
+    this.getTraslado('Pendientes');
+    this.estado = 1;
+    this.estado2 = "Pendientes";
+
   },
     err => {
       console.log(err);
@@ -166,16 +175,32 @@ ActualizaInputRecibe():void{
   this.people.idlocation = this.ObjectNotaTraslado.id_location_destino;
   this.ObjectFarmacia.id = this.people.idlocation;
   console.log("id location a buscar ",this.people.idlocation);
-  this.getDetalleTraslado();
+  this.bandera = false;
+  this.getTraslado('Pendientes');
+  this.estado = 1;
+  this.estado2 = "Pendientes";
+  console.log("llegue a Pendientes");
 }
 
+ActualizaInputRecibe2():void{
+  console.log("entre a ActualizaInputRecibe");
+  this.people.idlocation = this.ObjectNotaTraslado.id_location_destino;
+  this.ObjectFarmacia.id = this.people.idlocation;
+  console.log("id location a buscar ",this.people.idlocation);
+  this.bandera = false;
+  this.estado = 2;
+  this.estado2 = "Autorizados";
+  this.getTraslado('Autorizados');
+  console.log("llegue a autorizados");
+}
 
 setRevisado(id:string){
  
   this.ObjectDetalleTrasladoId.id = id;
+  this.ObjectDetalleTrasladoId.estado = 2;
 
     this.trasladoService.updateTraslado(this.ObjectDetalleTrasladoId).subscribe(res => {
-      this.ActualizaInputRecibe();
+      this.ActualizaInputRecibe2();
     },
       err => {
         console.log(err);
@@ -185,6 +210,40 @@ setRevisado(id:string){
    
 }
 
+
+getTraslado(data:any){
+  let op;
+  console.log("estado de la bandera ",this.bandera);
+  this.bandera ?  op = data.target.value: op = data
+
+  switch (op) {
+    case 'Creados' : this.estado=0;
+    break;
+    case 'Pendientes' : this.estado=1;
+    break;
+    case 'Autorizados' : this.estado=2;
+    break;
+    case 'Salientes' : this.estado=3;
+    break;
+    case 'Entrantes' : this.estado=4;
+    break;
+  }
+  
+
+  this.ObjectDetalleTrasladoId.id = this.ObjectFarmacia.id;
+  this.ObjectDetalleTrasladoId.estado = <any>this.estado;
+  this.trasladoService.searchDetalleTraslado2(this.ObjectDetalleTrasladoId).subscribe(res => {
+    console.log("Datos enviados");
+    this.ListaNotaTraslado = res;
+    console.log("detalle traslado +",this.ListaNotaTraslado);
+    this.bandera = true;
+  },
+    err => {
+      console.log(err);
+    }
+
+  );
+}
 
 
 }

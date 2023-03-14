@@ -19,7 +19,7 @@ export class ListaNotaTrasladoComponent {
 
   ListaNotaTraslado!:Traslado[];
   ListaDetalleTraslado?:DetalleTraslado[];
-  listaOp: String[] = ['Creados','Autorizados','Salientes', 'Entrantes'];
+  listaOp: String[] = ['Creados','Pendientes','Autorizados','Salientes', 'Entrantes'];
   
   ObjectStockDiary:stockDiary={
     id: '',
@@ -146,13 +146,16 @@ getTraslado(data:any){
   switch (op) {
     case 'Creados' : this.estado=0;
     break;
-    case 'Autorizados' : this.estado=1;
+    case 'Pendientes' : this.estado=1;
     break;
-    case 'Salientes' : this.estado=2;
+    case 'Autorizados' : this.estado=2;
     break;
-    case 'Entrantes' : this.estado=3;
+    case 'Salientes' : this.estado=3;
+    break;
+    case 'Entrantes' : this.estado=4;
     break;
   }
+  
   
 
   this.ObjectDetalleTrasladoId.id = this.ObjectFarmacia.id;

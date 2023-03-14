@@ -14,6 +14,12 @@
               (focus)="focus$.next($any($event).target.value)" (click)="click$.next($any($event).target.value)"
               #instance="ngbTypeahead" name="id_location_destino" />
           </div>
+          <div class="mb-3">
+            <label class="form-label">Seleciona una opcion de traslado</label>
+        <select [(ngModel)]="estado2" (change)="getTraslado($event)" class="form-control">
+            <option  *ngFor="let item of listaOp" >{{item}}</option>
+        </select>
+        </div>
         <div class="row">
             <table class="table">
                 <thead>
@@ -39,10 +45,12 @@
                     <td>{{i.id_autorizado}}</td>
                     <td>{{i.fecha | date:'dd/MM/yyyy'}}</td>
                     <td>{{i.id_location_destino}}</td>
-                    <td *ngIf="i.estado == 0">NULL</td>
+                    <td *ngIf="i.estado == 0">Creados</td>
                     <td *ngIf="i.estado == 1">Pendiente Aprobacion</td>
-                    <td *ngIf="i.estado == 2">Autorizado</td>
-                    <td *ngIf="i.estado < 2"><button type="button" class="btn btn-success" (click)="setRevisado(i.id)">Autorizar</button></td>
+                    <td *ngIf="i.estado == 2">Autorizados</td>
+                    <td *ngIf="i.estado == 3">Salientes</td>
+                    <td *ngIf="i.estado == 4">Entrantes</td>
+                    <td *ngIf="i.estado == 1"><button type="button" class="btn btn-success" (click)="setRevisado(i.id)">Autorizar</button></td>
                   </tr>
                   </ng-container>
                 </tbody>

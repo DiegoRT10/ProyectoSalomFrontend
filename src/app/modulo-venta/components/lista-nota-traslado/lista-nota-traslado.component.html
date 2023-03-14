@@ -39,10 +39,12 @@
                     <td>{{i.id_autorizado}}</td>
                     <td>{{i.fecha | date:'dd/MM/yyyy'}}</td>
                     <td>{{i.id_location_destino}}</td>
-                    <td *ngIf="i.estado == 0">Pendiente Aprobacion</td>
-                    <td *ngIf="i.estado == 1">Autorizado</td>
-                    <td *ngIf="i.estado == 2">Salientes</td>
-                    <td *ngIf="i.estado == 1"><button type="button" class="btn btn-success" (click)="insertStockDiary(i.id,i.id_location_destino)" >Dar Salida</button></td>
+                    <td *ngIf="i.estado == 0">Creados</td>
+                    <td *ngIf="i.estado == 1">Pendiente Aprobacion</td>
+                    <td *ngIf="i.estado == 2">Autorizados</td>
+                    <td *ngIf="i.estado == 3">Salientes</td>
+                    <td *ngIf="i.estado == 4">Entrantes</td>
+                    <td *ngIf="i.estado == 2"><button type="button" class="btn btn-success" (click)="insertStockDiary(i.id,i.id_location_destino)" >Dar Salida</button></td>
                   </tr>
                   </ng-container>
                 </tbody>

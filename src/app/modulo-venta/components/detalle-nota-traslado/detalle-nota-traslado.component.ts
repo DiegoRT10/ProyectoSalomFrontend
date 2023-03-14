@@ -187,6 +187,7 @@ export class DetalleNotaTrasladoComponent {
   
   ObjectDetalleTrasladoId:IdDetalleTraslado1={
     id: '',
+    estado: 0
   }
 
   constructor( private products:ProductsService, private trasladoService:TrasladoService, private ventaDiariaService: VentaDiariaService, private router: Router) { }
@@ -450,6 +451,7 @@ Limpiar():void{
   setRevisado(){
   for (const i of this.ListaDetalleTraslado!) {
     this.ObjectDetalleTrasladoId.id = i.id;
+    this.ObjectDetalleTrasladoId.estado = 0;
     this.trasladoService.updateDetalleTraslado(this.ObjectDetalleTrasladoId).subscribe(res => {
       console.log("Datos enviados");
     },
@@ -460,6 +462,7 @@ Limpiar():void{
     );
     console.log("detalle a enviar ",i.id_producto);
 }
+    this.setRevisado2()
     this.getDetalleTraslado();
     this.goListaNotaTraslado();
   }
@@ -479,7 +482,21 @@ Limpiar():void{
   }
 
 
-
+  setRevisado2(){
+ 
+    this.ObjectDetalleTrasladoId.id = <any>localStorage.getItem('idTraslado');
+    this.ObjectDetalleTrasladoId.estado = 1;
+  
+      this.trasladoService.updateTraslado(this.ObjectDetalleTrasladoId).subscribe(res => {
+        
+      },
+        err => {
+          console.log(err);
+        }
+    
+      );
+     
+  }
    
 
 }

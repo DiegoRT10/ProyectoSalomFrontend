@@ -45,7 +45,9 @@ updateTraslado(id:any){
   return this.http.post(`${this.URL}/traslados/stockdiary`,stockdiary);
  }
 
-
+ updateStockCurrent(stockCurrent:any){
+  return this.http.put(`${this.URL}/traslados/updateStockCurrent`,stockCurrent);
+} 
 
 
 }
@@ -91,4 +93,10 @@ export interface stockDiary{
   price:number, 
   appuser:string, 
   supplier:string
+}
+
+export interface stockCurrent{
+  units:number,
+  location:string,
+  product:string
 }

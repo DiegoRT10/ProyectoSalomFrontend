@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { DetalleTraslado, IdDetalleTraslado, stockDiary, Traslado, TrasladoService } from '../../services/traslado.service';
+import { DetalleTraslado, IdDetalleTraslado, stockCurrent, stockDiary, Traslado, TrasladoService } from '../../services/traslado.service';
 import { Administrador, Farmacia, VentaDiariaService } from '../../services/venta-diaria.service';
 import decode from 'jwt-decode';
 import { PriceSell, ProductoId, ProductsService } from '../../services/products.service';
@@ -31,6 +31,12 @@ export class ListaNotaTrasladoComponent {
     price: 0,
     appuser: '',
     supplier: ''
+  }
+
+  ObjectStockCurrent:stockCurrent={
+    units: 0,
+    location: '',
+    product: ''
   }
 
   ObjectNotaTraslado:Traslado={
@@ -108,7 +114,25 @@ insertStockDiary(idTraslado:string,destino:string){
       console.log("este es el producto a enviar ",this.ObjectStockDiary.product, " precio ",this.ObjectStockDiary.price);
       this.trasladoService.addStockDiary(this.ObjectStockDiary).subscribe(
         res => {
-          console.log("Datos enviados");
+          console.log("Datos stockdiary enviados");
+
+          
+          this.ObjectStockCurrent.units = i.cantidad;
+          this.ObjectStockCurrent.location = this.ObjectFarmacia.id;
+          this.ObjectStockCurrent.product = i.id_producto;  
+          console.log("datos de stock current ", this.ObjectStockCurrent.units, this.ObjectStockCurrent.location, this.ObjectStockCurrent.product)
+              this.trasladoService.updateStockCurrent(this.ObjectStockCurrent).subscribe(res => {
+                
+              },
+                err => {
+                  console.log(err);
+                }
+            
+              );
+             
+          
+
+
         },
         err =>{
           console.log(err);

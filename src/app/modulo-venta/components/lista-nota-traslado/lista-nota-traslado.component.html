@@ -10,7 +10,7 @@
         <br/>
         <div class="mb-3">
           <label class="form-label">Seleciona una opcion de traslado</label>
-      <select (change)="getTraslado($event)" class="form-control">
+      <select [(ngModel)]="estado2" (change)="getTraslado($event)" class="form-control">
           <option  *ngFor="let item of listaOp" >{{item}}</option>
       </select>
       </div>
@@ -19,6 +19,7 @@
                 <thead>
                   <tr>
                     <th scope="col">No</th>
+                    <th scope="col">id</th>
                     <th scope="col">Entrega</th>
                     <th scope="col">Recibe</th>
                     <th scope="col">Encargado</th>
@@ -33,6 +34,7 @@
                   <ng-container *ngFor="let i of ListaNotaTraslado">
                   <tr>    
                     <td>{{i.no}}</td>
+                    <td>{{i.id}}</td>
                     <td>{{i.id_entrega}}</td>
                     <td>{{i.id_recibe}}</td>
                     <td>{{i.id_encargado}}</td>
@@ -42,8 +44,8 @@
                     <td *ngIf="i.estado == 0">Creados</td>
                     <td *ngIf="i.estado == 1">Pendiente Aprobacion</td>
                     <td *ngIf="i.estado == 2">Autorizados</td>
-                    <td *ngIf="i.estado == 3">Salientes</td>
-                    <td *ngIf="i.estado == 4">Entrantes</td>
+                    <td *ngIf="i.estado == 3 && i.id_location_origen == idFarmacia ">Salientes</td>
+                    <td *ngIf="i.estado == 3  && i.id_location_destino == idFarmacia ">Entrantes</td>
                     <td *ngIf="i.estado == 2"><button type="button" class="btn btn-success" (click)="insertStockDiary(i.id,i.id_location_destino)" >Dar Salida</button></td>
                   </tr>
                   </ng-container>

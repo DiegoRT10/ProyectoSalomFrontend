@@ -13,15 +13,17 @@ import { PriceSell, ProductoId, ProductsService } from '../../services/products.
 export class ListaNotaTrasladoComponent {
 
   date: Date = new Date();
-  decodeToken:any = {}
-  bandera:boolean = true;
-  estado!:number;
+  decodeToken: any = {}
+  bandera: boolean = true;
+  estado!: number;
+  estado2:string ="Creados";
+  idFarmacia:string ="";
 
-  ListaNotaTraslado!:Traslado[];
-  ListaDetalleTraslado?:DetalleTraslado[];
-  listaOp: String[] = ['Creados','Pendientes','Autorizados','Salientes', 'Entrantes'];
-  
-  ObjectStockDiary:stockDiary={
+  ListaNotaTraslado!: Traslado[];
+  ListaDetalleTraslado?: DetalleTraslado[];
+  listaOp: String[] = ['Creados', 'Pendientes', 'Autorizados', 'Salientes', 'Entrantes'];
+
+  ObjectStockDiary: stockDiary = {
     id: '',
     datenew: this.date,
     reason: '',
@@ -33,13 +35,13 @@ export class ListaNotaTrasladoComponent {
     supplier: ''
   }
 
-  ObjectStockCurrent:stockCurrent={
+  ObjectStockCurrent: stockCurrent = {
     units: 0,
     location: '',
     product: ''
   }
 
-  ObjectNotaTraslado:Traslado={
+  ObjectNotaTraslado: Traslado = {
     id: '',
     id_entrega: '',
     id_recibe: '',
@@ -53,197 +55,236 @@ export class ListaNotaTrasladoComponent {
     estado: 0
   }
 
-  ObjectDetalleTrasladoId:IdDetalleTraslado={
+  ObjectDetalleTrasladoId: IdDetalleTraslado = {
     id: '',
-    estado:0
+    estado: 0
   }
 
-  ObjectPeopleLocation:Administrador={
+  ObjectPeopleLocation: Administrador = {
     id: ''
   }
 
-  
-  ObjectFarmacia:Farmacia={
+
+  ObjectFarmacia: Farmacia = {
     id: ''
   }
 
-  ObjectProduct:PriceSell={
-    id:"",
+  ObjectProduct: PriceSell = {
+    id: "",
     pricesell: 0
   }
 
-  ObjectProducto:ProductoId={
+  ObjectProducto: ProductoId = {
     id: ''
   }
 
- constructor( private trasladoService:TrasladoService, private ventaDiariaService: VentaDiariaService, private router: Router, private productService: ProductsService ) {}
+  constructor(private trasladoService: TrasladoService, private ventaDiariaService: VentaDiariaService, private router: Router, private productService: ProductsService) { }
 
 
- ngOnInit(): void {
-  this.getPeopleLocation();
- }
+  ngOnInit(): void {
+    this.getPeopleLocation();
+  }
 
 
 
 
-insertStockDiary(idTraslado:string,destino:string){
+  insertStockDiary(idTraslado: string, destino: string) {
 
-  this.ObjectDetalleTrasladoId.id = idTraslado;
-  this.trasladoService.searchDetalleTraslado(this.ObjectDetalleTrasladoId).subscribe(res => {
-    console.log("Datos enviados");
-    this.ListaDetalleTraslado = res;
-    console.log("detalle traslado1",this.ListaDetalleTraslado);
-    this.ObjectStockDiary.id = '';
-    // this.ObjectStockDiary.datenew = this.date;
-  
-    for (const i of this.ListaDetalleTraslado!) {
-      
-    this.ObjectStockDiary.reason = "-8";
-    this.ObjectStockDiary.location= this.ObjectFarmacia.id;
-    this.ObjectStockDiary.product= i.id_producto;
-    this.ObjectStockDiary.units= i.cantidad;
-    this.ObjectStockDiary.appuser= this.decodeToken.id;
-    this.ObjectStockDiary.supplier=destino;
-      
-    this.ObjectProducto.id = i.id_producto;
-    console.log("id producto ", this.ObjectProducto.id);
-    this.productService.searchPriceSell(this.ObjectProducto).subscribe(res => {
-      this.ObjectProduct = res[0];
-      this.ObjectStockDiary.price=this.ObjectProduct.pricesell;
-      this.ObjectStockDiary.product=this.ObjectProduct.id;
-      console.log("este es el producto a enviar ",this.ObjectStockDiary.product, " precio ",this.ObjectStockDiary.price);
-      this.trasladoService.addStockDiary(this.ObjectStockDiary).subscribe(
-        res => {
-          console.log("Datos stockdiary enviados");
+    this.ObjectDetalleTrasladoId.id = idTraslado;
+    this.trasladoService.searchDetalleTraslado(this.ObjectDetalleTrasladoId).subscribe(res => {
+      console.log("Datos enviados");
+      this.ListaDetalleTraslado = res;
+      console.log("detalle traslado1", this.ListaDetalleTraslado);
+      this.ObjectStockDiary.id = '';
+      // this.ObjectStockDiary.datenew = this.date;
 
-          
-          this.ObjectStockCurrent.units = i.cantidad;
-          this.ObjectStockCurrent.location = this.ObjectFarmacia.id;
-          this.ObjectStockCurrent.product = i.id_producto;  
-          console.log("datos de stock current ", this.ObjectStockCurrent.units, this.ObjectStockCurrent.location, this.ObjectStockCurrent.product)
+      for (const i of this.ListaDetalleTraslado!) {
+
+        this.ObjectStockDiary.reason = "-8";
+        this.ObjectStockDiary.location = this.ObjectFarmacia.id;
+        this.ObjectStockDiary.product = i.id_producto;
+        this.ObjectStockDiary.units = i.cantidad;
+        this.ObjectStockDiary.appuser = this.decodeToken.id;
+        this.ObjectStockDiary.supplier = destino;
+
+        this.ObjectProducto.id = i.id_producto;
+        console.log("id producto ", this.ObjectProducto.id);
+        this.productService.searchPriceSell(this.ObjectProducto).subscribe(res => {
+          this.ObjectProduct = res[0];
+          this.ObjectStockDiary.price = this.ObjectProduct.pricesell;
+          this.ObjectStockDiary.product = this.ObjectProduct.id;
+          console.log("este es el producto a enviar ", this.ObjectStockDiary.product, " precio ", this.ObjectStockDiary.price);
+          this.trasladoService.addStockDiary(this.ObjectStockDiary).subscribe(
+            res => {
+              console.log("Datos stockdiary enviados");
+
+
+              this.ObjectStockCurrent.units = i.cantidad;
+              this.ObjectStockCurrent.location = this.ObjectFarmacia.id;
+              this.ObjectStockCurrent.product = i.id_producto;
+              console.log("datos de stock current ", this.ObjectStockCurrent.units, this.ObjectStockCurrent.location, this.ObjectStockCurrent.product)
               this.trasladoService.updateStockCurrent(this.ObjectStockCurrent).subscribe(res => {
-                
+
+              
+
               },
                 err => {
                   console.log(err);
                 }
-            
+
               );
-             
-          
 
 
+
+
+            },
+            err => {
+              console.log(err);
+            }
+          );
         },
-        err =>{
-          console.log(err);
-        }
-      );
+          err => {
+            console.log(err);
+          }
+
+        );
+
+      }
+
+      this.ObjectDetalleTrasladoId.id = idTraslado;
+      this.ObjectDetalleTrasladoId.estado = 3;
+      console.log("Holaaaaaa");
+        this.trasladoService.updateTraslado(this.ObjectDetalleTrasladoId).subscribe(res => {
+          this.ActualizaInputRecibe();
+        },
+          err => {
+            console.log(err);
+          }
+      
+        );
+
     },
       err => {
         console.log(err);
       }
-  
+
     );
+
+
+
+
+  }
+
+
+  getTraslado(data: any) {
+    let op;
+    console.log("estado de la bandera ", this.bandera);
+    this.bandera ? op = data.target.value : op = data
+
+    switch (op) {
+      case 'Creados': this.estado = 0;
+        break;
+      case 'Pendientes': this.estado = 1;
+        break;
+      case 'Autorizados': this.estado = 2;
+        break;
+      case 'Salientes': this.estado = 3;
+        break;
+      case 'Entrantes': this.estado = 3;
+        break;
+    }
+
+
+
+    this.ObjectDetalleTrasladoId.id = this.ObjectFarmacia.id;
+    this.ObjectDetalleTrasladoId.estado = <any>this.estado;
+
+    if(this.estado < 2){
+      this.trasladoService.searchDetalleTraslado2(this.ObjectDetalleTrasladoId).subscribe(res => {
+        console.log("Datos enviados");
+        this.ListaNotaTraslado = res;
+        console.log("detalle traslado +", this.ListaNotaTraslado);
+        this.bandera = true;
+      },
+        err => {
+          console.log(err);
+        }
+  
+      );
+
+    }else{
+      this.trasladoService.searchDetalleTraslado3(this.ObjectDetalleTrasladoId).subscribe(res => {
+        console.log("Datos enviados");
+        this.ListaNotaTraslado = res;
+        console.log("detalle traslado +", this.ListaNotaTraslado);
+        this.bandera = true;
+      },
+        err => {
+          console.log(err);
+        }
+  
+      );
+
+    }
     
   }
 
 
+  getPeopleLocation(): void {
+    const token = localStorage.getItem('token');
+    this.decodeToken = decode(token || '');
 
-  },
-    err => {
-      console.log(err);
-    }
+    console.log("tocken " + this.decodeToken.id);
+    this.ObjectPeopleLocation.id = this.decodeToken.id
+    this.ObjectNotaTraslado.id_entrega = this.decodeToken.id;
+    this.ventaDiariaService.PeopleLocation(this.ObjectPeopleLocation).subscribe(res => {
+      this.ObjectFarmacia = res[0];
 
-  );
+      this.idFarmacia =  this.ObjectFarmacia.id;
+      console.log("El usuario " + this.ObjectPeopleLocation.id + " pertenece a " + this.ObjectFarmacia.id);
+      this.ObjectNotaTraslado.id_location_origen = this.ObjectFarmacia.id;
+      this.bandera = false;
+      this.getTraslado('Creados');
 
 
+    },
+      err => {
+        console.log(err);
+      }
 
- 
-}
-
-
-getTraslado(data:any){
-  let op;
-  console.log("estado de la bandera ",this.bandera);
-  this.bandera ?  op = data.target.value: op = data
-
-  switch (op) {
-    case 'Creados' : this.estado=0;
-    break;
-    case 'Pendientes' : this.estado=1;
-    break;
-    case 'Autorizados' : this.estado=2;
-    break;
-    case 'Salientes' : this.estado=3;
-    break;
-    case 'Entrantes' : this.estado=4;
-    break;
+    );
   }
-  
-  
 
-  this.ObjectDetalleTrasladoId.id = this.ObjectFarmacia.id;
-  this.ObjectDetalleTrasladoId.estado = <any>this.estado;
-  this.trasladoService.searchDetalleTraslado2(this.ObjectDetalleTrasladoId).subscribe(res => {
-    console.log("Datos enviados");
-    this.ListaNotaTraslado = res;
-    console.log("detalle traslado +",this.ListaNotaTraslado);
-    this.bandera = true;
-  },
-    err => {
-      console.log(err);
-    }
+  getDetalleTraslado(id: string) {
+    this.ObjectDetalleTrasladoId.id = id;
+    this.trasladoService.searchDetalleTraslado(this.ObjectDetalleTrasladoId).subscribe(res => {
+      console.log("Datos enviados");
+      this.ListaDetalleTraslado = res;
+      console.log("detalle traslado1", this.ListaDetalleTraslado);
+    },
+      err => {
+        console.log(err);
+      }
 
-  );
-}
+    );
 
+  }
 
-getPeopleLocation(): void {
-  const token = localStorage.getItem('token');
-  this.decodeToken = decode(token || '');
+  tipoTraslado(data: any) {
+    console.log('este es el dato de sde op ', data.target.value);
+    data.target.value = 'Salientes' ? this.bandera = true : this.bandera = false;
+  }
 
-  console.log("tocken "+this.decodeToken.id);
-  this.ObjectPeopleLocation.id = this.decodeToken.id
-  this.ObjectNotaTraslado.id_entrega = this.decodeToken.id;
-  this.ventaDiariaService.PeopleLocation(this.ObjectPeopleLocation).subscribe(res => {
-    this.ObjectFarmacia = res[0];
-
-
-    console.log("El usuario "+this.ObjectPeopleLocation.id+" pertenece a "+this.ObjectFarmacia.id);
-    this.ObjectNotaTraslado.id_location_origen = this.ObjectFarmacia.id;
+  ActualizaInputRecibe():void{
+    
     this.bandera = false;
-    this.getTraslado('Creados');
+    this.estado = 2;
+    this.estado2 = "Salientes";
+    this.getTraslado('Salientes');
+    console.log("llegue a Salientes");
+  }
 
-   
-  },
-    err => {
-      console.log(err);
-    }
 
-  );
-}
-
-getDetalleTraslado(id:string){
-  this.ObjectDetalleTrasladoId.id = id;
-  this.trasladoService.searchDetalleTraslado(this.ObjectDetalleTrasladoId).subscribe(res => {
-    console.log("Datos enviados");
-    this.ListaDetalleTraslado = res;
-    console.log("detalle traslado1",this.ListaDetalleTraslado);
-  },
-    err => {
-      console.log(err);
-    }
-
-  );
-
-}
-
-tipoTraslado(data:any){
-  console.log('este es el dato de sde op ', data.target.value);
-  data.target.value='Salientes' ? this.bandera=true : this.bandera=false;
-}
-
-  
 
 
 

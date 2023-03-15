@@ -31,6 +31,10 @@ export class TrasladoService {
 searchDetalleTraslado2(id:any){
   return this.http.post<Traslado[]>(`${this.URL}/traslados/NotaTraslado`,id);
 }
+
+searchDetalleTraslado3(id:any){
+  return this.http.post<Traslado[]>(`${this.URL}/traslados/NotaTraslado2`,id);
+}
  
 updateDetalleTraslado(id:any){
     return this.http.put(`${this.URL}/traslados/updateDetalleTraslado`,id);

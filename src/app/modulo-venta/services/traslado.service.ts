@@ -49,8 +49,12 @@ updateTraslado(id:any){
   return this.http.post(`${this.URL}/traslados/stockdiary`,stockdiary);
  }
 
- updateStockCurrent(stockCurrent:any){
-  return this.http.put(`${this.URL}/traslados/updateStockCurrent`,stockCurrent);
+ updateStockCurrentOrigen(stockCurrent:any){
+  return this.http.put(`${this.URL}/traslados/updateStockCurrentOrigen`,stockCurrent);
+} 
+
+updateStockCurrentDestino(stockCurrent:any){
+  return this.http.put(`${this.URL}/traslados/updateStockCurrentDestino`,stockCurrent);
 } 
 
 

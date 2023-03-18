@@ -22,7 +22,7 @@ export class ListaNotaTrasladoComponent {
 
   ListaNotaTraslado!: Traslado[];
   ListaDetalleTraslado?: DetalleTraslado[];
-  listaOp: String[] = ['Creados', 'Pendientes', 'Autorizados', 'Salientes', 'Entrantes'];
+  listaOp: String[] = ['Creados', 'Pendientes', 'Autorizados', 'Salientes', 'Entrantes','Finalizado'];
 
   ObjectStockDiary: stockDiary = {
     id: '',
@@ -240,10 +240,10 @@ export class ListaNotaTrasladoComponent {
       }
 
       this.ObjectDetalleTrasladoId.id = idTraslado;
-      this.ObjectDetalleTrasladoId.estado = 3;
+      this.ObjectDetalleTrasladoId.estado = 4;
       console.log("Holaaaaaa");
         this.trasladoService.updateTraslado(this.ObjectDetalleTrasladoId).subscribe(res => {
-          this.ActualizaInputRecibe();
+          this.ActualizaInputRecibe2();
         },
           err => {
             console.log(err);
@@ -305,6 +305,8 @@ export class ListaNotaTrasladoComponent {
       case 'Entrantes': this.estado = 3
                         this.estado3="Entrantes";
         break;
+      case 'Finalizado': this.estado = 4;
+                        this.estado3="Finalizado";
     }
 
 
@@ -325,8 +327,23 @@ export class ListaNotaTrasladoComponent {
   
       );
 
-    }else {
+    }
+    if(this.estado ==3 && this.estado3=="Entrantes"){
       this.trasladoService.searchDetalleTraslado3(this.ObjectDetalleTrasladoId).subscribe(res => {
+        console.log("Datos enviados");
+        this.ListaNotaTraslado = res;
+        console.log("detalle traslado +", this.ListaNotaTraslado);
+        this.bandera = true;
+      },
+        err => {
+          console.log(err);
+        }
+  
+      );
+
+    }
+    if(this.estado ==4 && this.estado3=="Finalizado"){
+      this.trasladoService.searchDetalleTraslado4(this.ObjectDetalleTrasladoId).subscribe(res => {
         console.log("Datos enviados");
         this.ListaNotaTraslado = res;
         console.log("detalle traslado +", this.ListaNotaTraslado);
@@ -391,14 +408,21 @@ export class ListaNotaTrasladoComponent {
   ActualizaInputRecibe():void{
     
     this.bandera = false;
-    this.estado = 2;
+    this.estado = 3;
     this.estado2 = "Salientes";
     this.getTraslado('Salientes');
     console.log("llegue a Salientes");
   }
 
 
-
+  ActualizaInputRecibe2():void{
+    
+    this.bandera = false;
+    this.estado = 4;
+    this.estado2 = "Finalizado";
+    this.getTraslado('Finalizado');
+    console.log("llegue a Finalizado");
+  }
 
 
 

@@ -27,7 +27,7 @@
                     <th scope="col">Fecha</th>
                     <th scope="col">Destino</th>
                     <th scope="col">Estado</th>
-                    <th scope="col">Salida</th>
+                    <th scope="col">Accion</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -46,8 +46,9 @@
                     <td *ngIf="i.estado == 2">Autorizados</td>
                     <td *ngIf="i.estado == 3 && i.id_location_origen == idFarmacia ">Salientes</td>
                     <td *ngIf="i.estado == 3  && i.id_location_destino == idFarmacia ">Entrantes</td>
+                    <td *ngIf="i.estado == 4">Finalizado</td>
                     <td *ngIf="i.estado == 2"><button type="button" class="btn btn-success" (click)="insertStockDiaryOrigen(i.id,i.id_location_destino)" >Dar Salida</button></td>
-                    <td *ngIf="i.estado == 3"><button type="button" class="btn btn-success" (click)="insertStockDiaryDestino(i.id,i.id_location_destino)">Recibido</button></td>
+                    <td *ngIf="i.estado == 3 && i.id_location_destino == idFarmacia"><button type="button" class="btn btn-success" (click)="insertStockDiaryDestino(i.id,i.id_location_destino)">Recibido</button></td>
                   </tr>
                   </ng-container>
                 </tbody>

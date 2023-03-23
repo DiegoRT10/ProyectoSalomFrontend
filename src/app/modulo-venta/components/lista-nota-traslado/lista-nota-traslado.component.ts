@@ -78,14 +78,19 @@ export class ListaNotaTrasladoComponent {
   ObjectProducto: ProductoId = {
     id: ''
   }
+  carga?: boolean;
 
   constructor(private trasladoService: TrasladoService, private ventaDiariaService: VentaDiariaService, private router: Router, private productService: ProductsService) { }
 
 
   ngOnInit(): void {
+    this.carga = true;
     this.getPeopleLocation();
   }
 
+  ngAfterViewInit() {
+    this.carga = false;
+  }
 
 
 

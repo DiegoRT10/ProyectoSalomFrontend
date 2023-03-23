@@ -38,13 +38,17 @@ export class ProfileComponent implements OnInit {
     token:null,
     tokenLife:null,
   };
+  carga?: boolean;
   constructor(private CrudService:CrudService, private CrudProfileService:CrudProfileService, private router:Router, private activatedRoute:ActivatedRoute) { }
 
   ngOnInit(): void {
-
+    this.carga = true;
     this.getUser();
     this.getProfile();
+  }
 
+  ngAfterViewInit() {
+    this.carga = false;
   }
 
   goUpdateProfile():void{

@@ -17,7 +17,7 @@ export class CreateComponent implements OnInit {
   public files: any = [];
   public previous: String = '';
   public loading!: boolean;
-
+  carga?: boolean;
 
   listaOp: String[] = ['Sistemas', 'Gerente', 'Administrador', 'Invitado'];
   listaOpAudi: String[] = ['Si', 'No'];
@@ -36,10 +36,12 @@ export class CreateComponent implements OnInit {
   };
 
 
+
   constructor(private CrudService: CrudService, private router: Router, private formBuilder: FormBuilder, private sanitizer: DomSanitizer) { }
 
   ngOnInit(): void {
 
+    this.carga = true;
 
     this.formLogin = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
@@ -48,6 +50,15 @@ export class CreateComponent implements OnInit {
 
 
   }
+
+
+  ngAfterViewInit() {
+    this.carga = false;
+  }
+
+
+
+
 
   AgregarUsuario() {
     this.AggUsuario.visible = 1;

@@ -11,12 +11,19 @@ import { CrudService, Users } from 'src/app/services/crud.service';
 export class ProfilesComponent implements OnInit {
   ListarUsuarios?: Users[];
   bandera:number = 1;
+  carga?: boolean;
   constructor(private crudService: CrudService,
     private router: Router) { }
 
   ngOnInit(): void {
+    this.carga = true;
     this.listarUsuarios();
   }
+
+  ngAfterViewInit() {
+    this.carga = false;
+  }
+
 
   listarUsuarios(){
     this.crudService.getUser().subscribe(

@@ -7,12 +7,19 @@ import { Router } from '@angular/router';
   styleUrls: ['./home-administrador.component.css']
 })
 export class HomeAdministradorComponent implements OnInit {
+  carga?: boolean;
 
   constructor(private router: Router) { }
 
+  
+
   ngOnInit(): void {
+    this.carga = true;
   }
 
+  ngAfterViewInit() {
+    this.carga = false;
+  }
 
   goModuloNomina():void{
     this.router.navigate(['nomina-administrador']);

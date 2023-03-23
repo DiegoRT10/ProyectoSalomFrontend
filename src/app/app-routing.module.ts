@@ -43,6 +43,7 @@ import { MovimientosInicioComponent } from './modulo-venta/components/movimiento
 
 
 
+
 const routes: Routes = [
 {path: 'home', component: HomeComponent},//puede acceder cualquier persona
 {path: 'home-gerente', component: HomeGerenteComponent, canActivate: [AuthGuard, RoleGuard],  data: {expectedRole: {s:'0', g:'1'}}}, //puede acceder sistemas o gerente 
@@ -81,6 +82,8 @@ const routes: Routes = [
 {path: 'lista-nota-traslado', component: ListaNotaTrasladoComponent, canActivate: [AuthGuard, RoleGuard],  data: {expectedRole: {s:'0', g:'2'}}},//puede acceder sistemas administrador
 {path: 'lista-salidas', component: ListaSalidasComponent, canActivate: [AuthGuard, RoleGuard],  data: {expectedRole: {s:'0', g:'1'}}},//puede acceder sistemas administrador
 {path: 'movimientos-inicio', component: MovimientosInicioComponent, canActivate: [AuthGuard, RoleGuard],  data: {expectedRole: {s:'0', g:'2'}}},//puede acceder sistemas administrador
+
+
 
 {path: '**', pathMatch: 'full', redirectTo: 'home'}
 ];

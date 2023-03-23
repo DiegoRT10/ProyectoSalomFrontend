@@ -22,6 +22,7 @@ export class PuestoComponent implements OnInit {
     salario_max:0.0,
   
     }
+  carga?: boolean;
 
 
 
@@ -29,8 +30,14 @@ export class PuestoComponent implements OnInit {
   constructor(private crudPuestoService:CrudPuestoService, private router:Router) { }
 
   ngOnInit(): void {
+    this.carga = true;
     this.listarPuestos();
   }
+
+  ngAfterViewInit() {
+    this.carga = false;
+  }
+
 
   listarPuestos(){
     this.crudPuestoService.getPuesto().subscribe(

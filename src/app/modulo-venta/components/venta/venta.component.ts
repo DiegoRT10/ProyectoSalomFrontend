@@ -30,6 +30,7 @@ export class VentaComponent implements OnInit {
   loading2?:boolean;
   loading3?:boolean;
   loading4?:boolean;
+  carga?:boolean;
   // options
   // gradient: boolean = true;
   // showLegend: boolean = true;
@@ -107,14 +108,17 @@ export class VentaComponent implements OnInit {
   // }; 
 
   ngOnInit(): void {
+   this.carga = true;
     this.ventaMes.mes = this.setFecha();
     this.VentaDiaria('cash',this.ventaMes.mes);
     this.ventaMes.mes=this.setFechaEvent();
     this.MetaFarmacia();
     this.setFechaCard();
     console.log('este es el dia actual ',this.dia);
-    
-   
+  }
+
+  ngAfterViewInit() {
+    this.carga = false;
   }
 
 

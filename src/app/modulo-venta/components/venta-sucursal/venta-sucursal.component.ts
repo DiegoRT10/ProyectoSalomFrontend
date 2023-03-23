@@ -4,6 +4,7 @@ import { Cierres, Administrador, dataCierres, PeopleLocation2, VentaDiariaAdmin,
 import decode from 'jwt-decode';
 import * as moment from 'moment';
 import { Observable, Subscription } from 'rxjs';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-venta-sucursal',
@@ -23,7 +24,7 @@ export class VentaSucursalComponent implements OnInit {
   date: Date = new Date();
   fechaDia: string = moment.utc(this.date).format('DD/MM/YYYY');
 
-  constructor(private router: Router, private VentaDiariaService: VentaDiariaService) {
+  constructor(private router: Router, private VentaDiariaService: VentaDiariaService, private spinner: NgxSpinnerService) {
    
     this.day = new Date().getDate(); 
     console.log('fecha dia',this.day)
@@ -91,8 +92,10 @@ export class VentaSucursalComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.spinner.show();
     this.PeopleLocation();
     this.setNoDiasMes();
+    this.spinner.hide();
   }
 
 

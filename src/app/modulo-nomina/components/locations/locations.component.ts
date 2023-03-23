@@ -25,17 +25,24 @@ export class LocationsComponent implements OnInit {
     longitud: '',
     visible:''
   }
+  carga!: boolean;
 
 
 
   constructor(private crudLocationService: CrudLocationService, private router: Router) { }
 
   ngOnInit(): void {
+    this.carga = true;
+
     this.mapas();
     this.listarLocations();
   }
 
+  ngAfterViewInit() {
+    this.carga = false;
+  }
 
+  
   mapas(): void {
     const map = new Map('map').setView([14.8012, -89.5421], 15);
     this.map2 = map;

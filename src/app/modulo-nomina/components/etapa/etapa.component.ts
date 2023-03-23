@@ -17,11 +17,17 @@ export class EtapaComponent implements OnInit {
     descripcion:''
   
     }
+  carga?: boolean;
 
   constructor(private crudEtapaService:CrudEtapaService, private router:Router) { }
 
   ngOnInit(): void {
+    this.carga = true;
     this.listarEtapas();
+  }
+
+  ngAfterViewInit() {
+    this.carga = false;
   }
 
   listarEtapas(){

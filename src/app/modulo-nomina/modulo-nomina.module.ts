@@ -17,6 +17,9 @@ import { LocationsComponent } from './components/locations/locations.component';
 import { CreateLocationComponent } from './components/create-location/create-location.component';
 import { UpdateLocationComponent } from './components/update-location/update-location.component';
 import { NominaGerenteComponent } from './components/nomina-gerente/nomina-gerente.component';
+import { LoadingComponent } from './components/loading/loading.component';
+
+
 
 
 @NgModule({
@@ -35,7 +38,9 @@ import { NominaGerenteComponent } from './components/nomina-gerente/nomina-geren
     LocationsComponent,
     CreateLocationComponent,
     UpdateLocationComponent,
-    NominaGerenteComponent
+    NominaGerenteComponent,
+    LoadingComponent,
+
   ],
   imports: [
     CommonModule,

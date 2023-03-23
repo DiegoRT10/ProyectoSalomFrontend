@@ -18,12 +18,18 @@ export class LoginComponent implements OnInit {
   }
 
   bandera?:boolean;
+  carga?: boolean;
 
   constructor( private authService: AuthService, private router: Router, private roleGuard: RoleGuard ) { 
     this.bandera = false;
   }
 
   ngOnInit(): void {
+    this.carga = true;
+  }
+
+  ngAfterViewInit() {
+    this.carga = false;
   }
 
   Login(){

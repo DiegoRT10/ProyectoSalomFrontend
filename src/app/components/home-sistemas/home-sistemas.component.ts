@@ -9,10 +9,16 @@ import { Router } from '@angular/router';
   styleUrls: ['./home-sistemas.component.css']
 })
 export class HomeSistemasComponent implements OnInit {
+  carga?: boolean;
 
   constructor(private router: Router) { }
 
   ngOnInit(): void {
+    this.carga = true;
+  }
+
+  ngAfterViewInit() {
+    this.carga = false;
   }
 
   goModuloNomina():void{

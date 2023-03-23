@@ -1,6 +1,14 @@
 <div class="main">
     <div class="section text-center">
       <div class="container">
+
+        <div class="row">
+          <div class="col-md-12 ml-auto mr-auto">
+              <app-loading *ngIf="carga"></app-loading>
+          </div>
+      </div>
+
+
         <div class="row">
           <div class="col-md-8 ml-auto mr-auto">
             <h2 class="title">Lista de moviemientos entre farmacias</h2>

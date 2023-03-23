@@ -9,6 +9,7 @@ import { MetaFarmacia, DataVentaDiaria, VentaDiariaService, VentaMes, DatosGrafi
 export class EstimuloGerenteComponent implements OnInit{
 
   loading?:boolean;
+  carga?: boolean;
 
   constructor(private VentaDiariaService: VentaDiariaService){
     this.loading=true;
@@ -27,8 +28,12 @@ ym: YM ={
 }
 
   ngOnInit():void{
-    
+    this.carga = true;
     this.peopleEstimulos();
+  }
+
+  ngAfterViewInit() {
+    this.carga = false;
   }
 
   peopleEstimulos(): void {

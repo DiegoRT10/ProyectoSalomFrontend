@@ -18,6 +18,8 @@ export class UpdateComponent implements OnInit {
   public previous: String = '';
   public loading!: boolean;
 
+  carga?: boolean;
+
   patIMG:string = '';
 
   valido:boolean=false;
@@ -43,6 +45,7 @@ export class UpdateComponent implements OnInit {
 
   public FormUpdate!: FormGroup;
 
+
   constructor(private CrudService:CrudService, 
               private router:Router,
               private activatedRoute:ActivatedRoute,
@@ -50,9 +53,15 @@ export class UpdateComponent implements OnInit {
               private sanitizer: DomSanitizer) { }
 
   ngOnInit(): void {
+    this.carga = true;
     this.Usuarios();
   }
   
+  ngAfterViewInit() {
+    this.carga = false;
+  }
+
+
   Usuarios():void{
     const idEntrante = <String>this.activatedRoute.snapshot.params['id'];
     console.log('id de entrada: '+idEntrante);

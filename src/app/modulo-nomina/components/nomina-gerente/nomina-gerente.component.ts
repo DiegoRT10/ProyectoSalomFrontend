@@ -7,13 +7,18 @@ import { Router } from '@angular/router';
   styleUrls: ['./nomina-gerente.component.css']
 })
 export class NominaGerenteComponent implements OnInit {
+  carga?: boolean;
 
   
 
   constructor(private router: Router) { }
 
   ngOnInit(): void {
-   
+    this.carga = true;
+  }
+
+  ngAfterViewInit() {
+    this.carga = false;
   }
 
   Profiles():void{

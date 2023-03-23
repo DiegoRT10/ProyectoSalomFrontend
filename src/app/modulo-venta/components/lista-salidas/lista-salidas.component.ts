@@ -80,14 +80,20 @@ export class ListaSalidasComponent {
   ObjectFarmacia:Farmacia={
     id: ''
   }
+  carga?: boolean;
 
  constructor( private products:ProductsService, private trasladoService:TrasladoService, private ventaDiariaService: VentaDiariaService, private router: Router ) {}
 
 
  ngOnInit(): void {
+  this.carga = true;
   this.getPeopleLocation();
   this.getLocationsId();
  }
+
+ ngAfterViewInit() {
+  this.carga = false;
+}
 
 
  @ViewChild('instance', { static: true }) instance: NgbTypeahead | undefined;

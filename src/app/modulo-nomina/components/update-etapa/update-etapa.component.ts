@@ -14,13 +14,19 @@ export class UpdateEtapaComponent implements OnInit {
     nombre:'',
     descripcion:''
     }
+  carga?: boolean;
 
   constructor(private crudEtapaService:CrudEtapaService, private router:Router, private activatedRoute:ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.carga = true;
     this.getOneEtapa();
   }
 
+
+  ngAfterViewInit() {
+    this.carga = false;
+  }
 
 getOneEtapa(): void{
   const idEntrante = localStorage.getItem('idE');

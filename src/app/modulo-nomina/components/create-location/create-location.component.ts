@@ -17,11 +17,16 @@ export class CreateLocationComponent implements OnInit {
     longitud:'',
     visible:''
   }
+  carga?: boolean;
 
   constructor(private crudLocationService:CrudLocationService, private router:Router) { }
 
   ngOnInit(): void {
-    
+    this.carga = true;
+  }
+
+  ngAfterViewInit() {
+    this.carga = false;
   }
 
   AgregarLocation():void{

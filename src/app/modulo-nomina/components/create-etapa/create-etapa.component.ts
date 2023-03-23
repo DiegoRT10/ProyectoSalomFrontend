@@ -16,12 +16,20 @@ export class CreateEtapaComponent implements OnInit {
     descripcion:''
 
     }
+  carga?: boolean;
   
     constructor(private crudEtapaService:CrudEtapaService, private router:Router) { }
   
     ngOnInit(): void {
+      this.carga = true;
     }
   
+    ngAfterViewInit() {
+      this.carga = false;
+    }
+  
+
+
     AgregarEtapa():void{
       this.crudEtapaService.addEtapa(this.AggEtapa).subscribe(
         res => {

@@ -42,6 +42,7 @@ export class UpdateProfileComponent implements OnInit {
   fechaPago:this.fecha, 
   estado:''
     }
+  carga?: boolean;
 
 
 
@@ -53,11 +54,17 @@ export class UpdateProfileComponent implements OnInit {
               private activatedRoute:ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.carga = true;
     this.getOneProfile();
     this.listarLocations();
     this.listarPuestos();
     this.listarEtapas();
 
+  }
+
+
+  ngAfterViewInit() {
+    this.carga = false;
   }
 
 

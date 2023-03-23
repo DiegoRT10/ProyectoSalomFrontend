@@ -16,11 +16,17 @@ export class UpdateLocationComponent implements OnInit {
     longitud:'',
     visible:''
   }
+  carga?: boolean;
 
   constructor(private crudLocationService:CrudLocationService, private router:Router) { }
 
   ngOnInit(): void {
+    this.carga = true;
     this.getOneLocation();
+  }
+
+  ngAfterViewInit() {
+    this.carga = false;
   }
 
   getOneLocation():void{

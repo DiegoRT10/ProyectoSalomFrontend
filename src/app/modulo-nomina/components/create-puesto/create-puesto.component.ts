@@ -19,13 +19,21 @@ export class CreatePuestoComponent implements OnInit {
   salario_max:0.0,
 
   }
+  carga?: boolean;
 
   constructor(private crudPuestoService:CrudPuestoService, private router:Router) { }
 
   ngOnInit(): void {
+    this.carga = true;
     const deptoEntrante = localStorage.getItem('dep');
     this.AggPuesto.depto=<any>deptoEntrante;
   }
+
+  ngAfterViewInit() {
+    this.carga = false;
+  }
+
+
 
   AgregarPuesto():void{
     this.crudPuestoService.addPuesto(this.AggPuesto).subscribe(

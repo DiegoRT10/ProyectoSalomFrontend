@@ -25,7 +25,7 @@ import { HomeGerenteComponent } from './components/home-gerente/home-gerente.com
 import { InformationComponent } from './components/information/information.component';
 import { HomeSistemasComponent } from './components/home-sistemas/home-sistemas.component';
 import { LoadingComponent } from './loading/loading.component';
-
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 
 
@@ -59,6 +59,7 @@ import { LoadingComponent } from './loading/loading.component';
     ReactiveFormsModule,
     ModuloNominaModule,
     ModuloVentaModule,
+    NgxSpinnerModule
     
     
   ],

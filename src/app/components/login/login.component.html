@@ -1,22 +1,59 @@
 <div class="main">
   <div class="section text-center">
     <div class="container">
+
+
+      <div class="row">
+        <div class="col-md-12 ml-auto mr-auto">
+            <app-loading *ngIf="carga"></app-loading>
+        </div>
+    </div>
+
+
+
+
       <div class="row">
         <div class="col-md-8 ml-auto mr-auto">
+          <br>
+          <br>
+
           <div *ngIf="bandera" class="alert alert-danger" role="alert"><i class="nc-icon nc-bell-55"></i>Usuario no encontrado
             <button type="button" class="close" data-dismiss="alert" aria-label="Close" (click)="cerrar()">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <div class="mb-3">
-            <label for="exampleFormControlInput1" class="form-label"><i class="nc-icon nc-single-02"></i>Username</label>
-            <input [(ngModel)]="user.username" type="email" class="form-control">
+
+          <div class="col-md-7 ml-auto mr-auto">
+
+            
+          <div  class="card card-register">
+            <h3 class="title mx-auto">Iniciar Sesion</h3>
+            <form class="register-form">
+              <label>Usuario</label>
+              <div class="input-group form-group-no-border">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">
+                    <i class="nc-icon nc-single-02"></i>
+                  </span>
+                </div>
+                <input [(ngModel)]="user.username" type="email" class="form-control" placeholder="usuario" name="username">
+              </div>
+              <label>Password</label>
+              <div class="input-group form-group-no-border">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">
+                    <i class="nc-icon nc-key-25"></i>
+                  </span>
+                </div>
+                <input [(ngModel)]="user.pass" type="password" class="form-control" (keyup.enter)="Login()" placeholder="password" name="pass">
+              </div>
+              <button class="btn btn-danger btn-block btn-round" (click)="Login()">Ingresar</button>
+            </form>
+            <div class="forgot">
+              <a href="#" class="btn btn-link btn-danger">Olvidaste tu contrasena?</a>
+            </div>
           </div>
-          <div class="mb-3">
-            <label for="exampleFormControlTextarea1" class="form-label"><i class="nc-icon nc-key-25"></i>Password</label>
-            <input [(ngModel)]="user.pass" type="password" class="form-control">
-          </div>
-          <button class="btn btn-primary" (click)="Login()">Ingresar</button>
+        </div>
         </div>
       </div>
     </div>

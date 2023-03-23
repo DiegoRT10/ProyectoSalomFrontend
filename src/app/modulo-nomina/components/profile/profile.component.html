@@ -1,5 +1,14 @@
 <div class="section profile-content">
   <div class="container">
+
+    <div class="row">
+      <div class="col-md-12 ml-auto mr-auto">
+          <app-loading *ngIf="carga"></app-loading>
+      </div>
+  </div>
+
+
+
     <div class="owner">
       <div class="avatar">
         <img src="http://localhost:3000/uploads/{{Usuario.image}}" alt="Circle Image"

@@ -36,6 +36,7 @@ export class FarmaciaComponent implements OnInit {
 
   total: string = 'cargando datos..';
   idDeposito: number = 0;
+  carga?: boolean;
 
 
   // clientesSubscription: Subscription = new Subscription;
@@ -143,6 +144,7 @@ export class FarmaciaComponent implements OnInit {
   setDepositos: any = '';
 
   ngOnInit(): void {
+    this.carga = true;
     let date: Date = new Date();
     this.noDiasMes = this.diasEnUnMes(date.getMonth() + 1, date.getFullYear());//se le suma +1 al mes porque para typescript enero = 0
     this.idEntrante = localStorage.getItem('idFar')!;
@@ -150,9 +152,12 @@ export class FarmaciaComponent implements OnInit {
     this.MetaFarmacia();
     this.VentaPorDia();
     this.VentaCierres();
-
-
   }
+
+  ngAfterViewInit() {
+    this.carga = false;
+  }
+
 
   // ngOnDestroy() {
   //   // acciones de destrucción

@@ -19,11 +19,17 @@ export class UpdatePuestoComponent implements OnInit {
     salario_max:0.0,
   
     }
+  carga?: boolean;
 
   constructor(private crudPuestoService:CrudPuestoService, private router:Router, private activatedRoute:ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.carga = true;
     this.getOnePuesto();
+  }
+
+  ngAfterViewInit() {
+    this.carga = false;
   }
 
 

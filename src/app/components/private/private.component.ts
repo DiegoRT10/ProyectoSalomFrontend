@@ -16,17 +16,20 @@ UsuarioD: Users={
   id:'',
   visible:''
 }
+  carga?: boolean;
 
   
   constructor(private crudService: CrudService, private router: Router) { 
     this.loading=true;}
 
   ngOnInit(): void {
-
+    this.carga = true;
    this.listarUsuarios();
 
+  }
 
-
+  ngAfterViewInit() {
+    this.carga = false;
   }
 
 listarUsuarios(){

@@ -23,6 +23,7 @@ export class VentaSucursalComponent implements OnInit {
   banderaDeposito: boolean = false; //sirve como bandera para saber si se quiere agregar un deposito
   date: Date = new Date();
   fechaDia: string = moment.utc(this.date).format('DD/MM/YYYY');
+  carga?: boolean;
 
   constructor(private router: Router, private VentaDiariaService: VentaDiariaService, private spinner: NgxSpinnerService) {
    
@@ -92,11 +93,14 @@ export class VentaSucursalComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.spinner.show();
+    this.carga = true;
     this.PeopleLocation();
     this.setNoDiasMes();
-    this.spinner.hide();
   }
+
+  // ngAfterViewInit() {
+  //   this.carga = false;
+  // }
 
 
   PeopleLocation():void{
@@ -108,6 +112,7 @@ export class VentaSucursalComponent implements OnInit {
       this.VentaAdministrador();
       this.VentaAdminApoyo();
       this.VentaCierres();
+      this.carga = false;
     },
     err =>{
       console.log(err);
@@ -260,6 +265,7 @@ export class VentaSucursalComponent implements OnInit {
     this.depositos.numero = numeroDepo;
     this.bandera = f;
     console.log('este es el numero de deposito ',this.depositos.numero);
+    this.banderaDeposito = false;
     //this.idDeposito = id;
     // this.depositos = depos;
     // console.log('depos ', this.depositos);
@@ -279,13 +285,15 @@ export class VentaSucursalComponent implements OnInit {
 
     this.VentaDiariaService.addDeposito(this.depositos).subscribe(
       res => {
-        console.log('Se agrego el deposito correctamente');
+ 
+        alert(JSON.stringify(res));
         this.OpenRegistroDeposito(false);
         this.Transacciones(this.depositos.money);
         this.depositos.numero=0;
         this.depositos.monto=0;
       },
       err => {
+        alert('Error al insertar '+err);
         console.log(err);
       });
 

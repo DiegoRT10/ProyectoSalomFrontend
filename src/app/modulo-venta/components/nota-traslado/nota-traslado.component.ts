@@ -196,11 +196,13 @@ export class NotaTrasladoComponent {
   ObjectFarmacia:Farmacia={
     id: ''
   }
+  carga?: boolean;
   
 
   constructor( private products:ProductsService, private trasladoService:TrasladoService, private ventaDiariaService: VentaDiariaService, private router: Router) { }
 
   ngOnInit(): void {
+    this.carga = true;
     // this.getProducts();
     this.fechaDia = moment.utc(this.date).format('yyyy-MM-DD');
     this.ObjectNotaTraslado.fecha = <any>this.fechaDia;
@@ -214,7 +216,9 @@ export class NotaTrasladoComponent {
   }
 
 
-   
+  ngAfterViewInit() {
+    this.carga = false;
+  }
     
   
 

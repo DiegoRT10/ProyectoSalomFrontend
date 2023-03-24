@@ -7,10 +7,16 @@ import { Router } from '@angular/router';
   styleUrls: ['./movimientos-inicio.component.css']
 })
 export class MovimientosInicioComponent {
+  carga?: boolean;
 
   constructor(private router: Router) { }
 
   ngOnInit(): void {
+    this.carga = true;
+  }
+
+  ngAfterViewInit() {
+    this.carga = false;
   }
 
   goCrearNota():void{

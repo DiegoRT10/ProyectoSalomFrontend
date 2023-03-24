@@ -199,12 +199,14 @@ export class MovimientosAdministradorComponent implements OnInit{
   ObjectFarmacia:Farmacia={
     id: ''
   }
+  carga?: boolean;
   
 
   constructor( private products:ProductsService, private trasladoService:TrasladoService, private ventaDiariaService: VentaDiariaService) { }
 
   ngOnInit(): void {
     // this.getProducts();
+    this.carga = true;
     this.fechaDia = moment.utc(this.date).format('yyyy-MM-DD');
     this.ObjectNotaTraslado.fecha = <any>this.fechaDia;
     console.log(this.fechaDia);
@@ -216,7 +218,9 @@ export class MovimientosAdministradorComponent implements OnInit{
 
 
    
-    
+  ngAfterViewInit() {
+    this.carga = false;
+  }
   
 
 

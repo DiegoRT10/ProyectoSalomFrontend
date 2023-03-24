@@ -7,12 +7,17 @@ import { Router } from '@angular/router';
   styleUrls: ['./venta-gerente.component.css']
 })
 export class VentaGerenteComponent implements OnInit {
+  carga?: boolean;
 
   constructor(private router: Router) { }
 
   ngOnInit(): void {
+    this.carga = true;
   }
 
+  ngAfterViewInit() {
+    this.carga = false;
+  }
 
   goVentaDiaria():void{
     this.router.navigate(['venta']);

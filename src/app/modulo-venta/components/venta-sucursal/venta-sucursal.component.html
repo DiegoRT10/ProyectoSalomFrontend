@@ -1,6 +1,12 @@
 <div class="main">
   <div class="section text-center">
     <div class="container">
+
+
+        
+
+
+
       <div class="row">
         <div class="col-md-8 ml-auto mr-auto">
             
@@ -11,12 +17,22 @@
       <br/>
       <br/>
 
+      <div class="row">
+        <div class="col-md-12 ml-auto mr-auto">
+            <app-loading *ngIf="carga"></app-loading>
+        </div>
+    </div>
 
-      <div *ngFor="let sucursal of ListaVentaSucursal" class="row">
+      <div  *ngFor="let sucursal of ListaVentaSucursal" class="row">
         <div class="col-md-6">
           <div class="info">
             
-            <div  class="card text-bg-light mb-3">
+            
+           
+
+            
+
+            <div *ngIf="!carga" class="card text-bg-light mb-3">
               <div class="card-header">{{sucursal.idlocation}}</div>
               <div class="card-body table-card">
                   <table class="table">
@@ -214,7 +230,7 @@
                                     </tr>
                                     <br>
                                     <tr>
-                                        <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#exampleModalLong" (click)="Transacciones(item.money)"> Mas detalles </button>
+                                        <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#exampleModalLong" (click)="Transacciones(item.money)"> Ver Depositos</button>
                                     </tr>
 
                                 </table>
@@ -250,7 +266,7 @@
             <div class="modal-body">
 
                 
-                <button class="btn btn-primary" type="submit" (click)="OpenRegistroDeposito(true)">Registrar Deposito</button>
+                <button *ngIf="!bandera" class="btn btn-primary" type="submit" (click)="OpenRegistroDeposito(true)">Registrar Deposito</button>
                 <br>
                 <br>
                 <table class="table">
@@ -281,8 +297,9 @@
                                 <i>Verificado y Acreditado</i>
                             </th> -->
                             <th>
-                                <button *ngIf="!bandera" type="button" class="btn btn-warning" (click)="VisibleNumero(true,dep,dep.id,dep.numero)">Editar</button>
+                                <button *ngIf="!bandera && !banderaDeposito" type="button" class="btn btn-warning" (click)="VisibleNumero(true,dep,dep.id,dep.numero)">Editar</button>
                                 <i *ngIf="bandera">Editando..</i>
+                                <i *ngIf="banderaDeposito">Registrando..</i>
                             </th> 
 
                         </tr>

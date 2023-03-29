@@ -28,18 +28,34 @@ export class TrasladoService {
   return this.http.post<DetalleTraslado[]>(`${this.URL}/traslados/detalleTraslado`,id);
 }
 
+// searchDetalleTraslado2(id:any){
+//   return this.http.post<Traslado[]>(`${this.URL}/traslados/NotaTraslado`,id);
+// }
+
+// searchDetalleTraslado3(id:any){
+//   return this.http.post<Traslado[]>(`${this.URL}/traslados/NotaTraslado2`,id);
+// }
+
+// searchDetalleTraslado4(id:any){
+//   return this.http.post<Traslado[]>(`${this.URL}/traslados/NotaTraslado3`,id);
+// }
+ 
 searchDetalleTraslado2(id:any){
-  return this.http.post<Traslado[]>(`${this.URL}/traslados/NotaTraslado`,id);
+  return this.http.post<Traslado_Detalle[]>(`${this.URL}/traslados/NotaTraslado`,id);
 }
 
 searchDetalleTraslado3(id:any){
-  return this.http.post<Traslado[]>(`${this.URL}/traslados/NotaTraslado2`,id);
+  return this.http.post<Traslado_Detalle[]>(`${this.URL}/traslados/NotaTraslado2`,id);
 }
 
 searchDetalleTraslado4(id:any){
-  return this.http.post<Traslado[]>(`${this.URL}/traslados/NotaTraslado3`,id);
+  return this.http.post<Traslado_Detalle[]>(`${this.URL}/traslados/NotaTraslado3`,id);
 }
- 
+
+searchProductosTraslado(id:any){
+  return this.http.post<ProductosTraslado[]>(`${this.URL}/traslados/ProductosTraslado`,id);
+}
+
 updateDetalleTraslado(id:any){
     return this.http.put(`${this.URL}/traslados/updateDetalleTraslado`,id);
   }
@@ -84,6 +100,38 @@ export interface DetalleTraslado{
   id_producto:string,
   cantidad:number,
   estado:number,
+}
+
+export interface ProductosTraslado{
+  id:string,
+  id_nota_traslado:string,
+  id_producto:string,
+  cantidad:number,
+  estado:number,
+  codin:number,
+  nombre:string
+}
+
+
+
+export interface Traslado_Detalle {
+  id:string, 
+  id_entrega:string, 
+  id_recibe:string, 
+  id_encargado:string, 
+  id_autorizado:string, 
+  no:number, 
+  fecha:Date, 
+  id_location_origen:string, 
+  id_location_destino:string, 
+  motivo:string, 
+  estado:number,
+  
+  id_detalle_traslado:string,
+  id_nota_traslado:string,
+  id_producto:string,
+  cantidad:number,
+  estado_detalle_traslado:number,
 }
 
 export interface IdDetalleTraslado{

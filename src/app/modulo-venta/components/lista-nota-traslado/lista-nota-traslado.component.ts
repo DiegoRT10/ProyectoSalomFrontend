@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { DetalleTraslado, IdDetalleTraslado, stockCurrent, stockDiary, Traslado, TrasladoService } from '../../services/traslado.service';
+import { DetalleTraslado, IdDetalleTraslado, ProductosTraslado, stockCurrent, stockDiary, Traslado, TrasladoService, Traslado_Detalle } from '../../services/traslado.service';
 import { Administrador, Farmacia, VentaDiariaService } from '../../services/venta-diaria.service';
 import decode from 'jwt-decode';
 import { PriceSell, ProductoId, ProductsService } from '../../services/products.service';
@@ -19,9 +19,12 @@ export class ListaNotaTrasladoComponent {
   estado2:string ="Creados";
   estado3:string =""
   idFarmacia:string ="";
+  abrir:boolean = false;
 
-  ListaNotaTraslado!: Traslado[];
+  // ListaNotaTraslado!: Traslado[];
+  ListaNotaTraslado!: Traslado_Detalle[];
   ListaDetalleTraslado?: DetalleTraslado[];
+  ListaProductosTraslado?: ProductosTraslado[];
   listaOp: String[] = ['Creados', 'Pendientes', 'Autorizados', 'Salientes', 'Entrantes','Finalizado'];
 
   ObjectStockDiary: stockDiary = {
@@ -429,7 +432,25 @@ export class ListaNotaTrasladoComponent {
     console.log("llegue a Finalizado");
   }
 
+  Abrir(flag:boolean){
+    this.abrir = flag
+  }
 
 
+  getProductosTraslado(id: string) {
+    console.log('entre a get productos');
+    this.ObjectDetalleTrasladoId.id = id;
+    this.trasladoService.searchProductosTraslado(this.ObjectDetalleTrasladoId).subscribe(res => {
+      console.log("Datos enviados");
+      this.ListaProductosTraslado = res;
+      console.log("productos", this.ListaProductosTraslado);
+    },
+      err => {
+        console.log(err);
+      }
+
+    );
+
+  }
 
 }

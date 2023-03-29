@@ -6,7 +6,7 @@ import { debounceTime, distinctUntilChanged, filter, map } from 'rxjs/operators'
 import { FormsModule } from '@angular/forms';
 import { JsonPipe } from '@angular/common';
 import { LocationsId, Movimientos, Products, ProductsService, ViewProducts, ViewProducts2 } from '../../services/products.service';
-import { DetalleTraslado, IdDetalleTraslado, Traslado, TrasladoService } from '../../services/traslado.service';
+import { DetalleTraslado, IdDetalleTraslado, ProductosTraslado, Traslado, TrasladoService } from '../../services/traslado.service';
 import * as moment from 'moment';
 import { Administrador, Farmacia, PeopleLocation, VentaDiariaService } from '../../services/venta-diaria.service';
 import decode from 'jwt-decode';
@@ -22,13 +22,15 @@ export class ListaSalidasComponent {
   bandera:boolean = true;
   estado!:number;
   estado2:string ="";
+  estado3:string =""
 
   state = [''];
-  listaOp: String[] = ['Creados','Pendientes','Autorizados','Salientes', 'Entrantes'];
+  listaOp: String[] = ['Creados','Pendientes','Autorizados','Salientes', 'Entrantes', 'Finalizado'];
 
   ListaNotaTraslado!:Traslado[];
   ListaPeopleLocation2?: PeopleLocation[];
   ListaLocationsId?:LocationsId[];
+  ListaProductosTraslado?: ProductosTraslado[];
 
 
   searchPeople = [''];
@@ -223,32 +225,99 @@ getTraslado(data:any){
   this.bandera ?  op = data.target.value: op = data
 
   switch (op) {
-    case 'Creados' : this.estado=0;
-    break;
-    case 'Pendientes' : this.estado=1;
-    break;
-    case 'Autorizados' : this.estado=2;
-    break;
-    case 'Salientes' : this.estado=3;
-    break;
-    case 'Entrantes' : this.estado=4;
-    break;
+    case 'Creados': this.estado = 0
+    this.estado3="Salientes";
+      break;
+    case 'Pendientes': this.estado = 1
+    this.estado3="Salientes";
+      break;
+    case 'Autorizados': this.estado = 2
+    this.estado3="Salientes";
+      break;
+    case 'Salientes': this.estado = 3
+                      this.estado3="Salientes";
+      break;
+    case 'Entrantes': this.estado = 3
+                      this.estado3="Entrantes";
+      break;
+    case 'Finalizado': this.estado = 4;
+                      this.estado3="Finalizado";
   }
   
 
   this.ObjectDetalleTrasladoId.id = this.ObjectFarmacia.id;
   this.ObjectDetalleTrasladoId.estado = <any>this.estado;
-  this.trasladoService.searchDetalleTraslado2(this.ObjectDetalleTrasladoId).subscribe(res => {
+  // this.trasladoService.searchDetalleTraslado2(this.ObjectDetalleTrasladoId).subscribe(res => {
+  //   console.log("Datos enviados");
+  //   this.ListaNotaTraslado = res;
+  //   console.log("detalle traslado +",this.ListaNotaTraslado);
+  //   this.bandera = true;
+  // },
+  //   err => {
+  //     console.log(err);
+  //   }
+
+  // );
+
+  if(this.estado <=3 && this.estado3=="Salientes"){
+    this.trasladoService.searchDetalleTraslado2(this.ObjectDetalleTrasladoId).subscribe(res => {
+      console.log("Datos enviados");
+      this.ListaNotaTraslado = res;
+      console.log("detalle traslado +", this.ListaNotaTraslado);
+      this.bandera = true;
+    },
+      err => {
+        console.log(err);
+      }
+
+    );
+
+  }
+  if(this.estado ==3 && this.estado3=="Entrantes"){
+    this.trasladoService.searchDetalleTraslado3(this.ObjectDetalleTrasladoId).subscribe(res => {
+      console.log("Datos enviados");
+      this.ListaNotaTraslado = res;
+      console.log("detalle traslado +", this.ListaNotaTraslado);
+      this.bandera = true;
+    },
+      err => {
+        console.log(err);
+      }
+
+    );
+
+  }
+  if(this.estado ==4 && this.estado3=="Finalizado"){
+    this.trasladoService.searchDetalleTraslado4(this.ObjectDetalleTrasladoId).subscribe(res => {
+      console.log("Datos enviados");
+      this.ListaNotaTraslado = res;
+      console.log("detalle traslado +", this.ListaNotaTraslado);
+      this.bandera = true;
+    },
+      err => {
+        console.log(err);
+      }
+
+    );
+
+  }
+  
+}
+
+getProductosTraslado(id: string) {
+  console.log('entre a get productos');
+  this.ObjectDetalleTrasladoId.id = id;
+  this.trasladoService.searchProductosTraslado(this.ObjectDetalleTrasladoId).subscribe(res => {
     console.log("Datos enviados");
-    this.ListaNotaTraslado = res;
-    console.log("detalle traslado +",this.ListaNotaTraslado);
-    this.bandera = true;
+    this.ListaProductosTraslado = res;
+    console.log("productos", this.ListaProductosTraslado);
   },
     err => {
       console.log(err);
     }
 
   );
+
 }
 
 

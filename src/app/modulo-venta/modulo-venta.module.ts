@@ -24,6 +24,7 @@ import { DetalleNotaTrasladoComponent } from './components/detalle-nota-traslado
 import { ListaNotaTrasladoComponent } from './components/lista-nota-traslado/lista-nota-traslado.component';
 import { ListaSalidasComponent } from './components/lista-salidas/lista-salidas.component';
 import { MovimientosInicioComponent } from './components/movimientos-inicio/movimientos-inicio.component';
+import { InventarioFarmaciaComponent } from './components/inventario-farmacia/inventario-farmacia.component';
 
 
 
@@ -42,6 +43,7 @@ import { MovimientosInicioComponent } from './components/movimientos-inicio/movi
     ListaNotaTrasladoComponent,
     ListaSalidasComponent,
     MovimientosInicioComponent,
+    InventarioFarmaciaComponent,
     //AccordionComponent,
   ],
   imports: [

@@ -37,6 +37,7 @@ export class FarmaciaComponent implements OnInit {
   total: string = 'cargando datos..';
   idDeposito: number = 0;
   carga?: boolean;
+  carga2?: boolean;
 
 
   // clientesSubscription: Subscription = new Subscription;
@@ -110,14 +111,7 @@ export class FarmaciaComponent implements OnInit {
     cierre: 0,
     gastos: 0,
     ingresos: 0,
-
-    // id:0, 
-    // numero:0, 
-    // moneyId:'',  
-    // monto:0,
-    // fecha:this.date,
-    // estado:0,
-    // total:0
+    deposito: 0
   }
 
   dataCierre: dataCierres = {
@@ -340,7 +334,9 @@ export class FarmaciaComponent implements OnInit {
           //this.setDepositos!.push(this.depositos); 
           this.total = j.monto.toString();
         }
-        //this.setDepositos!.push(this.depositos);  
+        //this.setDepositos!.push(this.depositos);
+        
+        this.carga2 = true;
       },
         err => {
           console.log(err);
@@ -361,6 +357,7 @@ export class FarmaciaComponent implements OnInit {
       this.ListaDepositos = <any>res;
       //this.Venta = res[0];
       console.log(this.ListaDepositos)
+      this.carga2 = true;
     },
       err => {
         console.log(err);

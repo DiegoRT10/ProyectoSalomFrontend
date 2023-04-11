@@ -39,6 +39,7 @@ import { DetalleNotaTrasladoComponent } from './modulo-venta/components/detalle-
 import { ListaNotaTrasladoComponent } from './modulo-venta/components/lista-nota-traslado/lista-nota-traslado.component';
 import { ListaSalidasComponent } from './modulo-venta/components/lista-salidas/lista-salidas.component';
 import { MovimientosInicioComponent } from './modulo-venta/components/movimientos-inicio/movimientos-inicio.component';
+import { InventarioFarmaciaComponent } from './modulo-venta/components/inventario-farmacia/inventario-farmacia.component';
 
 
 
@@ -82,6 +83,7 @@ const routes: Routes = [
 {path: 'lista-nota-traslado', component: ListaNotaTrasladoComponent, canActivate: [AuthGuard, RoleGuard],  data: {expectedRole: {s:'0', g:'2'}}},//puede acceder sistemas administrador
 {path: 'lista-salidas', component: ListaSalidasComponent, canActivate: [AuthGuard, RoleGuard],  data: {expectedRole: {s:'0', g:'1'}}},//puede acceder sistemas administrador
 {path: 'movimientos-inicio', component: MovimientosInicioComponent, canActivate: [AuthGuard, RoleGuard],  data: {expectedRole: {s:'0', g:'2'}}},//puede acceder sistemas administrador
+{path: 'inventario-farmacia', component: InventarioFarmaciaComponent, canActivate: [AuthGuard, RoleGuard],  data: {expectedRole: {s:'0', g:'2'}}},//puede acceder sistemas administrador
 
 
 

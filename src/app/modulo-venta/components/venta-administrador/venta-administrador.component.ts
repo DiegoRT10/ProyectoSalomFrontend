@@ -27,6 +27,9 @@ export class VentaAdministradorComponent implements OnInit {
     this.router.navigate(['movimientos-inicio']);
   }
 
+  goInventario():void{
+    this.router.navigate(['inventario-farmacia']);
+  }
 }
 
 

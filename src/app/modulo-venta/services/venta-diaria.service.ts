@@ -196,6 +196,7 @@ export interface DataVentaDiaria{
     cierre:number,
     gastos:number,
     ingresos:number,
+    deposito:number
 
     // id:number, 
     // numero:number, 

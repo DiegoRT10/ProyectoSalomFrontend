@@ -105,7 +105,7 @@
 
 
                                     <div class="example-accordion-item-header" (click)="accordionItem.toggle()">
-
+                                        <i *ngIf="(item.apertura + item.venta + item.gastos + item.ingresos + item.cierre) == item.deposito" class="nc-icon nc-check-2"></i>    
                                         {{'#'+item.seq+' '}}{{ item.dateend | date:"shortDate"}}<strong>{{' '+(item.apertura + item.venta + item.gastos + item.ingresos + item.cierre) |currency: 'Q'}}</strong>
                                         <span class="example-accordion-item-description">
                                             <!-- Click para {{ accordionItem.expanded ? 'cerrar' : 'abrir' }} -->
@@ -145,7 +145,8 @@
                                             </tr>
                                             <tr>
                                                 <th>Deposito</th>
-                                                <td>{{item.apertura + item.venta + item.gastos + item.ingresos + item.cierre | currency: 'Q'}}</td>
+                                                <!-- <td>{{item.apertura + item.venta + item.gastos + item.ingresos + item.cierre | currency: 'Q'}}</td> -->
+                                                <td>{{item.deposito | currency: 'Q'}}</td>
                                                 <!-- {{( i < size-1 ? Transacciones(item.money,true):Transacciones(item.money,false))}} -->
                                                 <td></td>
 
@@ -216,7 +217,19 @@
                 </button>
             </div>
             <div class="modal-body">
-                <table class="table">
+
+
+                
+                   <div class="modal-body d-flex justify-content-center align-items-center">
+                    <app-loading *ngIf="!carga2"></app-loading>
+                   </div>
+                    
+               
+                        
+            
+    
+
+                <table *ngIf="carga2" class="table">
                     <thead>
                         <tr>
                             <th scope="col">Numero</th>

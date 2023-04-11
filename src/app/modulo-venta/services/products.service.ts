@@ -39,6 +39,10 @@ export class ProductsService {
           return this.http.post<productsViewProducts[]>(`${this.URL}/producto/SearchProductsViewProducts`,code);
         }
 
+        getInventarioFarmacia(id:any){
+          return this.http.post<Inventario[]>(`${this.URL}/producto/inventarioFarmacia`,id);
+        }
+
         searchPriceSell(id:any){
           return this.http.post<PriceSell[]>(`${this.URL}/producto/PriceSell`,id);
         }
@@ -111,6 +115,13 @@ export interface productsViewProducts{
     supplier: string,
     taxcat: string,
     visible: number
+}
+
+export interface Inventario{
+  id:string,
+  code:string,
+  nombre:string,
+  units:number
 }
 
 

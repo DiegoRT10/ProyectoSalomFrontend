@@ -28,7 +28,6 @@ export class VentaSucursalComponent implements OnInit {
   constructor(private router: Router, private VentaDiariaService: VentaDiariaService, private spinner: NgxSpinnerService) {
    
     this.day = new Date().getDate(); 
-    console.log('fecha dia',this.day)
    }
 
 
@@ -105,7 +104,6 @@ export class VentaSucursalComponent implements OnInit {
 
   PeopleLocation():void{
     this.getIdLogin();
-    console.log('Este es el id',this.idPeople.id);
     this.VentaDiariaService.getOnPeople(this.idPeople).subscribe(res=>{
       //this.ListaVentaSucursal=<any>res;
       this.onPeopleLocation = res[0];
@@ -126,7 +124,6 @@ export class VentaSucursalComponent implements OnInit {
     this.dataCierre.host = this.onPeopleLocation.idlocation;
     this.VentaDiariaService.getCierresAdmin(this.dataCierre).subscribe(res => {
       this.ListaCierres = <any>res;
-      console.log('Cierres ',this.ListaCierres);
       // this.depos();
     },
       err => {
@@ -160,7 +157,6 @@ export class VentaSucursalComponent implements OnInit {
     let decodeToken:any = {}
     decodeToken = decode(token || '');
     this.idPeople.id = decodeToken.id;
-    console.log('Este es el token',decodeToken.id);
     
   }
 
@@ -191,7 +187,6 @@ export class VentaSucursalComponent implements OnInit {
 
       this.VentaDiariaService.getVentaDiaria(this.data).subscribe(res=>{
       this.ListaVentaDiaria=<any>res;
-      console.log(this.ListaVentaDiaria);
       this.totalesVenta();
       //this.Venta = res[0];
     },
@@ -213,7 +208,6 @@ export class VentaSucursalComponent implements OnInit {
 
   totalesVenta():void{
   for (const i of this.ListaVentaDiaria!) {
-    console.log(i.titular, i.apoyo);
     (i.titular == 0 ? this.acumuladoTitular= 0 : this.acumuladoTitular += i.titular);
     (i.apoyo == 0 ? this.acumuladoApoyo = 0 : this.acumuladoApoyo += i.apoyo);
     
@@ -224,8 +218,6 @@ export class VentaSucursalComponent implements OnInit {
     this.dataDeposito.money = money;
     this.VentaDiariaService.getTransacciones(this.dataDeposito).subscribe(res => {
       this.ListaDepositos = <any>res;
-      //this.Venta = res[0];
-      console.log("depositos ",this.ListaDepositos)
     },
       err => {
         console.log(err);
@@ -237,13 +229,10 @@ export class VentaSucursalComponent implements OnInit {
   CambioDeposito(depos: any, estado: number): void {
     this.depositos = depos;
     this.depositos.estado = estado;
-    console.log(this.depositos);
     if (estado == 0 || estado == 1) {
       this.VentaDiariaService.putDepositos(this.depositos).subscribe(res => {
         //this.ListaDepositos=<any>res;
         //this.Venta = res[0];
-        console.log(this.ListaDepositos);
-        console.log('entre a cambio deposito');
         this.cambioEstado = false;
         this.Transacciones(this.depositos.money);
       },
@@ -254,7 +243,6 @@ export class VentaSucursalComponent implements OnInit {
       );
 
     } else if (estado == 2) {
-      console.log('entre a cambio deposito 2');
       this.cambioEstado = true;
     }
 
@@ -264,24 +252,19 @@ export class VentaSucursalComponent implements OnInit {
     this.depositos.id = idDepo;
     this.depositos.numero = numeroDepo;
     this.bandera = f;
-    console.log('este es el numero de deposito ',this.depositos.numero);
     this.banderaDeposito = false;
-    //this.idDeposito = id;
-    // this.depositos = depos;
-    // console.log('depos ', this.depositos);
     
   }
 
   OpenRegistroDeposito(x:boolean):void{
     this.depositos.numero=0;
     this.depositos.monto=0;
-    //console.log("Datos a envaiar de deposito ",this.depositos.money," ",this.depositos.numero," ",this.depositos.monto);
     this.banderaDeposito = x;
   }
 
   SaveRegistroDeposito():void{
     this.depositos.money = this.dataDeposito.money;
-    console.log("Datos a envaiar de deposito ",this.depositos.money," ",this.depositos.numero," ",this.depositos.monto);
+
 
     this.VentaDiariaService.addDeposito(this.depositos).subscribe(
       res => {
@@ -303,11 +286,9 @@ export class VentaSucursalComponent implements OnInit {
    
   
     this.depositos.money = this.dataDeposito.money;
-    console.log("Datos a envaiar de deposito ",this.depositos.money," ",this.depositos.numero," ",this.depositos.monto);
 
     this.VentaDiariaService.editDeposito(this.depositos).subscribe(
       res => {
-        console.log('Se edito el deposito correctamente');
         this.Transacciones(this.depositos.money);
         this.depositos.numero=0;
         this.depositos.monto=0;

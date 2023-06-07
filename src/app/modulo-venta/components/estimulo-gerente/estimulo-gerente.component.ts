@@ -38,7 +38,6 @@ ym: YM ={
 
   peopleEstimulos(): void {
     this.ym.ym = this.getFecha();
-    console.log('fecha estimulo', this.ym);
     this.VentaDiariaService.getEstimulos(this.ym).subscribe(res => {
       this.ListaEstimulos = <any>res; 
       this.loading=false;

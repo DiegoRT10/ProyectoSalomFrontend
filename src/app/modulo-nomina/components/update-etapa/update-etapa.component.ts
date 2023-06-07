@@ -30,7 +30,6 @@ export class UpdateEtapaComponent implements OnInit {
 
 getOneEtapa(): void{
   const idEntrante = localStorage.getItem('idE');
-  console.log('idE de entrada: '+idEntrante);
   this.EditEtapa.id=<String>idEntrante;
 
   if(idEntrante){
@@ -49,7 +48,6 @@ getOneEtapa(): void{
   EditarPuesto():void{
     this.crudEtapaService.editEtapa(this.EditEtapa).subscribe(
       res => {
-        console.log('Se edito la Etapa');
         this.router.navigate(['etapa']);
       },
       err => {

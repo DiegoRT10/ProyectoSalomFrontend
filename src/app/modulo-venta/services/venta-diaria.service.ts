@@ -2,6 +2,7 @@ import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -12,8 +13,8 @@ export class VentaDiariaService {
     private jwtHelper: JwtHelperService) { }
 
 
-    private URL = 'http://localhost:3000';
-
+    //private URL = 'http://localhost:3000';
+    private URL = environment.PORT;
 
     //Listar todos   
     getVenta(){
@@ -102,7 +103,6 @@ export class VentaDiariaService {
 
 //Consula location id 
 PeopleLocation(id:any){
-  console.log("entre a la consulta")
   return this.http.post<Farmacia[]>(`${this.URL}/venta/SearchPeopleLocation`,id);
 }
 

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -11,8 +12,11 @@ export class CrudService {
     private jwtHelper: JwtHelperService) { }
 
 
-    private URL = 'http://localhost:3000';
+    //private URL = 'http://localhost:3000';
+    // private URL = 'https://api.corporacionsalom.com';
+    private URL = environment.PORT;
 
+    
   //Listar todos los usuarios  
   getUser(){
     return this.http.get(`${this.URL}/user/`);

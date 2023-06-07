@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,8 @@ export class CrudPuestoService {
   constructor(private http: HttpClient,
     private jwtHelper: JwtHelperService) { }
 
-    private URL = 'http://localhost:3000';
+    //private URL = 'http://localhost:3000';
+    private URL = environment.PORT;
 
     //Listar todos los puestos  
   getPuesto(){
@@ -33,7 +35,6 @@ export class CrudPuestoService {
   }
 
   delPuesto(id:any){
-    console.log('este es el id desde el service '+id);
     return this.http.delete(`${this.URL}/puesto/delete${id}`);
   }
 }

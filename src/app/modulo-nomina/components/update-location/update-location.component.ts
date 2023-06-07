@@ -31,7 +31,6 @@ export class UpdateLocationComponent implements OnInit {
 
   getOneLocation():void{
     const idEntrante = localStorage.getItem('idL');
-    console.log('idL de entrada '+idEntrante);
     this.EditLocation.id = <String>idEntrante;
 
     if(idEntrante){
@@ -53,7 +52,6 @@ export class UpdateLocationComponent implements OnInit {
   EditarLocation():void{
     this.crudLocationService.editLocation(this.EditLocation).subscribe(
       res => {
-        console.log('Se agrego la location');
         this.router.navigate(['location']);
       },
       err => {

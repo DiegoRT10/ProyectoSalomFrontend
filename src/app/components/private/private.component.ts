@@ -36,7 +36,6 @@ listarUsuarios(){
   this.crudService.getUser().subscribe(
     res=>{
       this.ListarUsuarios=<any>res;     
-      console.log(this.ListarUsuarios);
       this.loading=false;
     },
     err =>{
@@ -51,9 +50,6 @@ EliminarUsuario(id:String, visible:number){
   this.UsuarioD.visible=0;//eliminacion logica
   this.crudService.deleteUser(this.UsuarioD).subscribe(
     res=>{
-      console.log('Equipo eliminado');
-      console.log('Datos: '+this.UsuarioD);
-      console.log('id: '+id+' '+visible);
       this.listarUsuarios();
     },
     err =>{
@@ -62,7 +58,6 @@ EliminarUsuario(id:String, visible:number){
 }
 
 ModificarUsuario(id:String){
-  console.log('este es el id '+id);
   this.router.navigate(['/update/'+id]);
 }
 }

@@ -48,15 +48,11 @@ export class InventarioFarmaciaComponent {
   let decodeToken:any = {}
   decodeToken = decode(token || '');
 
-  console.log("tocken "+decodeToken.id);
   this.ObjectPeopleLocation.id = decodeToken.id
   this.ventaDiariaService.PeopleLocation(this.ObjectPeopleLocation).subscribe(res => {
     this.ObjectFarmacia = res[0];
-    console.log('Esta es la farmacia ', this.ObjectFarmacia.id);
-
     this.products.getInventarioFarmacia(this.ObjectFarmacia).subscribe(res => {
       this.ListaInvetario = <any>res;
-      console.log("datos de inventario ", this.ListaInvetario);
     },
       err => {
         console.log(err);

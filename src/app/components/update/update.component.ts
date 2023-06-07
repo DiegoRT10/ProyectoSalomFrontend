@@ -64,7 +64,6 @@ export class UpdateComponent implements OnInit {
 
   Usuarios():void{
     const idEntrante = <String>this.activatedRoute.snapshot.params['id'];
-    console.log('id de entrada: '+idEntrante);
     this.EditUsuario.id = idEntrante;
 
     if(idEntrante){
@@ -75,7 +74,6 @@ export class UpdateComponent implements OnInit {
         let opRol=this.EditUsuario.role;
         let opAudi=this.EditUsuario.auditor;
         this.AsignarRol(opRol);
-        console.log('Audi? '+this.EditUsuario.auditor)
         this.AsignarAuditor(opAudi);
         this.patIMG = this.EditUsuario.image;
       },
@@ -95,26 +93,18 @@ export class UpdateComponent implements OnInit {
   }
 
   EditarUsuario(){
-    console.log('Role a editar',this.EditUsuario.role);
-    console.log('Audi a editar',this.EditUsuario.auditor);
-    console.log('Imagen ',this.EditUsuario.image);
-
     switch(<any>this.EditUsuario.role){
       case 'Sistemas':
         this.EditUsuario.role=0;
-        console.log(this.EditUsuario.role);
         break
       case 'Gerente':
         this.EditUsuario.role=1;
-        console.log(this.EditUsuario.role);
         break;
       case 'Administrador':
         this.EditUsuario.role=2
-        console.log(this.EditUsuario.role);
         break;
       case 'Invitado':
         this.EditUsuario.role=3
-        console.log(this.EditUsuario.role);
         break;
     }
 
@@ -134,7 +124,6 @@ export class UpdateComponent implements OnInit {
     }
     this.CrudService.editUser(this.EditUsuario).subscribe(
       res=>{
-        console.log('Se edito el usuario');
 
         if(this.EditUsuario.image != this.patIMG){
 
@@ -145,13 +134,10 @@ export class UpdateComponent implements OnInit {
             formularioDeDatos.append('file', archivo)
           })
           // formularioDeDatos.append('_id', 'MY_ID_123')
-          console.log('formDatos ' + formularioDeDatos);
           this.EditUsuario.image = formularioDeDatos;
-          console.log('image' + this.EditUsuario.image);
           this.CrudService.uploadFile(formularioDeDatos)
             .subscribe((res: any) => {
               this.loading = false;
-              console.log('Respuesta del servidor', res);
 
             }, () => {
               this.loading = false;
@@ -176,11 +162,8 @@ export class UpdateComponent implements OnInit {
     const fileCapt = event.target.files[0];
     this.extraerBase64(fileCapt).then((imagen: any) => {
       this.previous = imagen.base;
-
-      console.log(imagen);
     });
     this.files.push(fileCapt);
-    // console.log(event.target.files)
   }
 
   extraerBase64 = async ($event: any) => new Promise((resolve, reject) => {
@@ -219,13 +202,9 @@ export class UpdateComponent implements OnInit {
       })
 
       formularioDeDatos.append('id', `${this.EditUsuario.id}`);
-      // console.log('formDatos '+formularioDeDatos);
-      // this.AggUsuario.image=formularioDeDatos;
-      // console.log('image'+this.AggUsuario.image);
       this.CrudService.uploadFile(formularioDeDatos)
         .subscribe((res: any) => {
           this.loading = false;
-          console.log('Respuesta del servidor', res);
 
         }, () => {
           this.loading = false;
@@ -243,26 +222,20 @@ export class UpdateComponent implements OnInit {
   setRol(event:any):void{
     let data = event.target.value;
     this.EditUsuario.role = data;
-    console.log('rol ', data);
   }
 
   AsignarRol(op:any):void{
-    console.log('esta es una opcion',op);
     if(op==0){
       this.EditUsuario.role = 'Sistemas';
-      console.log('funcion rol',this.EditUsuario.role);
     }
     if(op==1){
       this.EditUsuario.role = 'Gerente';
-      console.log('funcion rol',this.EditUsuario.role);
     }
     if(op==2){
       this.EditUsuario.role = 'Administrador';
-      console.log('funcion rol',this.EditUsuario.role);
     }
     if(op==3){
       this.EditUsuario.role = 'Invitado';
-      console.log('funcion rol',this.EditUsuario.role);
     }
 
     }
@@ -272,18 +245,14 @@ export class UpdateComponent implements OnInit {
     setAuditor(event:any):void{
       let data = event.target.value;
       this.EditUsuario.auditor = data;
-      console.log('Auditor ', data);
     }
 
     AsignarAuditor(op:any):void{
-      console.log('esta es una opcion',op);
       if(op==0){
         this.EditUsuario.auditor = 'No';
-        console.log('funcion audi',this.EditUsuario.auditor);
       }
       if(op==1){
         this.EditUsuario.auditor = 'Si';
-        console.log('funcion audi',this.EditUsuario.auditor);
       }
   
       }

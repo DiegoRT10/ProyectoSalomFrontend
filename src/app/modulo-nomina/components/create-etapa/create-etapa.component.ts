@@ -33,7 +33,6 @@ export class CreateEtapaComponent implements OnInit {
     AgregarEtapa():void{
       this.crudEtapaService.addEtapa(this.AggEtapa).subscribe(
         res => {
-          console.log('Se agrego la etapa');
           this.router.navigate(['etapa']);
         },
         err => {

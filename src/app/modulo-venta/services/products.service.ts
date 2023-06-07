@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,8 @@ export class ProductsService {
     private jwtHelper: JwtHelperService) { }
 
 
-    private URL = 'http://localhost:3000';
+    //private URL = 'http://localhost:3000';
+    private URL = environment.PORT;
     
        //Listar todos los productos   
        getPriducts(){

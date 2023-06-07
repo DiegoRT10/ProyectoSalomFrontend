@@ -209,7 +209,6 @@ export class MovimientosAdministradorComponent implements OnInit{
     this.carga = true;
     this.fechaDia = moment.utc(this.date).format('yyyy-MM-DD');
     this.ObjectNotaTraslado.fecha = <any>this.fechaDia;
-    console.log(this.fechaDia);
     this.getProductsCodeName();
     this.getLocationsId();
     this.getPeopleLocation();
@@ -259,7 +258,6 @@ export class MovimientosAdministradorComponent implements OnInit{
 
     this.trasladoService.addNotaTraslado(this.ObjectNotaTraslado).subscribe(
       res => {
-        console.log('Se agrego el deposito correctamente');
       },
       err => {
         console.log(err);
@@ -366,9 +364,7 @@ export class MovimientosAdministradorComponent implements OnInit{
 
 
   ActualizaInputRecibe():void{
-    console.log("entre a ActualizaInputRecibe");
     this.people.idlocation = this.ObjectNotaTraslado.id_location_destino;
-    console.log("id location a buscar ",this.people.idlocation);
     this.ventaDiariaService.getPeopleLocation(this.people).subscribe(res => {
       this.ListaPeopleLocation2 = <any>res;
       for (const i of this.ListaPeopleLocation2!) {
@@ -406,18 +402,11 @@ export class MovimientosAdministradorComponent implements OnInit{
       }else{break;}
     }
    
-    
-    console.log('Producto a mover ', this.ObjectMovimientos.idProducto);
-    console.log('Farmacia origen ', this.ObjectNotaTraslado.id_location_origen);
-    console.log('Farmacia destino', this.ObjectNotaTraslado.id_location_destino);
-    console.log('Cantida de producto ',this.ObjectMovimientos.cantidad);
-    console.log('Objeto a anadir ',this.ObjectMovimientos);
 
     this.ObjectProductoCode.code = <any>this.ObjectMovimientos.idProducto;
     this.products.searchProductoCode(this.ObjectProductoCode).subscribe(res => {
     this.ObjectProductsViewProducts = res[0];
     this.ObjectDetalleTraslado.id_producto = this.ObjectProductsViewProducts.id;
-    console.log("producto "+ this.ObjectProductsViewProducts.id);
     
       
     },
@@ -434,7 +423,6 @@ export class MovimientosAdministradorComponent implements OnInit{
    
     this.bandera=true;
     this.trasladoService.addNotaTraslado(this.ObjectNotaTraslado).subscribe(res => {
-      console.log("Datos enviados");
     },
       err => {
         console.log(err);
@@ -450,14 +438,12 @@ export class MovimientosAdministradorComponent implements OnInit{
     let decodeToken:any = {}
     decodeToken = decode(token || '');
 
-    console.log("tocken "+decodeToken.id);
     this.ObjectPeopleLocation.id = decodeToken.id
     this.ObjectNotaTraslado.id_entrega = decodeToken.id;
     this.ventaDiariaService.PeopleLocation(this.ObjectPeopleLocation).subscribe(res => {
       this.ObjectFarmacia = res[0];
       
 
-      console.log("El usuario "+this.ObjectPeopleLocation.id+" pertenece a "+this.ObjectFarmacia.id);
       this.ObjectNotaTraslado.id_location_origen = this.ObjectFarmacia.id;
       
     },
@@ -476,13 +462,13 @@ Limpiar():void{
 }
 
 
-  DatosTable():void{
+  // DatosTable():void{
 
-    const table = document.getElementById("rwd-table-id") as HTMLTableElement;
-   for (let i = 0, row; row = table.rows[i]; i++) {
-      console.log('dato table ',row);
-    }
-  }
+  //   const table = document.getElementById("rwd-table-id") as HTMLTableElement;
+  //  for (let i = 0, row; row = table.rows[i]; i++) {
+  //     console.log('dato table ',row);
+  //   }
+  // }
 
   
 
@@ -490,7 +476,6 @@ Limpiar():void{
     const token = localStorage.getItem('token');
     let decodeToken:any = {}
     decodeToken = decode(token || '');
-    console.log('Este es el token',decodeToken.id);
     return decodeToken.id;
   }
 
@@ -506,67 +491,3 @@ Limpiar():void{
 
 
 
-/**this.DatosMovimiento.push(`${this.ObjectMovimientos.idProducto}`);   
-      this.DatosMovimiento.push(`${this.ObjectMovimientos.idLocation}`); 
-      this.DatosMovimiento.push(`${this.ObjectMovimientos.cantidad}`);
-   
-    this.cadena = this.ObjectMovimientos.idProducto+' '+this.ObjectMovimientos.idLocation+' '+this.ObjectMovimientos.cantidad;
-    //this.cadena = `${this.ObjectMovimientos.idProducto}' '${this.ObjectMovimientos.idLocation}' '${this.ObjectMovimientos.cantidad}`
-    console.log('cadena ', this.cadena);
-
-    if(this.CadenaMovimiento.push(this.cadena)){
-      console.log('Lista Movimientos ',this.CadenaMovimiento);
-      this.Limpiar();
-    }
-
-    
-      let codigo = '';
-      let location = '';
-      let cantidad = '';
-
-    
-    for (let i = 0; i < this.CadenaMovimiento.length; i++) { //recorro cadena con valores de idProducto, 
-      let cadena = this.CadenaMovimiento[i];
-      
-      for(let j = 0; j < cadena.length; j++){
-        if(cadena.charAt(j) != ' '){
-          codigo += cadena.charAt(j)
-        }else{
-          this.sic = 0;
-          this.sfc = j;
-          break;} 
-      }
-      for(let k = codigo.length+1; k < cadena.length; k++){
-        if(cadena.charAt(k) != ' '){
-          location += cadena.charAt(k)
-        }else{
-          this.sil = codigo.length+1;
-          this.sfl = k;
-          break;}  
-      }
-      for(let m = codigo.length+location.length+2; m < cadena.length; m++){
-        if(cadena.charAt(m) != ' '){
-          cantidad += cadena.charAt(m)
-        }else{break;}  
-          this.sica = codigo.length+location.length+2;
-          this.sfca = cadena.length;
-          console.log('tamano inicio cantidad '+this.sica);
-          console.log('tamano fin cantidad '+this.sfca);
-      }
-      console.log('cadena codigo '+codigo);
-      console.log('cadena location '+location);
-      console.log('cadena cantidad '+cantidad);
-
-      this.ObjectMovimientos2.idProducto = codigo; 
-      this.ObjectMovimientos2.idLocation = location; 
-      this.ObjectMovimientos2.cantidad = <any>cantidad; 
-
-      
-      
-      
-    
-    }
-
-    // if(this.ListaMovimientos.push(this.ObjectMovimientos)){
-    //   console.log('Lista Movimientos ',this.ListaMov);
-    // } */

@@ -261,14 +261,11 @@ export class FarmaciaComponent implements OnInit {
   VentaDeposito(money: string, index: number): void {
 
     this.dataDeposito.money = money;
-    console.log('index', index);
-    console.log('size', this.size);
 
     this.VentaDiariaService.getDepositos(this.dataDeposito).subscribe(res => {
       //this.ListaDepositos=<any>res;
       this.depositos = res[0];
       this.size--;
-      console.log('depositos arreglo ', this.depositos);
     },
       err => {
         console.log(err);
@@ -308,9 +305,6 @@ export class FarmaciaComponent implements OnInit {
 
   verDepositos() {
     this.bandera = true;
-    console.log('ver ', this.setDepositos);
-
-
   }
 
 
@@ -328,7 +322,6 @@ export class FarmaciaComponent implements OnInit {
       .subscribe(res => {
         this.ListaDepositos = <any>res;
         this.depositos = res[0];
-        console.log('depositos arreglo ', this.depositos);
 
         for (const j of this.ListaDepositos!) {
           //this.setDepositos!.push(this.depositos); 
@@ -345,7 +338,6 @@ export class FarmaciaComponent implements OnInit {
       );
 
 
-    console.log('total', this.depositos.monto);
     j++;
     return <any>this.total;
     //}
@@ -356,7 +348,6 @@ export class FarmaciaComponent implements OnInit {
     this.VentaDiariaService.getTransacciones(this.dataDeposito).subscribe(res => {
       this.ListaDepositos = <any>res;
       //this.Venta = res[0];
-      console.log(this.ListaDepositos)
       this.carga2 = true;
     },
       err => {
@@ -370,13 +361,10 @@ export class FarmaciaComponent implements OnInit {
   CambioDeposito(depos: any, estado: number): void {
     this.depositos = depos;
     this.depositos.estado = estado;
-    console.log(this.depositos);
     if (estado == 0 || estado == 1) {
       this.VentaDiariaService.putDepositos(this.depositos).subscribe(res => {
         //this.ListaDepositos=<any>res;
         //this.Venta = res[0];
-        console.log(this.ListaDepositos);
-        console.log('entre a cambio deposito');
         this.cambioEstado = false;
         this.Transacciones(this.depositos.money);
       },
@@ -387,7 +375,6 @@ export class FarmaciaComponent implements OnInit {
       );
 
     } else if (estado == 2) {
-      console.log('entre a cambio deposito 2');
       this.cambioEstado = true;
     }
 
@@ -399,7 +386,6 @@ export class FarmaciaComponent implements OnInit {
     this.bandera = f;
     //this.idDeposito = id;
     this.depositos = depos;
-    console.log('depos ', this.depositos);
   }
 
 }

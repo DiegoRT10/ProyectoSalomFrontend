@@ -66,8 +66,6 @@ export class LocationsComponent implements OnInit {
     this.crudLocationService.getLocations().subscribe(
       res => {
         this.ListaLocations = <any>res;
-        console.log(this.ListaLocations);
-
 
       },
       err => {
@@ -87,13 +85,10 @@ export class LocationsComponent implements OnInit {
   }
 
    Eliminar(id: any): void {
-    console.log('este es el id desde HTML ' + id);
     this.DelLocation.id = id;
     this.DelLocation.visible='0';
-    console.log('este es el id desde de la Etapa ' + this.DelLocation.id);
     this.crudLocationService.delLocation(this.DelLocation).subscribe(
       res => {
-        console.log('Se elimino el puesto');
         this.listarLocations();
       },
       err => {

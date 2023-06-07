@@ -33,9 +33,7 @@ export class EtapaComponent implements OnInit {
   listarEtapas(){
     this.crudEtapaService.getEtapa().subscribe(
       res=>{
-        this.ListaEtapas=<any>res;     
-        console.log(this.ListaEtapas);
-        
+        this.ListaEtapas=<any>res;      
 
       },
       err =>{
@@ -55,12 +53,9 @@ export class EtapaComponent implements OnInit {
   }
 
   Eliminar(id:any):void{
-    console.log('este es el id desde HTML '+id);
     this.DelPuesto.id=id;
-    console.log('este es el id desde de la Etapa '+id);
     this.crudEtapaService.delEtapa(id).subscribe(
       res => {
-        console.log('Se elimino el puesto');
         this.listarEtapas();
       },
       err => {

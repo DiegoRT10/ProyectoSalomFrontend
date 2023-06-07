@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Users,CrudService } from 'src/app/services/crud.service';
 import { ProfileNomina } from '../../services/crud-profile.service';
-
+import { environment } from 'src/environments/environment';
 
 
 @Component({
@@ -13,7 +13,7 @@ import { ProfileNomina } from '../../services/crud-profile.service';
 })
 export class ProfileComponent implements OnInit {
   fecha!: Date;
-
+  ruta: any = environment.PORT;
   ProfileNomina:ProfileNomina ={
   id:'', 
   Location:'', 
@@ -63,7 +63,6 @@ export class ProfileComponent implements OnInit {
     if(idL){
       this.CrudService.getOneUser(this.Usuario).subscribe(res=>{
         this.Usuario = res[0];
-        console.log(this.Usuario.name);
       },
       err =>{
         console.log(err);
@@ -81,8 +80,6 @@ export class ProfileComponent implements OnInit {
     if(idL){
       this.CrudProfileService.getProfileNomina(this.ProfileNomina).subscribe(res=>{
         this.ProfileNomina = res[0];
-        console.log('datos profile',this.ProfileNomina);
-        console.log('location',this.ProfileNomina.Location);
       },
       err =>{
         console.log(err);

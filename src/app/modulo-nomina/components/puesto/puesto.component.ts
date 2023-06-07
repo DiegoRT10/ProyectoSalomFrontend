@@ -43,9 +43,7 @@ export class PuestoComponent implements OnInit {
     this.crudPuestoService.getPuesto().subscribe(
       res=>{
         this.ListaPuestos=<any>res;     
-        console.log(this.ListaPuestos);
         
-
       },
       err =>{
         console.log(err);
@@ -65,12 +63,9 @@ export class PuestoComponent implements OnInit {
   }
 
   Eliminar(id:any):void{
-    console.log('este es el id desde HTML '+id);
     this.DelPuesto.id=id;
-    console.log('este es el id desde delPuesto '+id);
     this.crudPuestoService.delPuesto(id).subscribe(
       res => {
-        console.log('Se elimino el puesto');
         this.listarPuestos();
       },
       err => {

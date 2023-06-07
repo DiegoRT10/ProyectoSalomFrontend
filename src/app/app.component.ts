@@ -37,7 +37,6 @@ export class AppComponent implements OnInit {
   }
 
    static verificarRol(){
-    console.log('entre a verificar');
     if(localStorage.getItem('token')){
       this.EstadoToken = true;
     if(localStorage.getItem('rol')){

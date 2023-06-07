@@ -35,7 +35,6 @@ export class UpdatePuestoComponent implements OnInit {
 
 getOnePuesto(): void{
   const idEntrante = localStorage.getItem('idP');
-  console.log('idP de entrada: '+idEntrante);
   this.EditPuesto.id=<String>idEntrante;
 
   if(idEntrante){
@@ -54,7 +53,6 @@ getOnePuesto(): void{
   EditarPuesto():void{
     this.crudPuestoService.editPuesto(this.EditPuesto).subscribe(
       res => {
-        console.log('Se edito el puesto');
         this.router.navigate(['puesto']);
       },
       err => {

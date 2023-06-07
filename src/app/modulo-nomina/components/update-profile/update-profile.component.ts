@@ -70,7 +70,6 @@ export class UpdateProfileComponent implements OnInit {
 
 getOneProfile(): void{
   const idEntrante = localStorage.getItem('id');
-  console.log('id de entrada: '+idEntrante);
   this.EditProfile.id=<String>idEntrante;
 
 
@@ -93,12 +92,6 @@ getOneProfile(): void{
 
      this.date = new Date(this.EditProfile.fechaIngreso); 
      this.fecha = this.EditProfile.fechaIngreso;
-     console.log('elemento ', this.EditProfile.fechaIngreso);
-     console.log('fecha parse ',moment.utc(this.date).format('MM/DD/YYYY'));
-     console.log('fecha desde el backend ',this.date);
-     // this.EditProfile.fechaIngreso = this.miDatePipe.transform(this.EditProfile.fechaIngreso, 'yyyy-MM-dd')
-      //console.log('fecha: ',this.miDatePipe.transform(this.date, 'yyyy-MM-dd'))
-
       console.log(res);
     },
     err =>{

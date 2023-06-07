@@ -41,7 +41,6 @@ export class LoginComponent implements OnInit {
     const token = localStorage.getItem('token');
     let decodeToken:any = {}
     decodeToken = decode(token || '');
-    console.log(decodeToken.role);
     localStorage.setItem('rol',decodeToken.role);
 
       switch(decodeToken.role){

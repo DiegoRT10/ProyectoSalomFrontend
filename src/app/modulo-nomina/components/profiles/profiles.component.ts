@@ -29,7 +29,6 @@ export class ProfilesComponent implements OnInit {
     this.crudService.getUser().subscribe(
       res=>{
         this.ListarUsuarios=<any>res;     
-        console.log(this.ListarUsuarios);
       },
       err =>{
         console.log(err);

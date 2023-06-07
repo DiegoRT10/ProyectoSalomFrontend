@@ -38,7 +38,6 @@ export class CreatePuestoComponent implements OnInit {
   AgregarPuesto():void{
     this.crudPuestoService.addPuesto(this.AggPuesto).subscribe(
       res => {
-        console.log('Se agrego el puesto');
         this.router.navigate(['puesto']);
       },
       err => {

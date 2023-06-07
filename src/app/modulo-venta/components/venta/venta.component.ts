@@ -31,12 +31,7 @@ export class VentaComponent implements OnInit {
   loading3?:boolean;
   loading4?:boolean;
   carga?:boolean;
-  // options
-  // gradient: boolean = true;
-  // showLegend: boolean = true;
-  // showLabels: boolean = true;
-  // isDoughnut: boolean = false;
-  // options
+
   view: [number,number] = [1090, 850];
   showXAxis = true;
   showYAxis = true;
@@ -55,23 +50,7 @@ export class VentaComponent implements OnInit {
     name: 'Customer Usage', 
 };
 
-//     {
-//       "name": "Germany",
-//       "value": 8940000
-//     },
-//     {
-//       "name": "USA",
-//       "value": 5000000
-//     },
-//     {
-//       "name": "France",
-//       "value": 7200000
-//     },
-//       {
-//       "name": "UK",
-//       "value": 6200000
-//     }
-//   ];
+
 
   constructor(private router: Router, private VentaDiariaService: VentaDiariaService) { 
     this.loading1=true;
@@ -102,11 +81,6 @@ export class VentaComponent implements OnInit {
   }
 
 
-  // single: DatosGrafica ={
-  //   name:'',
-  //   value:0
-  // }; 
-
   ngOnInit(): void {
    this.carga = true;
     this.ventaMes.mes = this.setFecha();
@@ -114,7 +88,6 @@ export class VentaComponent implements OnInit {
     this.ventaMes.mes=this.setFechaEvent();
     this.MetaFarmacia();
     this.setFechaCard();
-    console.log('este es el dia actual ',this.dia);
   }
 
   ngAfterViewInit() {
@@ -124,7 +97,6 @@ export class VentaComponent implements OnInit {
 
   setMes(event:any):void{
     this.ventaMes.mes = event.target.value;
-    console.log("venta seleccionada",this.ventaMes.mes);
     this.ventaMes.mes = this.ventaMes.mes.slice(0,4)+this.ventaMes.mes.slice(5);
     this.VentaDiaria('cash',this.ventaMes.mes);
     this.ventaMes.mes=this.setFechaEvent();
@@ -138,7 +110,6 @@ export class VentaComponent implements OnInit {
     this.VentaDiariaService.getOneVenta(this.Venta).subscribe(res=>{
       this.ListaVenta=<any>res;
       this.loading1=false;
-      //this.Venta = res[0];
       
     },
     err =>{
@@ -149,7 +120,6 @@ export class VentaComponent implements OnInit {
 
       this.VentaDiariaService.getDatos(this.Venta).subscribe(res=>{
         this.single=<any>res;
-        //this.Venta = res[0];
         this.loading2=false;
       },
       err =>{
@@ -242,17 +212,17 @@ goFarmacia(id:String):void{
 
 
 onSelect(data:any): void {
-  console.log('Item clicked', JSON.parse(JSON.stringify(data)));
+  // console.log('Item clicked', JSON.parse(JSON.stringify(data)));
   this.OneMetaFarmacia(data.name,data.value);
  
 }
 
 onActivate(data:any): void {
-  console.log('Activate', JSON.parse(JSON.stringify(data)));
+  // console.log('Activate', JSON.parse(JSON.stringify(data)));
 }
 
 onDeactivate(data:any): void {
-  console.log('Deactivate', JSON.parse(JSON.stringify(data)));
+  // console.log('Deactivate', JSON.parse(JSON.stringify(data)));
 }
 
 

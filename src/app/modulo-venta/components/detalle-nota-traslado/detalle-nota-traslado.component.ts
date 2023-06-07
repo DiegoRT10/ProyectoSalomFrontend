@@ -198,7 +198,6 @@ export class DetalleNotaTrasladoComponent {
     // this.getProducts();
     this.fechaDia = moment.utc(this.date).format('yyyy-MM-DD');
     this.ObjectNotaTraslado.fecha = <any>this.fechaDia;
-    console.log(this.fechaDia);
     this.getProductsCodeName();
     this.getPeopleLocation();
     this.getDetalleTraslado();
@@ -248,7 +247,6 @@ export class DetalleNotaTrasladoComponent {
 
     this.trasladoService.addDetalleNotaTraslado(this.ObjectNotaTraslado).subscribe(
       res => {
-        console.log('Se agrego el deposito correctamente');
       },
       err => {
         console.log(err);
@@ -351,12 +349,6 @@ export class DetalleNotaTrasladoComponent {
       }else{break;}
     }
    
-    
-    console.log('Producto a mover ', this.ObjectMovimientos.idProducto);
-    console.log('Farmacia origen ', this.ObjectNotaTraslado.id_location_origen);
-    console.log('Farmacia destino', this.ObjectNotaTraslado.id_location_destino);
-    console.log('Cantida de producto ',this.ObjectMovimientos.cantidad);
-    console.log('Objeto a anadir ',this.ObjectMovimientos);
 
     this.ObjectProductoCode.code = <any>this.ObjectMovimientos.idProducto;
     
@@ -366,7 +358,6 @@ export class DetalleNotaTrasladoComponent {
     this.products.searchProductoCode(this.ObjectProductoCode).subscribe(res => {
     this.ObjectProductsViewProducts = res[0];
     this.ObjectDetalleTraslado.id_producto = this.ObjectProductsViewProducts.id;
-    console.log("producto "+ this.ObjectProductsViewProducts.id);
     this.AgregarDetalleNotaTraslado();
       
     },
@@ -383,7 +374,6 @@ export class DetalleNotaTrasladoComponent {
    
     this.bandera=true;
     this.trasladoService.addDetalleNotaTraslado(this.ObjectDetalleTraslado).subscribe(res => {
-      console.log("Datos enviados");
       localStorage.setItem("idDetalleTraslado", <any>res);
       this.getDetalleTraslado();
       this.ObjectMovimientos.idProducto = "";
@@ -401,9 +391,7 @@ export class DetalleNotaTrasladoComponent {
   getDetalleTraslado(){
     this.ObjectDetalleTrasladoId.id = <any>localStorage.getItem("idTraslado");
     this.trasladoService.searchDetalleTraslado(this.ObjectDetalleTrasladoId).subscribe(res => {
-      console.log("Datos enviados");
       this.ListaDetalleTraslado = res;
-      console.log("detalle traslado +",this.ListaDetalleTraslado);
     },
       err => {
         console.log(err);
@@ -418,15 +406,11 @@ export class DetalleNotaTrasladoComponent {
     const token = localStorage.getItem('token');
     let decodeToken:any = {}
     decodeToken = decode(token || '');
-
-    console.log("tocken "+decodeToken.id);
     this.ObjectPeopleLocation.id = decodeToken.id
     this.ObjectNotaTraslado.id_entrega = decodeToken.id;
     this.ventaDiariaService.PeopleLocation(this.ObjectPeopleLocation).subscribe(res => {
       this.ObjectFarmacia = res[0];
       
-
-      console.log("El usuario "+this.ObjectPeopleLocation.id+" pertenece a "+this.ObjectFarmacia.id);
       this.ObjectNotaTraslado.id_location_origen = this.ObjectFarmacia.id;
       
     },
@@ -445,27 +429,25 @@ Limpiar():void{
 }
 
 
-  DatosTable():void{
+  // DatosTable():void{
 
-    const table = document.getElementById("detalle") as HTMLTableElement;
-   for (let i = 0, row; row = table.rows[i]; i++) {
-      console.log('dato table ',row);
-    }
-  }
+  //   const table = document.getElementById("detalle") as HTMLTableElement;
+  //  for (let i = 0, row; row = table.rows[i]; i++) {
+  //     console.log('dato table ',row);
+  //   }
+  // }
 
   setRevisado(){
   for (const i of this.ListaDetalleTraslado!) {
     this.ObjectDetalleTrasladoId.id = i.id;
     this.ObjectDetalleTrasladoId.estado = 0;
     this.trasladoService.updateDetalleTraslado(this.ObjectDetalleTrasladoId).subscribe(res => {
-      console.log("Datos enviados");
     },
       err => {
         console.log(err);
       }
   
     );
-    console.log("detalle a enviar ",i.id_producto);
 }
     this.setRevisado2()
     this.getDetalleTraslado();
@@ -477,7 +459,6 @@ Limpiar():void{
     const token = localStorage.getItem('token');
     let decodeToken:any = {}
     decodeToken = decode(token || '');
-    console.log('Este es el token',decodeToken.id);
     return decodeToken.id;
   }
 

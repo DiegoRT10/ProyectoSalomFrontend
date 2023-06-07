@@ -32,7 +32,6 @@ export class CreateLocationComponent implements OnInit {
   AgregarLocation():void{
     this.crudLocationService.addLocation(this.AggLocation).subscribe(
       res => {
-        console.log('Se agrego la location');
         this.router.navigate(['locations']);
       },
       err => {

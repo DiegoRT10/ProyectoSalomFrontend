@@ -71,19 +71,15 @@ export class CreateComponent implements OnInit {
     switch (<any>this.AggUsuario.role) {
       case 'Sistemas':
         this.AggUsuario.role = 0;
-        console.log(this.AggUsuario.role);
         break
       case 'Gerente':
         this.AggUsuario.role = 1;
-        console.log(this.AggUsuario.role);
         break;
       case 'Administrador':
         this.AggUsuario.role = 2
-        console.log(this.AggUsuario.role);
         break;
       case 'Invitado':
         this.AggUsuario.role = 3
-        console.log(this.AggUsuario.role);
         break;
     }
 
@@ -96,7 +92,6 @@ export class CreateComponent implements OnInit {
 
     this.CrudService.addUser(this.AggUsuario).subscribe(
       res => {
-        console.log('Se agrego el usuario');
         try {
           this.loading = true;
           const formularioDeDatos = new FormData();
@@ -104,13 +99,12 @@ export class CreateComponent implements OnInit {
             formularioDeDatos.append('file', archivo)
           })
           // formularioDeDatos.append('_id', 'MY_ID_123')
-          console.log('formDatos ' + formularioDeDatos);
+          
           this.AggUsuario.image = formularioDeDatos;
-          console.log('image' + this.AggUsuario.image);
           this.CrudService.uploadFile(formularioDeDatos)
             .subscribe((res: any) => {
               this.loading = false;
-              console.log('Respuesta del servidor', res);
+              
 
             }, () => {
               this.loading = false;
@@ -139,11 +133,8 @@ export class CreateComponent implements OnInit {
     const fileCapt = event.target.files[0];
     this.extraerBase64(fileCapt).then((imagen: any) => {
       this.previous = imagen.base;
-
-      console.log(imagen);
     });
     this.files.push(fileCapt);
-    // console.log(event.target.files)
   }
 
   extraerBase64 = async ($event: any) => new Promise((resolve, reject) => {
@@ -177,14 +168,10 @@ export class CreateComponent implements OnInit {
       })
 
       formularioDeDatos.append('id', `${this.AggUsuario.id}`);
-      // console.log('formDatos '+formularioDeDatos);
-      // this.AggUsuario.image=formularioDeDatos;
-      // console.log('image'+this.AggUsuario.image);
       this.CrudService.uploadFile(formularioDeDatos)
         .subscribe((res: any) => {
           this.loading = false;
-          console.log('Respuesta del servidor', res);
-
+          
         }, () => {
           this.loading = false;
           alert('Error');

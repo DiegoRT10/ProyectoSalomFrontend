@@ -101,9 +101,7 @@ export class ListaNotaTrasladoComponent {
 
     this.ObjectDetalleTrasladoId.id = idTraslado;
     this.trasladoService.searchDetalleTraslado(this.ObjectDetalleTrasladoId).subscribe(res => {
-      console.log("Datos enviados");
       this.ListaDetalleTraslado = res;
-      console.log("detalle traslado1", this.ListaDetalleTraslado);
       this.ObjectStockDiary.id = '';
       // this.ObjectStockDiary.datenew = this.date;
 
@@ -117,21 +115,17 @@ export class ListaNotaTrasladoComponent {
         this.ObjectStockDiary.supplier = destino;
 
         this.ObjectProducto.id = i.id_producto;
-        console.log("id producto ", this.ObjectProducto.id);
         this.productService.searchPriceSell(this.ObjectProducto).subscribe(res => {
           this.ObjectProduct = res[0];
           this.ObjectStockDiary.price = this.ObjectProduct.pricesell;
           this.ObjectStockDiary.product = this.ObjectProduct.id;
-          console.log("este es el producto a enviar ", this.ObjectStockDiary.product, " precio ", this.ObjectStockDiary.price);
           this.trasladoService.addStockDiary(this.ObjectStockDiary).subscribe(
             res => {
-              console.log("Datos stockdiary enviados");
 
 
               this.ObjectStockCurrent.units = i.cantidad;
               this.ObjectStockCurrent.location = this.ObjectFarmacia.id;
               this.ObjectStockCurrent.product = i.id_producto;
-              console.log("datos de stock current ", this.ObjectStockCurrent.units, this.ObjectStockCurrent.location, this.ObjectStockCurrent.product)
               this.trasladoService.updateStockCurrentOrigen(this.ObjectStockCurrent).subscribe(res => {
 
               
@@ -162,7 +156,6 @@ export class ListaNotaTrasladoComponent {
 
       this.ObjectDetalleTrasladoId.id = idTraslado;
       this.ObjectDetalleTrasladoId.estado = 3;
-      console.log("Holaaaaaa");
         this.trasladoService.updateTraslado(this.ObjectDetalleTrasladoId).subscribe(res => {
           this.ActualizaInputRecibe();
         },
@@ -188,9 +181,7 @@ export class ListaNotaTrasladoComponent {
 
     this.ObjectDetalleTrasladoId.id = idTraslado;
     this.trasladoService.searchDetalleTraslado(this.ObjectDetalleTrasladoId).subscribe(res => {
-      console.log("Datos enviados");
       this.ListaDetalleTraslado = res;
-      console.log("detalle traslado1", this.ListaDetalleTraslado);
       this.ObjectStockDiary.id = '';
       // this.ObjectStockDiary.datenew = this.date;
 
@@ -204,21 +195,17 @@ export class ListaNotaTrasladoComponent {
         this.ObjectStockDiary.supplier = destino;
 
         this.ObjectProducto.id = i.id_producto;
-        console.log("id producto ", this.ObjectProducto.id);
         this.productService.searchPriceSell(this.ObjectProducto).subscribe(res => {
           this.ObjectProduct = res[0];
           this.ObjectStockDiary.price = this.ObjectProduct.pricesell;
           this.ObjectStockDiary.product = this.ObjectProduct.id;
-          console.log("este es el producto a enviar ", this.ObjectStockDiary.product, " precio ", this.ObjectStockDiary.price);
           this.trasladoService.addStockDiary(this.ObjectStockDiary).subscribe(
             res => {
-              console.log("Datos stockdiary enviados");
 
 
               this.ObjectStockCurrent.units = i.cantidad;
               this.ObjectStockCurrent.location = this.ObjectFarmacia.id;
               this.ObjectStockCurrent.product = i.id_producto;
-              console.log("datos de stock current ", this.ObjectStockCurrent.units, this.ObjectStockCurrent.location, this.ObjectStockCurrent.product)
               this.trasladoService.updateStockCurrentDestino(this.ObjectStockCurrent).subscribe(res => {
 
               
@@ -249,7 +236,6 @@ export class ListaNotaTrasladoComponent {
 
       this.ObjectDetalleTrasladoId.id = idTraslado;
       this.ObjectDetalleTrasladoId.estado = 4;
-      console.log("Holaaaaaa");
         this.trasladoService.updateTraslado(this.ObjectDetalleTrasladoId).subscribe(res => {
           this.ActualizaInputRecibe2();
         },
@@ -275,23 +261,8 @@ export class ListaNotaTrasladoComponent {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   getTraslado(data: any) {
     let op;
-    console.log("estado de la bandera ", this.bandera);
     this.bandera ? op = data.target.value : op = data
 
 
@@ -324,9 +295,7 @@ export class ListaNotaTrasladoComponent {
 
     if(this.estado <=3 && this.estado3=="Salientes"){
       this.trasladoService.searchDetalleTraslado2(this.ObjectDetalleTrasladoId).subscribe(res => {
-        console.log("Datos enviados");
         this.ListaNotaTraslado = res;
-        console.log("detalle traslado +", this.ListaNotaTraslado);
         this.bandera = true;
       },
         err => {
@@ -338,9 +307,7 @@ export class ListaNotaTrasladoComponent {
     }
     if(this.estado ==3 && this.estado3=="Entrantes"){
       this.trasladoService.searchDetalleTraslado3(this.ObjectDetalleTrasladoId).subscribe(res => {
-        console.log("Datos enviados");
         this.ListaNotaTraslado = res;
-        console.log("detalle traslado +", this.ListaNotaTraslado);
         this.bandera = true;
       },
         err => {
@@ -352,9 +319,7 @@ export class ListaNotaTrasladoComponent {
     }
     if(this.estado ==4 && this.estado3=="Finalizado"){
       this.trasladoService.searchDetalleTraslado4(this.ObjectDetalleTrasladoId).subscribe(res => {
-        console.log("Datos enviados");
         this.ListaNotaTraslado = res;
-        console.log("detalle traslado +", this.ListaNotaTraslado);
         this.bandera = true;
       },
         err => {
@@ -371,15 +336,12 @@ export class ListaNotaTrasladoComponent {
   getPeopleLocation(): void {
     const token = localStorage.getItem('token');
     this.decodeToken = decode(token || '');
-
-    console.log("tocken " + this.decodeToken.id);
     this.ObjectPeopleLocation.id = this.decodeToken.id
     this.ObjectNotaTraslado.id_entrega = this.decodeToken.id;
     this.ventaDiariaService.PeopleLocation(this.ObjectPeopleLocation).subscribe(res => {
       this.ObjectFarmacia = res[0];
 
       this.idFarmacia =  this.ObjectFarmacia.id;
-      console.log("El usuario " + this.ObjectPeopleLocation.id + " pertenece a " + this.ObjectFarmacia.id);
       this.ObjectNotaTraslado.id_location_origen = this.ObjectFarmacia.id;
       this.bandera = false;
       this.getTraslado('Creados');
@@ -396,9 +358,7 @@ export class ListaNotaTrasladoComponent {
   getDetalleTraslado(id: string) {
     this.ObjectDetalleTrasladoId.id = id;
     this.trasladoService.searchDetalleTraslado(this.ObjectDetalleTrasladoId).subscribe(res => {
-      console.log("Datos enviados");
       this.ListaDetalleTraslado = res;
-      console.log("detalle traslado1", this.ListaDetalleTraslado);
     },
       err => {
         console.log(err);
@@ -409,7 +369,6 @@ export class ListaNotaTrasladoComponent {
   }
 
   tipoTraslado(data: any) {
-    console.log('este es el dato de sde op ', data.target.value);
     data.target.value = 'Salientes' ? this.bandera = true : this.bandera = false;
   }
 
@@ -419,7 +378,6 @@ export class ListaNotaTrasladoComponent {
     this.estado = 3;
     this.estado2 = "Salientes";
     this.getTraslado('Salientes');
-    console.log("llegue a Salientes");
   }
 
 
@@ -429,7 +387,6 @@ export class ListaNotaTrasladoComponent {
     this.estado = 4;
     this.estado2 = "Finalizado";
     this.getTraslado('Finalizado');
-    console.log("llegue a Finalizado");
   }
 
   Abrir(flag:boolean){
@@ -438,12 +395,9 @@ export class ListaNotaTrasladoComponent {
 
 
   getProductosTraslado(id: string) {
-    console.log('entre a get productos');
     this.ObjectDetalleTrasladoId.id = id;
     this.trasladoService.searchProductosTraslado(this.ObjectDetalleTrasladoId).subscribe(res => {
-      console.log("Datos enviados");
       this.ListaProductosTraslado = res;
-      console.log("productos", this.ListaProductosTraslado);
     },
       err => {
         console.log(err);

@@ -3,6 +3,7 @@ import { DecimalPipe } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -12,8 +13,8 @@ export class CrudProfileService {
   constructor(private http: HttpClient,
     private jwtHelper: JwtHelperService) { }
 
-    private URL = 'http://localhost:3000';
-
+    //private URL = 'http://localhost:3000';
+    private URL = environment.PORT;
 
 //Listar todos   
 getProfile(){
@@ -36,7 +37,6 @@ editProfile(profile:any){
 }
 
 delProfile(id:any){
-  console.log('este es el id desde el service '+id);
   return this.http.delete(`${this.URL}/profile/delete${id}`);
 }
 

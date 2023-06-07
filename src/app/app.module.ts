@@ -26,6 +26,7 @@ import { InformationComponent } from './components/information/information.compo
 import { HomeSistemasComponent } from './components/home-sistemas/home-sistemas.component';
 import { LoadingComponent } from './loading/loading.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 
 
 
@@ -70,6 +71,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     JwtHelperService,
     //Token Interceptor
     {provide: HTTP_INTERCEPTORS,useClass: TokenInterceptorService,multi:true},
+    {provide: LocationStrategy,useClass: HashLocationStrategy}
   ],
   bootstrap: [AppComponent]
 })

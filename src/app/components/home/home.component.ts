@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 
 
@@ -10,7 +11,7 @@ import { Component, OnInit } from '@angular/core';
 export class HomeComponent implements OnInit {
   carga?: boolean;
 
-  constructor() { 
+  constructor(private router: Router) { 
     
   }
 
@@ -21,4 +22,13 @@ export class HomeComponent implements OnInit {
   ngAfterViewInit() {
     this.carga = false;
   }
+
+  goProducts():void{
+    this.router.navigate(['products']);
+  }
+
+  goMantenimiento():void{
+    this.router.navigate(['mantenimiento']);
+  }
+
 }

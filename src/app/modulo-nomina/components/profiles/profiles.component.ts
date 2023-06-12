@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { CrudService, Users } from 'src/app/services/crud.service';
+import { CrudService, KEY, Users } from 'src/app/services/crud.service';
 
 
 @Component({
@@ -12,6 +12,12 @@ export class ProfilesComponent implements OnInit {
   ListarUsuarios?: Users[];
   bandera:number = 1;
   carga?: boolean;
+
+  Key: KEY ={
+    key: ''
+  }
+
+
   constructor(private crudService: CrudService,
     private router: Router) { }
 
@@ -26,7 +32,8 @@ export class ProfilesComponent implements OnInit {
 
 
   listarUsuarios(){
-    this.crudService.getUser().subscribe(
+    this.Key.key = "corposalom23"
+    this.crudService.getUser(this.Key).subscribe(
       res=>{
         this.ListarUsuarios=<any>res;     
       },

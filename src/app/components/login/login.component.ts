@@ -19,9 +19,12 @@ export class LoginComponent implements OnInit {
 
   bandera?:boolean;
   carga?: boolean;
+  loading?: boolean;
+
 
   constructor( private authService: AuthService, private router: Router, private roleGuard: RoleGuard ) { 
     this.bandera = false;
+    this.loading = false;
   }
 
   ngOnInit(): void {
@@ -33,7 +36,7 @@ export class LoginComponent implements OnInit {
   }
 
   Login(){
-   
+    this.loading = true;
     this.authService.singin(this.user).subscribe((res:any) =>{
     
     if(res.token ){
@@ -53,8 +56,10 @@ export class LoginComponent implements OnInit {
         case '3' : this.router.navigate(['invitado']);
       }
       AppComponent.verificarRol();
+      this.loading = false;
     } else{
       this.bandera = true;
+      this.loading = false;
     } 
     
     });

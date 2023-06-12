@@ -113,11 +113,10 @@
                                         <th *ngIf="venta.host==meta.idlocation ">{{venta.host}}</th>
                                         <th *ngIf="venta.host==meta.idlocation ">{{venta.total/meta.monto | percent: '2.0-2'}} </th>
                                         <th *ngIf="venta.host==meta.idlocation ">{{(venta.dia/noDiasMes) | percent: '2.0-2'}} </th>
-                                        <th *ngIf="venta.host==meta.idlocation ">{{((venta.total/venta.dia)*(noDiasMes))/meta.monto| percent: '2.0-2'}} </th>
+                                        <th *ngIf="venta.host==meta.idlocation ">{{((venta.total/venta.dia)*(noDiasMes))/meta.monto| percent: '2.0-3'}} </th>
                                         <th *ngIf="venta.host==meta.idlocation ">{{venta.total | currency: 'Q'}}</th>
                                         <th *ngIf="venta.host==meta.idlocation ">{{meta.monto | currency: 'Q'}}</th>
-                                        <th *ngIf="venta.host==meta.idlocation ">{{(venta.total/venta.dia)*(noDiasMes)|
-                                            currency: 'Q'}}</th>
+                                        <th *ngIf="venta.host==meta.idlocation ">{{(venta.total/venta.dia)*(noDiasMes)| currency: 'Q'}}</th>
 
                                         <th *ngIf="venta.host==meta.idlocation ">
                                             <button type="button" class="btn btn-just-icon"><i
@@ -140,20 +139,20 @@
 
                                 <tr>
                                     <th class="font-card-th">Venta Actual:</th>
-                                    <td class="font-card-td">{{totalVentaActual | currency: 'Q'}}</td>
+                                    <th class="font-card-td">{{totalVentaActual | currency: 'Q'}}</th>
                                 </tr>
                                 <tr>
                                     <th class="font-card-th">Venta Esperada:</th>
-                                    <td class="font-card-td">{{(totalVentaActual/diaRestantes)*noDiasMes | currency: 'Q'}}</td>
+                                    <th class="font-card-td">{{(totalVentaActual/diaRestantes)*noDiasMes | currency: 'Q'}}</th>
                                 </tr>
                                 <tr>
                                     <th class="font-card-th">Meta</th>
-                                    <td class="font-card-td">{{totalVentaMeta | currency: 'Q'}}</td>
+                                    <th class="font-card-td">{{totalVentaMeta | currency: 'Q'}}</th>
                                 </tr>
                                 <tr>
                                     <th class="font-card-th">Porcentaje</th>
-                                    <td class="font-card-td">
-                                        {{((totalVentaActual/diaRestantes)*noDiasMes)/totalVentaMeta | percent: '2.0-2'}}</td>
+                                    <th class="font-card-td">
+                                        {{((totalVentaActual/diaRestantes)*noDiasMes)/totalVentaMeta | percent: '2.0-2'}}</th>
                                 </tr>
                             </table>
                         </div>

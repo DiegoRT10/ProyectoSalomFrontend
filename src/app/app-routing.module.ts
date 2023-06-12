@@ -40,6 +40,8 @@ import { ListaNotaTrasladoComponent } from './modulo-venta/components/lista-nota
 import { ListaSalidasComponent } from './modulo-venta/components/lista-salidas/lista-salidas.component';
 import { MovimientosInicioComponent } from './modulo-venta/components/movimientos-inicio/movimientos-inicio.component';
 import { InventarioFarmaciaComponent } from './modulo-venta/components/inventario-farmacia/inventario-farmacia.component';
+import { MantenimientoComponent } from './mantenimiento/mantenimiento.component';
+import { ProductsComponent } from './components/products/products.component';
 
 
 
@@ -48,7 +50,7 @@ import { InventarioFarmaciaComponent } from './modulo-venta/components/inventari
 const routes: Routes = [
 {path: 'home', component: HomeComponent},//puede acceder cualquier persona
 {path: 'home-gerente', component: HomeGerenteComponent, canActivate: [AuthGuard, RoleGuard],  data: {expectedRole: {s:'0', g:'1'}}}, //puede acceder sistemas o gerente 
-{path: 'home-sistemas', component: HomeSistemasComponent, canActivate: [AuthGuard, RoleGuard],  data: {expectedRole: {s:'0', g:'1'}}},//solo puede acceder sistemas
+{path: 'home-sistemas', component: HomeSistemasComponent, canActivate: [AuthGuard, RoleGuard],  data: {expectedRole: {s:'0'}}},//solo puede acceder sistemas
 {path: 'private', component: PrivateComponent, canActivate: [AuthGuard, RoleGuard],  data: {expectedRole: {s:'0', g:'1'}}}, //puede acceder sistemas o gerente 
 {path: 'home-administrador', component: HomeAdministradorComponent, canActivate: [AuthGuard, RoleGuard],  data: {expectedRole: {s:'0', g:'2'}}},//puede acceder sistemas o administrador
 {path: 'login', component: LoginComponent},
@@ -84,7 +86,8 @@ const routes: Routes = [
 {path: 'lista-salidas', component: ListaSalidasComponent, canActivate: [AuthGuard, RoleGuard],  data: {expectedRole: {s:'0', g:'1'}}},//puede acceder sistemas administrador
 {path: 'movimientos-inicio', component: MovimientosInicioComponent, canActivate: [AuthGuard, RoleGuard],  data: {expectedRole: {s:'0', g:'2'}}},//puede acceder sistemas administrador
 {path: 'inventario-farmacia', component: InventarioFarmaciaComponent, canActivate: [AuthGuard, RoleGuard],  data: {expectedRole: {s:'0', g:'2'}}},//puede acceder sistemas administrador
-
+{path: 'mantenimiento', component: MantenimientoComponent},
+{path: 'products', component: ProductsComponent},
 
 
 {path: '**', pathMatch: 'full', redirectTo: 'home'}

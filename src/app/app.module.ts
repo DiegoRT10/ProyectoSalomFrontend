@@ -27,6 +27,9 @@ import { HomeSistemasComponent } from './components/home-sistemas/home-sistemas.
 import { LoadingComponent } from './loading/loading.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+import { MantenimientoComponent } from './mantenimiento/mantenimiento.component';
+import { ProductsComponent } from './components/products/products.component';
+
 
 
 
@@ -49,6 +52,8 @@ import { HashLocationStrategy, LocationStrategy } from '@angular/common';
     HomeSistemasComponent,
     HomeAdministradorComponent,
     LoadingComponent,
+    MantenimientoComponent,
+    ProductsComponent,
     
     
   ],
@@ -70,8 +75,8 @@ import { HashLocationStrategy, LocationStrategy } from '@angular/common';
     useValue:  JWT_OPTIONS},
     JwtHelperService,
     //Token Interceptor
-    {provide: HTTP_INTERCEPTORS,useClass: TokenInterceptorService,multi:true},
-    {provide: LocationStrategy,useClass: HashLocationStrategy}
+    {provide: HTTP_INTERCEPTORS,useClass: TokenInterceptorService,multi:true}
+    // {provide: LocationStrategy,useClass: HashLocationStrategy}
   ],
   bootstrap: [AppComponent]
 })

@@ -18,8 +18,8 @@ export class CrudService {
 
     
   //Listar todos los usuarios  
-  getUser(){
-    return this.http.get(`${this.URL}/user/`);
+  getUser(key:any){
+    return this.http.post(`${this.URL}/user/`,key);
   } 
 
   //Obtener un usuario
@@ -83,3 +83,6 @@ export class CrudService {
  
 }
 
+export interface KEY{
+  key:string
+}

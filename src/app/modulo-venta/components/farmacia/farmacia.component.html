@@ -41,33 +41,33 @@
                                 </tr>
                                 <tr>
                                     <th>Venta Actual</th>
-                                    <td>{{Venta.total | currency: 'Q'}}</td>
+                                    <th>{{Venta.total | currency: 'Q'}}</th>
                                 </tr>
                                 <tr>
                                     <th>Meta</th>
-                                    <td>{{metas.monto | currency: 'Q'}}</td>
+                                    <th>{{metas.monto | currency: 'Q'}}</th>
                                 </tr>
                                 <tr>
                                     <th>Falta para la meta</th>
-                                    <td>{{faltante | currency: 'Q'}}</td>
+                                    <th>{{faltante | currency: 'Q'}}</th>
                                 </tr>
                                 <tr>
                                     <th>Dias restantes</th>
-                                    <td>{{diasRestantes}}</td>
+                                    <th>{{diasRestantes}}</th>
                                 </tr>
                                 <tr>
                                     <th>Venta Necesaria</th>
-                                    <td>{{ventaNecesaria | currency: 'Q'}}</td>
+                                    <th>{{ventaNecesaria | currency: 'Q'}}</th>
                                 </tr>
                             </table>
                         </div>
                     </div>
                 </div>
                 <div class="col-4 ml-auto mr-auto">
-                    <div class="card text-bg-light mb-3">
+                    <div class="card text-bg-light mb-3" style="width: 23rem;">
                         <div class="card-header">Venta Diaria</div>
                         <div class="card-body table-card">
-                            <table class="table">
+                            <table class="table" >
                                 <thead>
                                     <tr class='table-dark'>
                                         <th scope="col">Dia</th>
@@ -105,7 +105,7 @@
 
 
                                     <div class="example-accordion-item-header" (click)="accordionItem.toggle()">
-                                        <i *ngIf="(item.apertura + item.venta + item.gastos + item.ingresos + item.cierre) == item.deposito" class="nc-icon nc-check-2"></i>    
+                                        <i *ngIf="$any((item.apertura + item.venta + item.gastos + item.ingresos + item.cierre).toFixed(2)) == item.deposito" class="nc-icon nc-check-2"></i> 
                                         {{'#'+item.seq+' '}}{{ item.dateend | date:"shortDate"}}<strong>{{' '+(item.apertura + item.venta + item.gastos + item.ingresos + item.cierre) |currency: 'Q'}}</strong>
                                         <span class="example-accordion-item-description">
                                             <!-- Click para {{ accordionItem.expanded ? 'cerrar' : 'abrir' }} -->

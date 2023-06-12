@@ -1,6 +1,8 @@
-import { CrudService, Users } from './../../services/crud.service';
+import { CrudService, KEY, Users } from './../../services/crud.service';
 import { Component, OnInit } from '@angular/core';
 import { Route, Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
+
 //import { CrudService } from 'src/app/services/crud.service';
 
 @Component({
@@ -16,6 +18,13 @@ UsuarioD: Users={
   id:'',
   visible:''
 }
+
+Key : KEY={
+  key: ''
+}
+
+  URL = environment.PORT;
+
   carga?: boolean;
 
   
@@ -33,7 +42,8 @@ UsuarioD: Users={
   }
 
 listarUsuarios(){
-  this.crudService.getUser().subscribe(
+  this.Key.key = "corposalom23";
+  this.crudService.getUser(this.Key).subscribe(
     res=>{
       this.ListarUsuarios=<any>res;     
       this.loading=false;
@@ -44,6 +54,9 @@ listarUsuarios(){
   );
 
 }
+
+
+
 
 EliminarUsuario(id:String, visible:number){
   this.UsuarioD.id=id;
@@ -60,4 +73,12 @@ EliminarUsuario(id:String, visible:number){
 ModificarUsuario(id:String){
   this.router.navigate(['/update/'+id]);
 }
+
+
+
+
+
+
 }
+
+

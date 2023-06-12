@@ -1,0 +1,35 @@
+<div class="main">
+    <div class="section text-center">
+      <div class="container">
+        <div class="row">
+            <div class="col-md-8 ml-auto mr-auto">
+
+
+              
+                <br>
+                <br>
+  <div class="section text-left" class="search-bar">
+    <input class="responsive-input" type="text" placeholder="Ingresa el producto a buscar" (keyup)="searchTerm$.next($any($event).target.value)">
+  </div>
+<br>
+<br>
+  <ul class="section text-left" class="list-group">
+    <div *ngFor="let item of listFiltered$ | async">
+        <blockquote class="blockquote mb-20">
+        <a href="">{{item}}</a>        
+        </blockquote>
+    </div>
+  </ul>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+  
+   
+  
+
+  

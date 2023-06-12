@@ -19,6 +19,7 @@ export class TokenInterceptorService implements HttpInterceptor{
   constructor() { }
 }
 
-      
+      //como crear un servisio en angular
+      //ng g s services/token-interceptor.service
 
   

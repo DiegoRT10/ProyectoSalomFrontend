@@ -3183,7 +3183,7 @@ h3 .small {
 .footer-big h4 a,
 .media .media-heading,
 .media .media-heading a {
-  color: #333333;
+  color: #333333;;
   text-decoration: none;
 }
 
@@ -3192,7 +3192,8 @@ h3 .small {
 }
 
 .description {
-  color: #9A9A9A;
+  /* color: #9A9A9A; */
+  color: black
 }
 
 blockquote small {
@@ -3289,10 +3290,11 @@ blockquote small {
 /*     General overwrite     */
 
 body {
-  color: #66615b;
-  font-size: 14px;
+  color: black;
+  font-size: 18px;
   font-weight: 300;
-  font-family: 'Montserrat', "Helvetica", Arial, sans-serif;
+  font-family: sans-serif;
+  /* 'Montserrat', "Helvetica", Arial,  */
 }
 
 a {

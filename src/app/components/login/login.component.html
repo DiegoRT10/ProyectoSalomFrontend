@@ -10,6 +10,7 @@
     </div>
 
 
+   
 
 
       <div class="row">
@@ -23,7 +24,20 @@
             </button>
           </div>
 
-          <div class="col-md-7 ml-auto mr-auto">
+
+
+
+          <div class="row">
+            <div class="col-md-12 ml-auto mr-auto">
+                <app-loading *ngIf="loading"></app-loading>
+            </div>
+        </div>
+
+
+
+
+
+          <div *ngIf="!loading" class="col-md-7 ml-auto mr-auto">
 
             
           <div  class="card card-register">

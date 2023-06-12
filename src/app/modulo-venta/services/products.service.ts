@@ -27,6 +27,13 @@ export class ProductsService {
       } 
 
 
+      //listar visat de productos y productos
+      getProductosView(){
+        console.log('entre a view products ');
+        return this.http.get(`${this.URL}/producto/ProductsView`);
+      }
+
+
         //Listar vista productos 
         getViewsProductsCodeName(){
           return this.http.get(`${this.URL}/producto/ViewProductsCodeName`);

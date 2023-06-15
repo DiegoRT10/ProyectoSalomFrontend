@@ -37,5 +37,8 @@ export class NominaGerenteComponent implements OnInit {
     this.router.navigate(['locations']);
   }
  
+  PeopleLocation():void{
+    this.router.navigate(['people-location']);
+  }
   
 }

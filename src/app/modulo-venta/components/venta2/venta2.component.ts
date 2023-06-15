@@ -1,16 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { MetaFarmacia, DataVentaDiaria, VentaDiariaService, VentaMes, DatosGrafica, DatosVentaGlobal } from '../../services/venta-diaria.service';
-import { Color, ScaleType } from '@swimlane/ngx-charts';
+import { DataVentaDiaria, DatosGrafica, DatosVentaGlobal, MetaFarmacia, VentaDiariaService, VentaMes } from '../../services/venta-diaria.service';
 import * as moment from 'moment';
 
-
 @Component({
-  selector: 'app-venta',
-  templateUrl: './venta.component.html',
-  styleUrls: ['./venta.component.css']
+  selector: 'app-venta2',
+  templateUrl: './venta2.component.html',
+  styleUrls: ['./venta2.component.css']
 })
-export class VentaComponent implements OnInit {
+export class Venta2Component implements OnInit{
   farmacia?: any;
   pVenta: any = 0;
   pVentaDiaria: any = 0;
@@ -32,38 +30,14 @@ export class VentaComponent implements OnInit {
   loading4?:boolean;
   carga?:boolean;
 
-  view: [number,number] = [1090, 850];
-  showXAxis = true;
-  showYAxis = true;
-  gradient = false;
-  showLegend = false;
-  showXAxisLabel = true;
-  xAxisLabel = 'Farmacias';
-  showYAxisLabel = true;
-  yAxisLabel = 'Ventas Actuales';
-  showlegendPosition = 'left';
-
-  colorScheme: Color = { 
-    domain: ['#99CCE5', '#FF7F7F'], 
-    group: ScaleType.Ordinal, 
-    selectable: true, 
-    name: 'Customer Usage', 
-};
-
-
-
-  constructor(private router: Router, private VentaDiariaService: VentaDiariaService) { 
-    this.loading1=true;
-    this.loading2=true;
-    this.loading3=true;
-    this.loading4=true;
-  }
-
   fecha!: Date;
   ListaVenta?: DataVentaDiaria[];
   ListaMetas?: MetaFarmacia[];
   ListaVentaGlobal?: DatosVentaGlobal[];
   
+  
+
+
   Venta: DataVentaDiaria = {
     dia:0,
     host:'',
@@ -81,6 +55,12 @@ export class VentaComponent implements OnInit {
     mes: ''
   }
 
+  constructor(private router: Router, private VentaDiariaService: VentaDiariaService) { 
+    this.loading1=true;
+    this.loading2=true;
+    this.loading3=true;
+    this.loading4=true;
+  }
 
   ngOnInit(): void {
     this.carga = true;
@@ -89,14 +69,12 @@ export class VentaComponent implements OnInit {
     this.VentaGlobal('cash',this.ventaMes.mes);
     this.ventaMes.mes=this.setFechaEvent();
     this.MetaFarmacia();
-    
     this.setFechaCard();
   }
 
   ngAfterViewInit() {
     this.carga = false;
   }
-
 
   setMes(event:any):void{
     this.ventaMes.mes = event.target.value;
@@ -137,10 +115,11 @@ VentaGlobal(cash:string,ym:string):void{
   console.log('Entre a venta global');
   this.Venta.host=cash;
   this.Venta.dia=<any>ym;
+  console.log('year month ',this.Venta.dia);
   this.VentaDiariaService.getVentasGlobales(this.Venta).subscribe(res=>{
     this.ListaVentaGlobal=<any>res;
     console.log('Datos de venta global ',this.ListaVentaGlobal);
-    this.Venta = <any>res;
+    //this.Venta = res[0];
     // this.DatosCard();
     this.loading3=false;
   },
@@ -245,7 +224,5 @@ onActivate(data:any): void {
 onDeactivate(data:any): void {
   // console.log('Deactivate', JSON.parse(JSON.stringify(data)));
 }
-
-
 
 }

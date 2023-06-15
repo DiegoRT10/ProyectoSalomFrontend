@@ -92,6 +92,7 @@
                     <table class="table">
                         <thead>
                             <tr>
+                                <th scope="col">No</th>
                                 <th scope="col">Dia</th>
                                 <th scope="col">Farmacia</th>
                                 <th scope="col">% Actual</th>
@@ -104,7 +105,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <ng-container *ngFor="let meta of ListaMetas">
+                            <!-- <ng-container *ngFor="let meta of ListaMetas">
                                 <ng-container *ngFor="let venta of ListaVenta">
 
 
@@ -126,8 +127,27 @@
                                     </tr>
 
                                 </ng-container>
-                            </ng-container>
+                            </ng-container> -->
 
+                            <ng-container *ngFor="let venta of ListaVentaGlobal; let i = index">
+                                <tr class="{{venta.dia === dia ? 'table-info' : ''}}">
+                                    <th>{{i+1}}</th>
+                                    <th>{{venta.dia}}</th>
+                                    <th>{{venta.host}}</th>
+                                    <th>{{venta.total/venta.monto | percent: '2.0-2'}} </th>
+                                    <th>{{(venta.dia/noDiasMes) | percent: '2.0-2'}} </th>
+                                    <th>{{((venta.total/venta.dia)*(noDiasMes))/venta.monto| percent: '2.0-3'}} </th>
+                                    <th>{{venta.total | currency: 'Q'}}</th>
+                                    <th>{{venta.monto | currency: 'Q'}}</th>
+                                    <th>{{(venta.total/venta.dia)*(noDiasMes)| currency: 'Q'}}</th>
+
+                                    <th>
+                                        <button type="button" class="btn btn-just-icon"><i
+                                                class="nc-icon nc-glasses-2"
+                                                (click)="goFarmacia(venta.host)"></i></button>
+                                    </th>
+                                </tr>
+                            </ng-container>
 
                         </tbody>
                     </table>

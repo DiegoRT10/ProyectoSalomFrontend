@@ -30,6 +30,10 @@ export class VentaDiariaService {
       return this.http.get(`${this.URL}/venta/metafarmacia`);
     }
 
+    getVentasGlobales(venta:any){
+      return this.http.post(`${this.URL}/venta/ventaGlobal`,venta);
+    }
+
     //Obtener consulta de venta del dia
     getDatos(venta:any){
       return this.http.post<DataVentaDiaria[]>(`${this.URL}/venta/DataGarfica`,venta);
@@ -245,4 +249,14 @@ export interface DataVentaDiaria{
     apoyo:number;
   }
 
+
+export interface DatosVentaGlobal{
+  idlocation:string,
+  monto:number,
+  datenew:Date,
+  dateend:Date,
+  dia:number,
+  host:String,
+  total:number
+}
  

@@ -18,6 +18,11 @@ export class CrudLocationService {
     getLocations(){
       return this.http.get(`${this.URL}/location/`);
     } 
+
+    //Lista IDs de las locaciones
+    getLocationsID(){
+      return this.http.get(`${this.URL}/location/LocationsID`);
+    } 
     
     //Obtener un puesto
     getOneLocation(location:any){
@@ -46,4 +51,8 @@ export class CrudLocationService {
     latitud:String,
     longitud:String,
     visible:String
+    }
+
+    export interface LIDs{
+      id:String
     }

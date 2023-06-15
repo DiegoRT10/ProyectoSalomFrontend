@@ -26,6 +26,17 @@ getOneProfile(profile:any){
   return this.http.post<Profiles[]>(`${this.URL}/profile/oneprofile`,profile);
 }
 
+//Obtener un los id de las personas
+getProfileId(){
+  return this.http.get(`${this.URL}/profile/profileId`);
+}
+
+//Insertar un puesto de trabajo 
+setLocationPeople(data:any){
+  return this.http.post<PeopleLocation[]>(`${this.URL}/profile/asignacionSucursal`,data);
+}
+
+
 //Agregar un puesto
 addProfile(profile:any){
   return this.http.post(`${this.URL}/profile/create`,profile);
@@ -85,3 +96,14 @@ export interface ProfileNomina{
   estado:String
 }
 
+export interface PIDs{
+  id:String
+}
+
+export interface PeopleLocation{
+  idpeople:string,
+  idlocation:string,
+  meta:number,
+  nivel:number,
+  dia:number
+}

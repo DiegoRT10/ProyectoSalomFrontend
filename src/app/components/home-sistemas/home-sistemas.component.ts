@@ -25,5 +25,9 @@ export class HomeSistemasComponent implements OnInit {
     this.router.navigate(['private']);
   }
 
+  goPeopleLocations():void{
+    this.router.navigate(['list-people-location']);
+  }
+
 
 }

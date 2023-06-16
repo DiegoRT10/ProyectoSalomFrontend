@@ -23,6 +23,7 @@ export class PeopleLocationsComponent implements OnInit{
   ListaPIDs?:PIDs[];
   ListaLIDs?:LIDs[];
   ListaPeopleLocations?:PeopleLocation[];
+  
 
 ObjectPIDs:PIDs={
   id: ''
@@ -32,13 +33,15 @@ ObjectLIDs:LIDs={
   id: ''
 }
 
-ObjectPeopleLocations:PeopleLocation={
+static ObjectPeopleLocations:PeopleLocation={
   idpeople: '',
   idlocation: '',
   meta: 0,
   nivel: 0,
   dia: 0
 }
+
+
 
   constructor( private router: Router, private ProfileServece: CrudProfileService, private LocationService: CrudLocationService) { }
 
@@ -47,7 +50,54 @@ ObjectPeopleLocations:PeopleLocation={
     this.getIDsLocation();
   }
 
+  public get IdPeople() : string {
+    return PeopleLocationsComponent.ObjectPeopleLocations.idpeople;
+  }
   
+  public set IdPeople(v : string) {
+    PeopleLocationsComponent.ObjectPeopleLocations.idpeople = v;
+  }
+  
+  
+  public get IdLocation() : string {
+    return PeopleLocationsComponent.ObjectPeopleLocations.idlocation;
+    }
+
+  public set IdLocation(v : string) {
+      PeopleLocationsComponent.ObjectPeopleLocations.idlocation = v;
+    }
+
+
+  public get Meta() : number {
+      return PeopleLocationsComponent.ObjectPeopleLocations.meta;
+      }
+
+  public set Meta(v : number) {
+        PeopleLocationsComponent.ObjectPeopleLocations.meta = v;
+      }
+
+  
+  public get Nivel() : number {
+    return PeopleLocationsComponent.ObjectPeopleLocations.nivel;
+  }
+      
+  public set Nivel(v : number) {
+        PeopleLocationsComponent.ObjectPeopleLocations.nivel = v;
+      }
+
+  
+  public get Dia() : number {
+    return PeopleLocationsComponent.ObjectPeopleLocations.dia
+  }
+  
+
+  public set Dia(v : number) {
+        PeopleLocationsComponent.ObjectPeopleLocations.dia = v;
+      }
+      
+            
+
+
   @ViewChild('instance', { static: true }) instance: NgbTypeahead | undefined;
 	focus$ = new Subject<string>();
 	click$ = new Subject<string>();
@@ -143,23 +193,24 @@ ObjectPeopleLocations:PeopleLocation={
 
   sendData():void{
    
-    switch(this.nivel){
-      case 'TITULAR TEMPORAL': this.ObjectPeopleLocations.nivel = 0;
+    console.log(PeopleLocationsComponent.ObjectPeopleLocations.nivel);
+    switch(<any>PeopleLocationsComponent.ObjectPeopleLocations.nivel){
+      case 'TITULAR TEMPORAL': PeopleLocationsComponent.ObjectPeopleLocations.nivel = 0;
       break;
-      case 'TITULAR': this.ObjectPeopleLocations.nivel = 1;
+      case 'TITULAR': PeopleLocationsComponent.ObjectPeopleLocations.nivel = 1;
       break;
-      case 'TITULAR SEGUNDO': this.ObjectPeopleLocations.nivel = 2;
+      case 'TITULAR SEGUNDO': PeopleLocationsComponent.ObjectPeopleLocations.nivel = 2;
       break;
-      case 'APOYO': this.ObjectPeopleLocations.nivel = 3;
+      case 'APOYO': PeopleLocationsComponent.ObjectPeopleLocations.nivel = 3;
       break;
     }
 
 
-    console.log("Datos de people location ", this.ObjectPeopleLocations);
+    console.log("Datos de people location ", PeopleLocationsComponent.ObjectPeopleLocations);
 
-      this.ProfileServece.setLocationPeople(this.ObjectPeopleLocations).subscribe(res => {
+      this.ProfileServece.setLocationPeople(PeopleLocationsComponent.ObjectPeopleLocations).subscribe(res => {
        console.log(res);    
-        this.router.navigate(['nomina-gerente']);
+       this.router.navigate(['list-people-location']);
       
       },
         err => {
@@ -173,6 +224,24 @@ ObjectPeopleLocations:PeopleLocation={
   }
 
 
+  public static CheckDataListPeopleLocation(idpeople:string, idlocation:string, meta:number, nivel:number, dia:number):void{
+    this.ObjectPeopleLocations.idpeople = idpeople;
+    this.ObjectPeopleLocations.idlocation = idlocation;
+    this.ObjectPeopleLocations.meta = meta;
+   
+    switch(nivel){
+      case 0: PeopleLocationsComponent.ObjectPeopleLocations.nivel = <any>'TITULAR TEMPORAL';
+      break;
+      case 1: PeopleLocationsComponent.ObjectPeopleLocations.nivel = <any>'TITULAR';
+      break;
+      case 2: PeopleLocationsComponent.ObjectPeopleLocations.nivel = <any>'TITULAR SEGUNDO';
+      break;
+      case 3: PeopleLocationsComponent.ObjectPeopleLocations.nivel = <any>'APOYO';
+      break;
+    }
+    this.ObjectPeopleLocations.dia = dia;
+   
+  }
 
 
 }

@@ -1,0 +1,48 @@
+<div class="main">
+    <div class="section text-center">
+        <div class="container">
+            <div>
+                <h1 class="title">Listado de Personas y su Sucursal</h1>
+            </div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">No</th>
+                        <th scope="col">ID Trabajador</th>
+                        <th scope="col">ID Sucursal</th>
+                        <th scope="col">Meta</th>
+                        <th scope="col">Nivel</th>
+                        <th scope="col">Dia</th>
+                        <th scope="col">Editar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                   
+            
+                    <ng-container *ngFor="let pl of this.ListPeopleLocation; let i = index">
+                        <tr>
+                            <th>{{i+1}}</th>
+                            <th>{{pl.idpeople}}</th>
+                            <th>{{pl.idlocation}}</th>
+                            <th>{{pl.meta}} </th>
+                            <ng-container [ngSwitch]="pl.nivel">
+                                <th *ngSwitchCase=0>Titular Temporal</th>
+                                <th *ngSwitchCase=1>Titular</th>
+                                <th *ngSwitchCase=2>Titular Segundo</th>
+                                <th *ngSwitchCase=3>Apoyo</th>
+                                <th *ngSwitchDefault> </th>
+                            </ng-container>
+                            <th>{{pl.dia}}</th>
+                            <th><button class="btn btn-outline-primary nc-icon nc-tap-01" (click)="goPeopleLocations(pl.idpeople,pl.idlocation,pl.meta,pl.nivel,pl.dia)"></button></th>
+                        </tr>
+                    </ng-container>
+            
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>            
+
+
+
+

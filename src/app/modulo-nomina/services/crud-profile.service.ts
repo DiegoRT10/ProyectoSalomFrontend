@@ -37,6 +37,12 @@ setLocationPeople(data:any){
 }
 
 
+//Listar todas las perosnas con sus ubicaciones en farmacia
+getPeopleLocation(){
+  return this.http.get(`${this.URL}/profile/PeopleLocation`);
+} 
+
+
 //Agregar un puesto
 addProfile(profile:any){
   return this.http.post(`${this.URL}/profile/create`,profile);
@@ -61,6 +67,7 @@ getLocation(){
 getProfileNomina(profile:any){
   return this.http.post<ProfileNomina[]>(`${this.URL}/profile/profilenomina`,profile);
 }
+
 
 
 }

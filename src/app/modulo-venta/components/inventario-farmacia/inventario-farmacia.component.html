@@ -18,6 +18,12 @@
 
 
             <div class="row">
+             <div class="nc-icon nc-zoom-split">
+              <input type="text" [(ngModel)]="filtroNombre" placeholder="Buscar por nombre">
+              <br>
+              <br>
+             </div>
+              
                 <table class="table">
                     <thead>
                       <tr>
@@ -28,8 +34,8 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <ng-container *ngFor="let i of ListaInvetario">
-                      <tr>    
+                      <ng-container *ngFor="let i of ListaInvetario " >
+                      <tr [hidden]="filtroNombre && i.nombre.toLowerCase().indexOf(filtroNombre!.toLowerCase()) === -1">   
                         <th>{{i.id}}</th>
                         <th>{{i.code}}</th>
                         <th>{{i.nombre}}</th>

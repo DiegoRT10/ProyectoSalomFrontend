@@ -11,33 +11,33 @@
             <form>
         <div  class="mb-3">
           <label for="typeahead-focus">ID de la persona</label>
-          <input id="typeahead-focus" type="text" class="form-control" [(ngModel)]="ObjectPeopleLocations.idpeople"  [ngbTypeahead]="search"
+          <input id="typeahead-focus" type="text" class="form-control" [(ngModel)]="IdPeople"  [ngbTypeahead]="search"
             (focus)="focus$.next($any($event).target.value)" (click)="click$.next($any($event).target.value)"
             #instance="ngbTypeahead" name="idpeople" />
         </div>
 
         <div  class="mb-3">
           <label for="typeahead-focus">ID de la Sucursal</label>
-          <input id="typeahead-focus" type="text" class="form-control" [(ngModel)]="ObjectPeopleLocations.idlocation"  [ngbTypeahead]="search2"
+          <input id="typeahead-focus" type="text" class="form-control" [(ngModel)]="IdLocation"  [ngbTypeahead]="search2"
             (focus)="focus2$.next($any($event).target.value)" (click)="click2$.next($any($event).target.value)"
             #instance="ngbTypeahead" name="idlocation" />
         </div>
 
         <div  class="mb-3">
           <label>Meta</label>
-          <input id="typeahead-focus" type="number" class="form-control" [(ngModel)]="ObjectPeopleLocations.meta"  name="meta" />
+          <input id="typeahead-focus" type="number" class="form-control" [(ngModel)]="Meta"  name="meta" />
         </div>
 
         <div  class="mb-3">
           <label for="typeahead-focus">Nivel</label>
-          <input id="typeahead-focus" type="text" class="form-control" [(ngModel)]="nivel"  [ngbTypeahead]="search3"
+          <input id="typeahead-focus" type="text" class="form-control" [(ngModel)]="Nivel"  [ngbTypeahead]="search3"
             (focus)="focus3$.next($any($event).target.value)" (click)="click3$.next($any($event).target.value)"
             #instance3="ngbTypeahead" name="nivel" />
         </div>
 
         <div  class="mb-3">
           <label>Dia</label>
-          <input id="typeahead-focus" type="number" class="form-control" [(ngModel)]="ObjectPeopleLocations.dia"  name="meta" />
+          <input id="typeahead-focus" type="number" class="form-control" [(ngModel)]="Dia"  name="dia" />
         </div>
 
         </form>

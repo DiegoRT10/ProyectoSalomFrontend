@@ -20,6 +20,8 @@ import { UpdateLocationComponent } from './components/update-location/update-loc
 import { NominaGerenteComponent } from './components/nomina-gerente/nomina-gerente.component';
 import { LoadingComponent } from './components/loading/loading.component';
 import { PeopleLocationsComponent } from './components/people-locations/people-locations.component';
+import { ListPeopleLocationsComponent } from './components/list-people-locations/list-people-locations.component';
+import { AboutMeComponent } from './components/about-me/about-me.component';
 
 
 
@@ -43,6 +45,8 @@ import { PeopleLocationsComponent } from './components/people-locations/people-l
     NominaGerenteComponent,
     LoadingComponent,
     PeopleLocationsComponent,
+    ListPeopleLocationsComponent,
+    AboutMeComponent,
 
   ],
   imports: [

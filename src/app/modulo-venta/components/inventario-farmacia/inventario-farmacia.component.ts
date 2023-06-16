@@ -11,6 +11,9 @@ import { Administrador, Farmacia, VentaDiariaService } from '../../services/vent
 export class InventarioFarmaciaComponent {
 
   carga?: boolean;
+  filtroNombre?: string;
+
+
   ListaInvetario?:Inventario[];
 
   

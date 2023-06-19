@@ -62,13 +62,21 @@ getLocation(){
   return this.http.get(`${this.URL}/profile/locations/`);
 } 
 
+//Listar todas las locations   
+getPeople(data:any){
+  return this.http.post(`${this.URL}/profile/people`,data);
+} 
+
 
 //Obtener un usuario con datos de nomina
 getProfileNomina(profile:any){
   return this.http.post<ProfileNomina[]>(`${this.URL}/profile/profilenomina`,profile);
 }
 
-
+//Editar un puesto
+editPass(data:any){
+  return this.http.put(`${this.URL}/profile/updatePass`,data);
+}
 
 }
 export interface Profiles{
@@ -113,4 +121,22 @@ export interface PeopleLocation{
   meta:number,
   nivel:number,
   dia:number
+}
+
+export interface People{
+  id:string,
+  name:string,
+  apppassword:string,
+  card:number,
+  role:number,
+  visible:number;
+  image:any,
+  auditor:number
+  token:string,
+  token_life:string
+}
+
+export interface Pass{
+  id:string, 
+  apppassword:string
 }

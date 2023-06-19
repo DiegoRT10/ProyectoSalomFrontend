@@ -22,7 +22,7 @@ export class HomeAdministradorComponent implements OnInit {
   }
 
   goModuloNomina():void{
-    this.router.navigate(['nomina-administrador']);
+    this.router.navigate(['about-me']);
   }
 
   goModuloVenta():void{

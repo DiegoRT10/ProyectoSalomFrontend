@@ -172,9 +172,9 @@ export class FarmaciaComponent implements OnInit {
     );
   }
 
-  VentaDiaria(cash: string, ym: string): void {
+  VentaDiaria(host: string, ym: string): void {
     let date: Date = new Date();
-    this.Venta.host = cash;
+    this.Venta.host = host;
     this.Venta.dia = <any>ym;
     this.VentaDiariaService.getOneVenta(this.Venta).subscribe(res => {
       this.ListaVenta = <any>res;
@@ -211,7 +211,7 @@ export class FarmaciaComponent implements OnInit {
     this.VentaDiariaService.getMetas().subscribe(res => {
       this.ListaMetas = <any>res;
       //this.Venta = res[0];
-      this.VentaDiaria('cash', this.setFecha());
+      this.VentaDiaria( this.idEntrante, this.setFecha());
     },
       err => {
         console.log(err);

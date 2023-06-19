@@ -36,7 +36,6 @@ export class AboutMeComponent implements OnInit{
     let decodeToken:any = {}
     decodeToken = decode(token || '');
     this.idPeople.id = decodeToken.id;
-    console.log('este es el id ',this.idPeople);
     this.profileService.getPeople(this.idPeople).subscribe(res => {
       this.ListPeople = <any>res;
      },
@@ -49,11 +48,8 @@ export class AboutMeComponent implements OnInit{
 
   setFlasg(id:string, f:boolean):void{
     this.ObjPeopleLocation.id = id;
-    console.log("Datos a enviar:", this.ObjPeopleLocation, "bandera ",f)
     if(!f){
-      console.log('Entre al if');
       this.profileService.editPass(this.ObjPeopleLocation).subscribe(res => {
-          console.log(res);
           this.getDatos();
        },
          err => {
@@ -65,6 +61,10 @@ export class AboutMeComponent implements OnInit{
 
     this.flag = f;
     
+  }
+
+  cancell(){
+    this.flag = false;
   }
 
 }

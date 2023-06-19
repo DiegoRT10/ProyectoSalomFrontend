@@ -193,7 +193,6 @@ static ObjectPeopleLocations:PeopleLocation={
 
   sendData():void{
    
-    console.log(PeopleLocationsComponent.ObjectPeopleLocations.nivel);
     switch(<any>PeopleLocationsComponent.ObjectPeopleLocations.nivel){
       case 'TITULAR TEMPORAL': PeopleLocationsComponent.ObjectPeopleLocations.nivel = 0;
       break;
@@ -206,7 +205,6 @@ static ObjectPeopleLocations:PeopleLocation={
     }
 
 
-    console.log("Datos de people location ", PeopleLocationsComponent.ObjectPeopleLocations);
 
       this.ProfileServece.setLocationPeople(PeopleLocationsComponent.ObjectPeopleLocations).subscribe(res => {
        console.log(res);    

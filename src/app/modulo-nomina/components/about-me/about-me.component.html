@@ -6,41 +6,36 @@
          <ng-container *ngFor="let i of ListPeople">
             <tr>
                 <th>ID</th>
-                <td>{{i.id}}</td>
-                <td></td>
+                <td colspan='3'>{{i.id}}</td>
             </tr>
             <tr>
                 <th>Nombre</th>
-                <td>{{i.name}}</td>
-                <td></td>
+                <td colspan='3'>{{i.name}}</td>
             </tr>
             <tr>
                 <th>Contrasena</th>
                 <td *ngIf="!flag">{{i.apppassword}}</td>
                 <td *ngIf="flag"><input type="text" [(ngModel)]="ObjPeopleLocation.apppassword" placeholder="Nueva Contrasena"></td>
                 <td *ngIf="!flag"><button class="btn btn-outline-primary nc-icon nc-tap-01" (click)="setFlasg(i.id,true)" title="Modificar"></button></td>
-                <td *ngIf="flag"><button class="btn btn-outline-primary nc-icon nc-bookmark-2" (click)="setFlasg(i.id,false)" title="Guardar"></button></td>
+                <td *ngIf="flag"><button class="btn btn-outline-primary nc-icon nc-bookmark-2" (click)="setFlasg(i.id,false)" title="Guardar"></button><span></span><button class="btn btn-outline-danger nc-icon nc-simple-remove" (click)="cancell()" title="Cancelar"></button></td>
             </tr>
             <tr>
                 <th>No. Facturacion</th>
-                <td>{{i.card}}</td>
-                <td></td>
+                <td colspan='3'>{{i.card}}</td>
             </tr>
             <tr>
                 <th>Cargo</th>
                 <ng-container [ngSwitch]="i.role">
-                    <td *ngSwitchCase=0>Gerente Sistemas</td>
-                    <td *ngSwitchCase=1>Gerente</td>
-                    <td *ngSwitchCase=2>Administrador</td>
-                    <td *ngSwitchCase=3>Invitado</td>
-                    <td *ngSwitchDefault> </td>
+                    <td colspan='3' *ngSwitchCase=0>Gerente Sistemas</td>
+                    <td colspan='3' *ngSwitchCase=1>Gerente</td>
+                    <td colspan='3' *ngSwitchCase=2>Administrador</td>
+                    <td colspan='3' *ngSwitchCase=3>Invitado</td>
+                    <td colspan='3' *ngSwitchDefault> </td>
                 </ng-container>
-                <td></td>
             </tr>
             <tr>
               <th>Auditor</th>
-              <td>{{i.auditor}}</td>
-              <td></td>
+              <td colspan='3'>{{i.auditor}}</td>
           </tr>
          </ng-container>   
         </table>

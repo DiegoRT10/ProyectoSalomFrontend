@@ -34,6 +34,10 @@ export class VentaDiariaService {
       return this.http.post(`${this.URL}/venta/ventaGlobal`,venta);
     }
 
+    getVentaProductos(venta:any){
+      return this.http.post(`${this.URL}/venta/ventaProducto`,venta);
+    }
+
     //Obtener consulta de venta del dia
     getDatos(venta:any){
       return this.http.post<DataVentaDiaria[]>(`${this.URL}/venta/DataGarfica`,venta);
@@ -265,3 +269,11 @@ export interface DatosVentaGlobal{
   total:number
 }
  
+
+export interface VentaProductos{
+  codin:string,
+  nombre:string,
+  unidades:number,
+  price:number,
+  taxid:string
+}

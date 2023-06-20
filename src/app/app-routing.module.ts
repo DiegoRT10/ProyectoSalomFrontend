@@ -45,6 +45,7 @@ import { ProductsComponent } from './components/products/products.component';
 import { PeopleLocationsComponent } from './modulo-nomina/components/people-locations/people-locations.component';
 import { ListPeopleLocationsComponent } from './modulo-nomina/components/list-people-locations/list-people-locations.component';
 import { AboutMeComponent } from './modulo-nomina/components/about-me/about-me.component';
+import { VentaDiariaComponent } from './modulo-venta/components/venta-diaria/venta-diaria.component';
 
 
 
@@ -93,7 +94,8 @@ const routes: Routes = [
 {path: 'products', component: ProductsComponent, canActivate: [AuthGuard, RoleGuard],  data: {expectedRole: {s:'0', g:'1'}}}, //puede acceder sistemas o gerente 
 {path: 'people-location', component: PeopleLocationsComponent, canActivate: [AuthGuard, RoleGuard],  data: {expectedRole: {s:'0', g:'1'}}}, //puede acceder sistemas o gerente 
 {path: 'list-people-location', component: ListPeopleLocationsComponent, canActivate: [AuthGuard, RoleGuard],  data: {expectedRole: {s:'0', g:'1'}}}, //puede acceder sistemas o gerente 
-{path: 'about-me', component: AboutMeComponent, canActivate: [AuthGuard, RoleGuard],  data: {expectedRole: {s:'0', g:'2'}}}, //puede acceder sistemas o gerente 
+{path: 'about-me', component: AboutMeComponent, canActivate: [AuthGuard, RoleGuard],  data: {expectedRole: {s:'0', g:'2'}}}, //puede acceder sistemas o Administrador 
+{path: 'venta-diaria', component: VentaDiariaComponent, canActivate: [AuthGuard, RoleGuard],  data: {expectedRole: {s:'0', g:'2'}}}, //puede acceder sistemas o gerente 
 
 {path: '**', pathMatch: 'full', redirectTo: 'home'}
 ];

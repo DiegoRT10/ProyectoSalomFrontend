@@ -23,6 +23,10 @@ export class VentaAdministradorComponent implements OnInit {
     this.router.navigate(['venta-sucursal']);
   }
 
+  goVentaDiaria():void{
+    this.router.navigate(['venta-diaria']);
+  }
+
   goMovimientos():void{
     this.router.navigate(['movimientos-inicio']);
   }

@@ -1,0 +1,35 @@
+<div class="main">
+    <div class="section text-center">
+      <div class="container">
+
+        <h1 class="title">Venta diaria {{onPeopleLocation.idlocation}}</h1>
+
+        <table class="table" >
+            <thead>
+                <tr class='table-dark'>
+                    <th>Codin</th>
+                    <th>Nombre</th>
+                    <th>Unidades</th>
+                    <th>Precio</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                <tr *ngFor="let venta of ListVentaProductos" >
+                    <td>{{venta.codin}}</td>
+                    <td>{{venta.nombre}}</td>
+                    <td>{{venta.unidades}}</td>
+                    <td>{{(venta.taxid == '000 '? venta.price : venta.price*1.12)  | currency: 'Q'}}</td>
+                    <td>{{(venta.taxid == '000 '? venta.price*venta.unidades :  venta.price*1.12*venta.unidades)  | currency: 'Q'}}</td>
+                   
+
+                </tr>
+
+
+            </tbody>
+        </table>
+
+      </div>
+    </div>
+</div>

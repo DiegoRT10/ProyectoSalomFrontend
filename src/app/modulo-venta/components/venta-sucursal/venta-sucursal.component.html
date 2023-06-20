@@ -1,266 +1,335 @@
 <div class="main">
   <div class="section text-center">
     <div class="container">
-
-
-        
-
-
-
       <div class="row">
         <div class="col-md-8 ml-auto mr-auto">
-            
-          <h1 class="title">Mi venta</h1>
+          <h1 class="title">Venta</h1>
           <br>
         </div>
       </div>
-      <br/>
-      <br/>
+      <br />
+      <br />
 
       <div class="row">
         <div class="col-md-12 ml-auto mr-auto">
-            <app-loading *ngIf="carga"></app-loading>
+          <app-loading *ngIf="carga"></app-loading>
         </div>
-    </div>
+      </div>
 
-      <div class="row">
-        <div class="col-md-6" *ngFor="let sucursal of ListaVentaSucursal">
-          <div class="info">
-            <div *ngIf="!carga" class="card text-bg-light mb-3">
-              <div class="card-header">{{sucursal.idlocation}}</div>
-              <div class="card-body table-card">
-                  <table class="table">
+
+      <!--nav  -->
+      <div class="nav-tabs-navigation">
+        <div class="nav-tabs-wrapper">
+          <ul class="nav nav-tabs" role="tablist">
+            <li class="nav-item">
+              <a class="nav-link active" data-toggle="tab" href="#ventaSolo" role="tab"><i
+                  class="nc-icon nc-single-02"></i>Venta Personal</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" data-toggle="tab" href="#ventaTotal" role="tab"><i
+                  class="nc-icon nc-chart-pie-36"></i>Venta Farmacia</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" data-toggle="tab" href="#cierres" role="tab"><i class="nc-icon nc-calendar-60"></i>Cierres</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <!-- End nav -->
+      <!-- Tab panes -->
+      <div class="tab-content following">
+        <div class="tab-pane active" id="ventaSolo" role="tabpanel">
+
+          <div class="row">
+            <div class="col-md-6" *ngFor="let sucursal of ListaVentaSucursal">
+              <div class="info">
+                <div *ngIf="!carga" class="card text-bg-light mb-3">
+                  <div class="card-header">{{sucursal.idlocation}}</div>
+                  <div class="card-body table-card">
+                    <table class="table">
                       <tr class='table-dark'>
-                          <th colspan='2'>
-                             {{sucursal.pname}}
-                          </th>
+                        <th colspan='2'>
+                          {{sucursal.pname}}
+                        </th>
                       </tr>
                       <tr>
-                          <th>Mi venta actual</th>
-                          <th>{{sucursal.venta | currency: 'Q'}}</th>
+                        <th>Mi venta actual</th>
+                        <th>{{sucursal.venta | currency: 'Q'}}</th>
                       </tr>
                       <tr>
-                          <th>Mi promedio de venta (diaria)</th>
-                          <th>{{sucursal.venta/day! | currency: 'Q'}}</th>
+                        <th>Mi promedio de venta (diaria)</th>
+                        <th>{{sucursal.venta/day! | currency: 'Q'}}</th>
                       </tr>
                       <tr>
-                          <th>Mi meta</th>
-                          <th>{{sucursal.meta | currency: 'Q'}}</th>
+                        <th>Mi meta</th>
+                        <th>{{sucursal.meta | currency: 'Q'}}</th>
                       </tr>
                       <tr>
-                          <th>Me falta para mi meta</th>
-                          <th>{{sucursal.meta-sucursal.venta | currency: 'Q'}}</th>
+                        <th>Me falta para mi meta</th>
+                        <th>{{sucursal.meta-sucursal.venta | currency: 'Q'}}</th>
                       </tr>
                       <tr>
-                          <th>Porcentaje Alcanzado</th>
-                          <th>{{(sucursal.venta)/(sucursal.meta) | percent: '2.0-2'}}</th>
+                        <th>Porcentaje Alcanzado</th>
+                        <th>{{(sucursal.venta)/(sucursal.meta) | percent: '2.0-2'}}</th>
                       </tr>
                       <tr>
                         <th>Mi meta diaria de venta</th>
-                        <th *ngIf="noDiasMes!-day! != 0">{{(sucursal.meta - sucursal.venta)/(noDiasMes!-day!) | currency: 'Q'}}</th>
+                        <th *ngIf="noDiasMes!-day! != 0">{{(sucursal.meta - sucursal.venta)/(noDiasMes!-day!) |
+                          currency:
+                          'Q'}}</th>
                         <th *ngIf="noDiasMes!-day! == 0">{{(sucursal.meta - sucursal.venta)/1 | currency: 'Q'}}</th>
-                    </tr>
-                  </table>
+                      </tr>
+                    </table>
 
-                  <div class="row">
-                    <div class="col-md-12">
+                    <div class="row">
+                      <div class="col-md-12">
                         <div class="info">
-                            <ngx-gauge [value]='redondear(((sucursal.venta)/(sucursal.meta))*100)' [thick]='15'  append="%">
-                            </ngx-gauge>
-                            <div>
-                                <label>Porcentaje de mi venta</label>
-                            </div>
+                          <ngx-gauge [value]='redondear(((sucursal.venta)/(sucursal.meta))*100)' [thick]='15'
+                            append="%">
+                          </ngx-gauge>
+                          <div>
+                            <label>Porcentaje de mi venta</label>
+                          </div>
                         </div>
+                      </div>
                     </div>
+
+                  </div>
                 </div>
 
               </div>
+            </div>
           </div>
 
-          </div>
         </div>
-      </div>
-    </div>
-    <div class="container">
-      <div class="row">
-        <div class="col-md-6"> 
-          
-          <div  class="card text-bg-light mb-3">
-            <div class="card-header">Mi venta (fecha)</div>
+        <div class="tab-pane text-center" id="ventaTotal" role="tabpanel">
 
-            <table class="table">
-            
-
-
-              <thead>
-                  <tr>
-                      <th scope="col">Dia</th>
-                      <th scope="col">Titular</th>
-                      <th scope="col">Apoyo</th>
-                      <th scope="col">Acumulado</th>
-                  </tr>
-              </thead>
-              <tbody>
-                <ng-container *ngFor="let venta of ListaVentaDiaria; let i = index">
-                            <tr>
-                              <th>{{venta.dia}}</th>
-                              <th>{{venta.titular | currency: 'Q'}}</th>
-                              <th>{{venta.apoyo | currency: 'Q'}}</th>
-                              <th *ngIf="i==0">{{setAcumulado(venta.titular+venta.apoyo) | currency: 'Q'}}</th>
-                              <th *ngIf="i>0">{{getAcumulado(venta.titular+venta.apoyo) | currency: 'Q'}}</th>
-                          </tr>
-                </ng-container>
-                
-                <tr>
-                  <th>Total</th>
-                  <th>{{acumuladoTitular | currency: 'Q'}}</th>
-                  <th>{{acumuladoApoyo | currency: 'Q'}}</th>
-                  <th>{{acumulado | currency: 'Q'}}</th>
-                </tr>
-             
-                             
-                                
-                              
-              </tbody>
-          </table>
-
+          <div class="card text-bg-light mb-3">
+            <div class="card-header">Venta total</div>
             <div class="card-body table-card">
+              <table class="table">
+
+
+
+                <thead>
+                  <tr>
+                    <th scope="col">Dia</th>
+                    <th scope="col">Titular</th>
+                    <th scope="col">Apoyo</th>
+                    <th scope="col">Rotativo</th>
+                    <th scope="col">Total</th>
+                    <th scope="col">Acumulado</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <ng-container *ngFor="let venta of ListaVentaDiaria; let i = index">
+                    <tr>
+                      <th>{{venta.dia}}</th>
+                      <th>{{venta.titular | currency: 'Q'}}</th>
+                      <th>{{venta.apoyo | currency: 'Q'}}</th>
+                      <th>{{venta.rotativo | currency: 'Q'}}</th>
+                      <th>{{venta.titular + venta.apoyo + venta.rotativo | currency: 'Q'}}</th>
+                      <th *ngIf="i==0">{{setAcumulado(venta.titular+venta.apoyo + venta.rotativo) | currency: 'Q'}}</th>
+                      <th *ngIf="i>0">{{getAcumulado(venta.titular+venta.apoyo + venta.rotativo) | currency: 'Q'}}</th>
+                    </tr>
+                  </ng-container>
+                </tbody>
+              </table>
+
+              <table class="table">
+                <tr class='table-dark'>
+                  <th colspan='2'>
+                    Resumen
+                  </th>
+                </tr>
+                <tr>
+                  <th>Total titular:</th>
+                  <th>{{acumuladoTitular | currency: 'Q'}}</th>
+                </tr>
+                <tr>
+                  <th>Total Apoyo:</th>
+                  <th>{{acumuladoApoyo | currency: 'Q'}}</th>
+                </tr>
+                <tr>
+                  <th>Total Rotativo:</th>
+                  <th>{{acumuladoRotativo | currency: 'Q'}}</th>
+                </tr>
+                <tr>
+                  <th>Total Farmacia:</th>
+                  <th>{{acumuladoTotal | currency: 'Q'}}</th>
+                </tr>
+                <tr>
+                  <th>Meta Farmacia:</th>
+                  <th>{{metas.monto | currency: 'Q'}}</th>
+                </tr>
+                <tr>
+                  <th>Falta para Meta:</th>
+                  <th>{{ metas.monto - acumuladoTotal | currency: 'Q'}}</th>
+                </tr>
+                <tr>
+                  <th>Dias Restantes:</th>
+                  <th>{{noDiasMes!-day!}}</th>
+                </tr>
+                <tr>
+                  <th>Meta diaria:</th>
+                  <th *ngIf="noDiasMes!-day! != 0">{{(metas.monto - acumuladoTotal)/(noDiasMes!-day!) |currency: 'Q'}}</th>
+                  <th *ngIf="noDiasMes!-day! == 0">{{(metas.monto - acumuladoTotal)/1 | currency: 'Q'}}</th>
+                </tr>
+              </table>
             </div>
           </div>
 
-          
+
         </div>
-        <div class="col-6 ml-auto mr-auto">
-            <div class="card text-bg-light mb-3 "style="width: 33rem;">
-                <div class="card-header">Cierres</div>
-                <div class="card-body table-card">
+        <div class="tab-pane text-center" id="cierres" role="tabpanel">
 
-                    <cdk-accordion class="example-accordion">
-                        <cdk-accordion-item *ngFor="let item of ListaCierres; let i = index"
-                            #accordionItem="cdkAccordionItem" class="example-accordion-item" role="button"
-                            tabindex="0" [attr.id]="'accordion-header-' + item.money"
-                            [attr.aria-expanded]="accordionItem.expanded"
-                            [attr.aria-controls]="'accordion-body-' + item.money">
+          <div class="col-4 ml-auto mr-auto">
+            <div class="card text-bg-light mb-3 " style="width: 25rem;">
+              <div class="card-header">Cierres</div>
+              <div class="card-body table-card">
 
-
-                            <div class="example-accordion-item-header" (click)="accordionItem.toggle()">
-                                <i *ngIf="$any((item.apertura + item.venta + item.gastos + item.ingresos + item.cierre).toFixed(2)) == item.deposito" class="nc-icon nc-check-2"></i> 
-                                {{'#'+item.seq+' '}}{{ item.dateend | date:"shortDate"}}<strong>{{' '+(item.apertura + item.venta + item.gastos + item.ingresos + item.cierre) |currency: 'Q'}}</strong>
-                                <span class="example-accordion-item-description">
-                                    <!-- Click para {{ accordionItem.expanded ? 'cerrar' : 'abrir' }} -->
-                                    <i *ngIf="accordionItem.expanded"
-                                        class="nc-icon nc-simple-remove"><strong>Cerrar</strong></i>
-                                    <i *ngIf="!accordionItem.expanded"
-                                        class="nc-icon nc-simple-add"><strong>Abrir</strong></i>
-
-                                </span>
-                            </div>
-
-                            <div class="example-accordion-item-body" role="region"
-                                [style.display]="accordionItem.expanded ? '' : 'none'"
-                                [attr.id]="'accordion-body-' + item.money"
-                                [attr.aria-labelledby]="'accordion-header-' + item.money">
-                                <table class="table">
-
-                                    <tr>
-                                        <th>Apertura</th>
-                                        <td>{{item.apertura | currency: 'Q'}}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Venta</th>
-                                        <td>{{item.venta | currency: 'Q'}}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Ingresos</th>
-                                        <td>{{item.ingresos | currency: 'Q'}}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Gastos</th>
-                                        <td>{{item.gastos | currency: 'Q'}}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Cierre</th>
-                                        <td>{{item.cierre | currency: 'Q'}}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Deposito</th>
-                                        <!-- <td>{{item.apertura + item.venta + item.gastos + item.ingresos + item.cierre | currency: 'Q'}}</td> -->
-                                        <td>{{item.deposito | currency: 'Q'}}</td>
-                                        <!-- {{( i < size-1 ? Transacciones(item.money,true):Transacciones(item.money,false))}} -->
-                                        <td></td>
-
-                                    </tr>
-
-                                </table>
-                                <div>
-                                    <table class="table">
-                                        <tr>
-                                            <td colspan="3" class="text-center fw-bold table-dark">Depositos
-                                                Registrados</td>
-                                        </tr>
-                                        <br>
-                                        <tr>
-                                            <button type="button" class="btn btn-dark" data-toggle="modal"
-                                                data-target="#exampleModalLong"
-                                                (click)="Transacciones(item.money)">
-                                                mas detalles
-                                            </button>
-                                        </tr>
-
-                                    </table>
-                                </div>
-                            </div>
-                            <!-- </ng-container> -->
-                        </cdk-accordion-item>
-                    </cdk-accordion>
+                <cdk-accordion class="example-accordion">
+                  <cdk-accordion-item *ngFor="let item of ListaCierres; let i = index" #accordionItem="cdkAccordionItem"
+                    class="example-accordion-item" role="button" tabindex="0"
+                    [attr.id]="'accordion-header-' + item.money" [attr.aria-expanded]="accordionItem.expanded"
+                    [attr.aria-controls]="'accordion-body-' + item.money">
 
 
+                    <div class="example-accordion-item-header" (click)="accordionItem.toggle()">
+                      <i *ngIf="$any((item.apertura + item.venta + item.gastos + item.ingresos + item.cierre).toFixed(2)) == item.deposito"
+                        class="nc-icon nc-check-2"></i>
+                      {{'#'+item.seq+' '}}{{ item.dateend | date:"shortDate"}}<strong>{{' '+(item.apertura + item.venta
+                        +
+                        item.gastos + item.ingresos + item.cierre) |currency: 'Q'}}</strong>
+                      <span class="example-accordion-item-description">
+                        <!-- Click para {{ accordionItem.expanded ? 'cerrar' : 'abrir' }} -->
+                        <i *ngIf="accordionItem.expanded" class="nc-icon nc-simple-remove"><strong>Cerrar</strong></i>
+                        <i *ngIf="!accordionItem.expanded" class="nc-icon nc-simple-add"><strong>Abrir</strong></i>
 
-                </div>
+                      </span>
+                    </div>
+
+                    <div class="example-accordion-item-body" role="region"
+                      [style.display]="accordionItem.expanded ? '' : 'none'" [attr.id]="'accordion-body-' + item.money"
+                      [attr.aria-labelledby]="'accordion-header-' + item.money">
+                      <table class="table">
+
+                        <tr>
+                          <th>Apertura</th>
+                          <td>{{item.apertura | currency: 'Q'}}</td>
+                        </tr>
+                        <tr>
+                          <th>Venta</th>
+                          <td>{{item.venta | currency: 'Q'}}</td>
+                        </tr>
+                        <tr>
+                          <th>Ingresos</th>
+                          <td>{{item.ingresos | currency: 'Q'}}</td>
+                        </tr>
+                        <tr>
+                          <th>Gastos</th>
+                          <td>{{item.gastos | currency: 'Q'}}</td>
+                        </tr>
+                        <tr>
+                          <th>Cierre</th>
+                          <td>{{item.cierre | currency: 'Q'}}</td>
+                        </tr>
+                        <tr>
+                          <th>Deposito</th>
+                          <!-- <td>{{item.apertura + item.venta + item.gastos + item.ingresos + item.cierre | currency: 'Q'}}</td> -->
+                          <td>{{item.deposito | currency: 'Q'}}</td>
+                          <!-- {{( i < size-1 ? Transacciones(item.money,true):Transacciones(item.money,false))}} -->
+                          <td></td>
+
+                        </tr>
+
+                      </table>
+                      <div>
+                        <table class="table">
+                          <tr>
+                            <td colspan="3" class="text-center fw-bold table-dark">Depositos
+                              Registrados</td>
+                          </tr>
+                          <br>
+                          <tr>
+                            <button type="button" class="btn btn-dark" data-toggle="modal"
+                              data-target="#exampleModalLong" (click)="Transacciones(item.money)">
+                              mas detalles
+                            </button>
+                          </tr>
+
+                        </table>
+                      </div>
+                    </div>
+                    <!-- </ng-container> -->
+                  </cdk-accordion-item>
+                </cdk-accordion>
+
+
+
+              </div>
             </div>
+          </div>
+
+
         </div>
       </div>
+      <!--end Tab panes  -->
+
+
+
+
+
+
+
+
+
+
+
+
     </div>
   </div>
 </div>
 
 <!-- Modal -->
 <div class="modal fade " id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
-    aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Depositos Registrados</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="VisibleNumero(false,null,0,0)" >
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            
-            <div class="modal-body">
+  aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Depositos Registrados</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+          (click)="VisibleNumero(false,null,0,0)">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
 
-                
-                <button *ngIf="!bandera" class="btn btn-primary" type="submit" (click)="OpenRegistroDeposito(true)">Registrar Deposito</button>
-                <br>
-                <br>
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th scope="col">Id</th>
-                            <th scope="col">Numero</th>
-                            <th scope="col">Monto</th>
-                            <th scope="col">Editar</th>
-                            
-                        </tr>
-                    </thead>
-                    <tbody>
+      <div class="modal-body">
 
-                    
-                        <tr *ngFor="let dep of ListaDepositos">
 
-                            <th>{{dep.id}}</th>
-                            <th>{{dep.numero}}</th>
-                            <th>{{dep.monto | currency: 'Q'}}</th>
-                            <!-- <th *ngIf="dep.estado == 0 && !cambioEstado">
+        <button *ngIf="!bandera" class="btn btn-primary" type="submit" (click)="OpenRegistroDeposito(true)">Registrar
+          Deposito</button>
+        <br>
+        <br>
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Id</th>
+              <th scope="col">Numero</th>
+              <th scope="col">Monto</th>
+              <th scope="col">Editar</th>
+
+            </tr>
+          </thead>
+          <tbody>
+
+
+            <tr *ngFor="let dep of ListaDepositos">
+
+              <th>{{dep.id}}</th>
+              <th>{{dep.numero}}</th>
+              <th>{{dep.monto | currency: 'Q'}}</th>
+              <!-- <th *ngIf="dep.estado == 0 && !cambioEstado">
                                 <button type="button" class="btn btn-danger" (click)="CambioDeposito(dep,1)">Verificar</button>
                             </th>
                             <th *ngIf="dep.estado == 1 && !cambioEstado">
@@ -269,57 +338,56 @@
                             <th *ngIf="dep.estado == 2 && !cambioEstado">
                                 <i>Verificado y Acreditado</i>
                             </th> -->
-                            <th>
-                                <button *ngIf="!bandera && !banderaDeposito" type="button" class="btn btn-warning" (click)="VisibleNumero(true,dep,dep.id,dep.numero)">Editar</button>
-                                <i *ngIf="bandera">Editando..</i>
-                                <i *ngIf="banderaDeposito">Registrando..</i>
-                            </th> 
+              <th>
+                <button *ngIf="!bandera && !banderaDeposito" type="button" class="btn btn-warning"
+                  (click)="VisibleNumero(true,dep,dep.id,dep.numero)">Editar</button>
+                <i *ngIf="bandera">Editando..</i>
+                <i *ngIf="banderaDeposito">Registrando..</i>
+              </th>
 
-                        </tr>
-                        <tr *ngIf="bandera">
-                            <th>
-                                <div>
-                                    <form>
-                                        <div>
-                                            <label class="form-label">Numero</label>
-                                            <input [(ngModel)]="depositos.numero" type="number" class="form-control" required="[0-9]" name="numero" >
-                                            <br>
-                                            <button type="button" class="btn btn-success" (click)="UpdataRegistroDeposito()">Guardar</button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </th>
-                        </tr>
-                        <tr *ngIf="banderaDeposito">
-                            <th>
-                                <div>
-                            <form>
-                            
-                                    <div class="input-group">
-                                        <input [(ngModel)]="depositos.numero" type="number"  required  class="form-control" placeholder="Numero de Deposito"  name="numero">
-                                        <input [(ngModel)]="depositos.monto" type="number" min='0' required step='0.01'  class="form-control" placeholder="Monto del Deposito"  name="monto">
-                                        <button class="btn btn-outline-primary" type="button"  (click)="SaveRegistroDeposito()">Registrar</button>
-                                    </div>
-                              
-                            </form>
-                        </div>
-                        </th>
-                            </tr>
+            </tr>
+            <tr *ngIf="bandera">
+              <th>
+                <div>
+                  <form>
+                    <div>
+                      <label class="form-label">Numero</label>
+                      <input [(ngModel)]="depositos.numero" type="number" class="form-control" required="[0-9]"
+                        name="numero">
+                      <br>
+                      <button type="button" class="btn btn-success" (click)="UpdataRegistroDeposito()">Guardar</button>
+                    </div>
+                  </form>
+                </div>
+              </th>
+            </tr>
+            <tr *ngIf="banderaDeposito">
+              <th>
+                <div>
+                  <form>
+
+                    <div class="input-group">
+                      <input [(ngModel)]="depositos.numero" type="number" required class="form-control"
+                        placeholder="Numero de Deposito" name="numero">
+                      <input [(ngModel)]="depositos.monto" type="number" min='0' required step='0.01'
+                        class="form-control" placeholder="Monto del Deposito" name="monto">
+                      <button class="btn btn-outline-primary" type="button"
+                        (click)="SaveRegistroDeposito()">Registrar</button>
+                    </div>
+
+                  </form>
+                </div>
+              </th>
+            </tr>
 
 
-                    </tbody>
-                </table>
-            </div>
-            <!-- <div class="modal-footer">
+          </tbody>
+        </table>
+      </div>
+      <!-- <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                                     <button type="button" class="btn btn-primary">Save changes</button>
                                                          </div> -->
-        </div>
     </div>
+  </div>
 </div>
-
-
-
-
-
-

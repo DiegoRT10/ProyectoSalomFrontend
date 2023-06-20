@@ -1,9 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Cierres, Administrador, dataCierres, PeopleLocation2, VentaDiariaAdmin, VentaDiariaService, VentaSucursal, dataDepositos, Depositos } from '../../services/venta-diaria.service';
+import { Cierres, Administrador, dataCierres, PeopleLocation2, VentaDiariaAdmin, VentaDiariaService, VentaSucursal, dataDepositos, Depositos, DataVentaDiaria, MetaFarmacia, Farmacia, idLocation } from '../../services/venta-diaria.service';
 import decode from 'jwt-decode';
 import * as moment from 'moment';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subscription, withLatestFrom } from 'rxjs';
 import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
@@ -17,6 +17,9 @@ export class VentaSucursalComponent implements OnInit {
   acumulado:number =0;
   acumuladoTitular:number=0;
   acumuladoApoyo:number=0;
+  acumuladoRotativo:number=0;
+  acumuladoTotal:number=0;
+  acumuladoFarmacia:number=0;
   private subs?: Subscription;
   cambioEstado: boolean = false;
   bandera: boolean = false; //sirve para no sobrepasar el limite de registros de cierre
@@ -24,6 +27,11 @@ export class VentaSucursalComponent implements OnInit {
   date: Date = new Date();
   fechaDia: string = moment.utc(this.date).format('DD/MM/YYYY');
   carga?: boolean;
+  fecha!: Date;
+  faltante: number = 0;
+  diasRestantes: number = 0;
+  ventaNecesaria: number = 0;
+  acumulado2: number = 0;
 
   constructor(private router: Router, private VentaDiariaService: VentaDiariaService, private spinner: NgxSpinnerService) {
    
@@ -37,6 +45,8 @@ export class VentaSucursalComponent implements OnInit {
   ListaVentaDiaria?:VentaDiariaAdmin[];
   ListaCierres?:Cierres[];
   ListaDepositos?: Depositos[];
+  ListaVenta?: DataVentaDiaria[];
+  ListaMetas?: MetaFarmacia[];
 
   dataCierre: dataCierres = {
     host: '',
@@ -82,19 +92,39 @@ export class VentaSucursalComponent implements OnInit {
   }
 
   VentaDiaria: VentaDiariaAdmin ={
-    dia:0,
-    titular:0,
-    apoyo:0
+    dia: 0,
+    titular: 0,
+    apoyo: 0,
+    rotativo: 0
   }
 
   dataDeposito: dataDepositos = {
     money: ''
   }
 
+  Venta: DataVentaDiaria = {
+    dia: 0,
+    host: '',
+    total: 0
+  }
+
+
+  metas: MetaFarmacia = {
+    idlocation: '',
+    monto: 0,
+    datenew: this.fecha,
+    dateend: this.fecha
+  }
+
+  idFarmacia: idLocation ={
+    idlocation: ''
+  }
+
   ngOnInit(): void {
     this.carga = true;
     this.PeopleLocation();
     this.setNoDiasMes();
+    
   }
 
   // ngAfterViewInit() {
@@ -110,6 +140,7 @@ export class VentaSucursalComponent implements OnInit {
       this.VentaAdministrador();
       this.VentaAdminApoyo();
       this.VentaCierres();
+      this.MetaFarmacia();
       this.carga = false;
     },
     err =>{
@@ -182,8 +213,8 @@ export class VentaSucursalComponent implements OnInit {
 
   VentaAdminApoyo():void{
     this.data.host=this.onPeopleLocation.idlocation;
-    // this.data.ym=this.getFecha(); descomentar cunado se realice la prueba 
-    this.data.ym='202203';
+     this.data.ym=this.getFecha(); //descomentar cunado se realice la prueba 
+    //this.data.ym='202203';
 
       this.VentaDiariaService.getVentaDiaria(this.data).subscribe(res=>{
       this.ListaVentaDiaria=<any>res;
@@ -208,10 +239,12 @@ export class VentaSucursalComponent implements OnInit {
 
   totalesVenta():void{
   for (const i of this.ListaVentaDiaria!) {
-    (i.titular == 0 ? this.acumuladoTitular= 0 : this.acumuladoTitular += i.titular);
-    (i.apoyo == 0 ? this.acumuladoApoyo = 0 : this.acumuladoApoyo += i.apoyo);
-    
+   this.acumuladoTitular += i.titular;
+   this.acumuladoApoyo += i.apoyo;
+   this.acumuladoRotativo += i.rotativo;  
+   this.acumuladoTotal +=   (i.titular + i.apoyo + i.rotativo)
   }
+  this.acumuladoFarmacia = this.acumuladoTitular + this.acumuladoApoyo + this.acumuladoRotativo;
   }
 
   Transacciones(money: string): void {
@@ -303,8 +336,51 @@ export class VentaSucursalComponent implements OnInit {
 
   }
 
-  
+  getVentaDiaria(host: string, ym: string): void {
+    let date: Date = new Date();
+    this.Venta.host = host;
+    this.Venta.dia = <any>ym;
+    this.VentaDiariaService.getOneVenta(this.Venta).subscribe(res => {
+      this.ListaVenta = <any>res;
+
+      this.Venta = res[0];
+      for (const j of this.ListaMetas!) {
+          for (const i of this.ListaVenta!) {
+            if (i.host == j.idlocation) {
+              this.Venta.dia = i.dia;
+              this.Venta.host = i.host;
+              this.Venta.total = i.total;
+              this.metas.monto = j.monto;
+              this.faltante = j.monto - i.total;
+
+              this.diasRestantes = this.noDiasMes! - date.getDate();
+              this.ventaNecesaria = this.faltante / this.diasRestantes
+            }
+          } 
+      }
 
 
+    },
+      err => {
+        console.log(err);
+      }
+
+    );
+
+  }
+
+  MetaFarmacia(): void {
+    this.idFarmacia.idlocation = this.onPeopleLocation.idlocation;
+    this.VentaDiariaService.getOneMeta(this.idFarmacia).subscribe(res => {
+      this.ListaMetas = <any>res;
+      //this.Venta = res[0];
+      this.getVentaDiaria(this.onPeopleLocation.idlocation,this.getFecha());
+    },
+      err => {
+        console.log(err);
+      }
+
+    );
+  }
 
 }

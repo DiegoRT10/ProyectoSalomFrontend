@@ -41,7 +41,7 @@ export class VentaDiariaService {
 
      //Obtener consulta de venta del dia
      getOneMeta(venta:any){
-      return this.http.post<MetaFarmacia[]>(`${this.URL}/venta/onemetafarmacia`,venta);
+      return this.http.post(`${this.URL}/venta/onemetafarmacia`,venta);
     }
 
     getPeopleLocation(venta:any){
@@ -144,6 +144,10 @@ export interface DataVentaDiaria{
     id: string
   }
 
+  export interface idLocation{
+    idlocation: string
+  }
+
   export interface Administrador{
     id: string
   }
@@ -244,9 +248,10 @@ export interface DataVentaDiaria{
   }
 
   export interface VentaDiariaAdmin{
-    dia:number;
-    titular:number;
-    apoyo:number;
+    dia:number,
+    titular:number,
+    apoyo:number,
+    rotativo:number
   }
 
 

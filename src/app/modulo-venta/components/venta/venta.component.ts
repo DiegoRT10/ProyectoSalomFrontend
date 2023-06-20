@@ -82,6 +82,7 @@ export class VentaComponent implements OnInit {
   }
 
 
+
   ngOnInit(): void {
     this.carga = true;
     this.ventaMes.mes = this.setFecha();

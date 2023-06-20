@@ -42,7 +42,6 @@ import { MovimientosInicioComponent } from './modulo-venta/components/movimiento
 import { InventarioFarmaciaComponent } from './modulo-venta/components/inventario-farmacia/inventario-farmacia.component';
 import { MantenimientoComponent } from './mantenimiento/mantenimiento.component';
 import { ProductsComponent } from './components/products/products.component';
-import { Venta2Component } from './modulo-venta/components/venta2/venta2.component';
 import { PeopleLocationsComponent } from './modulo-nomina/components/people-locations/people-locations.component';
 import { ListPeopleLocationsComponent } from './modulo-nomina/components/list-people-locations/list-people-locations.component';
 import { AboutMeComponent } from './modulo-nomina/components/about-me/about-me.component';
@@ -80,7 +79,6 @@ const routes: Routes = [
 {path: 'venta-gerente', component: VentaGerenteComponent, canActivate: [AuthGuard, RoleGuard],  data: {expectedRole: {s:'0', g:'1'}}},//puede acceder sistemas o gerente
 {path: 'venta-administrador', component: VentaAdministradorComponent, canActivate: [AuthGuard, RoleGuard],  data: {expectedRole: {s:'0', g:'2'}}},//puede acceder sistemas o administrador
 {path: 'venta', component: VentaComponent, canActivate: [AuthGuard, RoleGuard],  data: {expectedRole: {s:'0', g:'1'}}},//puede acceder sistemas o gerente
-{path: 'venta2', component: Venta2Component, canActivate: [AuthGuard, RoleGuard],  data: {expectedRole: {s:'0', g:'1'}}},//puede acceder sistemas o gerente
 {path: 'farmacia', component: FarmaciaComponent, canActivate: [AuthGuard, RoleGuard],  data: {expectedRole: {s:'0', g:'1'}}},//puede acceder sistemas o gerente
 {path: 'estimulo-gerente', component: EstimuloGerenteComponent, canActivate: [AuthGuard, RoleGuard],  data: {expectedRole: {s:'0', g:'1'}}},//puede acceder sistemas o gerente
 {path: 'venta-sucursal', component: VentaSucursalComponent, canActivate: [AuthGuard, RoleGuard],  data: {expectedRole: {s:'0', g:'2'}}},//puede acceder sistemas administrador

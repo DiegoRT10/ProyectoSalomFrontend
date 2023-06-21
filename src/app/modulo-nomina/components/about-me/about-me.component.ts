@@ -8,7 +8,8 @@ import decode from 'jwt-decode';
   styleUrls: ['./about-me.component.css']
 })
 export class AboutMeComponent implements OnInit{
-
+  carga?:boolean;
+  carga2?:boolean;
   flag?:boolean;
   ListPeople?:People[];
   idPeople:PIDs={
@@ -21,13 +22,18 @@ export class AboutMeComponent implements OnInit{
   }
   constructor(private profileService: CrudProfileService){
     this.flag = false;
+    this.carga2 = true;
   }
 
   ngOnInit(): void {
+    this.carga = true;
     this.getDatos();
   }
 
-
+  ngAfterViewInit() {
+    this.carga = false;
+  }
+ 
   
 
 
@@ -38,6 +44,7 @@ export class AboutMeComponent implements OnInit{
     this.idPeople.id = decodeToken.id;
     this.profileService.getPeople(this.idPeople).subscribe(res => {
       this.ListPeople = <any>res;
+      this.carga2 = false;
      },
        err => {
          console.log(err);

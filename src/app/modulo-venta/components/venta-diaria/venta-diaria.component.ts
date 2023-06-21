@@ -9,6 +9,8 @@ import decode from 'jwt-decode';
   styleUrls: ['./venta-diaria.component.css']
 })
 export class VentaDiariaComponent implements OnInit{
+  carga?:boolean;
+  flag?:boolean;
 
   ListVentaProductos?:VentaProductos[];
 
@@ -31,16 +33,25 @@ export class VentaDiariaComponent implements OnInit{
 
 
   
-  constructor(private router: Router, private VentaDiariaService: VentaDiariaService){}
+  constructor(private router: Router, private VentaDiariaService: VentaDiariaService){
+    this.flag = true;
+  }
 
   ngOnInit(): void {
+    this.carga = true;
     this.PeopleLocation();
   }
+
+  ngAfterViewInit() {
+    this.carga = false;
+  }
+
 
   VentaProductos(): void {
     this.idFarmacia.id = this.onPeopleLocation.idlocation;
     this.VentaDiariaService.getVentaProductos(this.idFarmacia).subscribe(res => {
       this.ListVentaProductos = <any>res;
+      this.flag = false;
     },
       err => {
         console.log(err);

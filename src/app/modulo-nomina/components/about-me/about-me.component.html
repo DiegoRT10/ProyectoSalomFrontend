@@ -1,8 +1,25 @@
 <div class="main">
     <div class="section text-center">
       <div class="container">
+
+        <div class="row">
+            <div class="col-md-12 ml-auto mr-auto">
+              <app-loading *ngIf="carga"></app-loading>
+            </div>
+        </div>
+
+
+
         <h1 class="title">Mis Datos</h1>
-        <table class="table">
+
+
+        <div class="row">
+            <div class="col-md-12 ml-auto mr-auto">
+              <app-loading *ngIf="carga2"></app-loading>
+            </div>
+        </div>
+
+        <table *ngIf="!carga2" class="table">
          <ng-container *ngFor="let i of ListPeople">
             <tr>
                 <th>ID</th>

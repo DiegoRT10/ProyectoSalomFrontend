@@ -2,9 +2,23 @@
     <div class="section text-center">
       <div class="container">
 
+        <div class="row">
+            <div class="col-md-12 ml-auto mr-auto">
+              <app-loading *ngIf="carga"></app-loading>
+            </div>
+            </div>
+
+
         <h1 class="title">Venta diaria {{onPeopleLocation.idlocation}}</h1>
 
-        <table class="table" >
+
+        <div class="row">
+            <div class="col-md-12 ml-auto mr-auto">
+              <app-loading *ngIf="flag"></app-loading>
+            </div>
+        </div>
+
+        <table *ngIf="!flag" class="table" >
             <thead>
                 <tr class='table-dark'>
                     <th>Codin</th>
@@ -17,11 +31,11 @@
             <tbody>
 
                 <tr *ngFor="let venta of ListVentaProductos" >
-                    <td>{{venta.codin}}</td>
-                    <td>{{venta.nombre}}</td>
-                    <td>{{venta.unidades}}</td>
-                    <td>{{(venta.taxid == '000 '? venta.price : venta.price*1.12)  | currency: 'Q'}}</td>
-                    <td>{{(venta.taxid == '000 '? venta.price*venta.unidades :  venta.price*1.12*venta.unidades)  | currency: 'Q'}}</td>
+                    <th>{{venta.codin}}</th>
+                    <th>{{venta.nombre}}</th>
+                    <th>{{venta.unidades}}</th>
+                    <th>{{(venta.taxid == '000 '? venta.price : venta.price*1.12)  | currency: 'Q'}}</th>
+                    <th>{{(venta.taxid == '000 '? venta.price*venta.unidades :  venta.price*1.12*venta.unidades)  | currency: 'Q'}}</th>
                    
 
                 </tr>

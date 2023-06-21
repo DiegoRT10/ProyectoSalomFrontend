@@ -11,6 +11,7 @@ import { Administrador, Farmacia, VentaDiariaService } from '../../services/vent
 export class InventarioFarmaciaComponent {
 
   carga?: boolean;
+  flag?:boolean;
   filtroNombre?: string;
 
 
@@ -26,7 +27,7 @@ export class InventarioFarmaciaComponent {
   }
 
   constructor(private products:ProductsService, private ventaDiariaService: VentaDiariaService) {
-
+    this.flag = true;
   }
  
  
@@ -56,6 +57,7 @@ export class InventarioFarmaciaComponent {
     this.ObjectFarmacia = res[0];
     this.products.getInventarioFarmacia(this.ObjectFarmacia).subscribe(res => {
       this.ListaInvetario = <any>res;
+      this.flag = false;
     },
       err => {
         console.log(err);

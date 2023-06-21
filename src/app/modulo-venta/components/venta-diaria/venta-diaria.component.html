@@ -30,16 +30,31 @@
             </thead>
             <tbody>
 
-                <tr *ngFor="let venta of ListVentaProductos" >
+                <tr *ngFor="let venta of ListVentaProductos; let i = index" >
                     <th>{{venta.codin}}</th>
                     <th>{{venta.nombre}}</th>
                     <th>{{venta.unidades}}</th>
-                    <th>{{(venta.taxid == '000 '? venta.price : venta.price*1.12)  | currency: 'Q'}}</th>
-                    <th>{{(venta.taxid == '000 '? venta.price*venta.unidades :  venta.price*1.12*venta.unidades)  | currency: 'Q'}}</th>
+
+                    <ng-container *ngIf="venta.taxid == '000'">
+                        <th>{{venta.price | currency: 'Q'}}</th>    
+                        <th>{{venta.price*venta.unidades | currency: 'Q'}}</th>
+                        {{setAcumulado(venta.price*venta.unidades)}}
+                    </ng-container>
+                    
+                    <ng-container *ngIf="venta.taxid != '000'">
+                        <th>{{venta.price*1.12 | currency: 'Q'}}</th>
+                        <th>{{venta.price*1.12*venta.unidades | currency: 'Q'}}</th>
+                        {{setAcumulado(venta.price*1.12*venta.unidades)}}
+                    </ng-container>
+                    
                    
-
                 </tr>
-
+                <tr class="table-dark">
+                    <th>Total</th>
+                    <th colspan='5'>{{this.acumulado | currency: 'Q' }}</th>
+                </tr>
+                <tr>
+                    
 
             </tbody>
         </table>

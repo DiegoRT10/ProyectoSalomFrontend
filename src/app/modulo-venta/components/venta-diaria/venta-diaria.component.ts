@@ -11,6 +11,7 @@ import decode from 'jwt-decode';
 export class VentaDiariaComponent implements OnInit{
   carga?:boolean;
   flag?:boolean;
+  acumulado:number = 0;
 
   ListVentaProductos?:VentaProductos[];
 
@@ -82,5 +83,11 @@ export class VentaDiariaComponent implements OnInit{
     this.idPeople.id = decodeToken.id;
     
   }
+
+  setAcumulado(cant: number):void {
+   this.acumulado += cant;
+  }
+
+
 
 }

@@ -31,7 +31,7 @@
         <div class="row">
             <table class="table">
                 <thead>
-                  <tr>
+                  <tr class="table-dark">
                     <th scope="col">No</th>
                     <th scope="col">Entrega</th>
                     <th scope="col">Recibe</th>
@@ -47,22 +47,22 @@
                 <tbody>
                   <ng-container *ngFor="let i of ListaNotaTraslado">
                   <tr>    
-                    <td>{{i.no}}</td>
-                    <td>{{i.id_entrega}}</td>
-                    <td>{{i.id_recibe}}</td>
-                    <td>{{i.id_encargado}}</td>
-                    <td>{{i.id_autorizado}}</td>
-                    <td>{{i.fecha | date:'dd/MM/yyyy'}}</td>
-                    <td>{{i.id_location_destino}}</td>
-                    <td *ngIf="i.estado == 0">Creados</td>
-                    <td *ngIf="i.estado == 1">Pendiente Aprobacion</td>
-                    <td *ngIf="i.estado == 2">Autorizados</td>
-                    <td *ngIf="i.estado == 3 && i.id_location_origen == ObjectFarmacia.id ">Salientes</td>
-                    <td *ngIf="i.estado == 3  && i.id_location_destino == ObjectFarmacia.id ">Entrantes</td>
-                    <td *ngIf="i.estado == 4">Finalizado</td>
-                    <td *ngIf="i.estado == 1"><button type="button" class="btn btn-success" (click)="setRevisado(i.id)">Autorizar</button></td>
-                    <td *ngIf="i.estado != 1">Sin Accion</td>
-                    <td> <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#exampleModalLong" (click)="getProductosTraslado(i.id)"> Ver Productos</button></td>
+                    <th>{{i.no}}</th>
+                    <th>{{i.id_entrega}}</th>
+                    <th>{{i.id_recibe}}</th>
+                    <th>{{i.id_encargado}}</th>
+                    <th>{{i.id_autorizado}}</th>
+                    <th>{{i.fecha | date:'dd/MM/yyyy'}}</th>
+                    <th>{{i.id_location_destino}}</th>
+                    <th *ngIf="i.estado == 0">Creados</th>
+                    <th *ngIf="i.estado == 1">Pendiente Aprobacion</th>
+                    <th *ngIf="i.estado == 2">Autorizados</th>
+                    <th *ngIf="i.estado == 3 && i.id_location_origen == ObjectFarmacia.id ">Salientes</th>
+                    <th *ngIf="i.estado == 3  && i.id_location_destino == ObjectFarmacia.id ">Entrantes</th>
+                    <th *ngIf="i.estado == 4">Finalizado</th>
+                    <th *ngIf="i.estado == 1"><button type="button" class="btn btn-success" (click)="setRevisado(i.id)">Autorizar</button></th>
+                    <th *ngIf="i.estado != 1">Sin Accion</th>
+                    <th> <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#exampleModalLong" (click)="getProductosTraslado(i.id)"> Ver Productos</button></th>
                   </tr>
                   </ng-container>
                 </tbody>
@@ -78,7 +78,7 @@ aria-hidden="true">
 <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
         <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLongTitle">Depositos Registrados</h5>
+            <h5 class="modal-title" id="exampleModalLongTitle">Productos Ingresados</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close" >
                 <span aria-hidden="true">&times;</span>
             </button>

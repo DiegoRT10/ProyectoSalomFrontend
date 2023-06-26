@@ -18,6 +18,7 @@ export class AppComponent implements OnInit {
   // Rol?:number;
   static EstadoToken: boolean;
   static Rol: number;
+  static Id: string;
 
   
   constructor(private router: Router) {
@@ -40,7 +41,10 @@ export class AppComponent implements OnInit {
     if(localStorage.getItem('token')){
       this.EstadoToken = true;
     if(localStorage.getItem('rol')){
-      this.Rol = Number(localStorage.getItem('rol'));
+      this.Rol = Number(localStorage.getItem('rol'));     
+    }
+    if(localStorage.getItem('id')){
+      this.Id = <string>localStorage.getItem('idUser');
     }
   }else{
     this.EstadoToken = false;
@@ -50,6 +54,11 @@ export class AppComponent implements OnInit {
 get Rol(){
   return AppComponent.Rol;
 }
+
+get Id(){
+  return AppComponent.Id;
+}
+
 
 get EstadoToken(){
   return AppComponent.EstadoToken;

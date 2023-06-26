@@ -1,5 +1,6 @@
 import { ModuloNominaModule } from './modulo-nomina/modulo-nomina.module';
 import { ModuloVentaModule } from './modulo-venta/modulo-venta.module';
+import { ModuloEvaluacionModule } from './modulo-evaluacion/modulo-evaluacion.module';
 import { TokenInterceptorService } from './services/token-interceptor.service';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -29,6 +30,10 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { MantenimientoComponent } from './mantenimiento/mantenimiento.component';
 import { ProductsComponent } from './components/products/products.component';
+import { HomeEvaluadorComponent } from './components/home-evaluador/home-evaluador.component';
+
+
+
 
 
 
@@ -54,6 +59,7 @@ import { ProductsComponent } from './components/products/products.component';
     LoadingComponent,
     MantenimientoComponent,
     ProductsComponent,
+    HomeEvaluadorComponent
     
     
   ],
@@ -65,6 +71,7 @@ import { ProductsComponent } from './components/products/products.component';
     ReactiveFormsModule,
     ModuloNominaModule,
     ModuloVentaModule,
+    ModuloEvaluacionModule,
     NgxSpinnerModule
     
     

@@ -46,6 +46,11 @@ import { PeopleLocationsComponent } from './modulo-nomina/components/people-loca
 import { ListPeopleLocationsComponent } from './modulo-nomina/components/list-people-locations/list-people-locations.component';
 import { AboutMeComponent } from './modulo-nomina/components/about-me/about-me.component';
 import { VentaDiariaComponent } from './modulo-venta/components/venta-diaria/venta-diaria.component';
+import { HomeEvaluadorComponent } from './components/home-evaluador/home-evaluador.component';
+import { EvaluacionDiagnosticaComponent } from './modulo-evaluacion/components/evaluacion-diagnostica/evaluacion-diagnostica.component';
+import { ExceptionsGuard } from './guards/exceptions.guard';
+import { StartEvaluacionDiagnosticaComponent } from './modulo-evaluacion/components/start-evaluacion-diagnostica/start-evaluacion-diagnostica.component';
+
 
 
 
@@ -96,6 +101,10 @@ const routes: Routes = [
 {path: 'list-people-location', component: ListPeopleLocationsComponent, canActivate: [AuthGuard, RoleGuard],  data: {expectedRole: {s:'0', g:'1'}}}, //puede acceder sistemas o gerente 
 {path: 'about-me', component: AboutMeComponent, canActivate: [AuthGuard, RoleGuard],  data: {expectedRole: {s:'0', g:'2'}}}, //puede acceder sistemas o Administrador 
 {path: 'venta-diaria', component: VentaDiariaComponent, canActivate: [AuthGuard, RoleGuard],  data: {expectedRole: {s:'0', g:'2'}}}, //puede acceder sistemas o gerente 
+{path: 'home-evaluador', component: HomeEvaluadorComponent, canActivate: [AuthGuard, ExceptionsGuard],  data: {expectedRole: {s:'0', g:'1'}}}, //puede acceder sistemas o gerente 
+{path: 'evaluacion-diagnostica', component: EvaluacionDiagnosticaComponent, canActivate: [AuthGuard, ExceptionsGuard],  data: {expectedRole: {s:'0', g:'1'}}}, //puede acceder sistemas o gerente con la excepcion que solo funciona para el evaluador y gerente de sistemas
+{path: 'start-evaluacion-diagnostica', component: StartEvaluacionDiagnosticaComponent, canActivate: [AuthGuard, ExceptionsGuard],  data: {expectedRole: {s:'0', g:'1'}}}, //puede acceder sistemas o gerente con la excepcion que solo funciona para el evaluador y gerente de sistemas
+
 
 {path: '**', pathMatch: 'full', redirectTo: 'home'}
 ];

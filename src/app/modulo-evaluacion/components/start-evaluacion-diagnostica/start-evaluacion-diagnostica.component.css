@@ -1,0 +1,8 @@
+.button-container button {
+    margin-right: 10px; /* Espacio entre los botones */
+    font-size: 16px; /* Tamaño de fuente de los botones */
+}
+
+.button-container button i {
+    font-size: 50px; /* Tamaño de fuente de los iconos */
+}

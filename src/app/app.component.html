@@ -32,6 +32,10 @@
           <a *ngIf="Rol==0 || Rol==1" class="nav-link" routerLink="home-gerente"
             routerLinkActive="active"><i class="nc-icon nc-briefcase-24"></i>Gerente</a>
         </li>
+        <li class="nav-item">
+          <a *ngIf="Rol==0 || Id=='GONZALEZC'" class="nav-link" routerLink="home-evaluador"
+            routerLinkActive="active"><i class="nc-icon nc-briefcase-24"></i>Evaluador</a>
+        </li>
       </ng-container>
         <li class="nav-item">
           <a *ngIf="!EstadoToken" class="nav-link" routerLink="login" routerLinkActive="active"><i

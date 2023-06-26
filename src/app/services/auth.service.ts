@@ -11,9 +11,8 @@ import { environment } from 'src/environments/environment';
 export class AuthService {
   //private URL = 'http://localhost:3000';
   private URL = environment.PORT;
-  constructor(
-    private http: HttpClient,
-    private jwtHelper: JwtHelperService) { }
+  constructor(private http: HttpClient, private jwtHelper: JwtHelperService) {  
+  }
 
   singin(user:any){
     return this.http.post(`${this.URL}/user/singin`,user);

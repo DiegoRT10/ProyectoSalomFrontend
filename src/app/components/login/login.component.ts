@@ -45,11 +45,15 @@ export class LoginComponent implements OnInit {
     let decodeToken:any = {}
     decodeToken = decode(token || '');
     localStorage.setItem('rol',decodeToken.role);
+    localStorage.setItem('idUser',decodeToken.id);
 
       switch(decodeToken.role){
         case '0': this.router.navigate(['home-sistemas']);
         break;
-        case '1' : this.router.navigate(['home-gerente']);
+        case '1' : 
+        if(decodeToken.id == 'GONZALEZC'){
+          this.router.navigate(['home-evaluador']);
+        }else{this.router.navigate(['home-gerente']);}   
         break;
         case '2' : this.router.navigate(['home-administrador']);
         break;

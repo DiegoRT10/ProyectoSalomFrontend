@@ -6,8 +6,7 @@ import decode from 'jwt-decode';
 @Injectable({
   providedIn: 'root'
 })
-export class RoleGuard implements CanActivate {
- 
+export class ExceptionsGuard implements CanActivate {
   constructor( private authService: AuthService, public router: Router){
   }
   //Verifica si el rol es el indicado para acceder 
@@ -17,12 +16,6 @@ export class RoleGuard implements CanActivate {
     const token = localStorage.getItem('token');
     let decodeToken:any = {}
     decodeToken = decode(token || '');
-
-    //personas que no tienen acceso
-    if(decodeToken.id == 'GONZALEZC'){
-      this.router.navigate(['login']);//retorna a login si no lo es
-      return false;
-    }
   
     if(!this.authService.isAuth() || decodeToken.role !== expectedRole && decodeToken.role !== expectedRole2){
       console.log('Usuario no autorizado para la vista');

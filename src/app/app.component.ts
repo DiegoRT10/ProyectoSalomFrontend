@@ -43,7 +43,7 @@ export class AppComponent implements OnInit {
     if(localStorage.getItem('rol')){
       this.Rol = Number(localStorage.getItem('rol'));     
     }
-    if(localStorage.getItem('id')){
+    if(localStorage.getItem('idUser')){
       this.Id = <string>localStorage.getItem('idUser');
     }
   }else{

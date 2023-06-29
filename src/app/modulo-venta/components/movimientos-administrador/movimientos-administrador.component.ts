@@ -76,7 +76,10 @@ export class MovimientosAdministradorComponent implements OnInit{
   }
 
   ObjetcCadenaProduct:ViewProducts2={
-    code_name:''
+    id: '',
+    code: '',
+    nombre: '',
+    code_name: ''
   }
   
   ObjectMovimientos:Movimientos={

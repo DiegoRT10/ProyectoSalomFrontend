@@ -1,7 +1,6 @@
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { EvaluacionDiagnosticaComponent } from './components/evaluacion-diagnostica/evaluacion-diagnostica.component';
-import { ProductsComponent } from './components/products/products.component';
+import { EvaluacionComponent } from './components/evaluacion/evaluacion.component';
 import { CdkAccordionModule } from '@angular/cdk/accordion';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { FormsModule } from '@angular/forms';
@@ -17,10 +16,11 @@ import { VistaEvaluacionDiagnosticaComponent } from './components/vista-evaluaci
 
 
 
+
+
 @NgModule({
   declarations: [
-    EvaluacionDiagnosticaComponent,
-    ProductsComponent,
+    EvaluacionComponent,
     StartEvaluacionDiagnosticaComponent,
     VistaEvaluacionDiagnosticaComponent
   ],

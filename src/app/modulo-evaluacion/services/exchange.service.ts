@@ -20,22 +20,31 @@ export class ExchangeService {
         return this.http.get(`${this.URL}/evaluacion/sendData`);
       } 
 
-      setEvaluacion(data:evaluacion){
-        return this.http.post(`${this.URL}/evaluacion/sendData`,data);
+      setEvaluacion(data:Evaluacion){
+        return this.http.post(`${this.URL}/evaluacion`,data);
       }
 
-      setProductosEvaluacion(data:evaluacion){
-        return this.http.post(`${this.URL}/evaluacion/sendData`,data);
+      setProductosEvaluacion(data:ProductosEvaluacion){
+        return this.http.post(`${this.URL}/evaluacion/insert_productos_evaluacion`,data);
       }
-
       
+      ListEvaluacion(data:ID){
+        return this.http.post<Evaluacion[]>(`${this.URL}/evaluacion/list-evaluacion`,data);
+      }
+
+      ListProductosEvaluacion(data:ID){
+        return this.http.post<ProductosEvaluacion[]>(`${this.URL}/evaluacion/list-producto-evaluacion`,data);
+      }
+
     }
 
     export interface ID{
-      id: number;
+      id: string;
     }
 
-    export interface evaluacion{
+    
+
+    export interface Evaluacion{
       id:string,
       tipo:string,
       nombre:string,
@@ -43,10 +52,12 @@ export class ExchangeService {
       observacion:string
     }
 
-    export interface productos_evaluacion{
+    export interface ProductosEvaluacion{
       id:string,
       id_evaluacion:string,
       id_producto:string,
       pregunta:string,
-      respuesta:string
+      calificacion:string
     }
+
+    

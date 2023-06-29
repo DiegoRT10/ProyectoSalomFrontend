@@ -61,7 +61,10 @@ export class DetalleNotaTrasladoComponent {
   }
 
   ObjetcCadenaProduct:ViewProducts2={
-    code_name:''
+    id: '',
+    code:'',
+    nombre:'',
+    code_name: ''
   }
   
   ObjectMovimientos:Movimientos={

@@ -135,6 +135,9 @@ export interface Inventario{
 
 
 export interface ViewProducts2{
+  id:string,
+  code:string,
+  nombre:string,
   code_name:string
 }
 

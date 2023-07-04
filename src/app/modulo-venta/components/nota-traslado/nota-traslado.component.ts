@@ -75,6 +75,7 @@ export class NotaTrasladoComponent {
   ObjetcCadenaProduct:ViewProducts2={
     id: '',
     code: '',
+    reference:'',
     nombre: '',
     code_name: ''
   }

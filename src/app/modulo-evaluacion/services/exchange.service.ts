@@ -40,6 +40,10 @@ export class ExchangeService {
         return this.http.post<Evaluacion[]>(`${this.URL}/evaluacion/list-evaluacion`,data);
       }
 
+      ListEvaluacionEnd(data:ID){
+        return this.http.post<Evaluacion[]>(`${this.URL}/evaluacion/list-evaluacion-end`,data);
+      }
+
       ListProductosEvaluacion(data:ID){
         console.log('entre a la ruta de listproductos');
         return this.http.post<ProductosEvaluacion[]>(`${this.URL}/evaluacion/list-producto-evaluacion`,data);

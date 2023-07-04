@@ -120,12 +120,15 @@
                                 #instance="ngbTypeahead" name="model" />
                                 <button class="btn-info" (click)="newQuestion()" >enviar</button>
                             </div>
-                              <img src="https://easydespensa.com/wp-content/uploads/2020/08/146476-1-ALKA-SELTZER-PRECIO-ESPECIAL-32410001976MG-TAB-EFERV-CAJ-X-14.jpg" alt="" width="800">
+                            
+                            
+                              <img src='{{URL}}/uploads/{{this.ObjProductoCodeName.reference}}.png' width="300" alt="">
+                           
                           
                               <table class="table">
                                 <tr>
                                   <th>Codin</th>
-                                  <th>{{this.ObjProductoCodeName.code}}</th>
+                                  <th>{{this.ObjProductoCodeName.reference}}</th>
                                 </tr>
                                 <tr>
                                   <th>Nombre</th>

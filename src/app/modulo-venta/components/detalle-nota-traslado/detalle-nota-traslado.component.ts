@@ -64,6 +64,7 @@ export class DetalleNotaTrasladoComponent {
     id: '',
     code:'',
     nombre:'',
+    reference:'',
     code_name: ''
   }
   

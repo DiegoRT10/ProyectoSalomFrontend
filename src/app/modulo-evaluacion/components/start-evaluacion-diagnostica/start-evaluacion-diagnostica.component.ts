@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { ProductsService, ViewProducts2 } from 'src/app/modulo-venta/services/products.service';
 import { NgbTypeahead } from '@ng-bootstrap/ng-bootstrap';
 import { Observable, OperatorFunction, Subject, debounceTime, distinctUntilChanged, filter, map, merge } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-start-evaluacion-diagnostica',
@@ -20,6 +21,7 @@ export class StartEvaluacionDiagnosticaComponent implements OnInit{
   idItem:string = '';
   idEvaluacion?:string;
   flagEnd:boolean=false;
+  URL = environment.PORT;
 
   ListaProductsCodeName?:ViewProducts2[];
   ListEvaluacion?:Evaluacion[];
@@ -58,6 +60,7 @@ export class StartEvaluacionDiagnosticaComponent implements OnInit{
   ObjProductoCodeName:ViewProducts2 = {
     id: '',
     code: '',
+    reference:'',
     nombre: '',
     code_name: ''
   }
@@ -140,16 +143,23 @@ export class StartEvaluacionDiagnosticaComponent implements OnInit{
 
   setDatosProductos(id:string):void{
     
-    for (const i of this.ListaProductsCodeName!) {
-      if(i.id == id){ 
-        this.ObjProductoCodeName.code = i.code;
-        this.ObjProductoCodeName.nombre = i.nombre;
-      }else{
-        this.ObjProductoCodeName.code = 'vacio';
-        this.ObjProductoCodeName.nombre = 'vacio';
-      }
+    // for (const i of this.ListaProductsCodeName!) {
       
-    }
+      this.ObjProductoCodeName.reference = <any>this.ListaProductsCodeName?.find(element => element.id == id)?.reference;
+      this.ObjProductoCodeName.nombre = <any>this.ListaProductsCodeName?.find(element => element.id == id)?.nombre;
+      // if(i.id == id){ 
+      //   console.log("comparando id",id,"con i.id",i.id);
+      //   this.ObjProductoCodeName.code = i.code;
+      //   this.ObjProductoCodeName.nombre = i.nombre;
+      //   break;
+      // }else{
+      //   console.log("comparando id",id,"con i.id",i.id);
+      //   this.ObjProductoCodeName.code = 'vacio';
+      //   this.ObjProductoCodeName.nombre = 'vacio';
+      //   break;
+      // }
+      
+    // }
   }
 
   setDatosProductosEvaluacion(calificacion:string){

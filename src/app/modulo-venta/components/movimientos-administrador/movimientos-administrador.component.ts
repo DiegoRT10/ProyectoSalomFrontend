@@ -78,6 +78,7 @@ export class MovimientosAdministradorComponent implements OnInit{
   ObjetcCadenaProduct:ViewProducts2={
     id: '',
     code: '',
+    reference:'',
     nombre: '',
     code_name: ''
   }

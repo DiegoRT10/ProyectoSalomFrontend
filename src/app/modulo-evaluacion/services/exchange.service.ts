@@ -24,8 +24,16 @@ export class ExchangeService {
         return this.http.post(`${this.URL}/evaluacion`,data);
       }
 
+      editEvaluacion(data:Evaluacion){
+        return this.http.put(`${this.URL}/evaluacion/update-evaluacion`,data);
+      }
+
       setProductosEvaluacion(data:ProductosEvaluacion){
         return this.http.post(`${this.URL}/evaluacion/insert_productos_evaluacion`,data);
+      }
+
+      editProductosEvaluacion(data:ProductosEvaluacion){
+        return this.http.put(`${this.URL}/evaluacion/update_productos_evaluacion`,data);
       }
       
       ListEvaluacion(data:ID){
@@ -33,6 +41,7 @@ export class ExchangeService {
       }
 
       ListProductosEvaluacion(data:ID){
+        console.log('entre a la ruta de listproductos');
         return this.http.post<ProductosEvaluacion[]>(`${this.URL}/evaluacion/list-producto-evaluacion`,data);
       }
 
@@ -49,7 +58,8 @@ export class ExchangeService {
       tipo:string,
       nombre:string,
       puesto:string,
-      observacion:string
+      observacion:string,
+      estado:string
     }
 
     export interface ProductosEvaluacion{

@@ -22,13 +22,10 @@ export class HomeEvaluadorComponent implements OnInit {
   }
 
 
-  goEvaluacionDiagnostico():void{
+  goEvaluacion():void{
     this.router.navigate(['evaluacion']);
   }
 
-  goEvaluacionFinal():void{
-    this.router.navigate(['evaluacion-final']);
-  }
 
   goPreguntas():void{
     this.router.navigate(['pregunta-evaluacion']);

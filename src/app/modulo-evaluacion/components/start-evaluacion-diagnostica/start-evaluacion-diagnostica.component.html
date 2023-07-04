@@ -2,7 +2,9 @@
     <div class="section text-center">
         <div class="container">
 
-            <h1>Evaluacion en proceso..</h1>
+            <h1 *ngIf="!flagEnd">Evaluacion en proceso..</h1>
+            <h1 *ngIf="flagEnd">Evaluacion Finalizada</h1>
+            <label *ngIf="!flagEnd">{{idEvaluacion}}</label>
             <br>
 
                 <!--nav  -->
@@ -13,7 +15,7 @@
               <a class="nav-link active" data-toggle="tab" href="#Evaluando" role="tab"><i
                   class="nc-icon nc-single-02"></i>Evaluando</a>
             </li>
-            <li class="nav-item">
+            <li *ngIf="!flagEnd" class="nav-item">
               <a class="nav-link" data-toggle="tab" href="#Evaluacion" role="tab"><i
                   class="nc-icon nc-chart-pie-36"></i>Evaluacion</a>
             </li>
@@ -79,9 +81,9 @@
                         <div class="card-header">Calificacion</div>
                         <div class="card-body table-card">
                             <div class="button-container">
-                                <button class="btn-success"><i class="nc-icon nc-check-2" (click)="setDatosProductosEvaluacion('0')" ></i></button>
-                                <button class="btn-warning"><i class="nc-icon nc-simple-delete" (click)="setDatosProductosEvaluacion('1')"></i></button>
-                                <button class="btn-danger"><i class="nc-icon nc-simple-remove" (click)="setDatosProductosEvaluacion('2')"></i></button>
+                                <button class="btn-success"><i class="nc-icon nc-check-2" (click)="editDatosProductosEvaluacion('0')" ></i></button>
+                                <button class="btn-warning"><i class="nc-icon nc-simple-delete" (click)="editDatosProductosEvaluacion('1')"></i></button>
+                                <button class="btn-danger"><i class="nc-icon nc-simple-remove" (click)="editDatosProductosEvaluacion('2')"></i></button>
                             </div>
                         </div>
                       </div>
@@ -139,9 +141,20 @@
                         </div>
         
                       </div>
+
+                      <div class="info">
+                        <div class="card text-bg-light mb-3">
+                          <div class="card-header">Finalizar evaluacion</div>
+                          <div class="card-body table-card">
+                              <button class="btn-danger" (click)="Finalizar()" >Finalizar</button>
+                          </div>
+                        </div>
+                      </div> 
      
 
                   </div>
+
+                  
 
 
               </div>

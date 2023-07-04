@@ -2,25 +2,31 @@
     <div class="section text-center">
         <div class="container">
 
-            <h1>Evaluacion en proceso..</h1>
+            <h1 *ngIf="flag">Evaluacion en proceso..</h1>
             <br>
 
-            <div class="tab-pane text-center" id="Estadistica" role="tabpanel">
+            <form>
+              <input type="text" class="form-control" [(ngModel)]="idEvaluacion" title="codigo de evaluacion" name="idEvaluacion">
+              <button class="btn-info" (click)="ListarEvaluacion()">Empezar</button>
+            </form>
+            
+
+            <div class="tab-pane text-center">
 
                 <div class="col-4 ml-auto mr-auto">
-                  <div class="card text-bg-light mb-3 " style="width: 25rem;">
-                    <div class="card-header">Datos evaluacion</div>
+                  <div *ngIf="flag" class="card text-bg-light mb-3 " style="width: 25rem;">
+                    <div class="card-header">Datos evaluacion {{flag}}</div>
                     <div class="card-body table-card">
                         <img src="https://easydespensa.com/wp-content/uploads/2020/08/146476-1-ALKA-SELTZER-PRECIO-ESPECIAL-32410001976MG-TAB-EFERV-CAJ-X-14.jpg" alt="" width="800">
                           
                               <table class="table">
                                 <tr>
                                   <th>Producto</th>
-                                  <th></th>
+                                  <th>{{this.ObjProductoCodeName.nombre}}</th>
                                 </tr>
                                 <tr>
                                   <th>No Pregunta</th>
-                                  <th></th>
+                                  <th>{{this.ObjProductosEvaluacionNew.pregunta}}</th>
                                 </tr>
                                 <tr>
                                   <th>Comentario</th>

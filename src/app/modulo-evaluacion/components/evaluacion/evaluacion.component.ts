@@ -22,7 +22,8 @@ export class EvaluacionComponent {
     tipo: '',
     nombre: '',
     puesto: '',
-    observacion: ''
+    observacion: '',
+    estado: ''
   }
 
   ObjProductosEvalucion: ProductosEvaluacion = {
@@ -113,6 +114,8 @@ export class EvaluacionComponent {
       case 'Evaluacion Final': this.ObjEvaluacion.tipo = '1';
         break;
     }
+
+    this.ObjEvaluacion.estado = '0' //creacion de evaluacion  
 
     console.log('datos a enviar de la evaluacion ',this.ObjEvaluacion);
     console.log('datos a enviar del producto ',this.ObjProductosEvalucion);

@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { StartEvaluacionDiagnosticaComponent } from './start-evaluacion-diagnostica.component';
+import { StartEvaluacionDiagnosticaComponent } from './start-evaluacion.component';
 
 describe('StartEvaluacionDiagnosticaComponent', () => {
   let component: StartEvaluacionDiagnosticaComponent;

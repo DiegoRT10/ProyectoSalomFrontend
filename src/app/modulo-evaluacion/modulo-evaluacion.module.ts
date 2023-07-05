@@ -11,8 +11,8 @@ import { NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { MdbAccordionModule } from 'mdb-angular-ui-kit/accordion';
 import { NgxGaugeModule } from 'ngx-gauge';
-import { StartEvaluacionDiagnosticaComponent } from './components/start-evaluacion-diagnostica/start-evaluacion-diagnostica.component';
-import { VistaEvaluacionDiagnosticaComponent } from './components/vista-evaluacion-diagnostica/vista-evaluacion-diagnostica.component';
+import { StartEvaluacionComponent } from './components/start-evaluacion/start-evaluacion.component';
+import { VistaEvaluacionComponent } from './components/vista-evaluacion/vista-evaluacion.component';
 
 
 
@@ -21,8 +21,8 @@ import { VistaEvaluacionDiagnosticaComponent } from './components/vista-evaluaci
 @NgModule({
   declarations: [
     EvaluacionComponent,
-    StartEvaluacionDiagnosticaComponent,
-    VistaEvaluacionDiagnosticaComponent
+    StartEvaluacionComponent,
+    VistaEvaluacionComponent
   ],
   imports: [
     CommonModule,

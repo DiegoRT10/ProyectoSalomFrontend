@@ -49,8 +49,8 @@ import { VentaDiariaComponent } from './modulo-venta/components/venta-diaria/ven
 import { HomeEvaluadorComponent } from './components/home-evaluador/home-evaluador.component';
 import { EvaluacionComponent } from './modulo-evaluacion/components/evaluacion/evaluacion.component';
 import { ExceptionsGuard } from './guards/exceptions.guard';
-import { StartEvaluacionDiagnosticaComponent } from './modulo-evaluacion/components/start-evaluacion-diagnostica/start-evaluacion-diagnostica.component';
-import { VistaEvaluacionDiagnosticaComponent } from './modulo-evaluacion/components/vista-evaluacion-diagnostica/vista-evaluacion-diagnostica.component';
+import { StartEvaluacionComponent } from './modulo-evaluacion/components/start-evaluacion/start-evaluacion.component';
+import { VistaEvaluacionComponent } from './modulo-evaluacion/components/vista-evaluacion/vista-evaluacion.component';
 
 
 
@@ -104,10 +104,10 @@ const routes: Routes = [
 {path: 'venta-diaria', component: VentaDiariaComponent, canActivate: [AuthGuard, RoleGuard],  data: {expectedRole: {s:'0', g:'2'}}}, //puede acceder sistemas o gerente 
 {path: 'home-evaluador', component: HomeEvaluadorComponent, canActivate: [AuthGuard, ExceptionsGuard],  data: {expectedRole: {s:'0', g:'1'}}}, //puede acceder sistemas o gerente 
 {path: 'evaluacion', component: EvaluacionComponent, canActivate: [AuthGuard, ExceptionsGuard],  data: {expectedRole: {s:'0', g:'1'}}}, //puede acceder sistemas o gerente con la excepcion que solo funciona para el evaluador y gerente de sistemas
-{path: 'start-evaluacion-diagnostica', component: StartEvaluacionDiagnosticaComponent, canActivate: [AuthGuard, ExceptionsGuard],  data: {expectedRole: {s:'0', g:'1'}}}, //puede acceder sistemas o gerente con la excepcion que solo funciona para el evaluador y gerente de sistemas
-{path: 'vista-evaluacion-diagnostica', component: VistaEvaluacionDiagnosticaComponent, canActivate: [AuthGuard, ExceptionsGuard],  data: {expectedRole: {s:'0', g:'1'}}}, //puede acceder sistemas o gerente con la excepcion que solo funciona para el evaluador y gerente de sistemas
+{path: 'start-evaluacion', component: StartEvaluacionComponent, canActivate: [AuthGuard, ExceptionsGuard],  data: {expectedRole: {s:'0', g:'1'}}}, //puede acceder sistemas o gerente con la excepcion que solo funciona para el evaluador y gerente de sistemas
+{path: 'vista-evaluacion', component: VistaEvaluacionComponent}, //puede acceder sistemas o gerente con la excepcion que solo funciona para el evaluador y gerente de sistemas
 
-{path: '**', pathMatch: 'full', redirectTo: 'home'}
+{path: '**', pathMatch: 'full', redirectTo: 'login'}
 ];
 
 @NgModule({

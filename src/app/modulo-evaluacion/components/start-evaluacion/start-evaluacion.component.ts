@@ -7,16 +7,17 @@ import { Observable, OperatorFunction, Subject, debounceTime, distinctUntilChang
 import { environment } from 'src/environments/environment';
 
 @Component({
-  selector: 'app-start-evaluacion-diagnostica',
-  templateUrl: './start-evaluacion-diagnostica.component.html',
-  styleUrls: ['./start-evaluacion-diagnostica.component.css']
+  selector: 'app-start-evaluacion',
+  templateUrl: './start-evaluacion.component.html',
+  styleUrls: ['./start-evaluacion.component.css']
 })
-export class StartEvaluacionDiagnosticaComponent implements OnInit{
+export class StartEvaluacionComponent implements OnInit{
 
   model: string ='';
   product = [''];
   flag:boolean=false;
   flagProducto:boolean = false;
+  flagImagen:boolean = false;
   NoPregunta:number=0;
   idItem:string = '';
   idEvaluacion?:string;
@@ -26,6 +27,7 @@ export class StartEvaluacionDiagnosticaComponent implements OnInit{
   ListaProductsCodeName?:ViewProducts2[];
   ListEvaluacion?:Evaluacion[];
   ListProductosEvaluacion?:ProductosEvaluacion[];
+  ListPreguntasEvaluacion?:ProductosEvaluacion[];
 
   ObjId: ID = {
     id: ''
@@ -63,6 +65,22 @@ export class StartEvaluacionDiagnosticaComponent implements OnInit{
     reference:'',
     nombre: '',
     code_name: ''
+  }
+
+  ObjProductoPregunta:ViewProducts2 = {
+    id: '',
+    code: '',
+    reference:'',
+    nombre: '',
+    code_name: ''
+  }
+
+  ObjPreguntasEvaluacion:ProductosEvaluacion ={
+    id: '',
+    id_evaluacion: '',
+    id_producto: '',
+    pregunta: '',
+    calificacion: ''
   }
 
   constructor(private router: Router, private exchangeService: ExchangeService, private products:ProductsService){
@@ -142,24 +160,10 @@ export class StartEvaluacionDiagnosticaComponent implements OnInit{
 
 
   setDatosProductos(id:string):void{
-    
-    // for (const i of this.ListaProductsCodeName!) {
-      
+  
       this.ObjProductoCodeName.reference = <any>this.ListaProductsCodeName?.find(element => element.id == id)?.reference;
       this.ObjProductoCodeName.nombre = <any>this.ListaProductsCodeName?.find(element => element.id == id)?.nombre;
-      // if(i.id == id){ 
-      //   console.log("comparando id",id,"con i.id",i.id);
-      //   this.ObjProductoCodeName.code = i.code;
-      //   this.ObjProductoCodeName.nombre = i.nombre;
-      //   break;
-      // }else{
-      //   console.log("comparando id",id,"con i.id",i.id);
-      //   this.ObjProductoCodeName.code = 'vacio';
-      //   this.ObjProductoCodeName.nombre = 'vacio';
-      //   break;
-      // }
       
-    // }
   }
 
   setDatosProductosEvaluacion(calificacion:string){
@@ -175,13 +179,15 @@ export class StartEvaluacionDiagnosticaComponent implements OnInit{
    }
 
    editDatosProductosEvaluacion(calificacion:string){
-    this.ObjProductosEvaluacion.calificacion = calificacion;
+
+    if(this.ObjProductosEvaluacion.pregunta != null && this.ObjProductosEvaluacion.pregunta != ""){
+      this.ObjProductosEvaluacion.calificacion = calificacion;
     this.ObjProductosEvaluacion.id = this.idItem;
 
       this.exchangeService.editProductosEvaluacion(this.ObjProductosEvaluacion).subscribe(res => {
 
         
- 
+          this.flagImagen = false;
           this.model = "";
           this.ObjProductosEvaluacion.id_evaluacion = "";
           this.ObjProductosEvaluacion.id_producto = "";
@@ -191,6 +197,7 @@ export class StartEvaluacionDiagnosticaComponent implements OnInit{
           this.idItem = "";
           this.ObjProductoCodeName.id = "";
           this.ObjProductoCodeName.code = "";
+          this.ObjProductoCodeName.reference = ""
           this.ObjProductoCodeName.code_name = "";
           this.ObjProductoCodeName.nombre = "";
         
@@ -201,6 +208,11 @@ export class StartEvaluacionDiagnosticaComponent implements OnInit{
         }
   
       );
+    }else{
+      alert('Error seleciona un producto');
+    }
+
+    
    }
    
   getProducto():string {
@@ -225,9 +237,10 @@ export class StartEvaluacionDiagnosticaComponent implements OnInit{
     if(this.getProducto()  !== undefined ){
       this.ObjProductosEvaluacion.id_evaluacion = <any>localStorage.getItem('idEvaluacion');
       this.ObjProductosEvaluacion.id_producto = this.getProducto();
-      
-
       this.ObjId.id = <any>localStorage.getItem('idEvaluacion');
+
+      this.flagImagen = true;
+
       console.log('estes es id a enviar de la evalucion ',this.ObjId.id);
       this.exchangeService.ListProductosEvaluacion(this.ObjId).subscribe(res => {
         
@@ -282,6 +295,7 @@ export class StartEvaluacionDiagnosticaComponent implements OnInit{
    }
 
    Limpiar():void{
+    this.model = '';
     this.ObjProductosEvaluacion.id = "";
     this.ObjProductosEvaluacion.id_evaluacion = "";
     this.ObjProductosEvaluacion.id_producto = "";
@@ -313,5 +327,23 @@ export class StartEvaluacionDiagnosticaComponent implements OnInit{
     
     
    }
+
+
+   PreguntasEvaluacion():void{
+    
+    this.exchangeService.ListPreguntasEvaluacion(this.ObjId).subscribe(res => {
+      this.ListPreguntasEvaluacion = res;
+    },
+      err => {
+        console.log(err);
+      }
+
+    );
+  }
+
+  setProductoPregunta(id:string):void{
+    this.ObjProductoPregunta.reference = <any>this.ListaProductsCodeName?.find(element => element.id == id)?.reference;
+    this.ObjProductoPregunta.nombre = <any>this.ListaProductsCodeName?.find(element => element.id == id)?.nombre;
+  }
 
 }

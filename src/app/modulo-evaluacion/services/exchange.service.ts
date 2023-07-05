@@ -45,8 +45,11 @@ export class ExchangeService {
       }
 
       ListProductosEvaluacion(data:ID){
-        console.log('entre a la ruta de listproductos');
         return this.http.post<ProductosEvaluacion[]>(`${this.URL}/evaluacion/list-producto-evaluacion`,data);
+      }
+
+      ListPreguntasEvaluacion(data:ID){
+        return this.http.post<ProductosEvaluacion[]>(`${this.URL}/evaluacion/list-evaluacion-preguntas`,data);
       }
 
     }

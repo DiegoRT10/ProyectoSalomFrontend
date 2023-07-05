@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductsService, ViewProducts2 } from 'src/app/modulo-venta/services/products.service';
 import { ExchangeService, Evaluacion, ProductosEvaluacion, ID } from '../../services/exchange.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 
 @Component({
-  selector: 'app-vista-evaluacion-diagnostica',
-  templateUrl: './vista-evaluacion-diagnostica.component.html',
-  styleUrls: ['./vista-evaluacion-diagnostica.component.css']
+  selector: 'app-vista-evaluacion',
+  templateUrl: './vista-evaluacion.component.html',
+  styleUrls: ['./vista-evaluacion.component.css']
 })
-export class VistaEvaluacionDiagnosticaComponent implements OnInit {
+export class VistaEvaluacionComponent implements OnInit {
 
   ListaProductsCodeName?:ViewProducts2[];
   URL = environment.PORT;
@@ -56,13 +56,12 @@ export class VistaEvaluacionDiagnosticaComponent implements OnInit {
   flag:boolean=false;
 
 
-  constructor(private router: Router, private exchangeService: ExchangeService, private products:ProductsService){
+  constructor(private router: Router, private exchangeService: ExchangeService, private products:ProductsService, private activatedRoute:ActivatedRoute,){
 
   }
 
   ngOnInit(): void {
 
-   
     this.getProductsCodeName();
 
     setInterval(() => {

@@ -108,42 +108,55 @@ export class EvaluacionComponent {
 
 
   setDatosEvaluacion(){
-    switch (<any>this.ObjEvaluacion.tipo) {
-      case 'Evaluacion Diagnostica': this.ObjEvaluacion.tipo = '0';
-        break;
-      case 'Evaluacion Final': this.ObjEvaluacion.tipo = '1';
-        break;
-    }
+    if(this.VerificaVacio()){
 
-    this.ObjEvaluacion.estado = '0' //creacion de evaluacion  
-
-    console.log('datos a enviar de la evaluacion ',this.ObjEvaluacion);
-    console.log('datos a enviar del producto ',this.ObjProductosEvalucion);
-
-
-    this.exchangeService.setEvaluacion(this.ObjEvaluacion).subscribe(res => {
-      console.log("este es el res ",res);
-    
-      localStorage.setItem('code-name',this.model);
-      localStorage.setItem('idEvaluacion',<any>res);
-
-      this.ObjProductosEvalucion.id = "";
-      this.ObjProductosEvalucion.id_evaluacion = "";
-      this.ObjProductosEvalucion.id_producto = "";
-      this.ObjProductosEvalucion.pregunta = "";
-      this.ObjProductosEvalucion.calificacion = "";
-      this.router.navigate(['start-evaluacion-diagnostica']);
-    },
-      err => {
-        console.log(err);
+      switch (<any>this.ObjEvaluacion.tipo) {
+        case 'Evaluacion Diagnostica': this.ObjEvaluacion.tipo = '0';
+          break;
+        case 'Evaluacion Final': this.ObjEvaluacion.tipo = '1';
+          break;
       }
+  
+      this.ObjEvaluacion.estado = '0' //creacion de evaluacion  
+  
+      console.log('datos a enviar de la evaluacion ',this.ObjEvaluacion);
+      console.log('datos a enviar del producto ',this.ObjProductosEvalucion);
+  
+  
+      this.exchangeService.setEvaluacion(this.ObjEvaluacion).subscribe(res => {
+        console.log("este es el res ",res);
+      
+        localStorage.setItem('code-name',this.model);
+        localStorage.setItem('idEvaluacion',<any>res);
+  
+        this.ObjProductosEvalucion.id = "";
+        this.ObjProductosEvalucion.id_evaluacion = "";
+        this.ObjProductosEvalucion.id_producto = "";
+        this.ObjProductosEvalucion.pregunta = "";
+        this.ObjProductosEvalucion.calificacion = "";
+        this.router.navigate(['start-evaluacion']);
+      },
+        err => {
+          console.log(err);
+        }
+  
+      );
 
-    );
+    }else{alert('Faltan campos por llenar')}
+
+
+    
   }
 
   
 
-
+  VerificaVacio():boolean{
+    return this.ObjEvaluacion.nombre != '' &&
+           this.ObjEvaluacion.tipo != '' &&
+           this.ObjEvaluacion.puesto != '' &&
+           this.ObjEvaluacion.puesto != ''&&
+           this.ObjEvaluacion.observacion != ''
+  }
 
 
   

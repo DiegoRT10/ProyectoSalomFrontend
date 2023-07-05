@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { VistaEvaluacionDiagnosticaComponent } from './vista-evaluacion-diagnostica.component';
+import { VistaEvaluacionComponent } from './vista-evaluacion.component';
 
 describe('VistaEvaluacionDiagnosticaComponent', () => {
-  let component: VistaEvaluacionDiagnosticaComponent;
-  let fixture: ComponentFixture<VistaEvaluacionDiagnosticaComponent>;
+  let component: VistaEvaluacionComponent;
+  let fixture: ComponentFixture<VistaEvaluacionComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ VistaEvaluacionDiagnosticaComponent ]
+      declarations: [ VistaEvaluacionComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(VistaEvaluacionDiagnosticaComponent);
+    fixture = TestBed.createComponent(VistaEvaluacionComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

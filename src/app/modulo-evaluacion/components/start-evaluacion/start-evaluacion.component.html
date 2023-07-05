@@ -20,7 +20,7 @@
                   class="nc-icon nc-chart-pie-36"></i>Evaluacion</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" data-toggle="tab" href="#Estadistica" role="tab"><i class="nc-icon nc-calendar-60"></i>Estadistica de evalucion</a>
+              <a class="nav-link" data-toggle="tab" href="#Estadistica" role="tab" (click)="PreguntasEvaluacion()"><i class="nc-icon nc-calendar-60"></i>Estadistica de evalucion</a>
             </li>
           </ul>
         </div>
@@ -118,11 +118,11 @@
                               <input id="typeahead-focus" type="text" class="form-control" [(ngModel)]="model" [ngbTypeahead]="search"
                                 (focus)="focus$.next($any($event).target.value)" (click)="click$.next($any($event).target.value)"
                                 #instance="ngbTypeahead" name="model" />
-                                <button class="btn-info" (click)="newQuestion()" >enviar</button>
+                                <button *ngIf="this.model !== '' " class="btn-info" (click)="newQuestion()" >enviar</button>
                             </div>
                             
                             
-                              <img src='{{URL}}/uploads/{{this.ObjProductoCodeName.reference}}.png' width="300" alt="">
+                              <img *ngIf="flagImagen" src='{{URL}}/uploads/{{this.ObjProductoCodeName.reference}}.png' width="300" alt="">
                            
                           
                               <table class="table">
@@ -166,14 +166,44 @@
         </div>
         <div class="tab-pane text-center" id="Estadistica" role="tabpanel">
 
-          <div class="col-4 ml-auto mr-auto">
-            <div class="card text-bg-light mb-3 " style="width: 25rem;">
-              <div class="card-header">Cierres</div>
+            <div class="card text-bg-light mb-3 ">
+              <div class="card-header">Preguntas realizadas</div>
               <div class="card-body table-card">
-
+                <table class="table">
+                  <thead>
+                      <tr>
+                          <th scope="col">No</th>
+                          <th scope="col">ID Pregunta</th>
+                          <th scope="col">Producto</th>
+                          <th scope="col">Pregunta</th>
+                          <th scope="col">Calificacion</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                     
+              
+                      <ng-container *ngFor="let lp of ListPreguntasEvaluacion; let i = index">
+                          <tr>
+                              <th>{{i+1}}</th>
+                              <th>{{lp.id}}</th>
+                              <ng-container *ngFor="let p of ListaProductsCodeName" >
+                                <th *ngIf="lp.id_producto == p.id">{{p.code_name}}</th>
+                              </ng-container>
+                              <th>{{lp.pregunta}}</th>
+                              <ng-cotainer [ngSwitch]="lp.calificacion" >
+                                <th *ngSwitchCase=0>Excelente</th>
+                                <th *ngSwitchCase=1>Regular</th>
+                                <th *ngSwitchCase=2>Erroneo</th>
+                                <th *ngSwitchDefault> </th>
+                              </ng-cotainer>
+                          </tr>
+                      </ng-container>
+              
+                  </tbody>
+              </table>
               </div>
             </div>
-          </div>
+          
 
 
         </div>

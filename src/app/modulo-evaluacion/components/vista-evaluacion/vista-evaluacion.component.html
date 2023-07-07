@@ -1,12 +1,12 @@
 <div class="main">
     <div class="section text-center">
+      <img class="left-align" src="../assets/img/salom/logo.png" alt="">
         <div class="container">
-
             <h1 *ngIf="flag">Evaluacion en proceso..</h1>
             <h1 *ngIf="!flag">Ingresa el codigo para empezar la evaluacion</h1>
             
             <br>
-
+            <br>
             <form *ngIf="!flag">
               <input type="text" class="form-control" [(ngModel)]="idEvaluacion" title="codigo de evaluacion" name="idEvaluacion">
               <button class="btn-info" (click)="ListarEvaluacion()">Empezar</button>
@@ -17,26 +17,13 @@
               
 
                 <div *ngIf="flag" class="card text-bg-light mb-3 ">
-                  <div class="card-header">Datos evaluacion {{flag}}</div>
+                  <div class="card-header">Pregunta No. {{this.ObjProductosEvaluacionNew.pregunta}}</div>
                   <div class="card-body table-card">
                     <img src='{{URL}}/uploads/{{this.ObjProductoCodeName.reference}}.png' width="800" alt="">
                         
-                            <table class="table">
-                              <tr>
-                                <th>Producto</th>
-                                <th>{{this.ObjProductoCodeName.nombre}}</th>
-                              </tr>
-                              <tr>
-                                <th>No Pregunta</th>
-                                <th>{{this.ObjProductosEvaluacionNew.pregunta}}</th>
-                              </tr>
-                              <tr>
-                                <th>Comentario</th>
-                                <th></th>
-                              </tr>
-                            </table>
                   </div>
                 </div>
+                
 
             </div>
                 

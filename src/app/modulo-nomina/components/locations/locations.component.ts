@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Map, marker, tileLayer } from 'leaflet';
 import { mapTo } from 'rxjs';
 import { CrudLocationService, Locations } from '../../services/crud-location.service';
+import * as L from 'leaflet';
 
 
 @Component({
@@ -27,6 +28,16 @@ export class LocationsComponent implements OnInit {
   }
   carga!: boolean;
 
+  private polygon: any;
+  private coordinates: number[][] = [
+    [14.800796, -89.544790],
+    [14.800758, -89.544658],
+    [14.800696, -89.544165],
+    [14.800463, -89.542555],
+    [14.800535, -89.543108],
+    [14.800268, -89.541040],
+    [14.800024, -89.539036]
+  ];
 
 
   constructor(private crudLocationService: CrudLocationService, private router: Router) { }
@@ -36,6 +47,7 @@ export class LocationsComponent implements OnInit {
 
     this.mapas();
     this.listarLocations();
+    this.addCoordinates();
   }
 
   ngAfterViewInit() {
@@ -56,10 +68,38 @@ export class LocationsComponent implements OnInit {
     }).addTo(map);
 
     const farm1 = marker([14.800796, -89.544790]).addTo(map).bindPopup("Doctor Farma Guayacan");
+
+//     var polygon = new L.Polyline([
+//       [14.800796, -89.544790],
+//       [14.800758, -89.544658],
+//       [14.800696, -89.544165],
+//       [14.800463, -89.542555],
+//       [14.800535, -89.543108],
+//       [14.800268, -89.541040],
+//       [14.800024, -89.539036]
+//     ]).addTo(map);
+
+//   polygon.bindPopup("holaaa");
+
+//  polygon.openPopup();
+
+
+this.polygon = L.polyline([]).addTo(map);
+
+
+  
     // map.fitBounds([
     //   [farm1.getLatLng().lat, farm1.getLatLng().lng]
     // ]);
 
+  }
+
+  private addCoordinates() {
+    if (this.coordinates.length > 0) {
+      const coordinate = this.coordinates.shift();
+      this.polygon.addLatLng(coordinate);
+      setTimeout(() => this.addCoordinates(), 1000); // Espera 1 segundo antes de agregar la siguiente coordenada
+    }
   }
 
   listarLocations() {

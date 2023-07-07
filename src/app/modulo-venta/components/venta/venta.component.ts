@@ -113,7 +113,8 @@ export class VentaComponent implements OnInit {
     this.Venta.dia=<any>ym;
     this.VentaDiariaService.getOneVenta(this.Venta).subscribe(res=>{
       this.ListaVenta=<any>res;
-      console.log('Esta es la ');
+      
+      this.DatosCard();
       this.loading1=false;
       
     },
@@ -136,12 +137,12 @@ export class VentaComponent implements OnInit {
 
 
 VentaGlobal(cash:string,ym:string):void{
-  console.log('Entre a venta global');
+ 
   this.Venta.host=cash;
   this.Venta.dia=<any>ym;
   this.VentaDiariaService.getVentasGlobales(this.Venta).subscribe(res=>{
     this.ListaVentaGlobal=<any>res;
-    console.log('Datos de venta global ',this.ListaVentaGlobal);
+   
     this.Venta = <any>res;
     // this.DatosCard();
     this.loading3=false;
@@ -157,9 +158,9 @@ VentaGlobal(cash:string,ym:string):void{
 MetaFarmacia():void{
   this.VentaDiariaService.getMetas().subscribe(res=>{
     this.ListaMetas=<any>res;
-    console.log('estas son las metas ',this.ListaMetas);
+   
     //this.Venta = res[0];
-    this.DatosCard();
+    // this.DatosCard();
     //this.loading3=false;
   },
   err =>{
@@ -200,13 +201,12 @@ setFechaCard():void{
 
 
 DatosCard():void{
+ 
   for(let i of this.ListaMetas!){
   for(let j of this.ListaVenta!){
-    console.log('entre al for de ventas de card');
     if(i.idlocation == j.host){
       this.totalVentaActual += j.total;
       this.totalVentaMeta += i.monto;
-      console.log("esta es la meta de la venta ",this.totalVentaMeta);
     }
    }
    }

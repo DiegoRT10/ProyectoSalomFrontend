@@ -98,6 +98,7 @@ this.polygon = L.polyline([]).addTo(map);
     if (this.coordinates.length > 0) {
       const coordinate = this.coordinates.shift();
       this.polygon.addLatLng(coordinate);
+      
       setTimeout(() => this.addCoordinates(), 1000); // Espera 1 segundo antes de agregar la siguiente coordenada
     }
   }

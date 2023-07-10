@@ -1,6 +1,7 @@
 import { ModuloNominaModule } from './modulo-nomina/modulo-nomina.module';
 import { ModuloVentaModule } from './modulo-venta/modulo-venta.module';
 import { ModuloEvaluacionModule } from './modulo-evaluacion/modulo-evaluacion.module';
+import { ModuloDistribuidoraModule } from './modulo-distribuidora/modulo-distribuidora.module';
 import { TokenInterceptorService } from './services/token-interceptor.service';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -72,9 +73,8 @@ import { HomeEvaluadorComponent } from './components/home-evaluador/home-evaluad
     ModuloNominaModule,
     ModuloVentaModule,
     ModuloEvaluacionModule,
+    ModuloDistribuidoraModule,
     NgxSpinnerModule
-    
-    
   ],
   providers: [
     //JWT

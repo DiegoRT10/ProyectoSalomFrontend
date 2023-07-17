@@ -6,7 +6,6 @@
 export const environment = {
   production: false,
   PORT: 'http://localhost:3000'
-  // PORT: 'https://corporacionsalom.com:4000'
 };
 
 /*

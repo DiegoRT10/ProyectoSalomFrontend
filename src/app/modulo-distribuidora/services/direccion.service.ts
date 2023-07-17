@@ -11,14 +11,15 @@ export class DireccionService {
   
   constructor(private http: HttpClient, private jwtHelper: JwtHelperService) { }
 
-  ListEvaluacion(){
+  ListCoordenada(){
     return this.http.get(`${this.URL}/direccion/coordenadasReceive`);
   }
 }
 
 export interface Coordenada{
   latitud:string,
-  longitud:string
+  longitud:string,
+  id:string
 }
 
 export interface ID{

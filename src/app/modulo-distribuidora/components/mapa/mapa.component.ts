@@ -33,12 +33,14 @@ export class MapaComponent implements OnInit{
 
   ObjCoordenadas:Coordenada={
     latitud: '',
-    longitud: ''
+    longitud: '',
+    id: ''
   }
 
   ObjCoordenadasOld:Coordenada={
     latitud: '',
-    longitud: ''
+    longitud: '',
+    id: ''
   }
 
   ObjId:ID = {
@@ -55,13 +57,14 @@ export class MapaComponent implements OnInit{
 
     setInterval(() => {
       this.getCoordenadas();
-    }, 5000);
+    }, 8000);
 
   }
 
   mapas(): void {
     console.log('entre a mapas');
-     this.map = new Map('map').setView([14.8012, -89.5421], 15);
+    //  this.map = new Map('map').setView([14.8012, -89.5421], 15);
+    this.map = new Map('map').setView([14.800796, -89.544790], 15);
 
     tileLayer('https://{s}.tile.jawg.io/jawg-terrain/{z}/{x}/{y}{r}.png?access-token={accessToken}', {
       attribution: '<a href="http://jawg.io" title="Tiles Courtesy of Jawg Maps" target="_blank">&copy; <b>Jawg</b>Maps</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
@@ -82,7 +85,7 @@ this.polygon = L.polyline([]).addTo(this.map);
 
   getCoordenadas(){
     console.log('entre a coordenadas');
-    this.direccionService.ListEvaluacion().subscribe(res => {
+    this.direccionService.ListCoordenada().subscribe(res => {
     this.ObjCoordenadas = <any>res;
     console.log('este es el res ',res);
     console.log('este es el objeto ',this.ObjCoordenadas);
@@ -91,8 +94,8 @@ this.polygon = L.polyline([]).addTo(this.map);
       if(this.ObjCoordenadas.latitud != this.ObjCoordenadasOld.latitud && this.ObjCoordenadas.longitud != this.ObjCoordenadasOld.longitud ){
         console.log('entre a segundo if');
         const coordenadas = [this.ObjCoordenadas.latitud,this.ObjCoordenadas.longitud]
-        // marker([Number(this.ObjCoordenadas.latitud), Number(this.ObjCoordenadas.longitud)]).addTo(this.map).bindPopup("Doctor Farma Guayacan")
         this.polygon.addLatLng(coordenadas);
+        this.map.setView([this.ObjCoordenadas.latitud, this.ObjCoordenadas.longitud], 15)
         this.ObjCoordenadasOld.latitud = this.ObjCoordenadas.latitud;
         this.ObjCoordenadasOld.longitud = this.ObjCoordenadas.longitud;
       }
@@ -115,5 +118,9 @@ this.polygon = L.polyline([]).addTo(this.map);
     }
   }
 
+
+  private setCoordenadas(){
+    this.coordinates.push([Number(this.ObjCoordenadas.latitud), Number(this.ObjCoordenadas.longitud)]);
+  }
 
 }

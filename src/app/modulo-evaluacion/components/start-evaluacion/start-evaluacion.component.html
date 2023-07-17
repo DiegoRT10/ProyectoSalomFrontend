@@ -1,13 +1,13 @@
 <div class="main">
-    <div class="section text-center">
-        <div class="container">
+  <div class="section text-center">
+    <div class="container">
 
-            <h1 *ngIf="!flagEnd">Evaluacion en proceso..</h1>
-            <h1 *ngIf="flagEnd">Evaluacion Finalizada</h1>
-            <label *ngIf="!flagEnd">{{idEvaluacion}}</label>
-            <br>
+      <h1 *ngIf="!flagEnd">Evaluacion en proceso..</h1>
+      <h1 *ngIf="flagEnd">Evaluacion Finalizada</h1>
+      <label *ngIf="!flagEnd">{{idEvaluacion}}</label>
+      <br>
 
-                <!--nav  -->
+      <!--nav  -->
       <div class="nav-tabs-navigation">
         <div class="nav-tabs-wrapper">
           <ul class="nav nav-tabs" role="tablist">
@@ -20,7 +20,8 @@
                   class="nc-icon nc-chart-pie-36"></i>Evaluacion</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" data-toggle="tab" href="#Estadistica" role="tab" (click)="PreguntasEvaluacion()"><i class="nc-icon nc-calendar-60"></i>Estadistica de evalucion</a>
+              <a class="nav-link" data-toggle="tab" href="#Estadistica" role="tab" (click)="PreguntasEvaluacion()"><i
+                  class="nc-icon nc-calendar-60"></i>Estadistica de evalucion</a>
             </li>
           </ul>
         </div>
@@ -30,200 +31,202 @@
       <div class="tab-content following">
         <div class="tab-pane active" id="Evaluando" role="tabpanel">
 
-         
-              <div class="info">
-                <div class="card text-bg-light mb-3">
-                  <div class="card-header">Datos Evaluando</div>
-                  <div class="card-body table-card">
-                    <table class="table">
-                     <tr>
-                        <th>Nombre</th>
-                        <th>{{this.ObjEvaluacion.nombre}}</th>
-                      </tr>
-                      <tr>
-                        <th>Puesto</th>
-                        <th>{{this.ObjEvaluacion.puesto }}</th>
-                      </tr>
-                      <tr>
-                        <th>Observacion</th>
-                        <th>{{this.ObjEvaluacion.observacion}}</th>
-                      </tr>
-                    </table>
 
-                    <div class="row">
-                      <div class="col-md-12">
-                        <div class="info">
-                          <ngx-gauge [value]='50' [thick]='15'
-                            append="%">
-                          </ngx-gauge>
-                          <div>
-                            <label>Porcentaje de evaluacion</label>
-                          </div>
-                        </div>
+          <div class="info">
+            <div class="card text-bg-light mb-3">
+              <div class="card-header">Datos Evaluando</div>
+              <div class="card-body table-card">
+                <table class="table">
+                  <tr>
+                    <th>Nombre</th>
+                    <th>{{this.ObjEvaluacion.nombre}}</th>
+                  </tr>
+                  <tr>
+                    <th>Puesto</th>
+                    <th>{{this.ObjEvaluacion.puesto }}</th>
+                  </tr>
+                  <tr>
+                    <th>Observacion</th>
+                    <th>{{this.ObjEvaluacion.observacion}}</th>
+                  </tr>
+                </table>
+
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="info">
+                      <ngx-gauge [value]='50' [thick]='15' append="%">
+                      </ngx-gauge>
+                      <div>
+                        <label>Porcentaje de evaluacion</label>
                       </div>
                     </div>
-
                   </div>
                 </div>
 
               </div>
-           
+            </div>
+
+          </div>
+
 
         </div>
         <div class="tab-pane text-center" id="Evaluacion" role="tabpanel">
 
-            <div class="row">
-                
+          <div class="row">
 
-                <div class="col-md-6">
-                    <div class="info">
-                      <div class="card text-bg-light mb-3">
-                        <div class="card-header">Calificacion</div>
-                        <div class="card-body table-card">
-                            <div class="button-container">
-                                <button class="btn-success"><i class="nc-icon nc-check-2" (click)="editDatosProductosEvaluacion('0')" ></i></button>
-                                <button class="btn-warning"><i class="nc-icon nc-simple-delete" (click)="editDatosProductosEvaluacion('1')"></i></button>
-                                <button class="btn-danger"><i class="nc-icon nc-simple-remove" (click)="editDatosProductosEvaluacion('2')"></i></button>
-                            </div>
-                        </div>
-                      </div>
-      
+
+            <div class="col-md-6">
+              <div class="info">
+                <div class="card text-bg-light mb-3">
+                  <div class="card-header">Calificacion</div>
+                  <div class="card-body table-card">
+                    <div class="button-container">
+                      <button class="btn-success"><i class="nc-icon nc-check-2"
+                          (click)="editDatosProductosEvaluacion('0')"></i></button>
+                      <button class="btn-warning"><i class="nc-icon nc-simple-delete"
+                          (click)="editDatosProductosEvaluacion('1')"></i></button>
+                      <button class="btn-danger"><i class="nc-icon nc-simple-remove"
+                          (click)="editDatosProductosEvaluacion('2')"></i></button>
                     </div>
-
-                    <div class="info">
-                        <div class="card text-bg-light mb-3">
-                          <div class="card-header">Seccion de pregunta</div>
-                          <div class="card-body table-card">
-                              <input *ngIf="flag" type="text" title="pregunta a realizar">
-                              <Label>Pregunta No. {{this.ObjProductosEvaluacion.pregunta}}</Label>
-                          </div>
-                        </div>
-                      </div> 
-                   
-                        
-                      
-
                   </div>
-
-                  
-
-                  <div class="col-md-6">
-
-                    <div class="info">
-                        <div class="card text-bg-light mb-3">
-                          <div class="card-header">Producto</div>
-                          <div class="card-body table-card">
-                            <div class="mb-3">
-                              <label for="typeahead-focus">Buscar producto inicial</label>
-                              <input id="typeahead-focus" type="text" class="form-control" [(ngModel)]="model" [ngbTypeahead]="search"
-                                (focus)="focus$.next($any($event).target.value)" (click)="click$.next($any($event).target.value)"
-                                #instance="ngbTypeahead" name="model" />
-                                <button *ngIf="this.model !== '' " class="btn-info" (click)="newQuestion()" >enviar</button>
-                            </div>
-                            
-                            
-                              <img *ngIf="flagImagen" src='{{URL}}/uploads/{{this.ObjProductoCodeName.reference}}.png' width="300" alt="">
-                           
-                          
-                              <table class="table">
-                                <tr>
-                                  <th>Codin</th>
-                                  <th>{{this.ObjProductoCodeName.reference}}</th>
-                                </tr>
-                                <tr>
-                                  <th>Nombre</th>
-                                  <th>{{this.ObjProductoCodeName.nombre}}</th>
-                                </tr>
-                                <tr>
-                                  <th>Comentario</th>
-                                  <th></th>
-                                </tr>
-                              </table>
-
-                            </div>
-                        </div>
-        
-                      </div>
-
-                      <div class="info">
-                        <div class="card text-bg-light mb-3">
-                          <div class="card-header">Finalizar evaluacion</div>
-                          <div class="card-body table-card">
-                              <button class="btn-danger" (click)="Finalizar()" >Finalizar</button>
-                          </div>
-                        </div>
-                      </div> 
-     
-
-                  </div>
-
-                  
-
+                </div>
 
               </div>
 
+              <div class="info">
+                <div class="card text-bg-light mb-3">
+                  <div class="card-header">Seccion de pregunta</div>
+                  <div class="card-body table-card">
+                    <input *ngIf="flag" type="text" title="pregunta a realizar">
+                    <Label>Pregunta No. {{this.ObjProductosEvaluacion.pregunta}}</Label>
+                  </div>
+                </div>
+              </div>
 
-        </div>
-        <div class="tab-pane text-center" id="Estadistica" role="tabpanel">
 
-            <div class="card text-bg-light mb-3 ">
-              <div class="card-header">Preguntas realizadas</div>
-              <div class="card-body table-card">
-                <table class="table">
-                  <thead>
-                      <tr>
-                          <th scope="col">No</th>
-                          <th scope="col">ID Pregunta</th>
-                          <th scope="col">Producto</th>
-                          <th scope="col">Pregunta</th>
-                          <th scope="col">Calificacion</th>
-                      </tr>
-                  </thead>
-                  <tbody>
+
+
+            </div>
+
+
+
+            <div class="col-md-6">
+
+              <div class="info">
+                <div class="card text-bg-light mb-3">
+                  <div class="card-header">Producto</div>
+                  <div class="card-body table-card">
+                    
                      
-              
-                      <ng-container *ngFor="let lp of ListPreguntasEvaluacion; let i = index">
-                          <tr>
-                              <th>{{i+1}}</th>
-                              <th>{{lp.id}}</th>
-                              <ng-container *ngFor="let p of ListaProductsCodeName" >
-                                <th *ngIf="lp.id_producto == p.id">{{p.code_name}}</th>
-                              </ng-container>
-                              <th>{{lp.pregunta}}</th>
-                              <ng-cotainer [ngSwitch]="lp.calificacion" >
-                                <th *ngSwitchCase=0>Excelente</th>
-                                <th *ngSwitchCase=1>Regular</th>
-                                <th *ngSwitchCase=2>Erroneo</th>
-                                <th *ngSwitchDefault> </th>
-                              </ng-cotainer>
-                          </tr>
-                      </ng-container>
-              
-                  </tbody>
-              </table>
+                      <img src='{{URL}}/uploads/{{this.ObjProductoDiagnostica.reference}}.png' width="300" alt="">
+                     
+                      <button class="btn-info" (click)="newQuestion()">enviar</button>
+                  
+
+                  <table class="table">
+                    <tr>
+                      <td>Codin:</td>
+                      <th>{{this.ObjProductoDiagnostica.reference}}</th>
+                    </tr>
+                    <tr>
+                      <td>Nombre:</td>
+                      <th>{{this.ObjProductoDiagnostica.nombre}}</th>
+                    </tr>
+                    <tr>
+                      <td>Componente:</td>
+                      <th>{{this.ObjProductoDiagnostica.componente}}</th>
+                    </tr>
+                    <tr>
+                      <td>Indicacion:</td>
+                      <th>{{this.ObjProductoDiagnostica.indicacion}}</th>
+                    </tr>
+                   
+                  </table>
+
+                </div>
+              </div>
+
+            </div>
+
+            <div class="info">
+              <div class="card text-bg-light mb-3">
+                <div class="card-header">Finalizar evaluacion</div>
+                <div class="card-body table-card">
+                  <button class="btn-danger" (click)="Finalizar()">Finalizar</button>
+                </div>
               </div>
             </div>
-          
+
+
+          </div>
+
+
 
 
         </div>
+
+
       </div>
-      <!--end Tab panes  --> 
+      <div class="tab-pane text-center" id="Estadistica" role="tabpanel">
+
+        <div class="card text-bg-light mb-3 ">
+          <div class="card-header">Preguntas realizadas</div>
+          <div class="card-body table-card">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">No</th>
+                  <th scope="col">ID Pregunta</th>
+                  <th scope="col">Producto</th>
+                  <th scope="col">Pregunta</th>
+                  <th scope="col">Calificacion</th>
+                </tr>
+              </thead>
+              <tbody>
 
 
+                <ng-container *ngFor="let lp of ListPreguntasEvaluacion; let i = index">
+                  <tr>
+                    <th>{{i+1}}</th>
+                    <th>{{lp.id}}</th>
+                    <ng-container *ngFor="let p of ListaProductsCodeName">
+                      <th *ngIf="lp.id_producto == p.id">{{p.code_name}}</th>
+                    </ng-container>
+                    <th>{{lp.pregunta}}</th>
+                    <ng-cotainer [ngSwitch]="lp.calificacion">
+                      <th *ngSwitchCase=0>Excelente</th>
+                      <th *ngSwitchCase=1>Regular</th>
+                      <th *ngSwitchCase=2>Erroneo</th>
+                      <th *ngSwitchDefault> </th>
+                    </ng-cotainer>
+                  </tr>
+                </ng-container>
 
-
-
-
-
-
-
-
-
-
-
-
-
+              </tbody>
+            </table>
+          </div>
         </div>
+
+
+
+      </div>
     </div>
+    <!--end Tab panes  -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+</div>
 </div>

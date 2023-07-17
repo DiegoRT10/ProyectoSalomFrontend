@@ -52,13 +52,24 @@ export class ExchangeService {
         return this.http.post<ProductosEvaluacion[]>(`${this.URL}/evaluacion/list-evaluacion-preguntas`,data);
       }
 
+      ListProductosDiagnostica(){
+        return this.http.get(`${this.URL}/evaluacion/ProductoDiagnostica`);
+      }
+
+      editProductosDiagnostica(data:Evaluado){
+        return this.http.put(`${this.URL}/evaluacion/UpdateProductoDiagnostica`,data);
+      }
+
     }
 
     export interface ID{
       id: string;
     }
 
-    
+    export interface Evaluado{
+      id:string,
+      evaluado:string
+    }
 
     export interface Evaluacion{
       id:string,
@@ -77,4 +88,13 @@ export class ExchangeService {
       calificacion:string
     }
 
+    export interface ProductoDiagnostica{
+      id:string, 
+      reference:string,
+      nombre:string, 
+      evaluacion:string, 
+      evaluado:string, 
+      componente:string, 
+      indicacion:string
+    }
     

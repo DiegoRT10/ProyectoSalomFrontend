@@ -20,7 +20,7 @@
                   class="nc-icon nc-chart-pie-36"></i>Evaluacion</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" data-toggle="tab" href="#Estadistica" role="tab" (click)="PreguntasEvaluacion()"><i
+              <a class="nav-link" data-toggle="tab" href="#Estadistica" role="tab" (click)="ProductosCalificados()"><i
                   class="nc-icon nc-calendar-60"></i>Estadistica de evalucion</a>
             </li>
           </ul>
@@ -120,7 +120,7 @@
                      
                       <img src='{{URL}}/uploads/{{this.ObjProductoDiagnostica.reference}}.png' width="300" alt="">
                      
-                      <button class="btn-info" (click)="newQuestion()">enviar</button>
+                      <!-- <button class="btn-info" (click)="newQuestion()">enviar</button> -->
                   
 
                   <table class="table">
@@ -175,25 +175,19 @@
             <table class="table">
               <thead>
                 <tr>
-                  <th scope="col">No</th>
-                  <th scope="col">ID Pregunta</th>
-                  <th scope="col">Producto</th>
                   <th scope="col">Pregunta</th>
+                  <th scope="col">Producto</th>
                   <th scope="col">Calificacion</th>
                 </tr>
               </thead>
               <tbody>
 
 
-                <ng-container *ngFor="let lp of ListPreguntasEvaluacion; let i = index">
+                <ng-container *ngFor="let pc of ListProductosCalificados; let i = index">
                   <tr>
-                    <th>{{i+1}}</th>
-                    <th>{{lp.id}}</th>
-                    <ng-container *ngFor="let p of ListaProductsCodeName">
-                      <th *ngIf="lp.id_producto == p.id">{{p.code_name}}</th>
-                    </ng-container>
-                    <th>{{lp.pregunta}}</th>
-                    <ng-cotainer [ngSwitch]="lp.calificacion">
+                    <th>{{pc.pregunta}}</th>
+                    <th>{{pc.nombre}}</th>
+                    <ng-cotainer [ngSwitch]="pc.calificacion">
                       <th *ngSwitchCase=0>Excelente</th>
                       <th *ngSwitchCase=1>Regular</th>
                       <th *ngSwitchCase=2>Erroneo</th>

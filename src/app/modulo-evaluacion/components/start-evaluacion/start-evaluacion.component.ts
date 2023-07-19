@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ExchangeService, ID, ProductosEvaluacion, Evaluacion, ProductoDiagnostica, Evaluado } from '../../services/exchange.service';
+import { ExchangeService, ID, ProductosEvaluacion, Evaluacion, ProductoDiagnostica, Evaluado, countEvaluado, DatoEvaluado, ProductosCalificados } from '../../services/exchange.service';
 import { Router } from '@angular/router';
 import { ProductsService, ViewProducts2 } from 'src/app/modulo-venta/services/products.service';
 import { NgbTypeahead } from '@ng-bootstrap/ng-bootstrap';
@@ -29,10 +29,31 @@ export class StartEvaluacionComponent implements OnInit{
   ListProductosEvaluacion?:ProductosEvaluacion[];
   ListPreguntasEvaluacion?:ProductosEvaluacion[];
   ListProductosDiagnostica?:ProductoDiagnostica[];
+  ListProductosCalificados?:ProductosCalificados[];
+  
+
+  ObjProductosCalificados: ProductosCalificados = {
+    nombre: '',
+    calificacion: 0,
+    pregunta: 0
+  }
+
+  ObjEvaluadoReset: DatoEvaluado = {
+    evaluado: 0
+  }
 
   ObjId: ID = {
     id: ''
   }
+
+  ObjIdCalificacion: ID = {
+    id: ''
+  }
+
+
+  ObjCountEvaluado: countEvaluado = {
+    NoEvaluado: 0
+  } 
 
   ObjEvaluado: Evaluado = {
     id: '',
@@ -91,6 +112,8 @@ export class StartEvaluacionComponent implements OnInit{
   ngOnInit(): void {
     this.ListarEvaluacion(this.idEvaluacion!);
     this.ListarProductosDiagnostica();
+    this.CountEvaluado();
+    
   }
 
 
@@ -100,6 +123,7 @@ export class StartEvaluacionComponent implements OnInit{
     this.exchangeService.ListProductosDiagnostica().subscribe(res => {
       this.ListProductosDiagnostica = <any>res; 
       this.ObjProductoDiagnostica = <any>this.ListProductosDiagnostica?.shift();
+      this.newQuestion();
     },
       err => {
         console.log(err);
@@ -184,7 +208,7 @@ export class StartEvaluacionComponent implements OnInit{
           this.ObjProductosEvaluacionNew.pregunta = "";
           this.idItem = "";
           this.setProductoEvaluado();
-        
+          
         
       },
         err => {
@@ -238,7 +262,9 @@ export class StartEvaluacionComponent implements OnInit{
 
         if(this.ObjProductosEvaluacionNew.pregunta != null && this.ObjProductosEvaluacionNew.pregunta != undefined && this.ObjProductosEvaluacionNew.pregunta != ''){
           console.log('entre al if');
+          console.log('este es el numero de pregunta desde la base de datos ', this.ObjProductosEvaluacionNew.pregunta);
           this.NoPregunta = Number(this.ObjProductosEvaluacionNew.pregunta) + 1;
+          console.log('es es el nuemro de prefgunta ', this.NoPregunta);
           this.ObjProductosEvaluacion.pregunta = String(this.NoPregunta);
           this.setDatosProductosEvaluacion('');
           this.Limpiar();
@@ -294,6 +320,7 @@ export class StartEvaluacionComponent implements OnInit{
     this.ObjEvaluacion.id = <string>localStorage.getItem('idEvaluacion');
     this.ObjEvaluacion.estado = '1';
       this.exchangeService.editEvaluacion(this.ObjEvaluacion).subscribe(res => {
+        this.resetProductosDiagnostica();
         localStorage.removeItem('idEvaluacion');
         localStorage.removeItem('NoPregunta');
         this.router.navigate(['evaluacion']);
@@ -310,10 +337,11 @@ export class StartEvaluacionComponent implements OnInit{
    }
 
 
-   PreguntasEvaluacion():void{
-    
-    this.exchangeService.ListPreguntasEvaluacion(this.ObjId).subscribe(res => {
-      this.ListPreguntasEvaluacion = res;
+
+  CountEvaluado(){
+    this.exchangeService.CounEvaluado().subscribe(res => {
+     this.ObjCountEvaluado = res[0];
+     console.log('Este es el numero de evaluados ',this.ObjCountEvaluado.NoEvaluado);
     },
       err => {
         console.log(err);
@@ -322,6 +350,30 @@ export class StartEvaluacionComponent implements OnInit{
     );
   }
 
+  resetProductosDiagnostica(){
+    this.ObjEvaluadoReset.evaluado = 0;
+    this.exchangeService.resetProductosDiagnostica(this.ObjEvaluadoReset).subscribe(res => {
+      console.log('se resetiaron los productos');
+     },
+       err => {
+         console.log(err);
+       }
+ 
+     );
+  }
+
+  ProductosCalificados(){
+    this.ObjIdCalificacion.id = <string>localStorage.getItem('idEvaluacion');
+    this.exchangeService.ListProductosCalificados(this.ObjIdCalificacion).subscribe(res => {
+      this.ListProductosCalificados = <any>res;
+     },
+       err => {
+         console.log(err);
+       }
+ 
+     );
+  }
+  
 
 
 }

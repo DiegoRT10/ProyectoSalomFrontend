@@ -60,6 +60,33 @@ export class ExchangeService {
         return this.http.put(`${this.URL}/evaluacion/UpdateProductoDiagnostica`,data);
       }
 
+      resetProductosDiagnostica(data:any){
+        console.log('dato para resetear ',data);
+        return this.http.put(`${this.URL}/evaluacion/resetProductosDiagnostica`,data);
+      }
+
+      CounEvaluado(){
+        return this.http.get<countEvaluado[]>(`${this.URL}/evaluacion/countEvaluado`);
+      }
+
+      ListProductosCalificados(data:ID){
+        return this.http.post(`${this.URL}/evaluacion/ProductosCalificados`,data);
+      }
+
+    }
+
+    export interface ProductosCalificados{
+      nombre:string,
+      pregunta:number,
+      calificacion:number
+    }
+
+    export interface DatoEvaluado{
+      evaluado:number
+    }
+
+    export interface countEvaluado{
+      NoEvaluado: number
     }
 
     export interface ID{

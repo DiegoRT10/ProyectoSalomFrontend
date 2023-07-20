@@ -17,11 +17,11 @@
             </li>
             <li *ngIf="!flagEnd" class="nav-item">
               <a class="nav-link" data-toggle="tab" href="#Evaluacion" role="tab"><i
-                  class="nc-icon nc-chart-pie-36"></i>Evaluacion</a>
+                  class="nc-icon nc-ruler-pencil"></i>Evaluacion</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" data-toggle="tab" href="#Estadistica" role="tab" (click)="ProductosCalificados()"><i
-                  class="nc-icon nc-calendar-60"></i>Estadistica de evalucion</a>
+                  class="nc-icon nc-chart-pie-36"></i>Estadistica de evaluacion</a>
             </li>
           </ul>
         </div>
@@ -54,7 +54,7 @@
                 <div class="row">
                   <div class="col-md-12">
                     <div class="info">
-                      <ngx-gauge [value]='50' [thick]='15' append="%">
+                      <ngx-gauge [value]='PorcentajeAvance' [thick]='15' append="%">
                       </ngx-gauge>
                       <div>
                         <label>Porcentaje de evaluacion</label>

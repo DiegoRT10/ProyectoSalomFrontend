@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ExchangeService, ID, ProductosEvaluacion, Evaluacion, ProductoDiagnostica, Evaluado, countEvaluado, DatoEvaluado, ProductosCalificados } from '../../services/exchange.service';
+import { ExchangeService, ID, ProductosEvaluacion, Evaluacion, ProductoDiagnostica, Evaluado, DatoEvaluado, ProductosCalificados, CountProductoEvaluacion, CountProductoCalificacion } from '../../services/exchange.service';
 import { Router } from '@angular/router';
 import { ProductsService, ViewProducts2 } from 'src/app/modulo-venta/services/products.service';
 import { NgbTypeahead } from '@ng-bootstrap/ng-bootstrap';
@@ -23,6 +23,9 @@ export class StartEvaluacionComponent implements OnInit{
   idEvaluacion?:string;
   flagEnd:boolean=false;
   URL = environment.PORT;
+  PorcentajeAvance:number = 0;
+
+
 
   ListaProductsCodeName?:ViewProducts2[];
   ListEvaluacion?:Evaluacion[];
@@ -51,9 +54,13 @@ export class StartEvaluacionComponent implements OnInit{
   }
 
 
-  ObjCountEvaluado: countEvaluado = {
+  ObjCountProductoEvaluacion: CountProductoEvaluacion = {
     NoEvaluado: 0
   } 
+
+  ObjCountProductoCalificacion: CountProductoCalificacion = {
+    NoCalificado: 0
+  }
 
   ObjEvaluado: Evaluado = {
     id: '',
@@ -112,18 +119,22 @@ export class StartEvaluacionComponent implements OnInit{
   ngOnInit(): void {
     this.ListarEvaluacion(this.idEvaluacion!);
     this.ListarProductosDiagnostica();
-    this.CountEvaluado();
-    
+    this.ProductoDiagnosticaCantidad();
   }
 
 
 
 
   ListarProductosDiagnostica(){
+    localStorage.setItem('StartEvaluacion','1');
     this.exchangeService.ListProductosDiagnostica().subscribe(res => {
       this.ListProductosDiagnostica = <any>res; 
       this.ObjProductoDiagnostica = <any>this.ListProductosDiagnostica?.shift();
-      this.newQuestion();
+      if(localStorage.getItem('StartEvaluacion') == '1'){
+        this.newQuestion();
+        localStorage.setItem('StartEvaluacion','0');
+      }
+      
     },
       err => {
         console.log(err);
@@ -191,24 +202,60 @@ export class StartEvaluacionComponent implements OnInit{
    }
 
    editDatosProductosEvaluacion(calificacion:string){
-
-    if(this.ObjProductosEvaluacion.pregunta != null && this.ObjProductosEvaluacion.pregunta != ""){
-      this.ObjProductosEvaluacion.calificacion = calificacion;
-    this.ObjProductosEvaluacion.id = this.idItem;
-
-      this.exchangeService.editProductosEvaluacion(this.ObjProductosEvaluacion).subscribe(res => {
-
-        
-          this.flagImagen = false;
-          this.model = "";
-          this.ObjProductosEvaluacion.id_evaluacion = "";
-          this.ObjProductosEvaluacion.id_producto = "";
-          this.ObjProductosEvaluacion.pregunta = "";
-          this.ObjProductosEvaluacion.calificacion = "";
-          this.ObjProductosEvaluacionNew.pregunta = "";
-          this.idItem = "";
-          this.setProductoEvaluado();
+    if(this.ObjProductosEvaluacion.pregunta !== '195'){
+      if(this.ObjProductosEvaluacion.pregunta != null && this.ObjProductosEvaluacion.pregunta != ""){
+        this.ObjProductosEvaluacion.calificacion = calificacion;
+      this.ObjProductosEvaluacion.id = this.idItem;
+  
+        this.exchangeService.editProductosEvaluacion(this.ObjProductosEvaluacion).subscribe(res => {
+  
           
+            this.flagImagen = false;
+            this.model = "";
+            this.ObjProductosEvaluacion.id_evaluacion = "";
+            this.ObjProductosEvaluacion.id_producto = "";
+            this.ObjProductosEvaluacion.pregunta = "";
+            this.ObjProductosEvaluacion.calificacion = "";
+            this.ObjProductosEvaluacionNew.pregunta = "";
+            this.idItem = "";
+            this.setProductoEvaluado();
+            
+          
+        },
+          err => {
+            console.log(err);
+          }
+    
+        );
+      }else{
+        alert('Espera a que cargue el producto >:C ');
+      }
+  
+    }else{
+      alert('Ya no hay mas productos por calificar :) ');
+    }
+
+    if(this.ObjProductosEvaluacion.pregunta === '195'){
+
+      this.ObjProductosEvaluacion.calificacion = calificacion;
+      this.ObjProductosEvaluacion.id = this.idItem;
+  
+        this.exchangeService.editProductosEvaluacion(this.ObjProductosEvaluacion).subscribe(res => {
+  
+          
+            this.flagImagen = false;
+            this.model = "";
+            this.ObjProductosEvaluacion.id_evaluacion = "";
+            this.ObjProductosEvaluacion.id_producto = "";
+            this.ObjProductosEvaluacion.pregunta = "";
+            this.ObjProductosEvaluacion.calificacion = "";
+            this.ObjProductosEvaluacionNew.pregunta = "";
+            this.idItem = "";
+            
+
+            this.ObjEvaluado.id = this.ObjProductoDiagnostica.id;
+      this.ObjEvaluado.evaluado = '1' //significa que ya fue evaluado dicho producto
+      this.exchangeService.editProductosDiagnostica(this.ObjEvaluado).subscribe(res => {
         
       },
         err => {
@@ -216,10 +263,19 @@ export class StartEvaluacionComponent implements OnInit{
         }
   
       );
-    }else{
-      alert('Error seleciona un producto');
-    }
+            
+          
+        },
+          err => {
+            console.log(err);
+          }
+    
+        );
+      
 
+      
+      
+    }
     
    }
    
@@ -267,11 +323,13 @@ export class StartEvaluacionComponent implements OnInit{
           console.log('es es el nuemro de prefgunta ', this.NoPregunta);
           this.ObjProductosEvaluacion.pregunta = String(this.NoPregunta);
           this.setDatosProductosEvaluacion('');
+          this.ProductoCalificadoDiagnosticaCantidad();
           this.Limpiar();
   
         }else{
           console.log('entre al else');
           this.ObjProductosEvaluacion.pregunta = '1';
+          this.ProductoCalificadoDiagnosticaCantidad();
           this.setDatosProductosEvaluacion('');
           this.Limpiar();
           }
@@ -338,10 +396,23 @@ export class StartEvaluacionComponent implements OnInit{
 
 
 
-  CountEvaluado(){
-    this.exchangeService.CounEvaluado().subscribe(res => {
-     this.ObjCountEvaluado = res[0];
-     console.log('Este es el numero de evaluados ',this.ObjCountEvaluado.NoEvaluado);
+   ProductoDiagnosticaCantidad(){
+    this.exchangeService.CantidadProductoDiagnostica().subscribe(res => {
+      this.ObjCountProductoEvaluacion = res[0];
+      console.log('CantidadProductoDiagnostica ',this.ObjCountProductoEvaluacion.NoEvaluado);
+    },
+      err => {
+        console.log(err);
+      }
+
+    );
+  }
+
+  ProductoCalificadoDiagnosticaCantidad(){
+    this.exchangeService.CantidadProductoCalificadoDiagnostica().subscribe(res => {
+      this.ObjCountProductoCalificacion = res[0];
+      console.log('CantidadProductoCalificadoDiagnostica ',this.ObjCountProductoCalificacion.NoCalificado);
+      this.calculoPorcentajeAvance();
     },
       err => {
         console.log(err);
@@ -373,6 +444,15 @@ export class StartEvaluacionComponent implements OnInit{
  
      );
   }
+
+  
+  calculoPorcentajeAvance(){
+    console.log('ObjCountProductoCalificacion.NoCalificado ',this.ObjCountProductoCalificacion.NoCalificado);
+    console.log('ObjCountProductoEvaluacion.NoEvaluado ',this.ObjCountProductoEvaluacion.NoEvaluado);
+   this.PorcentajeAvance = ((this.ObjCountProductoCalificacion.NoCalificado + 1) * 100)/this.ObjCountProductoEvaluacion.NoEvaluado;
+   console.log('este es el porcentaje avanzado ', this.PorcentajeAvance);
+  }
+
   
 
 

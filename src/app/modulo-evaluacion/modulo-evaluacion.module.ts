@@ -18,6 +18,7 @@ import { VistaEvaluacionComponent } from './components/vista-evaluacion/vista-ev
 
 
 
+
 @NgModule({
   declarations: [
     EvaluacionComponent,
@@ -35,7 +36,7 @@ import { VistaEvaluacionComponent } from './components/vista-evaluacion/vista-ev
     DragDropModule,
     CdkAccordionModule,
     MdbAccordionModule,
-    NgbTypeaheadModule
+    NgbTypeaheadModule,
   ],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })

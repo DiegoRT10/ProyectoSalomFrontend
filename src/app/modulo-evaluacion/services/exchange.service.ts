@@ -65,8 +65,21 @@ export class ExchangeService {
         return this.http.put(`${this.URL}/evaluacion/resetProductosDiagnostica`,data);
       }
 
-      CounEvaluado(){
-        return this.http.get<countEvaluado[]>(`${this.URL}/evaluacion/countEvaluado`);
+      //------------------------------------------------------------------------------------
+      CantidadProductoDiagnostica(){
+        return this.http.get<CountProductoEvaluacion[]>(`${this.URL}/evaluacion/cantidad-producto-diagnostica`);
+      }
+
+      CantidadProductoCalificadoDiagnostica(){
+        return this.http.get<CountProductoCalificacion[]>(`${this.URL}/evaluacion/cantidad-producto-calificado-diagnostica`);
+      }
+
+      CantidadProductoFinal(){
+        return this.http.get<CountProductoEvaluacion[]>(`${this.URL}/evaluacion/cantidad-producto-final`);
+      }
+
+      CantidadProductoCalificadoFinal(){
+        return this.http.get<CountProductoCalificacion[]>(`${this.URL}/evaluacion/cantidad-producto-calificado-final`);
       }
 
       ListProductosCalificados(data:ID){
@@ -85,8 +98,13 @@ export class ExchangeService {
       evaluado:number
     }
 
-    export interface countEvaluado{
+  
+    export interface CountProductoEvaluacion{
       NoEvaluado: number
+    }
+
+    export interface CountProductoCalificacion{
+      NoCalificado: number
     }
 
     export interface ID{

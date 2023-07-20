@@ -11,7 +11,17 @@
               <input type="text" class="form-control" [(ngModel)]="idEvaluacion" title="codigo de evaluacion" name="idEvaluacion">
               <button class="btn-info" (click)="ListarEvaluacion()">Empezar</button>
             </form>
-            
+            <div class="row">
+              <div class="col-md-12">
+                <div class="info">
+                  <ngx-gauge [value]='PorcentajeAvance' [thick]='15' append="%">
+                  </ngx-gauge>
+                  <div>
+                    <label>Porcentaje de evaluacion</label>
+                  </div>
+                </div>
+              </div>
+            </div>
 
             <div class="info">
               
@@ -19,6 +29,7 @@
                 <div *ngIf="flag" class="card text-bg-light mb-3 ">
                   <div class="card-header">Pregunta No. {{this.ObjProductosEvaluacionNew.pregunta}}</div>
                   <div class="card-body table-card">
+                    
                     <img src='{{URL}}/uploads/{{this.ObjProductoCodeName.reference}}.png' width="300" alt="">
                         
                   </div>

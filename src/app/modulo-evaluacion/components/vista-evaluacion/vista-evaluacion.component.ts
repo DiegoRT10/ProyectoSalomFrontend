@@ -1,18 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductsService, ViewProducts2 } from 'src/app/modulo-venta/services/products.service';
-import { ExchangeService, Evaluacion, ProductosEvaluacion, ID } from '../../services/exchange.service';
+import { ExchangeService, Evaluacion, ProductosEvaluacion, ID, CountProductoEvaluacion, CountProductoCalificacion } from '../../services/exchange.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
 
 @Component({
   selector: 'app-vista-evaluacion',
   templateUrl: './vista-evaluacion.component.html',
-  styleUrls: ['./vista-evaluacion.component.css']
+  styleUrls: ['./vista-evaluacion.component.css'],
+  
 })
 export class VistaEvaluacionComponent implements OnInit {
 
   ListaProductsCodeName?:ViewProducts2[];
   URL = environment.PORT;
+  PorcentajeAvance:number = 0;
   
   ObjProductosEvaluacionNew:ProductosEvaluacion ={
     id: '',
@@ -52,6 +55,14 @@ export class VistaEvaluacionComponent implements OnInit {
     id: ''
   }
 
+  ObjCountProductoEvaluacion: CountProductoEvaluacion = {
+    NoEvaluado: 0
+  } 
+
+  ObjCountProductoCalificacion: CountProductoCalificacion = {
+    NoCalificado: 0
+  }
+
   idEvaluacion:string="";
   flag:boolean=false;
 
@@ -88,7 +99,7 @@ export class VistaEvaluacionComponent implements OnInit {
         this.ObjProductoCodeName.reference = <any>this.ListaProductsCodeName?.find(element => element.id === this.ObjProductosEvaluacionNew.id_producto)?.reference;
         console.log('este es el reference ',this.ObjProductoCodeName.reference);
         this.ObjProductoCodeName.nombre = this.ListaProductsCodeName!.find(objeto => objeto.id === this.ObjProductosEvaluacionNew.id_producto)?.nombre!;
-        
+        this.ProductoDiagnosticaCantidad()
       }else{ this.ObjProductosEvaluacionNew}
 
       
@@ -165,6 +176,41 @@ export class VistaEvaluacionComponent implements OnInit {
     );
 
   }
+  }
+
+  
+  ProductoDiagnosticaCantidad(){
+    this.exchangeService.CantidadProductoDiagnostica().subscribe(res => {
+      this.ObjCountProductoEvaluacion = res[0];
+      console.log('CantidadProductoDiagnostica ',this.ObjCountProductoEvaluacion.NoEvaluado);
+      this.ProductoCalificadoDiagnosticaCantidad();
+    },
+      err => {
+        console.log(err);
+      }
+
+    );
+  }
+
+  ProductoCalificadoDiagnosticaCantidad(){
+    this.exchangeService.CantidadProductoCalificadoDiagnostica().subscribe(res => {
+      this.ObjCountProductoCalificacion = res[0];
+      console.log('CantidadProductoCalificadoDiagnostica ',this.ObjCountProductoCalificacion.NoCalificado);
+      this.calculoPorcentajeAvance();
+    },
+      err => {
+        console.log(err);
+      }
+
+    );
+  }
+
+
+  calculoPorcentajeAvance(){
+    console.log('ObjCountProductoCalificacion.NoCalificado ',this.ObjCountProductoCalificacion.NoCalificado);
+    console.log('ObjCountProductoEvaluacion.NoEvaluado ',this.ObjCountProductoEvaluacion.NoEvaluado);
+   this.PorcentajeAvance = ((this.ObjCountProductoCalificacion.NoCalificado) * 100)/this.ObjCountProductoEvaluacion.NoEvaluado;
+   console.log('este es el porcentaje avanzado ', this.PorcentajeAvance);
   }
 
 

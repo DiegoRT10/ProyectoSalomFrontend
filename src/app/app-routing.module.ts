@@ -52,6 +52,7 @@ import { ExceptionsGuard } from './guards/exceptions.guard';
 import { StartEvaluacionComponent } from './modulo-evaluacion/components/start-evaluacion/start-evaluacion.component';
 import { VistaEvaluacionComponent } from './modulo-evaluacion/components/vista-evaluacion/vista-evaluacion.component';
 import { MapaComponent } from './modulo-distribuidora/components/mapa/mapa.component';
+import { CalificacionEvaluacionComponent } from './modulo-evaluacion/components/calificacion-evaluacion/calificacion-evaluacion.component';
 
 
 
@@ -108,6 +109,8 @@ const routes: Routes = [
 {path: 'start-evaluacion', component: StartEvaluacionComponent, canActivate: [AuthGuard, ExceptionsGuard],  data: {expectedRole: {s:'0', g:'1'}}}, //puede acceder sistemas o gerente con la excepcion que solo funciona para el evaluador y gerente de sistemas
 {path: 'vista-evaluacion', component: VistaEvaluacionComponent}, //puede acceder sistemas o gerente con la excepcion que solo funciona para el evaluador y gerente de sistemas
 {path: 'mapa-rutas', component: MapaComponent, canActivate: [AuthGuard, RoleGuard],  data: {expectedRole: {s:'0', g:'1'}}},//puede acceder sistemas o gerente
+{path: 'calificacion-evaluacion', component: CalificacionEvaluacionComponent, canActivate: [AuthGuard, ExceptionsGuard],  data: {expectedRole: {s:'0', g:'1'}}}, //puede acceder sistemas o gerente con la excepcion que solo funciona para el evaluador y gerente de sistemas
+
 
 {path: '**', pathMatch: 'full', redirectTo: 'login'}
 ];

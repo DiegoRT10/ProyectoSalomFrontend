@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductsService, ViewProducts2 } from 'src/app/modulo-venta/services/products.service';
-import { ExchangeService, Evaluacion, ProductosEvaluacion, ID, CountProductoEvaluacion, CountProductoCalificacion } from '../../services/exchange.service';
+import { ExchangeService, Evaluacion, ProductosEvaluacion, ID, CountProductoEvaluacion, CountProductoCalificacion, TipoEvaluacion } from '../../services/exchange.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
@@ -16,6 +16,10 @@ export class VistaEvaluacionComponent implements OnInit {
   ListaProductsCodeName?:ViewProducts2[];
   URL = environment.PORT;
   PorcentajeAvance:number = 0;
+
+  ObjTipoEvaluacion:TipoEvaluacion = {
+    tipo: 0
+  }
   
   ObjProductosEvaluacionNew:ProductosEvaluacion ={
     id: '',
@@ -180,7 +184,8 @@ export class VistaEvaluacionComponent implements OnInit {
 
   
   ProductoDiagnosticaCantidad(){
-    this.exchangeService.CantidadProductoDiagnostica().subscribe(res => {
+    this.ObjTipoEvaluacion.tipo = Number(localStorage.getItem('tipoEvaluacion'));
+    this.exchangeService.CantidadProductoDF(this.ObjTipoEvaluacion).subscribe(res => {
       this.ObjCountProductoEvaluacion = res[0];
       console.log('CantidadProductoDiagnostica ',this.ObjCountProductoEvaluacion.NoEvaluado);
       this.ProductoCalificadoDiagnosticaCantidad();
@@ -193,7 +198,8 @@ export class VistaEvaluacionComponent implements OnInit {
   }
 
   ProductoCalificadoDiagnosticaCantidad(){
-    this.exchangeService.CantidadProductoCalificadoDiagnostica().subscribe(res => {
+    this.ObjTipoEvaluacion.tipo = Number(localStorage.getItem('tipoEvaluacion'));
+    this.exchangeService.CantidadProductoCalificadoDF(this.ObjTipoEvaluacion).subscribe(res => {
       this.ObjCountProductoCalificacion = res[0];
       console.log('CantidadProductoCalificadoDiagnostica ',this.ObjCountProductoCalificacion.NoCalificado);
       this.calculoPorcentajeAvance();

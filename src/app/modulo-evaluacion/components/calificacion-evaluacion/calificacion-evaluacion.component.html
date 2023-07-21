@@ -1,0 +1,70 @@
+<div class="main">
+    <div class="section text-center">
+      <div class="container">
+
+        <div class="row">
+            <div class="col-md-4">
+                <div class="info">
+                    <ngx-gauge [value]='24' [thick]='15'  append="%" label="Excelente">
+                    </ngx-gauge>
+                    <div>
+                        <label>Porcentaje de Preguntas Excelente</label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="info">
+                    <ngx-gauge [value]='10' [thick]='15'  append="%" label="Regular">
+                    </ngx-gauge>
+                    <div>
+                        <label>Porcentaje de Preguntas Regular</label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="info">
+                    <ngx-gauge [value]='76' [thick]='15'  append="%" label="Erroneo">
+                    </ngx-gauge>
+                    <div>
+                        <label>Porcentaje de Preguntas Erroneas</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card text-bg-light mb-3 ">
+            <div class="card-header">Preguntas realizadas</div>
+            <div class="card-body table-card">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">Pregunta</th>
+                    <th scope="col">Producto</th>
+                    <th scope="col">Calificacion</th>
+                  </tr>
+                </thead>
+                <tbody>
+  
+  
+                  <ng-container *ngFor="let pc of ListProductosCalificados; let i = index">
+                    <tr>
+                      <th>{{pc.pregunta}}</th>
+                      <th>{{pc.nombre}}</th>
+                      <ng-cotainer [ngSwitch]="pc.calificacion">
+                        <th *ngSwitchCase=0>Excelente</th>
+                        <th *ngSwitchCase=1>Regular</th>
+                        <th *ngSwitchCase=2>Erroneo</th>
+                        <th *ngSwitchDefault> </th>
+                      </ng-cotainer>
+                    </tr>
+                  </ng-container>
+  
+                </tbody>
+              </table>
+            </div>
+          </div>
+  
+
+      </div>
+    </div>
+</div>

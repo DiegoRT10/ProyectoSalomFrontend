@@ -32,6 +32,7 @@ export class ExchangeService {
         return this.http.post(`${this.URL}/evaluacion/insert_productos_evaluacion`,data);
       }
 
+      
       editProductosEvaluacion(data:ProductosEvaluacion){
         return this.http.put(`${this.URL}/evaluacion/update_productos_evaluacion`,data);
       }
@@ -52,12 +53,13 @@ export class ExchangeService {
         return this.http.post<ProductosEvaluacion[]>(`${this.URL}/evaluacion/list-evaluacion-preguntas`,data);
       }
 
-      ListProductosDiagnostica(){
-        return this.http.get(`${this.URL}/evaluacion/ProductoDiagnostica`);
+      ListProductosDF(data:TipoEvaluacion){
+        return this.http.post(`${this.URL}/evaluacion/ProductoEvaluacion`,data);
       }
 
-      editProductosDiagnostica(data:Evaluado){
-        return this.http.put(`${this.URL}/evaluacion/UpdateProductoDiagnostica`,data);
+      
+      editProductosDF(data:Evaluado){
+        return this.http.put(`${this.URL}/evaluacion/UpdateProductoDF`,data);
       }
 
       resetProductosDiagnostica(data:any){
@@ -66,26 +68,22 @@ export class ExchangeService {
       }
 
       //------------------------------------------------------------------------------------
-      CantidadProductoDiagnostica(){
-        return this.http.get<CountProductoEvaluacion[]>(`${this.URL}/evaluacion/cantidad-producto-diagnostica`);
+      CantidadProductoDF(data:TipoEvaluacion){
+        return this.http.post<CountProductoEvaluacion[]>(`${this.URL}/evaluacion/cantidad-producto-df`,data);
       }
 
-      CantidadProductoCalificadoDiagnostica(){
-        return this.http.get<CountProductoCalificacion[]>(`${this.URL}/evaluacion/cantidad-producto-calificado-diagnostica`);
-      }
-
-      CantidadProductoFinal(){
-        return this.http.get<CountProductoEvaluacion[]>(`${this.URL}/evaluacion/cantidad-producto-final`);
-      }
-
-      CantidadProductoCalificadoFinal(){
-        return this.http.get<CountProductoCalificacion[]>(`${this.URL}/evaluacion/cantidad-producto-calificado-final`);
+      CantidadProductoCalificadoDF(data:TipoEvaluacion){
+        return this.http.post<CountProductoCalificacion[]>(`${this.URL}/evaluacion/cantidad-producto-calificado-df`,data);
       }
 
       ListProductosCalificados(data:ID){
         return this.http.post(`${this.URL}/evaluacion/ProductosCalificados`,data);
       }
 
+    }
+
+    export interface TipoEvaluacion{
+      tipo:number
     }
 
     export interface ProductosCalificados{

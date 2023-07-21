@@ -169,6 +169,36 @@
       </div>
       <div class="tab-pane text-center" id="Estadistica" role="tabpanel">
 
+        <div class="row">
+          <div class="col-md-4">
+              <div class="info">
+                  <ngx-gauge [value]='this.porcentajeExcelente' [thick]='15'  append="%" label="Excelente">
+                  </ngx-gauge>
+                  <div>
+                      <label>Porcentaje de Preguntas Excelente</label>
+                  </div>
+              </div>
+          </div>
+          <div class="col-md-4">
+              <div class="info">
+                  <ngx-gauge [value]='this.porcentajeRegular' [thick]='15'  append="%" label="Regular">
+                  </ngx-gauge>
+                  <div>
+                      <label>Porcentaje de Preguntas Regular</label>
+                  </div>
+              </div>
+          </div>
+          <div class="col-md-4">
+              <div class="info">
+                  <ngx-gauge [value]='this.porcentajeErroneo' [thick]='15'  append="%" label="Erroneo">
+                  </ngx-gauge>
+                  <div>
+                      <label>Porcentaje de Preguntas Erroneas</label>
+                  </div>
+              </div>
+          </div>
+      </div>
+
         <div class="card text-bg-light mb-3 ">
           <div class="card-header">Preguntas realizadas</div>
           <div class="card-body table-card">

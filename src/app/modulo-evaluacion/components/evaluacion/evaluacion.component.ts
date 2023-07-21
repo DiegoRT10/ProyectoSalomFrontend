@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ProductsService, ViewProducts2 } from 'src/app/modulo-venta/services/products.service';
 import { ExchangeService, ID, ProductosEvaluacion, Evaluacion } from '../../services/exchange.service';
 import { Router } from '@angular/router';
@@ -10,7 +10,7 @@ import { Observable, OperatorFunction, Subject, debounceTime, distinctUntilChang
   templateUrl: './evaluacion.component.html',
   styleUrls: ['./evaluacion.component.css']
 })
-export class EvaluacionComponent {
+export class EvaluacionComponent implements OnInit {
   model!: string;
   product = [''];
   listaOp: String[] = ['Evaluacion Diagnostica', 'Evaluacion Final'];
@@ -128,6 +128,7 @@ export class EvaluacionComponent {
       
         localStorage.setItem('code-name',this.model);
         localStorage.setItem('idEvaluacion',<any>res);
+        localStorage.setItem('tipoEvaluacion',this.ObjEvaluacion.tipo);
   
         this.ObjProductosEvalucion.id = "";
         this.ObjProductosEvalucion.id_evaluacion = "";

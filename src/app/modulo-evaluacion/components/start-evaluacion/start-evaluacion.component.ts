@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ExchangeService, ID, ProductosEvaluacion, Evaluacion, ProductoDiagnostica, Evaluado, DatoEvaluado, ProductosCalificados, CountProductoEvaluacion, CountProductoCalificacion } from '../../services/exchange.service';
+import { ExchangeService, ID, ProductosEvaluacion, Evaluacion, ProductoDiagnostica, Evaluado, DatoEvaluado, ProductosCalificados, CountProductoEvaluacion, CountProductoCalificacion, TipoEvaluacion } from '../../services/exchange.service';
 import { Router } from '@angular/router';
 import { ProductsService, ViewProducts2 } from 'src/app/modulo-venta/services/products.service';
 import { NgbTypeahead } from '@ng-bootstrap/ng-bootstrap';
@@ -24,6 +24,14 @@ export class StartEvaluacionComponent implements OnInit{
   flagEnd:boolean=false;
   URL = environment.PORT;
   PorcentajeAvance:number = 0;
+  countExcelente:number=0;
+  countRegular:number=0;
+  countErroneo:number=0;
+
+  
+  porcentajeExcelente:number=0;
+  porcentajeRegular:number=0;
+  porcentajeErroneo:number=0;
 
 
 
@@ -34,6 +42,9 @@ export class StartEvaluacionComponent implements OnInit{
   ListProductosDiagnostica?:ProductoDiagnostica[];
   ListProductosCalificados?:ProductosCalificados[];
   
+  ObjTipoEvaluacion:TipoEvaluacion = {
+    tipo: 0
+  }
 
   ObjProductosCalificados: ProductosCalificados = {
     nombre: '',
@@ -118,16 +129,17 @@ export class StartEvaluacionComponent implements OnInit{
 
   ngOnInit(): void {
     this.ListarEvaluacion(this.idEvaluacion!);
-    this.ListarProductosDiagnostica();
+    this.ListarProductosDF();
     this.ProductoDiagnosticaCantidad();
   }
 
 
 
 
-  ListarProductosDiagnostica(){
+  ListarProductosDF(){
     localStorage.setItem('StartEvaluacion','1');
-    this.exchangeService.ListProductosDiagnostica().subscribe(res => {
+    this.ObjTipoEvaluacion.tipo = Number(localStorage.getItem('tipoEvaluacion'));
+    this.exchangeService.ListProductosDF(this.ObjTipoEvaluacion).subscribe(res => {
       this.ListProductosDiagnostica = <any>res; 
       this.ObjProductoDiagnostica = <any>this.ListProductosDiagnostica?.shift();
       if(localStorage.getItem('StartEvaluacion') == '1'){
@@ -191,8 +203,8 @@ export class StartEvaluacionComponent implements OnInit{
    setProductoEvaluado(){
     this.ObjEvaluado.id = this.ObjProductoDiagnostica.id;
     this.ObjEvaluado.evaluado = '1' //significa que ya fue evaluado dicho producto
-      this.exchangeService.editProductosDiagnostica(this.ObjEvaluado).subscribe(res => {
-        this.ListarProductosDiagnostica();
+      this.exchangeService.editProductosDF(this.ObjEvaluado).subscribe(res => {
+        this.ListarProductosDF();
       },
         err => {
           console.log(err);
@@ -255,7 +267,7 @@ export class StartEvaluacionComponent implements OnInit{
 
             this.ObjEvaluado.id = this.ObjProductoDiagnostica.id;
       this.ObjEvaluado.evaluado = '1' //significa que ya fue evaluado dicho producto
-      this.exchangeService.editProductosDiagnostica(this.ObjEvaluado).subscribe(res => {
+      this.exchangeService.editProductosDF(this.ObjEvaluado).subscribe(res => {
         
       },
         err => {
@@ -397,7 +409,8 @@ export class StartEvaluacionComponent implements OnInit{
 
 
    ProductoDiagnosticaCantidad(){
-    this.exchangeService.CantidadProductoDiagnostica().subscribe(res => {
+    this.ObjTipoEvaluacion.tipo = Number(localStorage.getItem('tipoEvaluacion'));
+    this.exchangeService.CantidadProductoDF(this.ObjTipoEvaluacion).subscribe(res => {
       this.ObjCountProductoEvaluacion = res[0];
       console.log('CantidadProductoDiagnostica ',this.ObjCountProductoEvaluacion.NoEvaluado);
     },
@@ -409,7 +422,8 @@ export class StartEvaluacionComponent implements OnInit{
   }
 
   ProductoCalificadoDiagnosticaCantidad(){
-    this.exchangeService.CantidadProductoCalificadoDiagnostica().subscribe(res => {
+    this.ObjTipoEvaluacion.tipo = Number(localStorage.getItem('tipoEvaluacion'));
+    this.exchangeService.CantidadProductoCalificadoDF(this.ObjTipoEvaluacion).subscribe(res => {
       this.ObjCountProductoCalificacion = res[0];
       console.log('CantidadProductoCalificadoDiagnostica ',this.ObjCountProductoCalificacion.NoCalificado);
       this.calculoPorcentajeAvance();
@@ -437,12 +451,36 @@ export class StartEvaluacionComponent implements OnInit{
     this.ObjIdCalificacion.id = <string>localStorage.getItem('idEvaluacion');
     this.exchangeService.ListProductosCalificados(this.ObjIdCalificacion).subscribe(res => {
       this.ListProductosCalificados = <any>res;
+      this.countPreguntas();
      },
        err => {
          console.log(err);
        }
  
      );
+  }
+
+  countPreguntas(){
+    for (const i of this.ListProductosCalificados!) {
+    
+      if(i.calificacion == 0){
+        this.countExcelente++;
+      }
+
+      if(i.calificacion == 1){
+        this.countRegular++;
+      }
+
+      if(i.calificacion == 2){
+        this.countErroneo++;
+      }
+      
+    }
+    console.log('Excelente ',this.countExcelente, 'Regular ', this.countRegular, 'Erroneo ', this.countErroneo );
+    this.porcentajeExcelente = (this.countExcelente * 100)/this.ObjCountProductoEvaluacion.NoEvaluado;
+    this.porcentajeRegular = (this.countRegular * 100)/this.ObjCountProductoEvaluacion.NoEvaluado;
+    this.porcentajeErroneo = (this.countErroneo * 100)/this.ObjCountProductoEvaluacion.NoEvaluado;
+
   }
 
   
@@ -453,7 +491,7 @@ export class StartEvaluacionComponent implements OnInit{
    console.log('este es el porcentaje avanzado ', this.PorcentajeAvance);
   }
 
-  
+ 
 
 
 }

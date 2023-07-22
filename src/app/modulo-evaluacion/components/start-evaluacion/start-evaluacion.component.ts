@@ -27,6 +27,7 @@ export class StartEvaluacionComponent implements OnInit{
   countExcelente:number=0;
   countRegular:number=0;
   countErroneo:number=0;
+  loading = true;
 
   
   porcentajeExcelente:number=0;
@@ -461,9 +462,11 @@ export class StartEvaluacionComponent implements OnInit{
   }
 
   countPreguntas(){
+
     for (const i of this.ListProductosCalificados!) {
-    
+      
       if(i.calificacion == 0){
+        // this.product.push(i.pregunta.toString());
         this.countExcelente++;
       }
 
@@ -477,9 +480,14 @@ export class StartEvaluacionComponent implements OnInit{
       
     }
     console.log('Excelente ',this.countExcelente, 'Regular ', this.countRegular, 'Erroneo ', this.countErroneo );
+   
     this.porcentajeExcelente = (this.countExcelente * 100)/this.ObjCountProductoEvaluacion.NoEvaluado;
     this.porcentajeRegular = (this.countRegular * 100)/this.ObjCountProductoEvaluacion.NoEvaluado;
     this.porcentajeErroneo = (this.countErroneo * 100)/this.ObjCountProductoEvaluacion.NoEvaluado;
+
+    this.countExcelente = 0;
+    this.countRegular = 0;
+    this.countErroneo = 0;
 
   }
 

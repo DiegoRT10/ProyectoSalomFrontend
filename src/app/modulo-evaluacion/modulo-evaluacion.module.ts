@@ -14,6 +14,7 @@ import { NgxGaugeModule } from 'ngx-gauge';
 import { StartEvaluacionComponent } from './components/start-evaluacion/start-evaluacion.component';
 import { VistaEvaluacionComponent } from './components/vista-evaluacion/vista-evaluacion.component';
 import { CalificacionEvaluacionComponent } from './components/calificacion-evaluacion/calificacion-evaluacion.component';
+import { LoadingComponent } from './components/loading/loading.component';
 
 
 
@@ -25,7 +26,8 @@ import { CalificacionEvaluacionComponent } from './components/calificacion-evalu
     EvaluacionComponent,
     StartEvaluacionComponent,
     VistaEvaluacionComponent,
-    CalificacionEvaluacionComponent
+    CalificacionEvaluacionComponent,
+    LoadingComponent
   ],
   imports: [
     CommonModule,

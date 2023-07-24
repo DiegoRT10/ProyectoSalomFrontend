@@ -310,7 +310,7 @@ export class StartEvaluacionComponent implements OnInit{
 
 
    newQuestion():void{
-    
+    this.loading = true;
     if(this.ObjProductoDiagnostica.nombre != '' && this.ObjProductoDiagnostica.nombre != undefined && this.ObjProductoDiagnostica.nombre != null){
       this.ObjProductosEvaluacion.id_evaluacion = <any>localStorage.getItem('idEvaluacion');
       this.ObjProductosEvaluacion.id_producto = this.ObjProductoDiagnostica.id;
@@ -338,6 +338,7 @@ export class StartEvaluacionComponent implements OnInit{
           this.setDatosProductosEvaluacion('');
           this.ProductoCalificadoDiagnosticaCantidad();
           this.Limpiar();
+          this.loading = false;
   
         }else{
           console.log('entre al else');
@@ -345,6 +346,7 @@ export class StartEvaluacionComponent implements OnInit{
           this.ProductoCalificadoDiagnosticaCantidad();
           this.setDatosProductosEvaluacion('');
           this.Limpiar();
+          this.loading = false;
           }
 
 

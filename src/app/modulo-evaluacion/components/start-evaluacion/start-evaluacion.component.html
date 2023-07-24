@@ -78,16 +78,19 @@
             <div class="col-md-6">
               <div class="info">
 
-                <div class="row">
-                  <div class="col-md-12 ml-auto mr-auto">
-                      <app-loading *ngIf="loading"></app-loading>
-                  </div>
-              </div>
-              
+
+
                 <div class="card text-bg-light mb-3">
                   <div class="card-header">Calificacion</div>
                   <div class="card-body table-card">
-                    <div class="button-container">
+
+                    <div class="row">
+                      <div class="col-md-12 ml-auto mr-auto">
+                        <app-loading *ngIf="loading"></app-loading>
+                      </div>
+                    </div>
+
+                    <div *ngIf="!loading" class="button-container">
                       <button class="btn-success"><i class="nc-icon nc-check-2"
                           (click)="editDatosProductosEvaluacion('0')"></i></button>
                       <button class="btn-warning"><i class="nc-icon nc-simple-delete"
@@ -123,141 +126,147 @@
                 <div class="card text-bg-light mb-3">
                   <div class="card-header">Producto</div>
                   <div class="card-body table-card">
-                    
-                     
+                    <div class="row">
+                      <div class="col-md-12 ml-auto mr-auto">
+                        <app-loading *ngIf="loading"></app-loading>
+                      </div>
+                    </div>
+                    <div *ngIf="!loading">
                       <img src='{{URL}}/uploads/{{this.ObjProductoDiagnostica.reference}}.png' width="300" alt="">
-                     
+
                       <!-- <button class="btn-info" (click)="newQuestion()">enviar</button> -->
-                  
 
-                  <table class="table">
-                    <tr>
-                      <td>Codin:</td>
-                      <th>{{this.ObjProductoDiagnostica.reference}}</th>
-                    </tr>
-                    <tr>
-                      <td>Nombre:</td>
-                      <th>{{this.ObjProductoDiagnostica.nombre}}</th>
-                    </tr>
-                    <tr>
-                      <td>Componente:</td>
-                      <th>{{this.ObjProductoDiagnostica.componente}}</th>
-                    </tr>
-                    <tr>
-                      <td>Indicacion:</td>
-                      <th>{{this.ObjProductoDiagnostica.indicacion}}</th>
-                    </tr>
-                   
-                  </table>
 
+                      <table class="table">
+                        <tr>
+                          <td>Codin:</td>
+                          <th>{{this.ObjProductoDiagnostica.reference}}</th>
+                        </tr>
+                        <tr>
+                          <td>Nombre:</td>
+                          <th>{{this.ObjProductoDiagnostica.nombre}}</th>
+                        </tr>
+                        <tr>
+                          <td>Componente:</td>
+                          <th>{{this.ObjProductoDiagnostica.componente}}</th>
+                        </tr>
+                        <tr>
+                          <td>Indicacion:</td>
+                          <th>{{this.ObjProductoDiagnostica.indicacion}}</th>
+                        </tr>
+
+                      </table>
+                    </div>
+
+
+                  </div>
+                </div>
+
+              </div>
+
+              <div class="info">
+                <div class="card text-bg-light mb-3">
+                  <div class="card-header">Finalizar evaluacion</div>
+                  <div class="card-body table-card">
+                    <button class="btn-danger" (click)="Finalizar()">Finalizar</button>
+                  </div>
                 </div>
               </div>
 
+
             </div>
 
-            <div class="info">
-              <div class="card text-bg-light mb-3">
-                <div class="card-header">Finalizar evaluacion</div>
-                <div class="card-body table-card">
-                  <button class="btn-danger" (click)="Finalizar()">Finalizar</button>
-                </div>
-              </div>
-            </div>
+
 
 
           </div>
-
-
 
 
         </div>
+        <div class="tab-pane text-center" id="Estadistica" role="tabpanel">
 
-
-      </div>
-      <div class="tab-pane text-center" id="Estadistica" role="tabpanel">
-
-        <div class="row">
-          <div class="col-md-4">
+          <div class="row">
+            <div class="col-md-4">
               <div class="info">
-                  <ngx-gauge [value]='this.porcentajeExcelente' [thick]='15'  append="%" label="Excelente">
-                  </ngx-gauge>
-                  <div>
-                      <label>Porcentaje de Preguntas Excelente</label>
-                  </div>
+                <ngx-gauge [value]='this.porcentajeExcelente' [thick]='15' append="%" label="Excelente">
+                </ngx-gauge>
+                <div>
+                  <label>Porcentaje de Preguntas Excelente</label>
+                </div>
               </div>
-          </div>
-          <div class="col-md-4">
+            </div>
+            <div class="col-md-4">
               <div class="info">
-                  <ngx-gauge [value]='this.porcentajeRegular' [thick]='15'  append="%" label="Regular">
-                  </ngx-gauge>
-                  <div>
-                      <label>Porcentaje de Preguntas Regular</label>
-                  </div>
+                <ngx-gauge [value]='this.porcentajeRegular' [thick]='15' append="%" label="Regular">
+                </ngx-gauge>
+                <div>
+                  <label>Porcentaje de Preguntas Regular</label>
+                </div>
               </div>
-          </div>
-          <div class="col-md-4">
+            </div>
+            <div class="col-md-4">
               <div class="info">
-                  <ngx-gauge [value]='this.porcentajeErroneo' [thick]='15'  append="%" label="Erroneo">
-                  </ngx-gauge>
-                  <div>
-                      <label>Porcentaje de Preguntas Erroneas</label>
-                  </div>
+                <ngx-gauge [value]='this.porcentajeErroneo' [thick]='15' append="%" label="Erroneo">
+                </ngx-gauge>
+                <div>
+                  <label>Porcentaje de Preguntas Erroneas</label>
+                </div>
               </div>
+            </div>
           </div>
-      </div>
 
-        <div class="card text-bg-light mb-3 ">
-          <div class="card-header">Preguntas realizadas</div>
-          <div class="card-body table-card">
-            <table class="table">
-              <thead>
-                <tr>
-                  <th scope="col">Pregunta</th>
-                  <th scope="col">Producto</th>
-                  <th scope="col">Calificacion</th>
-                </tr>
-              </thead>
-              <tbody>
-
-
-                <ng-container *ngFor="let pc of ListProductosCalificados; let i = index">
+          <div class="card text-bg-light mb-3 ">
+            <div class="card-header">Preguntas realizadas</div>
+            <div class="card-body table-card">
+              <table class="table">
+                <thead>
                   <tr>
-                    <th>{{pc.pregunta}}</th>
-                    <th>{{pc.nombre}}</th>
-                    <ng-cotainer [ngSwitch]="pc.calificacion">
-                      <th *ngSwitchCase=0>Excelente</th>
-                      <th *ngSwitchCase=1>Regular</th>
-                      <th *ngSwitchCase=2>Erroneo</th>
-                      <th *ngSwitchDefault> </th>
-                    </ng-cotainer>
+                    <th scope="col">Pregunta</th>
+                    <th scope="col">Producto</th>
+                    <th scope="col">Calificacion</th>
                   </tr>
-                </ng-container>
+                </thead>
+                <tbody>
 
-              </tbody>
-            </table>
+
+                  <ng-container *ngFor="let pc of ListProductosCalificados; let i = index">
+                    <tr>
+                      <th>{{pc.pregunta}}</th>
+                      <th>{{pc.nombre}}</th>
+                      <ng-cotainer [ngSwitch]="pc.calificacion">
+                        <th *ngSwitchCase=0>Excelente</th>
+                        <th *ngSwitchCase=1>Regular</th>
+                        <th *ngSwitchCase=2>Erroneo</th>
+                        <th *ngSwitchDefault> </th>
+                      </ng-cotainer>
+                    </tr>
+                  </ng-container>
+
+                </tbody>
+              </table>
+            </div>
           </div>
+
+
+
         </div>
-
-
-
       </div>
+      <!--end Tab panes  -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     </div>
-    <!--end Tab panes  -->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   </div>
-</div>
 </div>

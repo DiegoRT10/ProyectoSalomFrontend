@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { CountProductoCalificacion, CountProductoEvaluacion, ExchangeService, ID, ProductosCalificados, TipoEvaluacion } from '../../services/exchange.service';
 import { Router } from '@angular/router';
 
@@ -40,8 +40,16 @@ export class CalificacionEvaluacionComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.ProductosCalificados();
+    this.ProductoDiagnosticaCantidad()
   }
+
+  @HostListener('window:beforeunload', ['$event'])
+  onBeforeUnload($event: any): void {
+    $event.returnValue = 'Al salir se perderan los datos de evaluacion';
+    localStorage.removeItem('idEvaluacion');
+    localStorage.removeItem('NoPregunta');
+  }
+
 
   ProductosCalificados(){
     this.ObjIdCalificacion.id = <string>localStorage.getItem('idEvaluacion');
@@ -57,9 +65,11 @@ export class CalificacionEvaluacionComponent implements OnInit {
   }
 
   countPreguntas(){
+
     for (const i of this.ListProductosCalificados!) {
-    
+      
       if(i.calificacion == 0){
+        // this.product.push(i.pregunta.toString());
         this.countExcelente++;
       }
 
@@ -73,14 +83,22 @@ export class CalificacionEvaluacionComponent implements OnInit {
       
     }
     console.log('Excelente ',this.countExcelente, 'Regular ', this.countRegular, 'Erroneo ', this.countErroneo );
+   
+    this.porcentajeExcelente = (this.countExcelente * 100)/this.ObjCountProductoEvaluacion.NoEvaluado;
+    this.porcentajeRegular = (this.countRegular * 100)/this.ObjCountProductoEvaluacion.NoEvaluado;
+    this.porcentajeErroneo = (this.countErroneo * 100)/this.ObjCountProductoEvaluacion.NoEvaluado;
 
+    this.countExcelente = 0;
+    this.countRegular = 0;
+    this.countErroneo = 0;
   }
 
+  
   ProductoDiagnosticaCantidad(){
     this.ObjTipoEvaluacion.tipo = Number(localStorage.getItem('tipoEvaluacion'));
     this.exchangeService.CantidadProductoDF(this.ObjTipoEvaluacion).subscribe(res => {
       this.ObjCountProductoEvaluacion = res[0];
-      console.log('CantidadProductoDiagnostica ',this.ObjCountProductoEvaluacion.NoEvaluado);
+      this.ProductosCalificados();
     },
       err => {
         console.log(err);
@@ -88,20 +106,6 @@ export class CalificacionEvaluacionComponent implements OnInit {
 
     );
   }
-
-  ProductoCalificadoDiagnosticaCantidad(){
-    this.ObjTipoEvaluacion.tipo = Number(localStorage.getItem('tipoEvaluacion'));
-    this.exchangeService.CantidadProductoCalificadoDF(this.ObjTipoEvaluacion).subscribe(res => {
-      this.ObjCountProductoCalificacion = res[0];
-      console.log('CantidadProductoCalificadoDiagnostica ',this.ObjCountProductoCalificacion.NoCalificado);
-      
-    },
-      err => {
-        console.log(err);
-      }
-
-    );
-  }
-
+ 
 
 }

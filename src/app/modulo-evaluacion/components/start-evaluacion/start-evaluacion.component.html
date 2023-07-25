@@ -91,12 +91,9 @@
                     </div>
 
                     <div *ngIf="!loading" class="button-container">
-                      <button class="btn-success"><i class="nc-icon nc-check-2"
-                          (click)="editDatosProductosEvaluacion('0')"></i></button>
-                      <button class="btn-warning"><i class="nc-icon nc-simple-delete"
-                          (click)="editDatosProductosEvaluacion('1')"></i></button>
-                      <button class="btn-danger"><i class="nc-icon nc-simple-remove"
-                          (click)="editDatosProductosEvaluacion('2')"></i></button>
+                      <button class="btn-success"  (click)="editDatosProductosEvaluacion('0')"><i class="nc-icon nc-check-2"></i></button>
+                      <button class="btn-warning" (click)="editDatosProductosEvaluacion('1')"><i class="nc-icon nc-simple-delete"></i></button>
+                      <button class="btn-danger"  (click)="editDatosProductosEvaluacion('2')"><i class="nc-icon nc-simple-remove"></i></button>
                     </div>
                   </div>
                 </div>

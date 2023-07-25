@@ -119,12 +119,10 @@ export class EvaluacionComponent implements OnInit {
   
       this.ObjEvaluacion.estado = '0' //creacion de evaluacion  
   
-      console.log('datos a enviar de la evaluacion ',this.ObjEvaluacion);
-      console.log('datos a enviar del producto ',this.ObjProductosEvalucion);
   
   
       this.exchangeService.setEvaluacion(this.ObjEvaluacion).subscribe(res => {
-        console.log("este es el res ",res);
+       
       
         localStorage.setItem('code-name',this.model);
         localStorage.setItem('idEvaluacion',<any>res);

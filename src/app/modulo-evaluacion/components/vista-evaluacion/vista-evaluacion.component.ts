@@ -94,21 +94,13 @@ export class VistaEvaluacionComponent implements OnInit {
    
     if(this.flag){
       this.ObjId.id = id;
-    console.log('este es el dato a enviar xd',this.ObjId.id);
     this.exchangeService.ListProductosEvaluacion(this.ObjId).subscribe(res => {
-      console.log('este es el res de lista de productos ', res[0]);
       if(res[0]){
-        console.log('entre al if ');
         this.ObjProductosEvaluacionNew = res[0];
         this.ObjProductoCodeName.reference = <any>this.ListaProductsCodeName?.find(element => element.id === this.ObjProductosEvaluacionNew.id_producto)?.reference;
-        console.log('este es el reference ',this.ObjProductoCodeName.reference);
         this.ObjProductoCodeName.nombre = this.ListaProductsCodeName!.find(objeto => objeto.id === this.ObjProductosEvaluacionNew.id_producto)?.nombre!;
         this.ProductoDiagnosticaCantidad()
       }else{ this.ObjProductosEvaluacionNew}
-
-      
-     
-      console.log('datos recibido producto ',this.ObjProductosEvaluacionNew);
     },
       err => {
         console.log(err);
@@ -135,13 +127,11 @@ export class VistaEvaluacionComponent implements OnInit {
 
   ListarEvaluacion(){
     this.ObjId.id = this.idEvaluacion;
-    console.log('este es el dato a enviar ',this.ObjId.id);
     this.exchangeService.ListEvaluacion(this.ObjId).subscribe(res => {
 
       if(res[0]) {
         this.ObjEvaluacion = res[0];
         this.flag=true;
-        console.log('lista evaluacion ',this.ObjEvaluacion);
       }else{
         this.ObjEvaluacion;
         this.flag=false;
@@ -163,13 +153,11 @@ export class VistaEvaluacionComponent implements OnInit {
 
     if(this.flag){
     this.ObjId.id = this.idEvaluacion;
-    console.log('este es el dato a enviar ',this.ObjId.id);
     this.exchangeService.ListEvaluacionEnd(this.ObjId).subscribe(res => {
       this.ObjEvaluacionEnd = res[0];
-      console.log('este es el dato del evalucion init ',this.ObjEvaluacionEnd.estado);
       if(this.ObjEvaluacionEnd.estado == '1'){
         this.flag=false;
-       
+        this.router.navigate(['calificacion-evaluacion']);
       }
       
     },
@@ -187,7 +175,6 @@ export class VistaEvaluacionComponent implements OnInit {
     this.ObjTipoEvaluacion.tipo = Number(localStorage.getItem('tipoEvaluacion'));
     this.exchangeService.CantidadProductoDF(this.ObjTipoEvaluacion).subscribe(res => {
       this.ObjCountProductoEvaluacion = res[0];
-      console.log('CantidadProductoDiagnostica ',this.ObjCountProductoEvaluacion.NoEvaluado);
       this.ProductoCalificadoDiagnosticaCantidad();
     },
       err => {
@@ -201,7 +188,6 @@ export class VistaEvaluacionComponent implements OnInit {
     this.ObjTipoEvaluacion.tipo = Number(localStorage.getItem('tipoEvaluacion'));
     this.exchangeService.CantidadProductoCalificadoDF(this.ObjTipoEvaluacion).subscribe(res => {
       this.ObjCountProductoCalificacion = res[0];
-      console.log('CantidadProductoCalificadoDiagnostica ',this.ObjCountProductoCalificacion.NoCalificado);
       this.calculoPorcentajeAvance();
     },
       err => {

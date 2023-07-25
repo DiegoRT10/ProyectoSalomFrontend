@@ -77,15 +77,15 @@ export class VistaEvaluacionComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.getProductsCodeName();
+     this.getProductsCodeName();
 
     setInterval(() => {
       this.ListarEvaluacionInit();
-    }, 3000);
+    }, 1000);
 
     setInterval(() => {
       this.ListarProductosEvaluacion(this.ObjEvaluacion.id);
-    }, 3000);
+    }, 1000);
 
     
   }
@@ -128,6 +128,8 @@ export class VistaEvaluacionComponent implements OnInit {
   ListarEvaluacion(){
     this.ObjId.id = this.idEvaluacion;
     this.exchangeService.ListEvaluacion(this.ObjId).subscribe(res => {
+      
+      console.log('este es el res de lista de evaluacion ',res[0]);
 
       if(res[0]) {
         this.ObjEvaluacion = res[0];
@@ -155,6 +157,9 @@ export class VistaEvaluacionComponent implements OnInit {
     this.ObjId.id = this.idEvaluacion;
     this.exchangeService.ListEvaluacionEnd(this.ObjId).subscribe(res => {
       this.ObjEvaluacionEnd = res[0];
+      localStorage.setItem('tipoEvaluacion',this.ObjEvaluacionEnd.tipo);
+      localStorage.setItem('idEvaluacion',this.ObjEvaluacionEnd.id);
+      
       if(this.ObjEvaluacionEnd.estado == '1'){
         this.flag=false;
         this.router.navigate(['calificacion-evaluacion']);

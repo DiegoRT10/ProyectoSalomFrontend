@@ -3,12 +3,13 @@ import { ProductsService, ViewProducts2 } from 'src/app/modulo-venta/services/pr
 import { ExchangeService, Evaluacion, ProductosEvaluacion, ID, CountProductoEvaluacion, CountProductoCalificacion, TipoEvaluacion } from '../../services/exchange.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
-import {MatProgressBarModule} from '@angular/material/progress-bar';
+import { AppComponent } from 'src/app/app.component';
 
 @Component({
   selector: 'app-vista-evaluacion',
   templateUrl: './vista-evaluacion.component.html',
   styleUrls: ['./vista-evaluacion.component.css'],
+  
   
 })
 export class VistaEvaluacionComponent implements OnInit {
@@ -76,6 +77,8 @@ export class VistaEvaluacionComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+    AppComponent.viewBar = false;
 
      this.getProductsCodeName();
 

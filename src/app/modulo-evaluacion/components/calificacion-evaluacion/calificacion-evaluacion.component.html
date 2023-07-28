@@ -7,16 +7,16 @@
         <div class="row">
             <div class="col-md-4">
                 <div class="info">
-                    <ngx-gauge [value]='this.porcentajeExcelente' [thick]='15'  append="%" label="Excelente">
+                    <ngx-gauge [value]='$any(this.porcentajeExcelente.toFixed(1))' [thick]='15'  append="%" label="Bueno">
                     </ngx-gauge>
                     <div>
-                        <label>Porcentaje de Preguntas Excelente</label>
+                        <label>Porcentaje de Preguntas Buenas</label>
                     </div>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="info">
-                    <ngx-gauge [value]='this.porcentajeRegular' [thick]='15'  append="%" label="Regular">
+                    <ngx-gauge [value]='$any(this.porcentajeRegular.toFixed(1))' [thick]='15'  append="%" label="Regular">
                     </ngx-gauge>
                     <div>
                         <label>Porcentaje de Preguntas Regular</label>
@@ -25,7 +25,7 @@
             </div>
             <div class="col-md-4">
                 <div class="info">
-                    <ngx-gauge [value]='this.porcentajeErroneo' [thick]='15'  append="%" label="Erroneo">
+                    <ngx-gauge [value]='$any(this.porcentajeErroneo.toFixed(1))' [thick]='15'  append="%" label="Erroneo">
                     </ngx-gauge>
                     <div>
                         <label>Porcentaje de Preguntas Erroneas</label>
@@ -33,6 +33,11 @@
                 </div>
             </div>
         </div>
+
+        <br>
+        <button class="btn-success float-left"  (click)="generarPDF(ListProductosCalificados)">Descargar mis respuestas</button>
+        <br>
+        <br>
 
         <div class="card text-bg-light mb-3 ">
             <div class="card-header">Preguntas realizadas</div>
@@ -53,7 +58,7 @@
                       <th>{{pc.pregunta}}</th>
                       <th>{{pc.nombre}}</th>
                       <ng-cotainer [ngSwitch]="pc.calificacion">
-                        <th *ngSwitchCase=0>Excelente</th>
+                        <th *ngSwitchCase=0>Bueno</th>
                         <th *ngSwitchCase=1>Regular</th>
                         <th *ngSwitchCase=2>Erroneo</th>
                         <th *ngSwitchDefault> </th>

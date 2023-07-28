@@ -11,7 +11,7 @@ import decode from 'jwt-decode';
 })
 export class AppComponent implements OnInit {
   title = 'salom-app';
-
+  static viewBar: boolean = true;
   
  
   // EstadoToken?:boolean;
@@ -49,6 +49,10 @@ export class AppComponent implements OnInit {
   }else{
     this.EstadoToken = false;
   }
+}
+
+get viewBar(){
+  return AppComponent.viewBar;
 }
 
 get Rol(){

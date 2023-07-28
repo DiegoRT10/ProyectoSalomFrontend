@@ -11,12 +11,14 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { CdkAccordionModule } from '@angular/cdk/accordion';
 import { MdbAccordionModule } from 'mdb-angular-ui-kit/accordion';
 import { NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
+import { CatalogoComponent } from './components/catalogo/catalogo.component';
 
 
 
 @NgModule({
   declarations: [
-    MapaComponent
+    MapaComponent,
+    CatalogoComponent
   ],
   imports: [
     CommonModule,

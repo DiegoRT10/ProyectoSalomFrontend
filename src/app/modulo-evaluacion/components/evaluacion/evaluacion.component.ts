@@ -123,10 +123,13 @@ export class EvaluacionComponent implements OnInit {
   
       this.exchangeService.setEvaluacion(this.ObjEvaluacion).subscribe(res => {
        
+        
       
         localStorage.setItem('code-name',this.model);
         localStorage.setItem('idEvaluacion',<any>res);
         localStorage.setItem('tipoEvaluacion',this.ObjEvaluacion.tipo);
+        localStorage.setItem('personaEvaluando',this.ObjEvaluacion.nombre);
+
   
         this.ObjProductosEvalucion.id = "";
         this.ObjProductosEvalucion.id_evaluacion = "";

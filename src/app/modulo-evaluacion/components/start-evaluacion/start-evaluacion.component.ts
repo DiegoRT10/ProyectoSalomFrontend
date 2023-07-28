@@ -49,6 +49,7 @@ export class StartEvaluacionComponent implements OnInit{
 
   ObjProductosCalificados: ProductosCalificados = {
     nombre: '',
+    name:'',
     calificacion: 0,
     pregunta: 0
   }
@@ -511,7 +512,7 @@ export class StartEvaluacionComponent implements OnInit{
         this.ObjProductosEvaluacion.id = this.idItem;
         
       if(this.ObjProductosEvaluacion.calificacion == '0' || this.ObjProductosEvaluacion.calificacion == '1' || this.ObjProductosEvaluacion.calificacion == '2' ){
-
+        if(this.ObjProductosEvaluacion.id != '' && this.ObjProductosEvaluacion.id != "" && this.ObjProductosEvaluacion.id != null && this.ObjProductosEvaluacion.id != undefined){
         this.exchangeService.editProductosEvaluacion(this.ObjProductosEvaluacion).subscribe(res => {
   
           
@@ -532,7 +533,7 @@ export class StartEvaluacionComponent implements OnInit{
         }
   
       );
-
+      }
       }
         
       }else{

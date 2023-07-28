@@ -15,6 +15,8 @@ import { StartEvaluacionComponent } from './components/start-evaluacion/start-ev
 import { VistaEvaluacionComponent } from './components/vista-evaluacion/vista-evaluacion.component';
 import { CalificacionEvaluacionComponent } from './components/calificacion-evaluacion/calificacion-evaluacion.component';
 import { LoadingComponent } from './components/loading/loading.component';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
+
 
 
 
@@ -41,6 +43,7 @@ import { LoadingComponent } from './components/loading/loading.component';
     CdkAccordionModule,
     MdbAccordionModule,
     NgbTypeaheadModule,
+    MatProgressBarModule
   ],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })

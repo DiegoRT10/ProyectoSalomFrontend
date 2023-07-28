@@ -1,5 +1,4 @@
-<div class="main">
-    <div class="section text-center">
+
       <img class="left-align" src="../assets/img/salom/logo.png" alt="">
         <div class="container">
             <h1 *ngIf="flag">Evaluacion en proceso..</h1>
@@ -11,7 +10,7 @@
               <input type="text" class="form-control" [(ngModel)]="idEvaluacion" title="codigo de evaluacion" name="idEvaluacion">
               <button class="btn-info" (click)="ListarEvaluacion()">Empezar</button>
             </form>
-            <div class="row">
+            <!-- <div class="row">
               <div class="col-md-12">
                 <div class="info">
                   <ngx-gauge [value]='PorcentajeAvance' [thick]='15' append="%">
@@ -21,8 +20,13 @@
                   </div>
                 </div>
               </div>
-            </div>
+            </div> -->
+            
 
+           
+              <div class="section text-center">
+                <div class="container">
+                  <mat-progress-bar mode="determinate" [value]='PorcentajeAvance'></mat-progress-bar>
             <div class="info">
               
 
@@ -37,8 +41,10 @@
                 
 
             </div>
+          </div>
+        </div>
+  
                 
 
         </div>
-    </div>
-</div>
+

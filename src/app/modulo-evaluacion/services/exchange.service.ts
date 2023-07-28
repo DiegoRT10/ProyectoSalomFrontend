@@ -88,6 +88,7 @@ export class ExchangeService {
 
     export interface ProductosCalificados{
       nombre:string,
+      name:string,
       pregunta:number,
       calificacion:number
     }

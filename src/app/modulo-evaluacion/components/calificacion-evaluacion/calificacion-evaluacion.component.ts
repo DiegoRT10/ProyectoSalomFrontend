@@ -1,6 +1,11 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { CountProductoCalificacion, CountProductoEvaluacion, ExchangeService, ID, ProductosCalificados, TipoEvaluacion } from '../../services/exchange.service';
 import { Router } from '@angular/router';
+import * as pdfMake from "pdfmake/build/pdfmake";
+import * as pdfFonts from 'pdfmake/build/vfs_fonts';
+(<any>pdfMake).vfs = pdfFonts.pdfMake.vfs;
+
+
 
 @Component({
   selector: 'app-calificacion-evaluacion',
@@ -8,6 +13,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./calificacion-evaluacion.component.css']
 })
 export class CalificacionEvaluacionComponent implements OnInit {
+  
 
   ListProductosCalificados?:ProductosCalificados[];
   countExcelente:number=0;
@@ -55,6 +61,7 @@ export class CalificacionEvaluacionComponent implements OnInit {
     this.ObjIdCalificacion.id = <string>localStorage.getItem('idEvaluacion');
     this.exchangeService.ListProductosCalificados(this.ObjIdCalificacion).subscribe(res => {
       this.ListProductosCalificados = <any>res;
+      console.log('productos calificadso ',this.ListProductosCalificados);
       this.countPreguntas();
      },
        err => {
@@ -106,6 +113,68 @@ export class CalificacionEvaluacionComponent implements OnInit {
 
     );
   }
- 
+
+  
+  // generarPDF() {
+  //   const documentDefinition = {
+  //     content: [
+  //       {
+  //         text: 'Calificacion', // Texto del PDF
+  //         fontSize: 24, // Tamaño de fuente
+  //         bold: true, // Texto en negrita
+  //         alignment: 'center', // Alineación del texto
+  //         margin: [0, 20], // Márgenes (arriba, abajo, izquierda, derecha)
+  //       },
+  //       {
+  //         text: 'Se muestra el resultado de las preguntas erroneas',
+  //         fontSize: 14,
+  //         margin: [0, 10],
+  //       },
+  //       {
+	// 		style: 'tableExample',
+	// 		table: {
+	// 			widths: [165, 165, 165, 165],
+	// 			body: [
+
+	// 				[{text: 'Pregunta', bold: true, alignment: 'center'}, {text: 'Producto', bold: true, alignment: 'center'}, {text: 'Calificacion', bold: true, alignment: 'center'}],
+	// 				['1','producto A', 'excelente']
+	// 			]
+	// 		}
+	// 	},
+  //     ],
+  //   };
+
+  //   pdfMake.createPdf(documentDefinition).open();
+  // }
+
+  generarPDF(datos: ProductosCalificados[]) {
+    const documentDefinition = {
+      content: [
+        {
+          text: 'Calificacion',
+          fontSize: 24,
+          bold: true,
+          alignment: 'center',
+          margin: [0, 5],
+        },
+        {
+          style: 'tableExample',
+          table: {
+            widths: [165, 165, 165],
+            body: [
+              [{ text: 'Pregunta', bold: true, alignment: 'center' }, { text: 'Producto', bold: true, alignment: 'center' }, { text: 'Calificacion', bold: true, alignment: 'center' }],
+              ...datos
+              .filter((dato) => dato.calificacion == 2)
+              .map((dato) => [dato.pregunta.toString(), dato.name, (dato.calificacion == 2 ? 'Erroneo' : '')]),
+            ],
+          },
+        },
+      ],
+    };
+
+    pdfMake.createPdf(documentDefinition).open();
+  }
+
+
 
 }

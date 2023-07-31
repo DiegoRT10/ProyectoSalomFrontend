@@ -26,6 +26,7 @@ export class ProductsComponent {
   filterList(): void {
     this.productService.getProductosView().subscribe(res => {
       this.ListaProductos = <any>res;
+      console.log('este el filter lst ',this.ListaProductos);
       for (const i of this.ListaProductos) {
         this.list.push(i.code+" "+i.nombre);   
       }

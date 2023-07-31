@@ -151,7 +151,6 @@ export class DetalleNotaTrasladoComponent {
     uom: '',
     costo: 0,
     precio: 0,
-    margen: 0,
     supplier: '',
     taxcat: '',
     visible: 0

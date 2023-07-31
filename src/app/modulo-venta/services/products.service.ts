@@ -120,7 +120,6 @@ export interface productsViewProducts{
     uom: string,
     costo: number,
     precio: number,
-    margen: number,
     supplier: string,
     taxcat: string,
     visible: number

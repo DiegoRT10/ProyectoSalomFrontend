@@ -1,7 +1,48 @@
 <div class="main">
-    <div class="section text-center">
-      <div class="container">
-        HOLA ESTE ES EL CATALOGO
+  <div class="section text-center">
+    <div class="container">
+
+      <br>
+      <br>
+      <div class="nc-icon nc-zoom-split">
+        <input type="text" [(ngModel)]="filtroNombre" placeholder="Buscar por nombre">
+        <br>
+        <br>
+       </div>
+       <button (click)="generarPDF()">Generar PDF</button>
+  
+      
+
+      <div class="row">
+        <div class="col-md-12">
+          <div class="info">
+
+
+            <div class="boxesContainer text-selection-disable" *ngFor="let i of ListProductosDiagnostica">
+
+              <div class="cardBox" [hidden]="filtroNombre && i.nombre.toLowerCase().indexOf(filtroNombre!.toLowerCase()) === -1">
+                <div class="card">
+                  <div class="front">
+                    <img src='{{URL}}/uploads/{{i.reference}}.png' width="75" alt="">
+                    <p>{{i.nombre}}</p>
+                  </div>
+                  <div class="back">
+                    <p><b>Componente: </b>{{i.componente}}
+                        <b>Indicaciones: </b>{{i.indicacion}}
+                    </p>
+                    
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+
+
+
+
       </div>
     </div>
-</div>
+  </div>

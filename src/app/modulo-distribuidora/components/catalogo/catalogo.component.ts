@@ -50,96 +50,75 @@ export class CatalogoComponent implements OnInit{
     );
   }
 
-  // generarPDF() {
-  //   const documentDefinition = {
-  //     content: [
-  //       {
-  //         text: 'Calificacion',
-  //         fontSize: 24,
-  //         bold: true,
-  //         alignment: 'center',
-  //         margin: [0, 5],
-  //       },
-  //       {
-  //         style: 'tableExample',
-  //         table: {
-  //           widths: [165, 165, 165],
-  //           body: [
-  //             [{
-  //               image: this.imageUrl, width: 200, height: 200}, { text: 'Producto', bold: true, alignment: 'center' }, { text: 'Calificacion', bold: true, alignment: 'center' }],
-  //             ['pregunta', 'producto', 'calificacion'],
-  //           ],
-  //         },
-  //       },
-  //     ],
-  //   };
-
-  //   pdfMake.createPdf(documentDefinition).open();
-  // }
 
 
-  getImageFromAPI() {
-    const apiURL = 'tu_url_de_api/uploads/000004.png';
-    this.http.get(apiURL, { responseType: 'blob' })
-      .subscribe((response: Blob) => {
-        // Crea un objeto URL para la imagen recibida y muestra la imagen
-        this.imageUrl = URL.createObjectURL(response);
-      });
-  }
+
   
- 
+
   generarPDF() {
-    this.getBase64Image(this.imageUrl).then((base64Data) => {
-      const docDefinition = {
-        content: [
-          'Texto antes de la imagen',
-          {
-            image: base64Data,
-            width: 300,
+    // Reemplaza las rutas de las imágenes con las que tienes en tu proyecto
+    const imageUrls = [
+      'assets/products/000004.png',
+      'assets/products/000005.png',
+      'assets/products/000006.png',
+      // 'assets/products/000006.png',
+      // 'assets/products/000008.png',
+      // 'assets/products/000010.png',
+      // Agrega más rutas de imágenes aquí
+    ];
+
+    // Cargamos las imágenes y las convertimos a base64
+    const promises = imageUrls.map((url) =>
+      fetch(url)
+        .then((response) => response.blob())
+        .then((blob) => {
+          const reader = new FileReader();
+          return new Promise<string>((resolve) => {
+            reader.onloadend = () => {
+              const base64 = reader.result as string;
+              resolve(base64);
+            };
+            reader.readAsDataURL(blob);
+          });
+        })
+    );
+
+    // Esperamos a que todas las imágenes se hayan cargado y convertido a base64
+    Promise.all(promises).then((base64Images) => {
+      this.createPDF(base64Images); // Llamamos a la función para crear el PDF
+    });
+  }
+
+  createPDF(base64Images: string[]) {
+    const tableBody = base64Images.map((base64) => [
+      { image: base64, width: 100, height: 100 },
+    ]);
+
+    const documentDefinition = {
+      content: [
+        {
+          text: 'Catalogo',
+          fontSize: 24,
+          bold: true,
+          alignment: 'center',
+          margin: [0, 5],
+        },
+        {
+          style: 'tableExample',
+          table: {
+            widths: ['auto', 'auto', 'auto'],
+            body: [
+              tableBody,
+            ],
           },
-          'Texto después de la imagen',
-        ],
-      };
+        },
+      ],
+    };
 
-      const pdfDocGenerator = pdfMake.createPdf(docDefinition);
-      pdfDocGenerator.download('nombre_del_archivo.pdf');
-    });
+    pdfMake.createPdf(documentDefinition).open();
   }
-
-  // Función para obtener la imagen en formato de datos (data URL)
-  getBase64Image(url: string): Promise<string> {
-    return new Promise((resolve) => {
-      const img = new Image();
-      img.crossOrigin = 'Anonymous';
-      img.onload = function () {
-        const canvas = document.createElement('canvas');
-        canvas.width = img.width;
-        canvas.height = img.height;
-
-        const ctx = canvas.getContext('2d');
-        ctx.drawImage(img, 0, 0);
-
-        const dataURL = canvas.toDataURL('image/png'); // Puedes cambiar 'image/png' por el formato de imagen que necesites
-
-        resolve(dataURL);
-      };
-
-      // Agregar el bloque try-catch
-      img.onerror = function () {
-        try {
-          // Si hay un error, puedes resolver la promesa con una URL de imagen de respaldo o un valor predeterminado
-          const backupDataURL = 'https://upload.wikimedia.org/wikipedia/commons/4/48/Basketball.jpeg';
-          resolve(backupDataURL);
-        } catch (error) {
-          // Manejar cualquier otro error que pueda ocurrir durante la resolución
-          console.error('Error al cargar la imagen de respaldo:', error);
-          resolve(null); // Otra opción puede ser rechazar la promesa aquí con reject(error)
-        }
-      };
-
-      img.src = url;
-    });
-  }
-  
-  
 }
+ 
+  
+  
+

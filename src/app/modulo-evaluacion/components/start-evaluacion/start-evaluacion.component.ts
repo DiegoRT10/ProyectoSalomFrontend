@@ -132,7 +132,7 @@ export class StartEvaluacionComponent implements OnInit{
   ngOnInit(): void {
     this.ListarEvaluacion(this.idEvaluacion!);
     this.ListarProductosDF();
-    this.ProductoDiagnosticaCantidad();
+    this.ProductoDFCantidad();
   }
 
 
@@ -263,13 +263,13 @@ export class StartEvaluacionComponent implements OnInit{
           this.NoPregunta = Number(this.ObjProductosEvaluacionNew.pregunta) + 1;
           this.ObjProductosEvaluacion.pregunta = String(this.NoPregunta);
           this.setDatosProductosEvaluacion('');
-          this.ProductoCalificadoDiagnosticaCantidad();
+          this.ProductoCalificadoDFCantidad();
           this.Limpiar();
           this.loading = false;
   
         }else{
           this.ObjProductosEvaluacion.pregunta = '1';
-          this.ProductoCalificadoDiagnosticaCantidad();
+          this.ProductoCalificadoDFCantidad();
           this.setDatosProductosEvaluacion('');
           this.Limpiar();
           this.loading = false;
@@ -330,7 +330,7 @@ export class StartEvaluacionComponent implements OnInit{
 
 
 
-   ProductoDiagnosticaCantidad(){
+   ProductoDFCantidad(){
     this.ObjTipoEvaluacion.tipo = Number(localStorage.getItem('tipoEvaluacion'));
     this.exchangeService.CantidadProductoDF(this.ObjTipoEvaluacion).subscribe(res => {
       this.ObjCountProductoEvaluacion = res[0];
@@ -342,7 +342,7 @@ export class StartEvaluacionComponent implements OnInit{
     );
   }
 
-  ProductoCalificadoDiagnosticaCantidad(){
+  ProductoCalificadoDFCantidad(){
     this.ObjTipoEvaluacion.tipo = Number(localStorage.getItem('tipoEvaluacion'));
     this.exchangeService.CantidadProductoCalificadoDF(this.ObjTipoEvaluacion).subscribe(res => {
       this.ObjCountProductoCalificacion = res[0];
@@ -436,7 +436,7 @@ export class StartEvaluacionComponent implements OnInit{
             this.ObjProductosEvaluacion.id_evaluacion = "";
             this.ObjProductosEvaluacion.id_producto = "";
             this.ObjProductosEvaluacion.pregunta = "";
-            this.ObjProductosEvaluacion.calificacion = "";
+            // this.ObjProductosEvaluacion.calificacion = "";
             this.ObjProductosEvaluacionNew.pregunta = "";
             this.idItem = "";
             this.setProductoEvaluado();

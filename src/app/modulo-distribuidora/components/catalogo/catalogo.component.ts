@@ -50,54 +50,143 @@ export class CatalogoComponent implements OnInit{
     );
   }
 
-
-
-
   
-
   generarPDF() {
-    // Reemplaza las rutas de las imágenes con las que tienes en tu proyecto
-    const imageUrls = [
-      'assets/products/000004.png',
-      'assets/products/000005.png',
-      'assets/products/000006.png',
-      // 'assets/products/000006.png',
-      // 'assets/products/000008.png',
-      // 'assets/products/000010.png',
-      // Agrega más rutas de imágenes aquí
-    ];
-
+    const imageUrls = this.ListProductosDiagnostica.map(producto => `assets/products/${producto.reference}.png`);
+  
+    // Función para cargar la imagen o usar la imagen por defecto
+    const loadOrDefaultImage = (url: string): Promise<string> => {
+      return new Promise((resolve) => {
+        const image = new Image();
+        image.onload = () => {
+          // La imagen se ha cargado correctamente, utilizamos la URL
+          resolve(url);
+        };
+        image.onerror = () => {
+          // Error al cargar la imagen, utilizamos la imagen por defecto
+          resolve('assets/products/000000.png');
+        };
+        image.src = url;
+      });
+    };
+  
     // Cargamos las imágenes y las convertimos a base64
-    const promises = imageUrls.map((url) =>
-      fetch(url)
-        .then((response) => response.blob())
-        .then((blob) => {
-          const reader = new FileReader();
-          return new Promise<string>((resolve) => {
-            reader.onloadend = () => {
-              const base64 = reader.result as string;
-              resolve(base64);
-            };
-            reader.readAsDataURL(blob);
-          });
-        })
+    const promises = imageUrls.map(url =>
+      loadOrDefaultImage(url)
+        .then((validUrl) =>
+          fetch(validUrl)
+            .then(response => response.blob())
+            .then(blob => {
+              const reader = new FileReader();
+              return new Promise<string>((resolve) => {
+                reader.onloadend = () => {
+                  const base64 = reader.result as string;
+                  resolve(base64);
+                };
+                reader.readAsDataURL(blob);
+              });
+            })
+        )
     );
-
+  
     // Esperamos a que todas las imágenes se hayan cargado y convertido a base64
     Promise.all(promises).then((base64Images) => {
-      this.createPDF(base64Images); // Llamamos a la función para crear el PDF
+      this.createPDF(base64Images, this.ListProductosDiagnostica.map(producto => producto.reference)); // Llamamos a la función para crear el PDF
     });
   }
+  
 
-  createPDF(base64Images: string[]) {
-    const tableBody = base64Images.map((base64) => [
-      { image: base64, width: 100, height: 100 },
-    ]);
 
+
+  // createPDF(base64Images: string[], references: string[]) {
+  //   // Divide las imágenes en grupos de tres
+  //   const imagesInGroupsOfThree = [];
+  //   for (let i = 0; i < base64Images.length; i += 3) {
+  //     imagesInGroupsOfThree.push(base64Images.slice(i, i + 3));
+  //   }
+  
+  //   // Construye la tabla con las imágenes agrupadas
+  //   const tableBody = imagesInGroupsOfThree.map((imageGroup) => {
+  //     const row = [];
+  //     imageGroup.forEach((base64) => {
+  //       row.push({ image: base64, width: 160, height: 160 });
+  //     });
+  //     return row;
+  //   });
+  
+  //   // Agregamos una fila vacía si el número de imágenes no es divisible por tres
+  //   if (base64Images.length % 3 !== 0) {
+  //     const emptyCells = 3 - (base64Images.length % 3);
+  //     for (let i = 0; i < emptyCells; i++) {
+  //       tableBody[tableBody.length - 1].push({});
+  //     }
+  //   }
+  
+  //   const documentDefinition = {
+  //     content: [
+  //       {
+  //         text: 'Catálogo',
+  //         fontSize: 24,
+  //         bold: true,
+  //         alignment: 'center',
+  //         margin: [0, 5],
+  //       },
+  //       {
+  //         style: 'tableExample',
+  //         table: {
+  //           // widths: ['auto', 'auto', 'auto'],
+  //           body: tableBody,
+  //         },
+  //       },
+  //     ],
+  //   };
+  
+  //   pdfMake.createPdf(documentDefinition).open();
+  // }
+  createPDF(base64Images: string[], references: string[]) {
+    // Agrupamos cada imagen con su referencia en un solo objeto
+    const imagesWithReferences = base64Images.map((base64, index) => ({
+      image: base64,
+      reference: references[index],
+      width: 160,
+      height: 160,
+    }));
+  
+    // Divide las imágenes en grupos de tres
+    const imagesInGroupsOfThree = [];
+    for (let i = 0; i < imagesWithReferences.length; i += 3) {
+      imagesInGroupsOfThree.push(imagesWithReferences.slice(i, i + 3));
+    }
+  
+    // Construye la tabla con las imágenes y referencias agrupadas
+    const tableBody = imagesInGroupsOfThree.map((imageGroup) => {
+      const row = [];
+      imageGroup.forEach((item) => {
+        // Creamos una celda que contiene el id/reference y la imagen en la misma celda
+        const cell = {
+          stack: [
+            { text: `ID: ${item.reference}`, alignment: 'center', margin: [0, 5] },
+            { image: item.image, width: 160, height: 160 },
+          ],
+          alignment: 'center',
+        };
+        row.push(cell);
+      });
+      return row;
+    });
+  
+    // Agregamos una fila vacía si el número de imágenes no es divisible por tres
+    if (imagesWithReferences.length % 3 !== 0) {
+      const emptyCells = 3 - (imagesWithReferences.length % 3);
+      for (let i = 0; i < emptyCells; i++) {
+        tableBody[tableBody.length - 1].push({});
+      }
+    }
+  
     const documentDefinition = {
       content: [
         {
-          text: 'Catalogo',
+          text: 'Catálogo',
           fontSize: 24,
           bold: true,
           alignment: 'center',
@@ -106,17 +195,16 @@ export class CatalogoComponent implements OnInit{
         {
           style: 'tableExample',
           table: {
-            widths: ['auto', 'auto', 'auto'],
-            body: [
-              tableBody,
-            ],
+            // widths: ['auto', 'auto', 'auto'],
+            body: tableBody,
           },
         },
       ],
     };
-
+  
     pdfMake.createPdf(documentDefinition).open();
   }
+  
 }
  
   

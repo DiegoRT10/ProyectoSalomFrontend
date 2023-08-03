@@ -19,6 +19,7 @@ export class CatalogoComponent implements OnInit{
   filtroNombre?: string;
   imageUrl: string;
 
+
   ListProductosDiagnostica?:ProductoDiagnostica[];
 
   ObjTipoEvaluacion:TipoEvaluacion = {
@@ -95,61 +96,16 @@ export class CatalogoComponent implements OnInit{
     });
   }
   
-
-
-
-  // createPDF(base64Images: string[], references: string[]) {
-  //   // Divide las imágenes en grupos de tres
-  //   const imagesInGroupsOfThree = [];
-  //   for (let i = 0; i < base64Images.length; i += 3) {
-  //     imagesInGroupsOfThree.push(base64Images.slice(i, i + 3));
-  //   }
-  
-  //   // Construye la tabla con las imágenes agrupadas
-  //   const tableBody = imagesInGroupsOfThree.map((imageGroup) => {
-  //     const row = [];
-  //     imageGroup.forEach((base64) => {
-  //       row.push({ image: base64, width: 160, height: 160 });
-  //     });
-  //     return row;
-  //   });
-  
-  //   // Agregamos una fila vacía si el número de imágenes no es divisible por tres
-  //   if (base64Images.length % 3 !== 0) {
-  //     const emptyCells = 3 - (base64Images.length % 3);
-  //     for (let i = 0; i < emptyCells; i++) {
-  //       tableBody[tableBody.length - 1].push({});
-  //     }
-  //   }
-  
-  //   const documentDefinition = {
-  //     content: [
-  //       {
-  //         text: 'Catálogo',
-  //         fontSize: 24,
-  //         bold: true,
-  //         alignment: 'center',
-  //         margin: [0, 5],
-  //       },
-  //       {
-  //         style: 'tableExample',
-  //         table: {
-  //           // widths: ['auto', 'auto', 'auto'],
-  //           body: tableBody,
-  //         },
-  //       },
-  //     ],
-  //   };
-  
-  //   pdfMake.createPdf(documentDefinition).open();
-  // }
   createPDF(base64Images: string[], references: string[]) {
+
+    
+
     // Agrupamos cada imagen con su referencia en un solo objeto
     const imagesWithReferences = base64Images.map((base64, index) => ({
       image: base64,
       reference: references[index],
       width: 160,
-      height: 160,
+      height: 215,
     }));
   
     // Divide las imágenes en grupos de tres
@@ -161,14 +117,16 @@ export class CatalogoComponent implements OnInit{
     // Construye la tabla con las imágenes y referencias agrupadas
     const tableBody = imagesInGroupsOfThree.map((imageGroup) => {
       const row = [];
-      imageGroup.forEach((item) => {
+      imageGroup.forEach((item, columnIndex) => {
         // Creamos una celda que contiene el id/reference y la imagen en la misma celda
         const cell = {
           stack: [
-            { text: `ID: ${item.reference}`, alignment: 'center', margin: [0, 5] },
-            { image: item.image, width: 160, height: 160 },
+            { text: `CODIN: ${item.reference}`, alignment: 'center', margin: [0, 5]},
+            { image: item.image, width: 160, height: 215, margin: [0, 57]},
           ],
           alignment: 'center',
+          // border: [false, false, true, true], 
+          border: columnIndex === 2 ? [false, false, false, true] : [false, false, true, true],
         };
         row.push(cell);
       });
@@ -183,30 +141,91 @@ export class CatalogoComponent implements OnInit{
       }
     }
   
-    const documentDefinition = {
-      content: [
-        {
-          text: 'Catálogo',
-          fontSize: 24,
-          bold: true,
-          alignment: 'center',
-          margin: [0, 5],
-        },
-        {
-          style: 'tableExample',
-          table: {
-            // widths: ['auto', 'auto', 'auto'],
-            body: tableBody,
-          },
-        },
-      ],
-    };
-  
-    pdfMake.createPdf(documentDefinition).open();
+
+      //un comentario
+    fetch('assets/logos/econoFarma.png')
+    .then(response => response.blob())
+    .then(blob => {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const econoFarmaBase64 = reader.result as string;
+        // Continuar con la creación del PDF incluyendo la imagen de econoFarma
+        const documentDefinition = {
+          content: [
+            [
+              {
+                image: econoFarmaBase64, // Agregar la imagen de lado izquierdo
+                width: 200,
+                alignment: 'right',
+              },
+              {
+                text: 'CATÁLOGO PRODUCTOS', // Agregar el texto
+                fontSize: 20,
+                bold: true,
+                alignment: 'left',
+                margin: [0, 5],
+              },
+            ],
+            {
+              style: 'tableExample',
+              table: {
+                body: tableBody,
+              },
+            },
+          ],
+        };
+
+        pdfMake.createPdf(documentDefinition).open();
+      };
+      reader.readAsDataURL(blob);
+    });
   }
-  
+
+
+
+
+
+
+
+ 
+
 }
  
   
   
+   // const documentDefinition = {
+    //   content: [
+    //     // {
+    //     //   text: 'CATALOGO DE PRODUCTOS',
+    //     //   fontSize: 20,
+    //     //   bold: true,
+    //     //   alignment: 'left',
+    //     //   margin: [0, 0],
+    //     // }, 
+        
 
+    //     [
+    //       {
+    //         image: 'assets/logos/econoFarma.png', // Agregar la imagen de lado izquierdo
+    //         width: 100,
+    //       },
+    //       {
+    //         text: 'CATÁLOGO PRODUCTOS', // Agregar el texto
+    //         fontSize: 24,
+    //         bold: true,
+    //         alignment: 'center',
+    //         margin: [50, 5],
+    //       },
+    //     ],
+    //     {
+    //       style: 'tableExample',
+    //       table: {
+    //         // widths: ['auto', 'auto', 'auto'],
+    //         body: 
+    //         tableBody,
+    //       },
+    //     },
+    //   ],
+    // };
+  
+    // pdfMake.createPdf(documentDefinition).open();

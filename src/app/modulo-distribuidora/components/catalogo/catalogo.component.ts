@@ -116,35 +116,12 @@ export class CatalogoComponent implements OnInit{
       imagesInGroupsOfThree.push(imagesWithReferences.slice(i, i + 3));
     }
   
-    // Construye la tabla con las imágenes y referencias agrupadas
-    // const tableBody = imagesInGroupsOfThree.map((imageGroup) => {
-    //   const row = [];
-    //   imageGroup.forEach((item, columnIndex) => {
-    //     // Creamos una celda que contiene el id/reference y la imagen en la misma celda
-    //     const cell = {
-    //       stack: [
-    //         { text: `${item.reference}`, alignment: 'center', margin: [0, 5]},
-    //         { text: `Q${item.pormayor}`, alignment: 'center', bold:'true'},
-    //         { text: `${item.nombre}`, alignment: 'center', fontSize: 12, margin: [0, 5]},
-    //         { image: item.image, width: 160, height: 213, margin: [0, 57]}
-            
-    //       ],
-    //       alignment: 'center',
-    //       // border: [false, false, true, true], 
-    //       border: columnIndex === 2 ? [false, false, false, true] : [false, false, true, true],
-    //     };
-    //     row.push(cell);
-    //   });
-    //   return row;
-    // });
 
     const tableBody = imagesInGroupsOfThree.map((imageGroup) => {
       const row = [];
       imageGroup.forEach((item, columnIndex) => {
         // Dividir el texto en líneas si su longitud es mayor o igual a 20
-        const nombreLines = item.nombre.length >= 20
-          ? this.splitTextIntoLines(item.nombre, 20)
-          : [item.nombre];
+        const nombreLines = item.nombre.length >= 20 ? this.splitTextIntoLines(item.nombre, 20) : [item.nombre];
   
         const cell = {
           stack: [
@@ -183,21 +160,49 @@ export class CatalogoComponent implements OnInit{
         const econoFarmaBase64 = reader.result as string;
         // Continuar con la creación del PDF incluyendo la imagen de econoFarma
         const documentDefinition = {
-          content: [
-            [
+          header: function(currentPage: number, pageCount: number) {
+            return [
               {
-                image: econoFarmaBase64, // Agregar la imagen de lado izquierdo
+              columns:[
+                {
+                image: econoFarmaBase64,
                 width: 200,
                 alignment: 'right',
+                margin:[0,5]
               },
               {
-                text: 'CATÁLOGO PRODUCTOS', // Agregar el texto
+                text: 'CATÁLOGO PRODUCTOS',
                 fontSize: 20,
                 bold: true,
                 alignment: 'left',
-                margin: [0, 5],
-              },
-            ],
+                margin:[0,5]
+              },]
+              }
+
+            ];
+          },
+          footer: function(currentPage: number, pageCount: number) {
+            return {
+              text: currentPage.toString(),
+              alignment: 'center',
+            };
+          },
+
+          content: [
+            // [
+            //   {
+            //     image: econoFarmaBase64, // Agregar la imagen de lado izquierdo
+            //     width: 200,
+            //     alignment: 'right',
+            //   },
+            //   {
+            //     text: 'CATÁLOGO PRODUCTOS', // Agregar el texto
+            //     fontSize: 20,
+            //     bold: true,
+            //     alignment: 'left',
+            //     margin: [0, 5],
+            //   },
+            // ],
             {
               style: 'tableExample',
               table: {
@@ -205,6 +210,9 @@ export class CatalogoComponent implements OnInit{
               },
             },
           ],
+
+          
+
         };
 
         pdfMake.createPdf(documentDefinition).open();
@@ -214,46 +222,6 @@ export class CatalogoComponent implements OnInit{
   }
 
 
-
-  // splitTextIntoLines(text: string, maxLength: number): string[] {
-  //   const lines = [];
-  //   let currentLine = '';
-    
-  //   for (const word of text.split(' ')) {
-  //     if (currentLine.length + word.length <= maxLength) {
-  //       currentLine += (currentLine.length > 0 ? ' ' : '') + word;
-  //     } else {
-  //       lines.push(currentLine);
-  //       currentLine = word;
-  //     }
-  //   }
-    
-  //   if (currentLine.length > 0) {
-  //     lines.push(currentLine);
-  //   }
-    
-  //   return lines;
-  // }
-
-  // splitTextIntoLines(text: string, maxLength: number): string[] {
-  //   const lines = [];
-  //   let currentLine = '';
-    
-  //   for (const word of text.split(' ')) {
-  //     if (currentLine.length + word.length <= maxLength || word === '+') {
-  //       currentLine += (currentLine.length > 0 ? ' ' : '') + word;
-  //     } else {
-  //       lines.push(currentLine);
-  //       currentLine = word;
-  //     }
-  //   }
-    
-  //   if (currentLine.length > 0) {
-  //     lines.push(currentLine);
-  //   }
-    
-  //   return lines;
-  // }
   
   splitTextIntoLines(text: string, maxLength: number): string[] {
     const lines = [];
@@ -281,39 +249,3 @@ export class CatalogoComponent implements OnInit{
  
   
   
-   // const documentDefinition = {
-    //   content: [
-    //     // {
-    //     //   text: 'CATALOGO DE PRODUCTOS',
-    //     //   fontSize: 20,
-    //     //   bold: true,
-    //     //   alignment: 'left',
-    //     //   margin: [0, 0],
-    //     // }, 
-        
-
-    //     [
-    //       {
-    //         image: 'assets/logos/econoFarma.png', // Agregar la imagen de lado izquierdo
-    //         width: 100,
-    //       },
-    //       {
-    //         text: 'CATÁLOGO PRODUCTOS', // Agregar el texto
-    //         fontSize: 24,
-    //         bold: true,
-    //         alignment: 'center',
-    //         margin: [50, 5],
-    //       },
-    //     ],
-    //     {
-    //       style: 'tableExample',
-    //       table: {
-    //         // widths: ['auto', 'auto', 'auto'],
-    //         body: 
-    //         tableBody,
-    //       },
-    //     },
-    //   ],
-    // };
-  
-    // pdfMake.createPdf(documentDefinition).open();

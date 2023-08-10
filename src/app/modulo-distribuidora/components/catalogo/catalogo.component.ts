@@ -3,8 +3,10 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import * as pdfMake from "pdfmake/build/pdfmake";
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
-import { ExchangeService, ProductoDiagnostica, TipoEvaluacion } from 'src/app/modulo-evaluacion/services/exchange.service';
+import { ExchangeService, ProductoDF, TipoEvaluacion } from 'src/app/modulo-evaluacion/services/exchange.service';
 import { environment } from 'src/environments/environment';
+import { ProductoCatalogo, ProductosService } from '../../services/productos.service';
+
 (<any>pdfMake).vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
@@ -20,15 +22,14 @@ export class CatalogoComponent implements OnInit{
   imageUrl: string;
 
 
-  ListProductosDiagnostica?:ProductoDiagnostica[];
 
-  ObjTipoEvaluacion:TipoEvaluacion = {
-    tipo: 0
-  }
+  ListProductosCatalogo?:ProductoCatalogo[];
+
+
 
   
 
-  constructor(private router: Router, private exchangeService: ExchangeService, private http: HttpClient){}
+  constructor(private router: Router, private productosService: ProductosService, private http: HttpClient){}
 
   ngOnInit(): void {
     
@@ -39,10 +40,9 @@ export class CatalogoComponent implements OnInit{
 
   ListarProductosDF(){
     
-    this.ObjTipoEvaluacion.tipo = 0;
-    this.exchangeService.ListProductosDF(this.ObjTipoEvaluacion).subscribe(res => {
-      this.ListProductosDiagnostica = <any>res; 
-     
+    this.productosService.ListProductoCatalogo().subscribe(res => {
+      this.ListProductosCatalogo = <any>res; 
+     console.log('productos de catalogo ',this.ListProductosCatalogo);
     },
       err => {
         console.log(err);
@@ -53,7 +53,7 @@ export class CatalogoComponent implements OnInit{
 
   
   generarPDF() {
-    const imageUrls = this.ListProductosDiagnostica.map(producto => `assets/products/${producto.reference}.png`);
+    const imageUrls = this.ListProductosCatalogo.map(producto => `assets/products/${producto.reference}.png`);
   
     // Función para cargar la imagen o usar la imagen por defecto
     const loadOrDefaultImage = (url: string): Promise<string> => {
@@ -92,11 +92,11 @@ export class CatalogoComponent implements OnInit{
   
     // Esperamos a que todas las imágenes se hayan cargado y convertido a base64
     Promise.all(promises).then((base64Images) => {
-      this.createPDF(base64Images, this.ListProductosDiagnostica.map(producto => producto.reference)); // Llamamos a la función para crear el PDF
+      this.createPDF(base64Images, this.ListProductosCatalogo.map(producto => producto.reference),this.ListProductosCatalogo.map(producto => String(producto.pormayor)), this.ListProductosCatalogo.map(producto => producto.nombre)); // Llamamos a la función para crear el PDF
     });
   }
   
-  createPDF(base64Images: string[], references: string[]) {
+  createPDF(base64Images: string[], references: string[], pormayor: string[], nombre: string[]) {
 
     
 
@@ -104,6 +104,8 @@ export class CatalogoComponent implements OnInit{
     const imagesWithReferences = base64Images.map((base64, index) => ({
       image: base64,
       reference: references[index],
+      pormayor: pormayor[index],
+      nombre: nombre[index],
       width: 160,
       height: 215,
     }));
@@ -121,8 +123,11 @@ export class CatalogoComponent implements OnInit{
         // Creamos una celda que contiene el id/reference y la imagen en la misma celda
         const cell = {
           stack: [
-            { text: `CODIN: ${item.reference}`, alignment: 'center', margin: [0, 5]},
-            { image: item.image, width: 160, height: 215, margin: [0, 57]},
+            { text: `${item.reference}`, alignment: 'center', margin: [0, 5]},
+            { text: `Q${item.pormayor}`, alignment: 'center', bold:'true'},
+            // { text: `${item.nombre}`, alignment: 'left' },
+            { image: item.image, width: 160, height: 213, margin: [0, 57]}
+            
           ],
           alignment: 'center',
           // border: [false, false, true, true], 

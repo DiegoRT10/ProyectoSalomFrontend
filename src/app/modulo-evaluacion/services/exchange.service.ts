@@ -132,7 +132,7 @@ export class ExchangeService {
       calificacion:string
     }
 
-    export interface ProductoDiagnostica{
+    export interface ProductoDF{
       id:string, 
       reference:string,
       nombre:string, 

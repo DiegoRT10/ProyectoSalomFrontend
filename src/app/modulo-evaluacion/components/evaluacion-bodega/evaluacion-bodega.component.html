@@ -1,0 +1,35 @@
+<div class="main">
+    <div class="section text-center">
+        <div class="container">
+
+            
+            <h1 class="title">Evaluacion</h1>
+            
+            <form>
+                <div class="mb-3">
+                    <label class="form-label">Tipo de evaluacion</label>
+                    <select  [(ngModel)]="ObjEvaluacion.tipo" class="form-control" name="tipo">
+                    <option  *ngFor="let item of listaOp" >{{item}}</option>
+            </select>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Nombre</label>
+                    <input type="text" class="form-control" [(ngModel)]="ObjEvaluacion.nombre" name="nombre">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Puesto</label>
+                    <input type="text" class="form-control" [(ngModel)]="ObjEvaluacion.puesto" name="puesto">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Observacion</label>
+                    <input type="text" class="form-control" [(ngModel)]="ObjEvaluacion.observacion" name="comentario">
+                </div>
+                  <div class="mb-3">
+                    <button type="button" class="btn btn-success float-left" (click)="setDatosEvaluacion()" >Guardar e Iniciar</button>
+                </div>
+            </form>
+            
+        </div>
+    </div>
+
+</div>

@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ExchangeService, ID, ProductosEvaluacion, Evaluacion, ProductoDiagnostica, Evaluado, DatoEvaluado, ProductosCalificados, CountProductoEvaluacion, CountProductoCalificacion, TipoEvaluacion } from '../../services/exchange.service';
+import { ExchangeService, ID, ProductosEvaluacion, Evaluacion, ProductoDF, Evaluado, DatoEvaluado, ProductosCalificados, CountProductoEvaluacion, CountProductoCalificacion, TipoEvaluacion } from '../../services/exchange.service';
 import { Router } from '@angular/router';
 import { ProductsService, ViewProducts2 } from 'src/app/modulo-venta/services/products.service';
 import { NgbTypeahead } from '@ng-bootstrap/ng-bootstrap';
@@ -40,7 +40,7 @@ export class StartEvaluacionComponent implements OnInit{
   ListEvaluacion?:Evaluacion[];
   ListProductosEvaluacion?:ProductosEvaluacion[];
   ListPreguntasEvaluacion?:ProductosEvaluacion[];
-  ListProductosDiagnostica?:ProductoDiagnostica[];
+  ListProductosDF?:ProductoDF[];
   ListProductosCalificados?:ProductosCalificados[];
   
   ObjTipoEvaluacion:TipoEvaluacion = {
@@ -115,7 +115,7 @@ export class StartEvaluacionComponent implements OnInit{
     calificacion: ''
   }
 
-  ObjProductoDiagnostica: ProductoDiagnostica = {
+  ObjProductoDiagnostica: ProductoDF = {
     id: '',
     reference: '000000',
     nombre: '',
@@ -142,8 +142,8 @@ export class StartEvaluacionComponent implements OnInit{
     localStorage.setItem('StartEvaluacion','1');
     this.ObjTipoEvaluacion.tipo = Number(localStorage.getItem('tipoEvaluacion'));
     this.exchangeService.ListProductosDF(this.ObjTipoEvaluacion).subscribe(res => {
-      this.ListProductosDiagnostica = <any>res; 
-      this.ObjProductoDiagnostica = <any>this.ListProductosDiagnostica?.shift();
+      this.ListProductosDF = <any>res; 
+      this.ObjProductoDiagnostica = <any>this.ListProductosDF?.shift();
       if(localStorage.getItem('StartEvaluacion') == '1'){
         this.newQuestion();
         localStorage.setItem('StartEvaluacion','0');

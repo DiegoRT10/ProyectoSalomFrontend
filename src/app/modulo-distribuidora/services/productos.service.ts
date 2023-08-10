@@ -11,8 +11,8 @@ export class ProductosService {
   
   constructor(private http: HttpClient, private jwtHelper: JwtHelperService) { }
 
-  ListProducto(){
-    return this.http.get(`${this.URL}/direccion/coordenadasReceive`);
+  ListProductoCatalogo(){
+    return this.http.get(`${this.URL}/distribuidora/productosCatalogo`);
   }
 }
 
@@ -24,4 +24,12 @@ export interface Coordenada{
 
 export interface ID{
   id:string
+}
+
+export interface ProductoCatalogo{
+  id:string,
+  reference:string,
+  nombre: string,
+  pormayor: number,
+  supplier: string
 }

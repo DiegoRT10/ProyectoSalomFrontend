@@ -16,6 +16,7 @@ import { VistaEvaluacionComponent } from './components/vista-evaluacion/vista-ev
 import { CalificacionEvaluacionComponent } from './components/calificacion-evaluacion/calificacion-evaluacion.component';
 import { LoadingComponent } from './components/loading/loading.component';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
+import { EvaluacionBodegaComponent } from './components/evaluacion-bodega/evaluacion-bodega.component';
 
 
 
@@ -29,7 +30,8 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
     StartEvaluacionComponent,
     VistaEvaluacionComponent,
     CalificacionEvaluacionComponent,
-    LoadingComponent
+    LoadingComponent,
+    EvaluacionBodegaComponent
   ],
   imports: [
     CommonModule,

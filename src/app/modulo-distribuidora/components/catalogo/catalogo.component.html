@@ -20,18 +20,18 @@
 
             <div class="boxesContainer text-selection-disable" *ngFor="let i of ListProductosCatalogo">
 
-              <div class="cardBox" [hidden]="filtroNombre && i.nombre.toLowerCase().indexOf(filtroNombre!.toLowerCase()) === -1">
+              <div class="cardBox" [hidden]="filtroNombre && i.name.toLowerCase().indexOf(filtroNombre!.toLowerCase()) === -1">
                 <div class="card">
                   <div class="front">
                     <div class="image-container">
                       <img src="{{URL}}/uploads/{{i.reference}}.png" alt="">
                     </div>
                     <p><b>CODIN: </b>{{i.reference}}</p>
-                    <p>{{i.nombre}}</p>
+                    <p>{{i.name}}</p>
                   </div>
                   <div class="back">
                     <p><b>Precio : </b>{{i.pormayor}}
-                        <b>Laboratorio: </b>{{i.supplier}}
+                        <b>Laboratorio: </b>{{i.laboratorio}}
                     </p>
                     
                   </div>

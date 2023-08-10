@@ -29,7 +29,10 @@ export interface ID{
 export interface ProductoCatalogo{
   id:string,
   reference:string,
-  nombre: string,
   pormayor: number,
-  supplier: string
+  name: string,
+  forma: string,
+  concentracion: string,
+  presentacion: string,
+  laboratorio: string, 
 }

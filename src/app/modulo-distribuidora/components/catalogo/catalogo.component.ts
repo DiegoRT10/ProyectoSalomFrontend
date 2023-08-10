@@ -92,7 +92,7 @@ export class CatalogoComponent implements OnInit{
   
     // Esperamos a que todas las imágenes se hayan cargado y convertido a base64
     Promise.all(promises).then((base64Images) => {
-      this.createPDF(base64Images, this.ListProductosCatalogo.map(producto => producto.reference),this.ListProductosCatalogo.map(producto => String(producto.pormayor)), this.ListProductosCatalogo.map(producto => producto.nombre)); // Llamamos a la función para crear el PDF
+      this.createPDF(base64Images, this.ListProductosCatalogo.map(producto => producto.reference),this.ListProductosCatalogo.map(producto => String(producto.pormayor)), this.ListProductosCatalogo.map(producto => producto.name)); // Llamamos a la función para crear el PDF
     });
   }
   
@@ -104,10 +104,10 @@ export class CatalogoComponent implements OnInit{
     const imagesWithReferences = base64Images.map((base64, index) => ({
       image: base64,
       reference: references[index],
-      pormayor: pormayor[index],
       nombre: nombre[index],
+      pormayor: pormayor[index],
       width: 160,
-      height: 215,
+      height: 175,
     }));
   
     // Divide las imágenes en grupos de tres
@@ -117,26 +117,53 @@ export class CatalogoComponent implements OnInit{
     }
   
     // Construye la tabla con las imágenes y referencias agrupadas
+    // const tableBody = imagesInGroupsOfThree.map((imageGroup) => {
+    //   const row = [];
+    //   imageGroup.forEach((item, columnIndex) => {
+    //     // Creamos una celda que contiene el id/reference y la imagen en la misma celda
+    //     const cell = {
+    //       stack: [
+    //         { text: `${item.reference}`, alignment: 'center', margin: [0, 5]},
+    //         { text: `Q${item.pormayor}`, alignment: 'center', bold:'true'},
+    //         { text: `${item.nombre}`, alignment: 'center', fontSize: 12, margin: [0, 5]},
+    //         { image: item.image, width: 160, height: 213, margin: [0, 57]}
+            
+    //       ],
+    //       alignment: 'center',
+    //       // border: [false, false, true, true], 
+    //       border: columnIndex === 2 ? [false, false, false, true] : [false, false, true, true],
+    //     };
+    //     row.push(cell);
+    //   });
+    //   return row;
+    // });
+
     const tableBody = imagesInGroupsOfThree.map((imageGroup) => {
       const row = [];
       imageGroup.forEach((item, columnIndex) => {
-        // Creamos una celda que contiene el id/reference y la imagen en la misma celda
+        // Dividir el texto en líneas si su longitud es mayor o igual a 20
+        const nombreLines = item.nombre.length >= 20
+          ? this.splitTextIntoLines(item.nombre, 20)
+          : [item.nombre];
+  
         const cell = {
           stack: [
-            { text: `${item.reference}`, alignment: 'center', margin: [0, 5]},
-            { text: `Q${item.pormayor}`, alignment: 'center', bold:'true'},
-            // { text: `${item.nombre}`, alignment: 'left' },
-            { image: item.image, width: 160, height: 213, margin: [0, 57]}
-            
+            { text: `${item.reference}`, alignment: 'center', },
+            { text: `Q${item.pormayor}`, alignment: 'center', bold: true },
+            ...nombreLines.map((line, index) => ({ text: line, alignment: 'center', fontSize: 12 })),
+            // { text: 'PEDIALYTE COCO', alignment: 'center', fontSize: 12, margin: [0,5] },
+            // { text: '#60 + ZINC', alignment: 'center', fontSize: 12, margin: [0,5] },
+            { image: item.image, width: 160, height: 175, margin: [0, 55] }
           ],
           alignment: 'center',
-          // border: [false, false, true, true], 
-          border: columnIndex === 2 ? [false, false, false, true] : [false, false, true, true],
+          border: columnIndex === 2 ? [false, false, false, true] : [false, false, true, true]
         };
         row.push(cell);
       });
       return row;
     });
+
+
   
     // Agregamos una fila vacía si el número de imágenes no es divisible por tres
     if (imagesWithReferences.length % 3 !== 0) {
@@ -188,10 +215,66 @@ export class CatalogoComponent implements OnInit{
 
 
 
+  // splitTextIntoLines(text: string, maxLength: number): string[] {
+  //   const lines = [];
+  //   let currentLine = '';
+    
+  //   for (const word of text.split(' ')) {
+  //     if (currentLine.length + word.length <= maxLength) {
+  //       currentLine += (currentLine.length > 0 ? ' ' : '') + word;
+  //     } else {
+  //       lines.push(currentLine);
+  //       currentLine = word;
+  //     }
+  //   }
+    
+  //   if (currentLine.length > 0) {
+  //     lines.push(currentLine);
+  //   }
+    
+  //   return lines;
+  // }
 
-
-
-
+  // splitTextIntoLines(text: string, maxLength: number): string[] {
+  //   const lines = [];
+  //   let currentLine = '';
+    
+  //   for (const word of text.split(' ')) {
+  //     if (currentLine.length + word.length <= maxLength || word === '+') {
+  //       currentLine += (currentLine.length > 0 ? ' ' : '') + word;
+  //     } else {
+  //       lines.push(currentLine);
+  //       currentLine = word;
+  //     }
+  //   }
+    
+  //   if (currentLine.length > 0) {
+  //     lines.push(currentLine);
+  //   }
+    
+  //   return lines;
+  // }
+  
+  splitTextIntoLines(text: string, maxLength: number): string[] {
+    const lines = [];
+    let currentLine = '';
+    
+    for (const word of text.split(/(\s|\+)/)) {
+      if (currentLine.length + word.length <= maxLength) {
+        currentLine += (currentLine.length > 0 ? (word === '+' ? '+' : ' ') : '') + word;
+      } else {
+        lines.push(currentLine);
+        currentLine = word;
+      }
+    }
+    
+    if (currentLine.length > 0) {
+      lines.push(currentLine);
+    }
+    
+    return lines;
+  }
+  
  
 
 }

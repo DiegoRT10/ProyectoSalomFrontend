@@ -92,22 +92,24 @@ export class CatalogoComponent implements OnInit{
   
     // Esperamos a que todas las imágenes se hayan cargado y convertido a base64
     Promise.all(promises).then((base64Images) => {
-      this.createPDF(base64Images, this.ListProductosCatalogo.map(producto => producto.reference),this.ListProductosCatalogo.map(producto => String(producto.pormayor)), this.ListProductosCatalogo.map(producto => producto.name)); // Llamamos a la función para crear el PDF
+      this.createPDF(base64Images, this.ListProductosCatalogo.map(producto => producto.presentacion),this.ListProductosCatalogo.map(producto => producto.reference),this.ListProductosCatalogo.map(producto => String(producto.pormayor)), this.ListProductosCatalogo.map(producto => producto.name), this.ListProductosCatalogo.map(producto => producto.laboratorio)); // Llamamos a la función para crear el PDF
     });
   }
   
-  createPDF(base64Images: string[], references: string[], pormayor: string[], nombre: string[]) {
+  createPDF(base64Images: string[], presentacion: string[], references: string[], pormayor: string[], nombre: string[], laboratorio: string[]) {
 
     
 
     // Agrupamos cada imagen con su referencia en un solo objeto
     const imagesWithReferences = base64Images.map((base64, index) => ({
       image: base64,
+      laboratorio: laboratorio[index],
+      presentacion: presentacion[index],
       reference: references[index],
       nombre: nombre[index],
       pormayor: pormayor[index],
       width: 160,
-      height: 175,
+      height: 195,
     }));
   
     // Divide las imágenes en grupos de tres
@@ -121,19 +123,20 @@ export class CatalogoComponent implements OnInit{
       const row = [];
       imageGroup.forEach((item, columnIndex) => {
         // Dividir el texto en líneas si su longitud es mayor o igual a 20
-        const nombreLines = item.nombre.length >= 20 ? this.splitTextIntoLines(item.nombre, 20) : [item.nombre];
+        // const nombreLines = item.nombre.length >= 20 ? this.splitTextIntoLines(item.nombre, 20) : [item.nombre];
+        const nombreLines = item.nombre.length >= 20 ? this.splitTextIntoLines(item.nombre, 20) : this.splitTextIntoLines(item.nombre.concat('          '), 20);
   
         const cell = {
           stack: [
+            { text: `${item.laboratorio}`, alignment: 'center', },
             { text: `${item.reference}`, alignment: 'center', },
-            { text: `Q${item.pormayor}`, alignment: 'center', bold: true },
+            { text: `Q${item.pormayor}`, alignment: 'center', },
+            { text: `${item.presentacion}`, alignment: 'center', },
             ...nombreLines.map((line, index) => ({ text: line, alignment: 'center', fontSize: 12 })),
-            // { text: 'PEDIALYTE COCO', alignment: 'center', fontSize: 12, margin: [0,5] },
-            // { text: '#60 + ZINC', alignment: 'center', fontSize: 12, margin: [0,5] },
-            { image: item.image, width: 160, height: 175, margin: [0, 55] }
+            { image: item.image, width: 160, height: 190, margin: [0, 56] }
           ],
           alignment: 'center',
-          border: columnIndex === 2 ? [false, false, false, true] : [false, false, true, true]
+          border: columnIndex === 2 ? [false, false, false, true] : [false, false, true, true],
         };
         row.push(cell);
       });
@@ -165,18 +168,19 @@ export class CatalogoComponent implements OnInit{
               {
               columns:[
                 {
+                  text: 'CATÁLOGO DE PRODUCTOS',
+                  fontSize: 20,
+                  bold: true,
+                  alignment: 'left',
+                  margin:[0,5]
+                },
+              {
                 image: econoFarmaBase64,
                 width: 200,
                 alignment: 'right',
                 margin:[0,5]
               },
-              {
-                text: 'CATÁLOGO PRODUCTOS',
-                fontSize: 20,
-                bold: true,
-                alignment: 'left',
-                margin:[0,5]
-              },]
+            ]
               }
 
             ];
@@ -189,20 +193,6 @@ export class CatalogoComponent implements OnInit{
           },
 
           content: [
-            // [
-            //   {
-            //     image: econoFarmaBase64, // Agregar la imagen de lado izquierdo
-            //     width: 200,
-            //     alignment: 'right',
-            //   },
-            //   {
-            //     text: 'CATÁLOGO PRODUCTOS', // Agregar el texto
-            //     fontSize: 20,
-            //     bold: true,
-            //     alignment: 'left',
-            //     margin: [0, 5],
-            //   },
-            // ],
             {
               style: 'tableExample',
               table: {

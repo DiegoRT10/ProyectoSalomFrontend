@@ -11,17 +11,21 @@ export class DireccionService {
   
   constructor(private http: HttpClient, private jwtHelper: JwtHelperService) { }
 
-  ListCoordenada(){
-    return this.http.get(`${this.URL}/direccion/coordenadasReceive`);
+  ListCoordenada(idPeople:ID){
+    console.log('este es el idPeople a enivar ', idPeople);
+    return this.http.post<Coordenada>(`${this.URL}/distribuidora/coordenadasReceive`,idPeople);
   }
 }
 
 export interface Coordenada{
+  id:string,
+  idRuta:string,
+  idPeople:string
+  fechaHora:string;
   latitud:string,
   longitud:string,
-  id:string
 }
 
 export interface ID{
-  id:string
+  idPeople:string
 }

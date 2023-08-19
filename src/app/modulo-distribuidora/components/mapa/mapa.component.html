@@ -2,6 +2,13 @@
     <div class="section text-center">
         <div class="container">
             <h1 class="title">Rutas de venta</h1>
+
+            <br>
+            <label for="">Ingresa el codigo del rutero</label>
+            <input type="text" class="form-control" [(ngModel)]="ObjId.idPeople" title="codigo de la persona" name="ObjId.id">
+            <button class="btn btn-info" (click)="startRuta()">Rastrear</button>
+            <br>
+
              <div id="map"></div>
              <h2>Direccion Actual</h2>
              <table class="table">

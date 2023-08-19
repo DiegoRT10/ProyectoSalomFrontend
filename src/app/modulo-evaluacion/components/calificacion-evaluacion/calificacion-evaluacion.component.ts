@@ -1,5 +1,5 @@
 import { Component, HostListener, OnInit } from '@angular/core';
-import { CountProductoCalificacion, CountProductoEvaluacion, ExchangeService, ID, ProductosCalificados, TipoEvaluacion } from '../../services/exchange.service';
+import { CountProductoCalificacion, CountProductoEvaluacion, Evaluacion, ExchangeService, ID, ProductosCalificados, TipoEvaluacion } from '../../services/exchange.service';
 import { Router } from '@angular/router';
 import * as pdfMake from "pdfmake/build/pdfmake";
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
@@ -24,6 +24,19 @@ export class CalificacionEvaluacionComponent implements OnInit {
   porcentajeRegular:number=0;
   porcentajeErroneo:number=0;
 
+  flag:boolean = false;
+  
+  listaOp: String[] = ['Evaluacion Administradores Diagnostica', 'Evaluacion Administradores Final','Evaluacion Bodega Diagnostica','Evaluacion Bodega Final'];
+
+  ObjEvaluacion: Evaluacion = {
+    id: '',
+    tipo: '',
+    nombre: '',
+    puesto: '',
+    observacion: '',
+    estado: ''
+  }
+
   ObjCountProductoEvaluacion: CountProductoEvaluacion = {
     NoEvaluado: 0
   } 
@@ -33,6 +46,10 @@ export class CalificacionEvaluacionComponent implements OnInit {
   }
 
   ObjIdCalificacion: ID = {
+    id: ''
+  }
+
+  ObjIdCalificacionPDF: ID = {
     id: ''
   }
 
@@ -46,7 +63,7 @@ export class CalificacionEvaluacionComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.ProductoDiagnosticaCantidad()
+    this.ProductoDiagnosticaCantidad(5)
   }
 
   @HostListener('window:beforeunload', ['$event'])
@@ -57,17 +74,17 @@ export class CalificacionEvaluacionComponent implements OnInit {
   }
 
 
-  ProductosCalificados(){
-    this.ObjIdCalificacion.id = <string>localStorage.getItem('idEvaluacion');
+  ProductosCalificados(id:string){
+    (id == '0' ? this.ObjIdCalificacion.id = <string>localStorage.getItem('idEvaluacion') : this.ObjIdCalificacion.id = this.ObjIdCalificacionPDF.id)
     this.exchangeService.ListProductosCalificados(this.ObjIdCalificacion).subscribe(res => {
       this.ListProductosCalificados = <any>res;
       console.log('productos calificadso ',this.ListProductosCalificados);
       this.countPreguntas();
+      this.ObjIdCalificacionPDF.id = '';
      },
        err => {
          console.log(err);
        }
- 
      );
   }
 
@@ -101,11 +118,13 @@ export class CalificacionEvaluacionComponent implements OnInit {
   }
 
   
-  ProductoDiagnosticaCantidad(){
+  ProductoDiagnosticaCantidad(tipo:number){
+    (tipo == 5 ? this.ObjTipoEvaluacion.tipo = Number(localStorage.getItem('tipoEvaluacion')) : this.ObjTipoEvaluacion.tipo = tipo)
     this.ObjTipoEvaluacion.tipo = Number(localStorage.getItem('tipoEvaluacion'));
     this.exchangeService.CantidadProductoDF(this.ObjTipoEvaluacion).subscribe(res => {
       this.ObjCountProductoEvaluacion = res[0];
-      this.ProductosCalificados();
+      (tipo == 5 ? this.ProductosCalificados('0') : this.ProductosCalificados('1'))
+      
     },
       err => {
         console.log(err);
@@ -175,6 +194,26 @@ export class CalificacionEvaluacionComponent implements OnInit {
     pdfMake.createPdf(documentDefinition).open();
   }
 
+  newCalificacion(){
+    this.flag = true;
+  }
 
+  callCalificacionEvaluacion(){
+    switch (<any>this.ObjEvaluacion.tipo) {
+      case 'Evaluacion Administradores Diagnostica': this.ObjEvaluacion.tipo = '0';
+        break;
+      case 'Evaluacion Administradores Final': this.ObjEvaluacion.tipo = '1';
+        break;
+      case 'Evaluacion Bodega Diagnostica': this.ObjEvaluacion.tipo = '2';
+        break;
+      case 'Evaluacion Bodega Final': this.ObjEvaluacion.tipo = '3';
+        break;
+    }
 
+    if(this.ObjEvaluacion.tipo != ''){
+      this.ProductoDiagnosticaCantidad(6);
+      this.flag = false;
+    }
+
+  }
 }

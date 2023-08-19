@@ -17,6 +17,7 @@ export class MapaComponent implements OnInit{
   longitud!: string;
 
   carga!: boolean;
+  start: boolean;
 
   private polygon: any;
   private coordinates: number[][] = [
@@ -32,19 +33,25 @@ export class MapaComponent implements OnInit{
   ListCoordenadas?:Coordenada[];
 
   ObjCoordenadas:Coordenada={
+    id: '',
+    idRuta: '',
+    idPeople: '',
+    fechaHora: '',
     latitud: '',
-    longitud: '',
-    id: ''
+    longitud: ''
   }
 
   ObjCoordenadasOld:Coordenada={
+    id: '',
+    idRuta: '',
+    idPeople: '',
+    fechaHora: '',
     latitud: '',
-    longitud: '',
-    id: ''
+    longitud: ''
   }
 
   ObjId:ID = {
-    id: ''
+    idPeople: ''
   }
 
   constructor(private direccionService:DireccionService){
@@ -56,7 +63,9 @@ export class MapaComponent implements OnInit{
     
 
     setInterval(() => {
-      this.getCoordenadas();
+      if(this.start){
+        this.getCoordenadas();
+      }
     }, 8000);
 
   }
@@ -85,16 +94,16 @@ this.polygon = L.polyline([]).addTo(this.map);
 
   getCoordenadas(){
     console.log('entre a coordenadas');
-    this.direccionService.ListCoordenada().subscribe(res => {
-    this.ObjCoordenadas = <any>res;
-    console.log('este es el res ',res);
-    console.log('este es el objeto ',this.ObjCoordenadas);
+    this.direccionService.ListCoordenada(this.ObjId).subscribe(res => {
+    this.ObjCoordenadas = res[0];
     if(this.ObjCoordenadas != null && this.ObjCoordenadas != undefined ){
       console.log('entre al primer if');
       if(this.ObjCoordenadas.latitud != this.ObjCoordenadasOld.latitud && this.ObjCoordenadas.longitud != this.ObjCoordenadasOld.longitud ){
         console.log('entre a segundo if');
         const coordenadas = [this.ObjCoordenadas.latitud,this.ObjCoordenadas.longitud]
+        console.log('estas son las coordenadas ',coordenadas);
         this.polygon.addLatLng(coordenadas);
+        console.log('estas son las coordenadas ',coordenadas);
         this.map.setView([this.ObjCoordenadas.latitud, this.ObjCoordenadas.longitud], 15)
         this.ObjCoordenadasOld.latitud = this.ObjCoordenadas.latitud;
         this.ObjCoordenadasOld.longitud = this.ObjCoordenadas.longitud;
@@ -123,4 +132,8 @@ this.polygon = L.polyline([]).addTo(this.map);
     this.coordinates.push([Number(this.ObjCoordenadas.latitud), Number(this.ObjCoordenadas.longitud)]);
   }
 
+  public startRuta(){
+    this.start = true;   
+    console.log('este es el idPeople',this.ObjId.idPeople);
+  }
 }

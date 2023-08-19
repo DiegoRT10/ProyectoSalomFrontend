@@ -35,7 +35,19 @@
         </div>
 
         <br>
-        <button class="btn-success float-left"  (click)="generarPDF(ListProductosCalificados)">Descargar mis respuestas</button>
+        <button *ngIf="!flag" class="btn-success float-left"  (click)="generarPDF(ListProductosCalificados)">Descargar mis respuestas</button>
+        <button *ngIf="!flag" class="btn-success float-right" (click)="newCalificacion()" >Ver otras evaluaciones</button>
+        <form *ngIf="flag">
+          <div class="mb-3">
+            <label class="form-label">Tipo de evaluacion</label>
+            <select  [(ngModel)]="ObjEvaluacion.tipo" class="form-control" name="tipo">
+            <option  *ngFor="let item of listaOp" >{{item}}</option>
+    </select>
+        </div>
+          <input type="text" class="form-control" [(ngModel)]="ObjIdCalificacionPDF.id" title="codigo de evaluacion" name="idEvaluacion">
+          <br>
+          <button class="btn-info" (click)="callCalificacionEvaluacion()" >Generar</button>
+        </form>
         <br>
         <br>
 

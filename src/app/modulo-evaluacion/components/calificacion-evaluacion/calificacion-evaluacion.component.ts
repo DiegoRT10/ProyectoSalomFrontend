@@ -183,8 +183,8 @@ export class CalificacionEvaluacionComponent implements OnInit {
             body: [
               [{ text: 'Pregunta', bold: true, alignment: 'center' }, { text: 'Producto', bold: true, alignment: 'center' }, { text: 'Calificacion', bold: true, alignment: 'center' }],
               ...datos
-              .filter((dato) => dato.calificacion == 2)
-              .map((dato) => [dato.pregunta.toString(), dato.name, (dato.calificacion == 2 ? 'Erroneo' : '')]),
+              .filter((dato) => dato.calificacion > 0)
+              .map((dato) => [dato.pregunta.toString(), dato.name, (dato.calificacion == 2 ? 'Erroneo' : 'Regular')]),
             ],
           },
         },

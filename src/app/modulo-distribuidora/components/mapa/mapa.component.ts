@@ -17,7 +17,7 @@ export class MapaComponent implements OnInit{
   longitud!: string;
 
   carga!: boolean;
-  start: boolean;
+  start: boolean = (localStorage.getItem('idRutero') ? true: false);
 
   private polygon: any;
   private coordinates: number[][] = [
@@ -83,7 +83,7 @@ export class MapaComponent implements OnInit{
       accessToken: 'dWEkrXd5H5laWG2CyiSd0K9PBColbhFH7MToodSFgkJoDVQeEpuRKibstrzgWRoH'
     }).addTo(this.map);
 
-    // const farm1 = marker([14.800796, -89.544790]).addTo(map).bindPopup("Doctor Farma Guayacan");
+    // \const farm1 = marker([14.800796, -89.544790]).addTo(map).bindPopup("Doctor Farma Guayacan");
 
 
 this.polygon = L.polyline([]).addTo(this.map);
@@ -94,14 +94,17 @@ this.polygon = L.polyline([]).addTo(this.map);
 
   getCoordenadas(){
     console.log('entre a coordenadas');
+    this.ObjId.idPeople = localStorage.getItem('idRutero');
     this.direccionService.ListCoordenada(this.ObjId).subscribe(res => {
     this.ObjCoordenadas = res[0];
     if(this.ObjCoordenadas != null && this.ObjCoordenadas != undefined ){
       console.log('entre al primer if');
+      
       if(this.ObjCoordenadas.latitud != this.ObjCoordenadasOld.latitud && this.ObjCoordenadas.longitud != this.ObjCoordenadasOld.longitud ){
         console.log('entre a segundo if');
         const coordenadas = [this.ObjCoordenadas.latitud,this.ObjCoordenadas.longitud]
         console.log('estas son las coordenadas ',coordenadas);
+        marker(<any>coordenadas).addTo(this.map).bindPopup("Coordenada inicial");
         this.polygon.addLatLng(coordenadas);
         console.log('estas son las coordenadas ',coordenadas);
         this.map.setView([this.ObjCoordenadas.latitud, this.ObjCoordenadas.longitud], 15)
@@ -135,5 +138,11 @@ this.polygon = L.polyline([]).addTo(this.map);
   public startRuta(){
     this.start = true;   
     console.log('este es el idPeople',this.ObjId.idPeople);
+    localStorage.setItem('idRutero',this.ObjId.idPeople);
+  }
+
+  public otherRutero(){
+    this.start = false;
+    localStorage.removeItem('idRutero');
   }
 }

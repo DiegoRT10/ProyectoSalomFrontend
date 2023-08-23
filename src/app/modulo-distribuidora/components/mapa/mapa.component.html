@@ -4,9 +4,12 @@
             <h1 class="title">Rutas de venta</h1>
 
             <br>
-            <label for="">Ingresa el codigo del rutero</label>
-            <input type="text" class="form-control" [(ngModel)]="ObjId.idPeople" title="codigo de la persona" name="ObjId.id">
-            <button class="btn btn-info" (click)="startRuta()">Rastrear</button>
+            <form *ngIf="!start">
+                <label>Ingresa el codigo del rutero</label>
+                <input type="text" class="form-control" [(ngModel)]="ObjId.idPeople" title="codigo de la persona" name="ObjId.id">
+                <button class="btn btn-info" (click)="startRuta()">Rastrear</button>
+            </form>
+            <button *ngIf="start" class="btn btn-info" (click)="otherRutero()" >Ver otro rutero</button>
             <br>
 
              <div id="map"></div>

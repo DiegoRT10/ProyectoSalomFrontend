@@ -139,6 +139,7 @@ export class ExchangeService {
       evaluacion:string, 
       evaluado:string, 
       componente:string, 
-      indicacion:string
+      indicacion:string,
+      unidad:string
     }
     

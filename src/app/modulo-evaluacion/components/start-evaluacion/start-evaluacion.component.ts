@@ -122,7 +122,8 @@ export class StartEvaluacionComponent implements OnInit{
     evaluacion: '',
     evaluado: '',
     componente: '',
-    indicacion: ''
+    indicacion: '',
+    unidad: ''
   }
 
   constructor(private router: Router, private exchangeService: ExchangeService){
@@ -220,6 +221,8 @@ export class StartEvaluacionComponent implements OnInit{
       case '0': this.editDatosProductosEvaluacionDiagnostica(calificacion);
       break;
       case '1': this.editDatosProductosEvaluacionFinal(calificacion);
+      break;
+      case '2': this.editDatosProductosEvaluacionDiagnosticaBodega(calificacion);
       break;
     }
    }
@@ -329,7 +332,7 @@ export class StartEvaluacionComponent implements OnInit{
    }
 
 
-
+gg
    ProductoDFCantidad(){
     this.ObjTipoEvaluacion.tipo = Number(localStorage.getItem('tipoEvaluacion'));
     this.exchangeService.CantidadProductoDF(this.ObjTipoEvaluacion).subscribe(res => {
@@ -343,9 +346,11 @@ export class StartEvaluacionComponent implements OnInit{
   }
 
   ProductoCalificadoDFCantidad(){
+    console.log('entre a ProductoCalificadoDFCantidad');
     this.ObjTipoEvaluacion.tipo = Number(localStorage.getItem('tipoEvaluacion'));
     this.exchangeService.CantidadProductoCalificadoDF(this.ObjTipoEvaluacion).subscribe(res => {
       this.ObjCountProductoCalificacion = res[0];
+      console.log('esta es la calificacion ', this.ObjCountProductoCalificacion.NoCalificado);
       this.calculoPorcentajeAvance();
     },
       err => {
@@ -588,5 +593,87 @@ export class StartEvaluacionComponent implements OnInit{
     
   }
 
+  editDatosProductosEvaluacionDiagnosticaBodega(calificacion:string){
+    
+    if(this.ObjProductosEvaluacion.pregunta !== '1264'){
+      if(this.ObjProductosEvaluacion.pregunta != null && this.ObjProductosEvaluacion.pregunta != ""){
+        this.ObjProductosEvaluacion.calificacion = calificacion;
+        this.ObjProductosEvaluacion.id = this.idItem;
+        
+      if(this.ObjProductosEvaluacion.calificacion == '0' || this.ObjProductosEvaluacion.calificacion == '1' || this.ObjProductosEvaluacion.calificacion == '2' ){
+        if(this.ObjProductosEvaluacion.id != '' && this.ObjProductosEvaluacion.id != "" && this.ObjProductosEvaluacion.id != null && this.ObjProductosEvaluacion.id != undefined){
+        this.exchangeService.editProductosEvaluacion(this.ObjProductosEvaluacion).subscribe(res => {
+  
+          
+          this.flagImagen = false;
+          this.model = "";
+          this.ObjProductosEvaluacion.id_evaluacion = "";
+          this.ObjProductosEvaluacion.id_producto = "";
+          this.ObjProductosEvaluacion.pregunta = "";
+          this.ObjProductosEvaluacion.calificacion = "";
+          this.ObjProductosEvaluacionNew.pregunta = "";
+          this.idItem = "";
+          this.setProductoEvaluado();
+          
+        
+      },
+        err => {
+          console.log(err);
+        }
+  
+      );
+      }
+      }
+        
+      }else{
+        alert('Espera a que cargue el producto >:C ');
+      }
+  
+    }else{
+      alert('Ya no hay mas productos por calificar :) ');
+    }
 
+    if(this.ObjProductosEvaluacion.pregunta === '1264'){
+
+      this.ObjProductosEvaluacion.calificacion = calificacion;
+      this.ObjProductosEvaluacion.id = this.idItem;
+  
+        this.exchangeService.editProductosEvaluacion(this.ObjProductosEvaluacion).subscribe(res => {
+  
+          
+            this.flagImagen = false;
+            this.model = "";
+            this.ObjProductosEvaluacion.id_evaluacion = "";
+            this.ObjProductosEvaluacion.id_producto = "";
+            this.ObjProductosEvaluacion.pregunta = "";
+            this.ObjProductosEvaluacion.calificacion = "";
+            this.ObjProductosEvaluacionNew.pregunta = "";
+            this.idItem = "";
+            
+
+            this.ObjEvaluado.id = this.ObjProductoDiagnostica.id;
+      this.ObjEvaluado.evaluado = '1' //significa que ya fue evaluado dicho producto
+      this.exchangeService.editProductosDF(this.ObjEvaluado).subscribe(res => {
+        
+      },
+        err => {
+          console.log(err);
+        }
+  
+      );
+            
+          
+        },
+          err => {
+            console.log(err);
+          }
+    
+        );
+      
+
+      
+      
+    }
+    
+  }
 }

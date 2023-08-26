@@ -28,7 +28,7 @@ export class StartEvaluacionComponent implements OnInit{
   countRegular:number=0;
   countErroneo:number=0;
   loading = true;
-
+  bodega:boolean = false;
   
   porcentajeExcelente:number=0;
   porcentajeRegular:number=0;
@@ -163,6 +163,13 @@ export class StartEvaluacionComponent implements OnInit{
   
 
   ListarEvaluacion(id:string){
+
+    if(this.ObjTipoEvaluacion.tipo === 0 || this.ObjTipoEvaluacion.tipo === 1 ){
+      this.bodega = false;
+    }else{
+      this.bodega = true;
+    }
+
     this.ObjId.id = id;
     this.exchangeService.ListEvaluacion(this.ObjId).subscribe(res => {
       this.ObjEvaluacion = res[0];

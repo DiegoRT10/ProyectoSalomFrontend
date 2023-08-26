@@ -143,6 +143,7 @@
                           <td>Nombre:</td>
                           <th>{{this.ObjProductoDiagnostica.nombre}}</th>
                         </tr>
+                        <ng-container *ngIf="bodega">
                         <tr>
                           <td>Componente:</td>
                           <th>{{this.ObjProductoDiagnostica.componente}}</th>
@@ -151,7 +152,11 @@
                           <td>Indicacion:</td>
                           <th>{{this.ObjProductoDiagnostica.indicacion}}</th>
                         </tr>
-
+                      </ng-container>
+                      <ng-container *ngIf="!bodega">
+                          <td>Unidad</td>
+                          <th>{{this.ObjProductoDiagnostica.unidad}}</th>
+                      </ng-container>
                       </table>
                     </div>
 

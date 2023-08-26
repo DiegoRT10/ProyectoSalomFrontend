@@ -92,7 +92,7 @@
 
                     <div *ngIf="!loading" class="button-container">
                       <button class="btn-success"  (click)="editDatosProductosEvaluacion('0')"><i class="nc-icon nc-check-2"></i></button>
-                      <button class="btn-warning" (click)="editDatosProductosEvaluacion('1')"><i class="nc-icon nc-simple-delete"></i></button>
+                      <button *ngIf="!bodega" class="btn-warning" (click)="editDatosProductosEvaluacion('1')"><i class="nc-icon nc-simple-delete"></i></button>
                       <button class="btn-danger"  (click)="editDatosProductosEvaluacion('2')"><i class="nc-icon nc-simple-remove"></i></button>
                     </div>
                   </div>
@@ -143,7 +143,7 @@
                           <td>Nombre:</td>
                           <th>{{this.ObjProductoDiagnostica.nombre}}</th>
                         </tr>
-                        <ng-container *ngIf="bodega">
+                        <ng-container *ngIf="!bodega">
                         <tr>
                           <td>Componente:</td>
                           <th>{{this.ObjProductoDiagnostica.componente}}</th>
@@ -153,7 +153,7 @@
                           <th>{{this.ObjProductoDiagnostica.indicacion}}</th>
                         </tr>
                       </ng-container>
-                      <ng-container *ngIf="!bodega">
+                      <ng-container *ngIf="bodega">
                           <td>Unidad</td>
                           <th>{{this.ObjProductoDiagnostica.unidad}}</th>
                       </ng-container>

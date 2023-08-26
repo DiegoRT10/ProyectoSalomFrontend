@@ -164,7 +164,7 @@ export class StartEvaluacionComponent implements OnInit{
 
   ListarEvaluacion(id:string){
 
-    if(this.ObjTipoEvaluacion.tipo === 0 || this.ObjTipoEvaluacion.tipo === 1 ){
+    if(Number(localStorage.getItem('tipoEvaluacion')) === 0 || Number(localStorage.getItem('tipoEvaluacion')) === 1 ){
       this.bodega = false;
     }else{
       this.bodega = true;

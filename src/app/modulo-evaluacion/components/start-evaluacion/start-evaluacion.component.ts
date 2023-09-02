@@ -430,257 +430,271 @@ gg
   }
 
 
-  editDatosProductosEvaluacionDiagnostica(calificacion:string){
-    
-    if(this.ObjProductosEvaluacion.pregunta !== '195'){
-      if(this.ObjProductosEvaluacion.pregunta != null && this.ObjProductosEvaluacion.pregunta != "" && this.ObjProductosEvaluacion.pregunta != ''){
+  async editDatosProductosEvaluacionDiagnostica(calificacion: string) {
+    if (this.ObjProductosEvaluacion.pregunta !== '195') {
+        if (this.ObjProductosEvaluacion.pregunta != null && this.ObjProductosEvaluacion.pregunta != "" && this.ObjProductosEvaluacion.pregunta != '') {
+            this.ObjProductosEvaluacion.calificacion = calificacion;
+            this.ObjProductosEvaluacion.id = this.idItem;
+
+            if (this.ObjProductosEvaluacion.calificacion === '0' || this.ObjProductosEvaluacion.calificacion === '1' || this.ObjProductosEvaluacion.calificacion === '2') {
+                if (this.ObjProductosEvaluacion.id != '' && this.ObjProductosEvaluacion.id != "" && this.ObjProductosEvaluacion.id != null && this.ObjProductosEvaluacion.id != undefined) {
+                    console.log('este es el id de la pregunta ', this.ObjProductosEvaluacion.id, ' y esta es su calificación', this.ObjProductosEvaluacion.calificacion);
+
+                    try {
+                        await new Promise<void>((resolve, reject) => {
+                            this.exchangeService.editProductosEvaluacion(this.ObjProductosEvaluacion).subscribe(
+                                res => {
+                                    this.flagImagen = false;
+                                    this.model = "";
+                                    this.ObjProductosEvaluacion.id_evaluacion = "";
+                                    this.ObjProductosEvaluacion.id_producto = "";
+                                    this.ObjProductosEvaluacion.pregunta = "";
+                                    // this.ObjProductosEvaluacion.calificacion = "";
+                                    this.ObjProductosEvaluacionNew.pregunta = "";
+                                    this.idItem = "";
+                                    this.setProductoEvaluado();
+                                    resolve(); // Resolvemos la promesa al finalizar
+                                },
+                                err => {
+                                    console.log(err);
+                                    reject(err); // Rechazamos la promesa en caso de error
+                                }
+                            );
+                        });
+                    } catch (error) {
+                        console.log(error);
+                    }
+                }
+            }
+        } else {
+            alert('Espera a que cargue el producto >:C');
+        }
+    } else {
+        alert('Ya no hay más productos por calificar :)');
+    }
+
+    if (this.ObjProductosEvaluacion.pregunta === '195') {
         this.ObjProductosEvaluacion.calificacion = calificacion;
         this.ObjProductosEvaluacion.id = this.idItem;
-        
-      if(this.ObjProductosEvaluacion.calificacion === '0' || this.ObjProductosEvaluacion.calificacion === '1' || this.ObjProductosEvaluacion.calificacion === '2' ){
-        if(this.ObjProductosEvaluacion.id != '' && this.ObjProductosEvaluacion.id != "" && this.ObjProductosEvaluacion.id != null && this.ObjProductosEvaluacion.id != undefined){
-          console.log('este es el id de la pregunta ',this.ObjProductosEvaluacion.id,' y esta es su calificaion',this.ObjProductosEvaluacion.calificacion);
-          this.exchangeService.editProductosEvaluacion(this.ObjProductosEvaluacion).subscribe(res => {
-    
-            
-            this.flagImagen = false;
-            this.model = "";
-            this.ObjProductosEvaluacion.id_evaluacion = "";
-            this.ObjProductosEvaluacion.id_producto = "";
-            this.ObjProductosEvaluacion.pregunta = "";
-            // this.ObjProductosEvaluacion.calificacion = "";
-            this.ObjProductosEvaluacionNew.pregunta = "";
-            this.idItem = "";
-            this.setProductoEvaluado();
-            
-          
-        },
-          err => {
-            console.log(err);
-          }
-    
-        );
+
+        try {
+            await new Promise<void>((resolve, reject) => {
+                this.exchangeService.editProductosEvaluacion(this.ObjProductosEvaluacion).subscribe(
+                    res => {
+                        this.flagImagen = false;
+                        this.model = "";
+                        this.ObjProductosEvaluacion.id_evaluacion = "";
+                        this.ObjProductosEvaluacion.id_producto = "";
+                        this.ObjProductosEvaluacion.pregunta = "";
+                        this.ObjProductosEvaluacion.calificacion = "";
+                        this.ObjProductosEvaluacionNew.pregunta = "";
+                        this.idItem = "";
+
+                        this.ObjEvaluado.id = this.ObjProductoDiagnostica.id;
+                        this.ObjEvaluado.evaluado = '1'; // significa que ya fue evaluado dicho producto
+                        
+                        this.exchangeService.editProductosDF(this.ObjEvaluado).subscribe(
+                            res => {
+                                resolve(); // Resolvemos la promesa al finalizar
+                            },
+                            err => {
+                                console.log(err);
+                                reject(err); // Rechazamos la promesa en caso de error
+                            }
+                        );
+                    },
+                    err => {
+                        console.log(err);
+                        reject(err); // Rechazamos la promesa en caso de error
+                    }
+                );
+            });
+        } catch (error) {
+            console.log(error);
         }
-       
-      }
-        
-      }else{
-        alert('Espera a que cargue el producto >:C ');
-      }
-  
-    }else{
-      alert('Ya no hay mas productos por calificar :) ');
     }
+}
 
-    if(this.ObjProductosEvaluacion.pregunta === '195'){
 
-      this.ObjProductosEvaluacion.calificacion = calificacion;
-      this.ObjProductosEvaluacion.id = this.idItem;
-  
-        this.exchangeService.editProductosEvaluacion(this.ObjProductosEvaluacion).subscribe(res => {
-  
-          
-            this.flagImagen = false;
-            this.model = "";
-            this.ObjProductosEvaluacion.id_evaluacion = "";
-            this.ObjProductosEvaluacion.id_producto = "";
-            this.ObjProductosEvaluacion.pregunta = "";
-            this.ObjProductosEvaluacion.calificacion = "";
-            this.ObjProductosEvaluacionNew.pregunta = "";
-            this.idItem = "";
-            
+async editDatosProductosEvaluacionFinal(calificacion: string) {
+  if (this.ObjProductosEvaluacion.pregunta !== '375') {
+      if (this.ObjProductosEvaluacion.pregunta != null && this.ObjProductosEvaluacion.pregunta != "") {
+          this.ObjProductosEvaluacion.calificacion = calificacion;
+          this.ObjProductosEvaluacion.id = this.idItem;
 
-            this.ObjEvaluado.id = this.ObjProductoDiagnostica.id;
-      this.ObjEvaluado.evaluado = '1' //significa que ya fue evaluado dicho producto
-      this.exchangeService.editProductosDF(this.ObjEvaluado).subscribe(res => {
-        
-      },
-        err => {
-          console.log(err);
-        }
-  
-      );
-            
-          
-        },
-          err => {
-            console.log(err);
+          if (this.ObjProductosEvaluacion.calificacion == '0' || this.ObjProductosEvaluacion.calificacion == '1' || this.ObjProductosEvaluacion.calificacion == '2') {
+              if (this.ObjProductosEvaluacion.id != '' && this.ObjProductosEvaluacion.id != "" && this.ObjProductosEvaluacion.id != null && this.ObjProductosEvaluacion.id != undefined) {
+                  try {
+                      await new Promise<void>((resolve, reject) => {
+                          this.exchangeService.editProductosEvaluacion(this.ObjProductosEvaluacion).subscribe(
+                              res => {
+                                  this.flagImagen = false;
+                                  this.model = "";
+                                  this.ObjProductosEvaluacion.id_evaluacion = "";
+                                  this.ObjProductosEvaluacion.id_producto = "";
+                                  this.ObjProductosEvaluacion.pregunta = "";
+                                  this.ObjProductosEvaluacion.calificacion = "";
+                                  this.ObjProductosEvaluacionNew.pregunta = "";
+                                  this.idItem = "";
+                                  this.setProductoEvaluado();
+                                  resolve();
+                              },
+                              err => {
+                                  console.log(err);
+                                  reject(err);
+                              }
+                          );
+                      });
+                  } catch (error) {
+                      console.log(error);
+                  }
+              }
           }
-    
-        );
-      
-
-      
-      
-    }
-    
+      } else {
+          alert('Espera a que cargue el producto >:C');
+      }
+  } else {
+      alert('Ya no hay más productos por calificar :)');
   }
 
-  editDatosProductosEvaluacionFinal(calificacion:string){
-    
-    if(this.ObjProductosEvaluacion.pregunta !== '375'){
-      if(this.ObjProductosEvaluacion.pregunta != null && this.ObjProductosEvaluacion.pregunta != ""){
-        this.ObjProductosEvaluacion.calificacion = calificacion;
-        this.ObjProductosEvaluacion.id = this.idItem;
-        
-      if(this.ObjProductosEvaluacion.calificacion == '0' || this.ObjProductosEvaluacion.calificacion == '1' || this.ObjProductosEvaluacion.calificacion == '2' ){
-        if(this.ObjProductosEvaluacion.id != '' && this.ObjProductosEvaluacion.id != "" && this.ObjProductosEvaluacion.id != null && this.ObjProductosEvaluacion.id != undefined){
-        this.exchangeService.editProductosEvaluacion(this.ObjProductosEvaluacion).subscribe(res => {
-  
-          
-          this.flagImagen = false;
-          this.model = "";
-          this.ObjProductosEvaluacion.id_evaluacion = "";
-          this.ObjProductosEvaluacion.id_producto = "";
-          this.ObjProductosEvaluacion.pregunta = "";
-          this.ObjProductosEvaluacion.calificacion = "";
-          this.ObjProductosEvaluacionNew.pregunta = "";
-          this.idItem = "";
-          this.setProductoEvaluado();
-          
-        
-      },
-        err => {
-          console.log(err);
-        }
-  
-      );
-      }
-      }
-        
-      }else{
-        alert('Espera a que cargue el producto >:C ');
-      }
-  
-    }else{
-      alert('Ya no hay mas productos por calificar :) ');
-    }
-
-    if(this.ObjProductosEvaluacion.pregunta === '375'){
-
+  if (this.ObjProductosEvaluacion.pregunta === '375') {
       this.ObjProductosEvaluacion.calificacion = calificacion;
       this.ObjProductosEvaluacion.id = this.idItem;
-  
-        this.exchangeService.editProductosEvaluacion(this.ObjProductosEvaluacion).subscribe(res => {
-  
-          
-            this.flagImagen = false;
-            this.model = "";
-            this.ObjProductosEvaluacion.id_evaluacion = "";
-            this.ObjProductosEvaluacion.id_producto = "";
-            this.ObjProductosEvaluacion.pregunta = "";
-            this.ObjProductosEvaluacion.calificacion = "";
-            this.ObjProductosEvaluacionNew.pregunta = "";
-            this.idItem = "";
-            
 
-            this.ObjEvaluado.id = this.ObjProductoDiagnostica.id;
-      this.ObjEvaluado.evaluado = '1' //significa que ya fue evaluado dicho producto
-      this.exchangeService.editProductosDF(this.ObjEvaluado).subscribe(res => {
-        
-      },
-        err => {
-          console.log(err);
-        }
-  
-      );
-            
-          
-        },
-          err => {
-            console.log(err);
-          }
-    
-        );
-      
+      try {
+          await new Promise<void>((resolve, reject) => {
+              this.exchangeService.editProductosEvaluacion(this.ObjProductosEvaluacion).subscribe(
+                  res => {
+                      this.flagImagen = false;
+                      this.model = "";
+                      this.ObjProductosEvaluacion.id_evaluacion = "";
+                      this.ObjProductosEvaluacion.id_producto = "";
+                      this.ObjProductosEvaluacion.pregunta = "";
+                      this.ObjProductosEvaluacion.calificacion = "";
+                      this.ObjProductosEvaluacionNew.pregunta = "";
+                      this.idItem = "";
 
-      
-      
-    }
-    
-  }
-
-  editDatosProductosEvaluacionDiagnosticaBodega(calificacion:string){
-    
-    if(this.ObjProductosEvaluacion.pregunta !== '1264'){
-      if(this.ObjProductosEvaluacion.pregunta != null && this.ObjProductosEvaluacion.pregunta != ""){
-        this.ObjProductosEvaluacion.calificacion = calificacion;
-        this.ObjProductosEvaluacion.id = this.idItem;
-        
-      if(this.ObjProductosEvaluacion.calificacion == '0' || this.ObjProductosEvaluacion.calificacion == '1' || this.ObjProductosEvaluacion.calificacion == '2' ){
-        if(this.ObjProductosEvaluacion.id != '' && this.ObjProductosEvaluacion.id != "" && this.ObjProductosEvaluacion.id != null && this.ObjProductosEvaluacion.id != undefined){
-        this.exchangeService.editProductosEvaluacion(this.ObjProductosEvaluacion).subscribe(res => {
-  
-          
-          this.flagImagen = false;
-          this.model = "";
-          this.ObjProductosEvaluacion.id_evaluacion = "";
-          this.ObjProductosEvaluacion.id_producto = "";
-          this.ObjProductosEvaluacion.pregunta = "";
-          this.ObjProductosEvaluacion.calificacion = "";
-          this.ObjProductosEvaluacionNew.pregunta = "";
-          this.idItem = "";
-          this.setProductoEvaluado();
-          
-        
-      },
-        err => {
-          console.log(err);
-        }
-  
-      );
+                      this.ObjEvaluado.id = this.ObjProductoDiagnostica.id;
+                      this.ObjEvaluado.evaluado = '1';
+                      
+                      this.exchangeService.editProductosDF(this.ObjEvaluado).subscribe(
+                          res => {
+                              resolve();
+                          },
+                          err => {
+                              console.log(err);
+                              reject(err);
+                          }
+                      );
+                  },
+                  err => {
+                      console.log(err);
+                      reject(err);
+                  }
+              );
+          });
+      } catch (error) {
+          console.log(error);
       }
-      }
-        
-      }else{
-        alert('Espera a que cargue el producto >:C ');
-      }
-  
-    }else{
-      alert('Ya no hay mas productos por calificar :) ');
-    }
-
-    if(this.ObjProductosEvaluacion.pregunta === '1264'){
-
-      this.ObjProductosEvaluacion.calificacion = calificacion;
-      this.ObjProductosEvaluacion.id = this.idItem;
-  
-        this.exchangeService.editProductosEvaluacion(this.ObjProductosEvaluacion).subscribe(res => {
-  
-          
-            this.flagImagen = false;
-            this.model = "";
-            this.ObjProductosEvaluacion.id_evaluacion = "";
-            this.ObjProductosEvaluacion.id_producto = "";
-            this.ObjProductosEvaluacion.pregunta = "";
-            this.ObjProductosEvaluacion.calificacion = "";
-            this.ObjProductosEvaluacionNew.pregunta = "";
-            this.idItem = "";
-            
-
-            this.ObjEvaluado.id = this.ObjProductoDiagnostica.id;
-      this.ObjEvaluado.evaluado = '1' //significa que ya fue evaluado dicho producto
-      this.exchangeService.editProductosDF(this.ObjEvaluado).subscribe(res => {
-        
-      },
-        err => {
-          console.log(err);
-        }
-  
-      );
-            
-          
-        },
-          err => {
-            console.log(err);
-          }
-    
-        );
-      
-
-      
-      
-    }
-    
   }
 }
+
+
+async editDatosProductosEvaluacionDiagnosticaBodega(calificacion: string) {
+  if (this.ObjProductosEvaluacion.pregunta !== '1264') {
+      if (this.ObjProductosEvaluacion.pregunta != null && this.ObjProductosEvaluacion.pregunta != "") {
+          this.ObjProductosEvaluacion.calificacion = calificacion;
+          this.ObjProductosEvaluacion.id = this.idItem;
+
+          if (this.ObjProductosEvaluacion.calificacion == '0' || this.ObjProductosEvaluacion.calificacion == '1' || this.ObjProductosEvaluacion.calificacion == '2') {
+              if (this.ObjProductosEvaluacion.id != '' && this.ObjProductosEvaluacion.id != "" && this.ObjProductosEvaluacion.id != null && this.ObjProductosEvaluacion.id != undefined) {
+                  try {
+                      await new Promise<void>((resolve, reject) => {
+                          this.exchangeService.editProductosEvaluacion(this.ObjProductosEvaluacion).subscribe(
+                              res => {
+                                  this.flagImagen = false;
+                                  this.model = "";
+                                  this.ObjProductosEvaluacion.id_evaluacion = "";
+                                  this.ObjProductosEvaluacion.id_producto = "";
+                                  this.ObjProductosEvaluacion.pregunta = "";
+                                  this.ObjProductosEvaluacion.calificacion = "";
+                                  this.ObjProductosEvaluacionNew.pregunta = "";
+                                  this.idItem = "";
+                                  this.setProductoEvaluado();
+                                  resolve();
+                              },
+                              err => {
+                                  console.log(err);
+                                  reject(err);
+                              }
+                          );
+                      });
+                  } catch (error) {
+                      console.log(error);
+                  }
+              }
+          }
+      } else {
+          alert('Espera a que cargue el producto >:C');
+      }
+  } else {
+      alert('Ya no hay más productos por calificar :)');
+  }
+
+  if (this.ObjProductosEvaluacion.pregunta === '1264') {
+      this.ObjProductosEvaluacion.calificacion = calificacion;
+      this.ObjProductosEvaluacion.id = this.idItem;
+
+      try {
+          await new Promise<void>((resolve, reject) => {
+              this.exchangeService.editProductosEvaluacion(this.ObjProductosEvaluacion).subscribe(
+                  res => {
+                      this.flagImagen = false;
+                      this.model = "";
+                      this.ObjProductosEvaluacion.id_evaluacion = "";
+                      this.ObjProductosEvaluacion.id_producto = "";
+                      this.ObjProductosEvaluacion.pregunta = "";
+                      this.ObjProductosEvaluacion.calificacion = "";
+                      this.ObjProductosEvaluacionNew.pregunta = "";
+                      this.idItem = "";
+
+                      this.ObjEvaluado.id = this.ObjProductoDiagnostica.id;
+                      this.ObjEvaluado.evaluado = '1';
+                      
+                      this.exchangeService.editProductosDF(this.ObjEvaluado).subscribe(
+                          res => {
+                              resolve();
+                          },
+                          err => {
+                              console.log(err);
+                              reject(err);
+                          }
+                      );
+                  },
+                  err => {
+                      console.log(err);
+                      reject(err);
+                  }
+              );
+          });
+      } catch (error) {
+          console.log(error);
+      }
+  }
+}
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+}
+

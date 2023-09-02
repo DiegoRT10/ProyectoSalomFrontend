@@ -26,6 +26,7 @@ import { ListaSalidasComponent } from './components/lista-salidas/lista-salidas.
 import { MovimientosInicioComponent } from './components/movimientos-inicio/movimientos-inicio.component';
 import { InventarioFarmaciaComponent } from './components/inventario-farmacia/inventario-farmacia.component';
 import { VentaDiariaComponent } from './components/venta-diaria/venta-diaria.component';
+import { MetaComponent } from './components/meta/meta.component';
 
 
 
@@ -47,6 +48,7 @@ import { VentaDiariaComponent } from './components/venta-diaria/venta-diaria.com
     MovimientosInicioComponent,
     InventarioFarmaciaComponent,
     VentaDiariaComponent,
+    MetaComponent,
     //AccordionComponent,
   ],
   imports: [

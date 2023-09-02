@@ -55,6 +55,7 @@ import { MapaComponent } from './modulo-distribuidora/components/mapa/mapa.compo
 import { CalificacionEvaluacionComponent } from './modulo-evaluacion/components/calificacion-evaluacion/calificacion-evaluacion.component';
 import { CatalogoComponent } from './modulo-distribuidora/components/catalogo/catalogo.component';
 import { EvaluacionBodegaComponent } from './modulo-evaluacion/components/evaluacion-bodega/evaluacion-bodega.component';
+import { MetaComponent } from './modulo-venta/components/meta/meta.component';
 
 
 
@@ -90,6 +91,7 @@ const routes: Routes = [
 {path: 'venta-gerente', component: VentaGerenteComponent, canActivate: [AuthGuard, RoleGuard],  data: {expectedRole: {s:'0', g:'1'}}},//puede acceder sistemas o gerente
 {path: 'venta-administrador', component: VentaAdministradorComponent, canActivate: [AuthGuard, RoleGuard],  data: {expectedRole: {s:'0', g:'2'}}},//puede acceder sistemas o administrador
 {path: 'venta', component: VentaComponent, canActivate: [AuthGuard, RoleGuard],  data: {expectedRole: {s:'0', g:'1'}}},//puede acceder sistemas o gerente
+{path: 'meta', component: MetaComponent, canActivate: [AuthGuard, RoleGuard],  data: {expectedRole: {s:'0', g:'1'}}},//puede acceder sistemas o gerente
 {path: 'farmacia', component: FarmaciaComponent, canActivate: [AuthGuard, RoleGuard],  data: {expectedRole: {s:'0', g:'1'}}},//puede acceder sistemas o gerente
 {path: 'estimulo-gerente', component: EstimuloGerenteComponent, canActivate: [AuthGuard, RoleGuard],  data: {expectedRole: {s:'0', g:'1'}}},//puede acceder sistemas o gerente
 {path: 'venta-sucursal', component: VentaSucursalComponent, canActivate: [AuthGuard, RoleGuard],  data: {expectedRole: {s:'0', g:'2'}}},//puede acceder sistemas administrador

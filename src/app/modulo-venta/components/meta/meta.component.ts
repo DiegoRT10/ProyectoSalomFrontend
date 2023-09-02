@@ -6,11 +6,11 @@ import * as moment from 'moment';
 
 
 @Component({
-  selector: 'app-venta',
-  templateUrl: './venta.component.html',
-  styleUrls: ['./venta.component.css']
+  selector: 'app-meta',
+  templateUrl: './meta.component.html',
+  styleUrls: ['./meta.component.css']
 })
-export class VentaComponent implements OnInit {
+export class MetaComponent {
   farmacia?: any;
   pVenta: any = 0;
   pVentaDiaria: any = 0;
@@ -31,6 +31,7 @@ export class VentaComponent implements OnInit {
   loading3?:boolean;
   loading4?:boolean;
   carga?:boolean;
+  prueba: number;
 
   view: [number,number] = [1090, 850];
   showXAxis = true;
@@ -129,21 +130,7 @@ export class VentaComponent implements OnInit {
             );
         });
 
-        // const singlePromise = new Promise<void>((resolve, reject) => {
-        //     this.VentaDiariaService.getDatos(this.Venta).subscribe(
-        //         res => {
-        //             this.single = <any>res;
-        //             this.loading2 = false;
-        //             resolve();
-        //         },
-        //         err => {
-        //             console.log(err);
-        //             reject(err);
-        //         }
-        //     );
-        // });
-
-        // await Promise.all([listaVentaPromise, singlePromise]);
+      
     } catch (error) {
         console.log(error);
     }
@@ -162,13 +149,14 @@ async VentaGlobal(cash: string, ym: string): Promise<void> {
               res => {
                   this.ListaVentaGlobal = <any>res;
                   for (const VentaGlobal of this.ListaVentaGlobal) {
+                    
                     const nuevoDato: any = {
                       name: VentaGlobal.idlocation.toString(),
-                      value: VentaGlobal.total
+                      value: (VentaGlobal.total / VentaGlobal.monto) 
                     };
                     this.single.push(nuevoDato);
                   }
-                  
+                
                   resolve();
                   this.loading2 = false;
                   this.loading3 = false;
@@ -238,14 +226,6 @@ setFechaCard():void{
 
 DatosCard():void{
  
-  // for(let i of this.ListaMetas!){
-  // for(let j of this.ListaVenta!){
-  //   if(i.idlocation == j.host){
-  //     this.totalVentaActual += j.total;
-  //     this.totalVentaMeta += i.monto;
-  //   }
-  //  }
-  //  }
   for(let i of this.ListaMetas!){
     this.totalVentaMeta += i.monto;
      }

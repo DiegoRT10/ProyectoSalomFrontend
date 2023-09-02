@@ -31,6 +31,7 @@ export class VentaDiariaService {
     }
 
     getVentasGlobales(venta:any){
+      console.log('estos son los datos a enviar por la ruta ',venta);
       return this.http.post(`${this.URL}/venta/ventaGlobal`,venta);
     }
 

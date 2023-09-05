@@ -281,6 +281,7 @@ goFarmacia(id:String):void{
 
 onSelect(data:any): void {
   // console.log('Item clicked', JSON.parse(JSON.stringify(data)));
+  console.log('este es el dato seleccionado de la grafica ', data.value);
   this.OneMetaFarmacia(data.name,data.value);
  
 }

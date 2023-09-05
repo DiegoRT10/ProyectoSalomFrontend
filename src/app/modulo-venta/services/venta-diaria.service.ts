@@ -31,8 +31,11 @@ export class VentaDiariaService {
     }
 
     getVentasGlobales(venta:any){
-      console.log('estos son los datos a enviar por la ruta ',venta);
       return this.http.post(`${this.URL}/venta/ventaGlobal`,venta);
+    }
+
+    getVentasGlobalesMeta(venta:any){
+      return this.http.post(`${this.URL}/venta/ventaGlobalMetas`,venta);
     }
 
     getVentaProductos(venta:any){
@@ -268,6 +271,17 @@ export interface DatosVentaGlobal{
   dia:number,
   host:String,
   total:number
+}
+
+export interface DatosVentaGlobalMeta{
+  idlocation:string,
+  monto:number,
+  datenew:Date,
+  dateend:Date,
+  dia:number,
+  host:String,
+  total:number,
+  actual:number
 }
  
 

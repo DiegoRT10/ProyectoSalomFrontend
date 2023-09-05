@@ -1,0 +1,114 @@
+.left-align {
+    float: left;
+    margin-right: 10px;
+  }
+
+/* Estilo para el cuadro */
+.cuadro {
+  width: 150px; /* Ancho del cuadro */
+  height: 150px; /* Altura del cuadro */
+  border: 2px solid #000; /* Borde negro de 2 píxeles */
+  padding: 10px; /* Espacio interno de 10 píxeles */
+  text-align: center; /* Centrar el contenido horizontalmente */
+  position: relative; /* Para poder posicionar el círculo de manera absoluta */
+}
+
+.cuadroFirst {
+  width: 150px; /* Ancho del cuadro */
+  height: 150px; /* Altura del cuadro */
+  border: 5px solid #ddd272; /* Borde negro de 2 píxeles */
+  padding: 10px; /* Espacio interno de 10 píxeles */
+  text-align: center; /* Centrar el contenido horizontalmente */
+}
+
+.cuadroSecond {
+  width: 150px; /* Ancho del cuadro */
+  height: 150px; /* Altura del cuadro */
+  border: 5px solid #7c7c7c; /* Borde negro de 2 píxeles */
+  padding: 10px; /* Espacio interno de 10 píxeles */
+  text-align: center; /* Centrar el contenido horizontalmente */
+}
+
+.cuadroThird {
+  width: 150px; /* Ancho del cuadro */
+  height: 150px; /* Altura del cuadro */
+  border: 5px solid #946c16; /* Borde negro de 2 píxeles */
+  padding: 10px; /* Espacio interno de 10 píxeles */
+  text-align: center; /* Centrar el contenido horizontalmente */
+}
+
+/* Estilo para la imagen dentro del cuadro */
+.cuadro img {
+  max-width: 100%; /* Ajustar la imagen al ancho del cuadro */
+  max-height: 100%; /* Ajustar la imagen a la altura del cuadro */
+}
+/* Estilo para la imagen dentro del cuadro */
+.cuadroFirst img {
+  max-width: 100%; /* Ajustar la imagen al ancho del cuadro */
+  max-height: 100%; /* Ajustar la imagen a la altura del cuadro */
+}
+/* Estilo para la imagen dentro del cuadro */
+.cuadroSecond img {
+  max-width: 100%; /* Ajustar la imagen al ancho del cuadro */
+  max-height: 100%; /* Ajustar la imagen a la altura del cuadro */
+}
+
+/* Estilo para la imagen dentro del cuadro */
+.cuadroThird img {
+  max-width: 100%; /* Ajustar la imagen al ancho del cuadro */
+  max-height: 100%; /* Ajustar la imagen a la altura del cuadro */
+}
+
+.cuadroFirst::before {
+  content: "1";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 30px; /* Ancho del círculo */
+  height: 30px; /* Altura del círculo */
+  background-color: #ddd272; /* Cambia esto al color que desees para el círculo */
+  border-radius: 50%; /* Hace que el elemento sea un círculo */
+}
+
+
+
+.cuadroSecond::before {
+  content: "2";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 30px; /* Ancho del círculo */
+  height: 30px; /* Altura del círculo */
+  background-color: #7c7c7c; /* Cambia esto al color que desees para el círculo */
+  border-radius: 50%; /* Hace que el elemento sea un círculo */
+}
+
+.cuadroThird::before {
+  content: "3";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 30px; /* Ancho del círculo */
+  height: 30px; /* Altura del círculo */
+  background-color: #946c16; /* Cambia esto al color que desees para el círculo */
+  border-radius: 50%; /* Hace que el elemento sea un círculo */
+}
+
+.cuadro::before {
+  content: "1"; /* Agrega el número 1 como contenido */
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 20px; /* Ancho del círculo */
+  height: 20px; /* Altura del círculo */
+  background: url('../assets/img/salom/firts.png') no-repeat; /* Cambia la ruta a la imagen de la medalla */
+  background-size: cover; /* Ajusta el tamaño de la imagen de la medalla */
+  border-radius: 50%; /* Hace que el elemento sea un círculo */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold; /* Ajusta la fuente según tus preferencias */
+  color: white; /* Ajusta el color del texto dentro del círculo */
+  z-index: 2; /* Coloca el círculo en la parte superior */
+}
+

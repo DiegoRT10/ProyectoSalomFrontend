@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { MetaFarmacia, DataVentaDiaria, VentaDiariaService, VentaMes, DatosGrafica, DatosVentaGlobal } from '../../services/venta-diaria.service';
+import { MetaFarmacia, DataVentaDiaria, VentaDiariaService, VentaMes, DatosGrafica, DatosVentaGlobal, DatosVentaGlobalMeta } from '../../services/venta-diaria.service';
 import { Color, ScaleType } from '@swimlane/ngx-charts';
 import * as moment from 'moment';
-
+import 'moment/locale/es';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-meta',
@@ -26,22 +27,22 @@ export class MetaComponent {
   diaRestantes:number = this.date.getDate();
   check:string='';
   dia=new Date().getDate();
-  loading1?:boolean;
   loading2?:boolean;
   loading3?:boolean;
   loading4?:boolean;
   carga?:boolean;
   prueba: number;
 
-  view: [number,number] = [1090, 850];
+  // view: [number,number] = [1090, 850];
+  view: [number,number] = [850, 850];
   showXAxis = true;
   showYAxis = true;
   gradient = false;
   showLegend = false;
   showXAxisLabel = true;
-  xAxisLabel = 'Farmacias';
+  xAxisLabel = 'Porcentaje de metas';
   showYAxisLabel = true;
-  yAxisLabel = 'Ventas Actuales';
+  yAxisLabel = 'Farmacias';
   showlegendPosition = 'left';
 
   colorScheme: Color = { 
@@ -51,10 +52,9 @@ export class MetaComponent {
     name: 'Customer Usage', 
 };
 
-
+URL = environment.PORT;
 
   constructor(private router: Router, private VentaDiariaService: VentaDiariaService) { 
-    this.loading1=true;
     this.loading2=true;
     this.loading3=true;
     this.loading4=true;
@@ -63,7 +63,7 @@ export class MetaComponent {
   fecha!: Date;
   ListaVenta?: DataVentaDiaria[];
   ListaMetas?: MetaFarmacia[];
-  ListaVentaGlobal?: DatosVentaGlobal[];
+  ListaVentaGlobal?: DatosVentaGlobalMeta[];
   
   Venta: DataVentaDiaria = {
     dia:0,
@@ -87,12 +87,11 @@ export class MetaComponent {
   ngOnInit(): void {
     this.carga = true;
     this.ventaMes.mes = this.setFecha();
-    this.VentaDiaria('cash',this.ventaMes.mes);
     this.VentaGlobal('cash',this.ventaMes.mes);
     this.ventaMes.mes=this.setFechaEvent();
     this.MetaFarmacia();
     
-    this.setFechaCard();
+    // this.setFechaCard();
   }
 
   ngAfterViewInit() {
@@ -101,58 +100,35 @@ export class MetaComponent {
 
 
   setMes(event:any):void{
+    this.loading2=true;
+    this.loading3=true;
+    this.loading4=true;
     this.ventaMes.mes = event.target.value;
     this.ventaMes.mes = this.ventaMes.mes.slice(0,4)+this.ventaMes.mes.slice(5);
     console.log('Este es el mes de venta',this.ventaMes.mes);
-    this.VentaDiaria('cash',this.ventaMes.mes);
     this.VentaGlobal('cash', this.ventaMes.mes);
     this.ventaMes.mes=this.setFechaEvent();
   }
 
 
-  async VentaDiaria(cash: string, ym: string): Promise<void> {
-    try {
-        this.Venta.host = cash;
-        this.Venta.dia = <any>ym;
-
-        await new Promise<void> ((resolve, reject) => {
-            this.VentaDiariaService.getOneVenta(this.Venta).subscribe(
-                res => {
-                    this.ListaVenta = <any>res;
-                    this.DatosCard();
-                    resolve();
-                    this.loading1 = false;
-                },
-                err => {
-                    console.log(err);
-                    reject(err);
-                }
-            );
-        });
-
-      
-    } catch (error) {
-        console.log(error);
-    }
-}
-
-
-
+  
 async VentaGlobal(cash: string, ym: string): Promise<void> {
+  console.log('entre a venta global');
   try {
       this.Venta.host = cash;
       this.Venta.dia = <any>ym;
       console.log('datos a enviar de Venta Global ',this.Venta.host);
       console.log('datos a enviar de Venta Global ',this.Venta.dia);
       await new Promise<void>((resolve, reject) => {
-          this.VentaDiariaService.getVentasGlobales(this.Venta).subscribe(
+          this.VentaDiariaService.getVentasGlobalesMeta(this.Venta).subscribe(
               res => {
                   this.ListaVentaGlobal = <any>res;
                   for (const VentaGlobal of this.ListaVentaGlobal) {
                     
                     const nuevoDato: any = {
                       name: VentaGlobal.idlocation.toString(),
-                      value: (VentaGlobal.total / VentaGlobal.monto) 
+                      // value: (VentaGlobal.total / VentaGlobal.monto * 100) 
+                      value: VentaGlobal.actual 
                     };
                     this.single.push(nuevoDato);
                   }
@@ -198,22 +174,15 @@ async MetaFarmacia(): Promise<void> {
 OneMetaFarmacia(id:string, val:any ):void{
 
   //porcentaje venta actual
-  for(let i of this.ListaMetas!){
-    if(id == i.idlocation){
-    this.farmacia=i.idlocation
-    this.metaActual = i.monto;
-    this.pVenta=((val/i.monto)*100).toFixed(2);
-    }
-  }
 
-  //Porcentaje venta diaria y porcentaja de proyeccion
-  for(let i of this.ListaVenta!){
-   if(id == i.host){
-    this.pVentaDiaria=((i.dia/this.noDiasMes)*100).toFixed(2);
-    this.pProyeccion=((((i.total/i.dia)*this.noDiasMes)/this.metaActual)*100).toFixed(2);
-   }
-  }
+    const total = this.ListaVentaGlobal.filter(item => item.idlocation === id).map(item => item.total);
+    const farmSelect = this.ListaMetas.filter(item => item.idlocation === id);
 
+    
+    this.farmacia = farmSelect.map(item => item.idlocation); 
+    this.metaActual = farmSelect.map(item => item.monto);
+    this.pVenta=(Number(<any>total/this.metaActual)*100).toFixed(2);
+    
   
 }
 
@@ -240,8 +209,6 @@ DatosCard():void{
 }
 
 
- 
-
 setFecha(): string {
   let date: Date = new Date();
   return moment.utc(date).format('YYYYMM');
@@ -252,6 +219,16 @@ setFechaEvent(): string {
   return moment.utc(date).format('YYYY-MM');
 }
 
+obtenerFechaActual() {
+  moment.locale('es');
+  const fechaActual = moment();
+  const diaSemana = fechaActual.format('dddd');
+  const dia = fechaActual.format('D');
+  const mes = fechaActual.format('MMMM');
+  const año = fechaActual.format('YYYY');
+
+  return `${diaSemana} ${dia} de ${mes} de ${año}`;
+}
 
 goFarmacia(id:String):void{
   localStorage.setItem('idFar',<string>id);

@@ -17,6 +17,7 @@
             </div>
         </div>
       
+        
    
         <div class="row">
             <div class="col-md-6">
@@ -60,29 +61,21 @@
               
               <div class="col-md-6">
                 <div class="info">
-                    <div class="row">
-                        <div class="col-md-3">
-                            <div class="cuadroFirst">
-                                <img src='{{URL}}/uploads/vendedores/claudia.jpeg' >
+                    <div class="row" >
+                        <div class="col-md-3" *ngFor="let i of ListPeopleLocationRank">
+                            <div *ngIf="i.puesto === 0" class="cuadroFirst">
+                                <img src='{{URL}}/uploads/vendedores/{{i.id}}.png' >
                             </div>
-                        </div>
-                  
-                        <div class="col-md-3">
-                            <div class="cuadroSecond">
-                                <img src='{{URL}}/uploads/vendedores/persona2.jpeg' >
+                            <div *ngIf="i.puesto === 1" class="cuadroSecond">
+                                <img src='{{URL}}/uploads/vendedores/{{i.id}}.png' >
                             </div>
-                        </div>
-
-                        <div class="col-md-3">
-                            <div class="cuadroThird">
-                                <img src='{{URL}}/uploads/vendedores/persona3.jpeg' >
+                            <div *ngIf="i.puesto === 2" class="cuadroThird">
+                                <img src='{{URL}}/uploads/vendedores/{{i.id}}.png' >
                             </div>
-                        </div>
-
-                        <div class="col-md-3">
-                            <div class="cuadro">
-                                <img src='{{URL}}/uploads/vendedores/claudia.jpeg' >
+                            <div *ngIf="i.puesto > 2" class="cuadro">
+                                <img src='{{URL}}/uploads/vendedores/{{i.id}}.png' >
                             </div>
+                            
                         </div>
 
                 </div>

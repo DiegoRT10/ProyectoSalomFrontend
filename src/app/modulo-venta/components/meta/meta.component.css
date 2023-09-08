@@ -19,6 +19,7 @@
   border: 5px solid #ddd272; /* Borde negro de 2 píxeles */
   padding: 10px; /* Espacio interno de 10 píxeles */
   text-align: center; /* Centrar el contenido horizontalmente */
+  position: relative;
 }
 
 .cuadroSecond {
@@ -27,6 +28,7 @@
   border: 5px solid #7c7c7c; /* Borde negro de 2 píxeles */
   padding: 10px; /* Espacio interno de 10 píxeles */
   text-align: center; /* Centrar el contenido horizontalmente */
+  position: relative;
 }
 
 .cuadroThird {
@@ -35,6 +37,7 @@
   border: 5px solid #946c16; /* Borde negro de 2 píxeles */
   padding: 10px; /* Espacio interno de 10 píxeles */
   text-align: center; /* Centrar el contenido horizontalmente */
+  position: relative;
 }
 
 /* Estilo para la imagen dentro del cuadro */
@@ -59,56 +62,55 @@
   max-height: 100%; /* Ajustar la imagen a la altura del cuadro */
 }
 
+
 .cuadroFirst::before {
-  content: "1";
+  content: ""; /* No necesitas contenido aquí si estás usando una imagen */
   position: absolute;
   top: 0;
   left: 0;
-  width: 30px; /* Ancho del círculo */
-  height: 30px; /* Altura del círculo */
-  background-color: #ddd272; /* Cambia esto al color que desees para el círculo */
-  border-radius: 50%; /* Hace que el elemento sea un círculo */
-}
-
-
-
-.cuadroSecond::before {
-  content: "2";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 30px; /* Ancho del círculo */
-  height: 30px; /* Altura del círculo */
-  background-color: #7c7c7c; /* Cambia esto al color que desees para el círculo */
-  border-radius: 50%; /* Hace que el elemento sea un círculo */
-}
-
-.cuadroThird::before {
-  content: "3";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 30px; /* Ancho del círculo */
-  height: 30px; /* Altura del círculo */
-  background-color: #946c16; /* Cambia esto al color que desees para el círculo */
-  border-radius: 50%; /* Hace que el elemento sea un círculo */
-}
-
-.cuadro::before {
-  content: "1"; /* Agrega el número 1 como contenido */
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 20px; /* Ancho del círculo */
-  height: 20px; /* Altura del círculo */
-  background: url('../assets/img/salom/firts.png') no-repeat; /* Cambia la ruta a la imagen de la medalla */
-  background-size: cover; /* Ajusta el tamaño de la imagen de la medalla */
-  border-radius: 50%; /* Hace que el elemento sea un círculo */
+  width: 40px; /* Ajusta el ancho de la imagen */
+  height: 40px; /* Ajusta la altura de la imagen */
+  background: url('src\assets\img\salom\first.png') no-repeat;
+  background-size: cover;
+  border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-weight: bold; /* Ajusta la fuente según tus preferencias */
-  color: white; /* Ajusta el color del texto dentro del círculo */
-  z-index: 2; /* Coloca el círculo en la parte superior */
+  z-index: 2;
+  /* Puedes ajustar otros estilos según tus preferencias */
+}
+
+.cuadroSecond::before {
+  content: ""; /* No necesitas contenido aquí si estás usando una imagen */
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 40px; /* Ajusta el ancho de la imagen */
+  height: 40px; /* Ajusta la altura de la imagen */
+  background: url('src\assets\img\salom\second.png') no-repeat;
+  background-size: cover;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
+  /* Puedes ajustar otros estilos según tus preferencias */
+}
+
+.cuadroThird::before {
+  content: ""; /* No necesitas contenido aquí si estás usando una imagen */
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 40px; /* Ajusta el ancho de la imagen */
+  height: 40px; /* Ajusta la altura de la imagen */
+  background: url('src\assets\img\salom\third.png') no-repeat;
+  background-size: cover;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
+  /* Puedes ajustar otros estilos según tus preferencias */
 }
 

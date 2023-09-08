@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { MetaFarmacia, DataVentaDiaria, VentaDiariaService, VentaMes, DatosGrafica, DatosVentaGlobal, DatosVentaGlobalMeta } from '../../services/venta-diaria.service';
+import { MetaFarmacia, DataVentaDiaria, VentaDiariaService, VentaMes, DatosGrafica, DatosVentaGlobal, DatosVentaGlobalMeta, PeopleLocation } from '../../services/venta-diaria.service';
 import { Color, ScaleType } from '@swimlane/ngx-charts';
 import * as moment from 'moment';
 import 'moment/locale/es';
 import { environment } from 'src/environments/environment';
+import { AppComponent } from 'src/app/app.component';
+import { PeopleLocationMeta, PeopleLocationService, PeopleRank } from '../../services/people-location.service';
 
 @Component({
   selector: 'app-meta',
@@ -32,6 +34,9 @@ export class MetaComponent {
   loading4?:boolean;
   carga?:boolean;
   prueba: number;
+  fisrtp:string;
+  secondp:string;
+  unionp:string;
 
   // view: [number,number] = [1090, 850];
   view: [number,number] = [850, 850];
@@ -45,8 +50,10 @@ export class MetaComponent {
   yAxisLabel = 'Farmacias';
   showlegendPosition = 'left';
 
+  domainColors = [];
+
   colorScheme: Color = { 
-    domain: ['#99CCE5', '#FF7F7F'], 
+    domain: ['#acff7f'], 
     group: ScaleType.Ordinal, 
     selectable: true, 
     name: 'Customer Usage', 
@@ -54,7 +61,7 @@ export class MetaComponent {
 
 URL = environment.PORT;
 
-  constructor(private router: Router, private VentaDiariaService: VentaDiariaService) { 
+  constructor(private router: Router, private VentaDiariaService: VentaDiariaService, private peopleLocationService: PeopleLocationService) { 
     this.loading2=true;
     this.loading3=true;
     this.loading4=true;
@@ -64,6 +71,8 @@ URL = environment.PORT;
   ListaVenta?: DataVentaDiaria[];
   ListaMetas?: MetaFarmacia[];
   ListaVentaGlobal?: DatosVentaGlobalMeta[];
+  ListPeopleLocation?: PeopleLocationMeta[];
+  ListPeopleLocationRank: PeopleRank[] = [];
   
   Venta: DataVentaDiaria = {
     dia:0,
@@ -85,11 +94,14 @@ URL = environment.PORT;
 
 
   ngOnInit(): void {
+    this.PeopleLocations();
+    AppComponent.viewBar = false;
     this.carga = true;
     this.ventaMes.mes = this.setFecha();
     this.VentaGlobal('cash',this.ventaMes.mes);
     this.ventaMes.mes=this.setFechaEvent();
     this.MetaFarmacia();
+
     
     // this.setFechaCard();
   }
@@ -105,7 +117,6 @@ URL = environment.PORT;
     this.loading4=true;
     this.ventaMes.mes = event.target.value;
     this.ventaMes.mes = this.ventaMes.mes.slice(0,4)+this.ventaMes.mes.slice(5);
-    console.log('Este es el mes de venta',this.ventaMes.mes);
     this.VentaGlobal('cash', this.ventaMes.mes);
     this.ventaMes.mes=this.setFechaEvent();
   }
@@ -113,12 +124,10 @@ URL = environment.PORT;
 
   
 async VentaGlobal(cash: string, ym: string): Promise<void> {
-  console.log('entre a venta global');
+  let rank = 0;
   try {
       this.Venta.host = cash;
       this.Venta.dia = <any>ym;
-      console.log('datos a enviar de Venta Global ',this.Venta.host);
-      console.log('datos a enviar de Venta Global ',this.Venta.dia);
       await new Promise<void>((resolve, reject) => {
           this.VentaDiariaService.getVentasGlobalesMeta(this.Venta).subscribe(
               res => {
@@ -131,11 +140,47 @@ async VentaGlobal(cash: string, ym: string): Promise<void> {
                       value: VentaGlobal.actual 
                     };
                     this.single.push(nuevoDato);
+
+                    if(VentaGlobal.actual < (VentaGlobal.dia/this.noDiasMes)){
+                      this.colorScheme.domain.push('#FF7F7F');
+                    }
+
+                    const persona = this.ListPeopleLocation.filter(item => item.idlocation == VentaGlobal.idlocation).map(item => item);
+                    if(persona.length === 2){
+                    this.fisrtp = persona.slice(0,1).map(item => item.id).toString();
+                    this.secondp = persona.slice(1,2).map(item => item.id).toString();
+                    this.unionp = `${this.fisrtp}-${this.secondp}`;
+
+                    const nuevoDato: any = {
+                      id: this.unionp,
+                      name: persona.slice(1,2).map(item => item.name).toString(),
+                      idlocation: persona.slice(1,2).map(item => item.idlocation).toString(),
+                      puesto: rank++
+                    };
+
+                  
+
+                    this.ListPeopleLocationRank.push(nuevoDato);
+
+                    }else{
+                      const nuevoDato: any = {
+                        id: persona.map(item => item.id).toString(),
+                        name: persona.map(item => item.name).toString(),
+                        idlocation: persona.map(item => item.idlocation).toString(),
+                        puesto: rank++
+                      };
+                      this.ListPeopleLocationRank.push(nuevoDato);
+
+                    }
+
+                    
+
                   }
-                
+                  
                   resolve();
                   this.loading2 = false;
                   this.loading3 = false;
+                  
               },
               err => {
                   console.log(err);
@@ -156,6 +201,25 @@ async MetaFarmacia(): Promise<void> {
           this.VentaDiariaService.getMetas().subscribe(
               res => {
                   this.ListaMetas = <any>res;
+                  resolve();
+              },
+              err => {
+                  console.log(err);
+                  reject(err);
+              }
+          );
+      });
+  } catch (error) {
+      console.log(error);
+  }
+}
+
+async PeopleLocations(): Promise<void> {
+  try {
+      await new Promise<void>((resolve, reject) => {
+          this.peopleLocationService.getPeopleLocation().subscribe(
+              res => {
+                  this.ListPeopleLocation = <any>res;
                   resolve();
               },
               err => {

@@ -106,11 +106,15 @@ export class CalificacionEvaluacionComponent implements OnInit {
       }
       
     }
-    console.log('Excelente ',this.countExcelente, 'Regular ', this.countRegular, 'Erroneo ', this.countErroneo );
+    console.log('Excelente ',this.countExcelente, 'Regular ', this.countRegular, 'Erroneo ', this.countErroneo, 'total productos ', this.ObjCountProductoEvaluacion.NoEvaluado );
    
     this.porcentajeExcelente = (this.countExcelente * 100)/this.ObjCountProductoEvaluacion.NoEvaluado;
     this.porcentajeRegular = (this.countRegular * 100)/this.ObjCountProductoEvaluacion.NoEvaluado;
     this.porcentajeErroneo = (this.countErroneo * 100)/this.ObjCountProductoEvaluacion.NoEvaluado;
+
+    console.log('porcenta excelente ', this.porcentajeExcelente);
+    console.log('porcenta regular ', this.porcentajeRegular);
+    console.log('porcenta erroneo ', this.porcentajeErroneo);
 
     this.countExcelente = 0;
     this.countRegular = 0;
@@ -120,9 +124,10 @@ export class CalificacionEvaluacionComponent implements OnInit {
   
   ProductoDiagnosticaCantidad(tipo:number){
     (tipo == 5 ? this.ObjTipoEvaluacion.tipo = Number(localStorage.getItem('tipoEvaluacion')) : this.ObjTipoEvaluacion.tipo = tipo)
-    this.ObjTipoEvaluacion.tipo = Number(localStorage.getItem('tipoEvaluacion'));
+    
     this.exchangeService.CantidadProductoDF(this.ObjTipoEvaluacion).subscribe(res => {
       this.ObjCountProductoEvaluacion = res[0];
+      console.log('este es el total de productos a calificar ', this.ObjCountProductoEvaluacion);
       (tipo == 5 ? this.ProductosCalificados('0') : this.ProductosCalificados('1'))
       
     },
@@ -211,8 +216,10 @@ export class CalificacionEvaluacionComponent implements OnInit {
     }
 
     if(this.ObjEvaluacion.tipo != ''){
-      this.ProductoDiagnosticaCantidad(6);
+      this.ProductoDiagnosticaCantidad(<any>this.ObjEvaluacion.tipo);
       this.flag = false;
+    }else{
+      alert('Debe seleccionar un tipo de evaluación');
     }
 
   }

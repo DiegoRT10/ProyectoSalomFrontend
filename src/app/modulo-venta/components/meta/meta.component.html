@@ -27,10 +27,12 @@
                                                 <div class="spectre-line-chart">
                                                     <ngx-charts-bar-horizontal  [view]="view" 
                                                                                 [scheme]="colorScheme" 
+                                                                                [customColors]="customColors"
                                                                                 [results]="single"
                                                                                 [gradient]="gradient" 
                                                                                 [xAxis]="showXAxis" 
                                                                                 [yAxis]="showYAxis"
+                                                                                [xScaleMax]="xScaleMax"
                                                                                 [legend]="showLegend" 
                                                                                 [showXAxisLabel]="showXAxisLabel"
                                                                                 [showYAxisLabel]="showYAxisLabel" 
@@ -38,6 +40,7 @@
                                                                                 [yAxisLabel]="yAxisLabel" 
                                                                                 (select)="onSelect($event)">
                                                     </ngx-charts-bar-horizontal>
+                                                    <div class="line"></div>
                                                 </div>
                                                 
                 

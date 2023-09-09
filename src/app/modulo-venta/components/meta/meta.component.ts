@@ -6,7 +6,7 @@ import * as moment from 'moment';
 import 'moment/locale/es';
 import { environment } from 'src/environments/environment';
 import { AppComponent } from 'src/app/app.component';
-import { PeopleLocationMeta, PeopleLocationService, PeopleRank } from '../../services/people-location.service';
+import { PeopleLocationMeta, PeopleLocationService, PeopleRank, customColors } from '../../services/people-location.service';
 
 @Component({
   selector: 'app-meta',
@@ -25,6 +25,8 @@ export class MetaComponent {
   totalVentaActual: number = 0;
   totalVentaMeta: number = 0;
   single: DatosGrafica[] = [];
+   customColors: customColors[] = [];
+  // customColors: any;
   date: Date = new Date();
   diaRestantes:number = this.date.getDate();
   check:string='';
@@ -49,8 +51,10 @@ export class MetaComponent {
   showYAxisLabel = true;
   yAxisLabel = 'Farmacias';
   showlegendPosition = 'left';
+  xScaleMax;
 
-  domainColors = [];
+
+
 
   colorScheme: Color = { 
     domain: ['#acff7f'], 
@@ -58,6 +62,9 @@ export class MetaComponent {
     selectable: true, 
     name: 'Customer Usage', 
 };
+
+
+
 
 URL = environment.PORT;
 
@@ -94,6 +101,8 @@ URL = environment.PORT;
 
 
   ngOnInit(): void {
+    
+    this.setFechaCard()
     this.PeopleLocations();
     AppComponent.viewBar = false;
     this.carga = true;
@@ -103,6 +112,8 @@ URL = environment.PORT;
     this.MetaFarmacia();
 
     
+
+
     // this.setFechaCard();
   }
 
@@ -133,17 +144,35 @@ async VentaGlobal(cash: string, ym: string): Promise<void> {
               res => {
                   this.ListaVentaGlobal = <any>res;
                   for (const VentaGlobal of this.ListaVentaGlobal) {
-                    
+                  
                     const nuevoDato: any = {
                       name: VentaGlobal.idlocation.toString(),
-                      // value: (VentaGlobal.total / VentaGlobal.monto * 100) 
                       value: VentaGlobal.actual 
                     };
                     this.single.push(nuevoDato);
 
-                    if(VentaGlobal.actual < (VentaGlobal.dia/this.noDiasMes)){
-                      this.colorScheme.domain.push('#FF7F7F');
+                    let metaSugerida = (VentaGlobal.dia * 100 /this.noDiasMes);
+                    
+                    this.xScaleMax = metaSugerida + 10;
+                    
+                    if(VentaGlobal.actual < metaSugerida){
+                      
+                      const nuevoDato: any = {
+                        name: VentaGlobal.idlocation.toString(),
+                        value: '#FF7F7F'
+                      };
+                      this.customColors.push(nuevoDato);
                     }
+                    else{
+                     
+                      const nuevoDato: any = {
+                        name: VentaGlobal.idlocation.toString(),
+                        value: '#acff7f'
+                      };
+                      this.customColors.push(nuevoDato);
+                    }
+
+                   
 
                     const persona = this.ListPeopleLocation.filter(item => item.idlocation == VentaGlobal.idlocation).map(item => item);
                     if(persona.length === 2){
@@ -303,7 +332,6 @@ goFarmacia(id:String):void{
 onSelect(data:any): void {
   // console.log('Item clicked', JSON.parse(JSON.stringify(data)));
   this.OneMetaFarmacia(data.name,data.value);
- 
 }
 
 onActivate(data:any): void {
@@ -313,6 +341,7 @@ onActivate(data:any): void {
 onDeactivate(data:any): void {
   // console.log('Deactivate', JSON.parse(JSON.stringify(data)));
 }
+
 
 
 

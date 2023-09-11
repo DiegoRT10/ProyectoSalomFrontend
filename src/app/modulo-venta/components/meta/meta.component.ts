@@ -175,16 +175,24 @@ async VentaGlobal(cash: string, ym: string): Promise<void> {
                    
 
                     const persona = this.ListPeopleLocation.filter(item => item.idlocation == VentaGlobal.idlocation).map(item => item);
+
+                    
+                   
                     if(persona.length === 2){
                     this.fisrtp = persona.slice(0,1).map(item => item.id).toString();
                     this.secondp = persona.slice(1,2).map(item => item.id).toString();
                     this.unionp = `${this.fisrtp}-${this.secondp}`;
 
+
+
+                    
                     const nuevoDato: any = {
                       id: this.unionp,
                       name: persona.slice(1,2).map(item => item.name).toString(),
                       idlocation: persona.slice(1,2).map(item => item.idlocation).toString(),
-                      puesto: rank++
+                      puesto: rank++,
+                      meta: metaSugerida,
+                      actual: VentaGlobal.actual,
                     };
 
                   
@@ -196,7 +204,9 @@ async VentaGlobal(cash: string, ym: string): Promise<void> {
                         id: persona.map(item => item.id).toString(),
                         name: persona.map(item => item.name).toString(),
                         idlocation: persona.map(item => item.idlocation).toString(),
-                        puesto: rank++
+                        puesto: rank++,
+                        meta: metaSugerida,
+                        actual: VentaGlobal.actual,
                       };
                       this.ListPeopleLocationRank.push(nuevoDato);
 

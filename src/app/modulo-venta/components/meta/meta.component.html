@@ -75,7 +75,10 @@
                             <div *ngIf="i.puesto === 2" class="cuadroThird">
                                 <img src='{{URL}}/uploads/vendedores/{{i.id}}.png' >
                             </div>
-                            <div *ngIf="i.puesto > 2" class="cuadro">
+                            <div *ngIf="i.puesto > 2 && i.actual > i.meta" class="cuadro">
+                                <img src='{{URL}}/uploads/vendedores/{{i.id}}.png' >
+                            </div>
+                            <div *ngIf="i.puesto > 2 && i.actual < i.meta" class="cuadroBad">
                                 <img src='{{URL}}/uploads/vendedores/{{i.id}}.png' >
                             </div>
                             

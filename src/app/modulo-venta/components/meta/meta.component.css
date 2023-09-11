@@ -40,6 +40,15 @@
   position: relative;
 }
 
+.cuadroBad {
+  width: 150px; /* Ancho del cuadro */
+  height: 150px; /* Altura del cuadro */
+  border: 2px solid #FF7F7F; /* Borde negro de 2 píxeles */
+  padding: 10px; /* Espacio interno de 10 píxeles */
+  text-align: center; /* Centrar el contenido horizontalmente */
+  position: relative; /* Para poder posicionar el círculo de manera absoluta */
+}
+
 /* Estilo para la imagen dentro del cuadro */
 .cuadro img {
   max-width: 100%; /* Ajustar la imagen al ancho del cuadro */
@@ -58,6 +67,12 @@
 
 /* Estilo para la imagen dentro del cuadro */
 .cuadroThird img {
+  max-width: 100%; /* Ajustar la imagen al ancho del cuadro */
+  max-height: 100%; /* Ajustar la imagen a la altura del cuadro */
+}
+
+/* Estilo para la imagen dentro del cuadro */
+.cuadroBad img {
   max-width: 100%; /* Ajustar la imagen al ancho del cuadro */
   max-height: 100%; /* Ajustar la imagen a la altura del cuadro */
 }

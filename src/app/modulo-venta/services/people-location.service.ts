@@ -34,7 +34,9 @@ export class PeopleLocationService {
     id:string,
     name: string,
     idlocation: string,
-    puesto: number
+    puesto: number,
+    meta: number,
+    actual: number
   }
 
   export interface customColors {

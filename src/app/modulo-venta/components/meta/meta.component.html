@@ -38,9 +38,10 @@
                                                                                 [showYAxisLabel]="showYAxisLabel" 
                                                                                 [xAxisLabel]="xAxisLabel"
                                                                                 [yAxisLabel]="yAxisLabel" 
+                                                                                [rotateXAxisTicks]="true"
+                                                                                [trimXAxisTicks]="false"
                                                                                 (select)="onSelect($event)">
                                                     </ngx-charts-bar-horizontal>
-                                                    <div class="line"></div>
                                                 </div>
                                                 
                 
@@ -66,7 +67,8 @@
                 <div class="info">
                     <div class="row" >
                         <div class="col-md-3" *ngFor="let i of ListPeopleLocationRank">
-                            <div *ngIf="i.puesto === 0" class="cuadroFirst">
+
+                            <!-- <div *ngIf="i.puesto === 0" class="cuadroFirst">
                                 <img src='{{URL}}/uploads/vendedores/{{i.id}}.png' >
                             </div>
                             <div *ngIf="i.puesto === 1" class="cuadroSecond">
@@ -80,7 +82,87 @@
                             </div>
                             <div *ngIf="i.puesto > 2 && i.actual < i.meta" class="cuadroBad">
                                 <img src='{{URL}}/uploads/vendedores/{{i.id}}.png' >
-                            </div>
+                            </div> -->
+
+                            <div class="boxesContainer text-selection-disable">
+                                <div class="cardBox">
+
+                                  <div *ngIf="i.puesto === 1" class="cardFirst" style="cursor:pointer;">
+                                    <div class="front">
+                                      <div class="image-container">
+                                        <img src="{{URL}}/uploads/vendedores/{{i.id}}.png">
+                                      </div>
+                                      <p><b>{{i.name}}</b></p>
+                                    </div>
+                                    <div class="back">
+                                      <p><b>Posicion: </b>{{i.puesto}}</p>
+                                      <p><b>Meta Sugerida: </b>{{i.meta | percent: '2.0-2'}}</p>
+                                      <p><b>Meta Actual: </b>{{i.actual | percent: '2.0-2'}}</p>
+                                    </div>
+                                  </div>
+
+                                  <div *ngIf="i.puesto === 2" class="cardSecond" style="cursor:pointer;">
+                                    <div class="front">
+                                      <div class="image-container">
+                                        <img src="{{URL}}/uploads/vendedores/{{i.id}}.png">
+                                      </div>
+                                      <p><b>{{i.name}}</b></p>
+                                    </div>
+                                    <div class="back">
+                                      <p><b>Posicion: </b>{{i.puesto}}</p>
+                                      <p><b>Meta Sugerida: </b>{{i.meta | percent: '2.0-2'}}</p>
+                                      <p><b>Meta Actual: </b>{{i.actual | percent: '2.0-2'}}</p>
+                                    </div>
+                                  </div>
+
+                                  <div *ngIf="i.puesto === 3" class="cardThird" style="cursor:pointer;">
+                                    <div class="front">
+                                      <div class="image-container">
+                                        <img src="{{URL}}/uploads/vendedores/{{i.id}}.png">
+                                      </div>
+                                      <p><b>{{i.name}}</b></p>
+                                    </div>
+                                    <div class="back">
+                                      <p><b>Posicion: </b>{{i.puesto}}</p>
+                                      <p><b>Meta Sugerida: </b>{{i.meta | percent: '2.0-2'}}</p>
+                                      <p><b>Meta Actual: </b>{{i.actual | percent: '2.0-2'}}</p>
+                                    </div>
+                                  </div>
+
+                                  <div *ngIf="i.puesto > 3 && i.actual > i.meta" class="cardGood" style="cursor:pointer;">
+                                    <div class="front">
+                                      <div class="image-container">
+                                        <img src="{{URL}}/uploads/vendedores/{{i.id}}.png">
+                                      </div>
+                                      <p><b>{{i.name}}</b></p>
+                                    </div>
+                                    <div class="back">
+                                      <p><b>Posicion: </b>{{i.puesto}}</p>
+                                      <p><b>Meta Sugerida: </b>{{i.meta | percent: '2.0-2'}}</p>
+                                      <p><b>Meta Actual: </b>{{i.actual | percent: '2.0-2'}}</p>
+                                    </div>
+                                  </div>
+
+                                  <div *ngIf="i.puesto > 3 && i.actual < i.meta" class="cardBad" style="cursor:pointer;">
+                                    <div class="front">
+                                      <div class="image-container">
+                                        <img src="{{URL}}/uploads/vendedores/{{i.id}}.png">
+                                      </div>
+                                      <p><b>{{i.name}}</b></p>
+                                    </div>
+                                    <div class="back">
+                                      <p><b>Posicion </b>{{i.puesto}}</p>
+                                      <p><b>Meta Sugerida: </b>{{i.meta | percent: '2.0-2'}}</p>
+                                      <p><b>Meta Actual: </b>{{i.actual | percent: '2.0-2'}}</p>
+                                    </div>
+                                  </div>
+
+
+
+                                </div>
+                              </div>
+
+
                             
                         </div>
 

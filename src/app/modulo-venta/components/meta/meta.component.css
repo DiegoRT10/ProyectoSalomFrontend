@@ -3,88 +3,14 @@
     margin-right: 10px;
   }
 
-/* Estilo para el cuadro */
-.cuadro {
-  width: 150px; /* Ancho del cuadro */
-  height: 150px; /* Altura del cuadro */
-  border: 2px solid #000; /* Borde negro de 2 píxeles */
-  padding: 10px; /* Espacio interno de 10 píxeles */
-  text-align: center; /* Centrar el contenido horizontalmente */
-  position: relative; /* Para poder posicionar el círculo de manera absoluta */
-}
 
-.cuadroFirst {
-  width: 150px; /* Ancho del cuadro */
-  height: 150px; /* Altura del cuadro */
-  border: 5px solid #ddd272; /* Borde negro de 2 píxeles */
-  padding: 10px; /* Espacio interno de 10 píxeles */
-  text-align: center; /* Centrar el contenido horizontalmente */
-  position: relative;
-}
-
-.cuadroSecond {
-  width: 150px; /* Ancho del cuadro */
-  height: 150px; /* Altura del cuadro */
-  border: 5px solid #7c7c7c; /* Borde negro de 2 píxeles */
-  padding: 10px; /* Espacio interno de 10 píxeles */
-  text-align: center; /* Centrar el contenido horizontalmente */
-  position: relative;
-}
-
-.cuadroThird {
-  width: 150px; /* Ancho del cuadro */
-  height: 150px; /* Altura del cuadro */
-  border: 5px solid #946c16; /* Borde negro de 2 píxeles */
-  padding: 10px; /* Espacio interno de 10 píxeles */
-  text-align: center; /* Centrar el contenido horizontalmente */
-  position: relative;
-}
-
-.cuadroBad {
-  width: 150px; /* Ancho del cuadro */
-  height: 150px; /* Altura del cuadro */
-  border: 2px solid #FF7F7F; /* Borde negro de 2 píxeles */
-  padding: 10px; /* Espacio interno de 10 píxeles */
-  text-align: center; /* Centrar el contenido horizontalmente */
-  position: relative; /* Para poder posicionar el círculo de manera absoluta */
-}
-
-/* Estilo para la imagen dentro del cuadro */
-.cuadro img {
-  max-width: 100%; /* Ajustar la imagen al ancho del cuadro */
-  max-height: 100%; /* Ajustar la imagen a la altura del cuadro */
-}
-/* Estilo para la imagen dentro del cuadro */
-.cuadroFirst img {
-  max-width: 100%; /* Ajustar la imagen al ancho del cuadro */
-  max-height: 100%; /* Ajustar la imagen a la altura del cuadro */
-}
-/* Estilo para la imagen dentro del cuadro */
-.cuadroSecond img {
-  max-width: 100%; /* Ajustar la imagen al ancho del cuadro */
-  max-height: 100%; /* Ajustar la imagen a la altura del cuadro */
-}
-
-/* Estilo para la imagen dentro del cuadro */
-.cuadroThird img {
-  max-width: 100%; /* Ajustar la imagen al ancho del cuadro */
-  max-height: 100%; /* Ajustar la imagen a la altura del cuadro */
-}
-
-/* Estilo para la imagen dentro del cuadro */
-.cuadroBad img {
-  max-width: 100%; /* Ajustar la imagen al ancho del cuadro */
-  max-height: 100%; /* Ajustar la imagen a la altura del cuadro */
-}
-
-
-.cuadroFirst::before {
+.cardFirst .front ::before {
   content: ""; /* No necesitas contenido aquí si estás usando una imagen */
   position: absolute;
   top: 0;
   left: 0;
-  width: 40px; /* Ajusta el ancho de la imagen */
-  height: 40px; /* Ajusta la altura de la imagen */
+  width: 50px; /* Ajusta el ancho de la imagen */
+  height: 50px; /* Ajusta la altura de la imagen */
   background: url('src\assets\img\salom\first.png') no-repeat;
   background-size: cover;
   border-radius: 50%;
@@ -95,13 +21,13 @@
   /* Puedes ajustar otros estilos según tus preferencias */
 }
 
-.cuadroSecond::before {
+.cardSecond .front ::before {
   content: ""; /* No necesitas contenido aquí si estás usando una imagen */
   position: absolute;
   top: 0;
   left: 0;
-  width: 40px; /* Ajusta el ancho de la imagen */
-  height: 40px; /* Ajusta la altura de la imagen */
+  width: 50px; /* Ajusta el ancho de la imagen */
+  height: 50px; /* Ajusta la altura de la imagen */
   background: url('src\assets\img\salom\second.png') no-repeat;
   background-size: cover;
   border-radius: 50%;
@@ -112,13 +38,13 @@
   /* Puedes ajustar otros estilos según tus preferencias */
 }
 
-.cuadroThird::before {
+.cardThird .front ::before {
   content: ""; /* No necesitas contenido aquí si estás usando una imagen */
   position: absolute;
   top: 0;
   left: 0;
-  width: 40px; /* Ajusta el ancho de la imagen */
-  height: 40px; /* Ajusta la altura de la imagen */
+  width: 50px; /* Ajusta el ancho de la imagen */
+  height: 50px; /* Ajusta la altura de la imagen */
   background: url('src\assets\img\salom\third.png') no-repeat;
   background-size: cover;
   border-radius: 50%;
@@ -129,5 +55,721 @@
   /* Puedes ajustar otros estilos según tus preferencias */
 }
 
+@media (max-width: 600px) {
+  .spectre-line-chart {
+    max-width: 300px;
+    overflow: auto;
+  }
+}
+
+@media (max-width: 600px) {
+  .col-md-3 {
+    flex-basis: 50%; /* Cambia a dos columnas (50% de ancho) en pantallas pequeñas */
+  }
+}
 
 
+
+/* CSS para las cards  */
+
+.cardBox {
+  float: left;
+  font-size: 1.2em;
+  margin: 1% 0 0 1%;
+  perspective: 800px;
+  transition: all 0.3s ease 0s;
+  width: 90%;
+}
+
+.cardBox:active .cardGood {
+  transform: rotateY( 180deg);
+}
+
+.cardBox:active .cardBad {
+  transform: rotateY( 180deg);
+}
+
+.cardBox:active .cardFirst {
+  transform: rotateY( 180deg);
+}
+
+.cardBox:active .cardSecond {
+  transform: rotateY( 180deg);
+}
+
+.cardBox:active .cardThird {
+  transform: rotateY( 180deg);
+}
+
+.cardGood {
+  /* background: #222; */
+  background: #ffffff;
+  border: 2px solid #00ff2a;
+  cursor: default;
+  height: 300px;
+  transform-style: preserve-3d;
+  transition: transform 0.4s ease 0s;
+  width: 100%;
+  -webkit-animation: giro 1s 1;
+  animation: giro 1s 1;
+}
+
+.cardBad {
+  /* background: #222; */
+  background: #ffffff;
+  border: 2px solid #ff0000;
+  cursor: default;
+  height: 300px;
+  transform-style: preserve-3d;
+  transition: transform 0.4s ease 0s;
+  width: 100%;
+  -webkit-animation: giro 1s 1;
+  animation: giro 1s 1;
+}
+
+.cardFirst {
+  /* background: #222; */
+  background: #ffffff;
+  border: 5px solid #ddd272;
+  cursor: default;
+  height: 300px;
+  transform-style: preserve-3d;
+  transition: transform 0.4s ease 0s;
+  width: 100%;
+  -webkit-animation: giro 1s 1;
+  animation: giro 1s 1;
+}
+
+.cardSecond {
+  /* background: #222; */
+  background: #ffffff;
+  border: 5px solid #7c7c7c;
+  cursor: default;
+  height: 300px;
+  transform-style: preserve-3d;
+  transition: transform 0.4s ease 0s;
+  width: 100%;
+  -webkit-animation: giro 1s 1;
+  animation: giro 1s 1;
+}
+
+.cardThird {
+  /* background: #222; */
+  background: #ffffff;
+  border: 5px solid #946c16;
+  cursor: default;
+  height: 300px;
+  transform-style: preserve-3d;
+  transition: transform 0.4s ease 0s;
+  width: 100%;
+  -webkit-animation: giro 1s 1;
+  animation: giro 1s 1;
+}
+
+
+
+p{
+-webkit-touch-callout: none !important;
+-webkit-user-select: none !important;
+ -khtml-user-select: none !important;
+   -moz-user-select: none !important;
+    -ms-user-select: none !important;
+        user-select: none !important;
+}
+
+/* cardGood */
+
+.cardGood p {
+  margin-bottom: 1.8em;
+}
+
+.cardGood .front,
+.cardGood .back {
+  backface-visibility: hidden;
+  box-sizing: border-box;
+  color: rgb(0, 0, 0);
+  /* color: white; */
+  display: block;
+  font-size: 1.2em;
+  height: 100%;
+  padding: 0.8em;
+  position: absolute;
+  text-align: center;
+  width: 100%;
+}
+
+.cardGood .front strong {
+  /* background: #fff; */
+  background: #000000;
+  border-radius: 100%;
+  color: #222;
+  font-size: 1.5em;
+  line-height: 30px;
+  padding: 0 7px 4px 6px;
+}
+
+.cardGood .back {
+  transform: rotateY( 180deg);
+}
+
+.cardGood .back a {
+  padding: 0.3em 0.5em;
+  background: #333;
+  /* color: #fff; */
+  color: #000000;
+  text-decoration: none;
+  border-radius: 1px;
+  font-size: 0.9em;
+  transition: all 0.2s ease 0s;
+}
+
+.cardGood .back a:hover {
+  /* background: #fff; */
+  background: #000000;
+  color: #333;
+  text-shadow: 0 0 1px #333;
+}
+
+.cardBox:nth-child(1) .cardGood .back {
+  background: rgb(180, 182, 185);
+}
+
+.cardBox:nth-child(2) .cardGood .back {
+  background: orange;
+}
+
+.cardBox:nth-child(3) .cardGood .back {
+  background: yellowgreen;
+}
+
+.cardBox:nth-child(4) .cardGood .back {
+  background: tomato;
+}
+
+.cardBox:nth-child(2) .cardGood {
+  -webkit-animation: giro 1.5s 1;
+  animation: giro 1.5s 1;
+}
+
+.cardBox:nth-child(3) .cardGood {
+  -webkit-animation: giro 2s 1;
+  animation: giro 2s 1;
+}
+
+.cardBox:nth-child(4) .cardGood {
+  -webkit-animation: giro 2.5s 1;
+  animation: giro 2.5s 1;
+}
+/* fin */
+
+/* cardBad */
+
+.cardBad p {
+  margin-bottom: 1.8em;
+}
+
+.cardBad .front,
+.cardBad .back {
+  backface-visibility: hidden;
+  box-sizing: border-box;
+  color: rgb(0, 0, 0);
+  /* color: white; */
+  display: block;
+  font-size: 1.2em;
+  height: 100%;
+  padding: 0.8em;
+  position: absolute;
+  text-align: center;
+  width: 100%;
+}
+
+.cardBad .front strong {
+  /* background: #fff; */
+  background: #000000;
+  border-radius: 100%;
+  color: #222;
+  font-size: 1.5em;
+  line-height: 30px;
+  padding: 0 7px 4px 6px;
+}
+
+.cardBad .back {
+  transform: rotateY( 180deg);
+}
+
+.cardBad .back a {
+  padding: 0.3em 0.5em;
+  background: #333;
+  /* color: #fff; */
+  color: #000000;
+  text-decoration: none;
+  border-radius: 1px;
+  font-size: 0.9em;
+  transition: all 0.2s ease 0s;
+}
+
+.cardBad .back a:hover {
+  /* background: #fff; */
+  background: #000000;
+  color: #333;
+  text-shadow: 0 0 1px #333;
+}
+
+.cardBox:nth-child(1) .cardBad .back {
+  background: rgb(180, 182, 185);
+}
+
+.cardBox:nth-child(2) .cardBad .back {
+  background: orange;
+}
+
+.cardBox:nth-child(3) .cardBad .back {
+  background: yellowgreen;
+}
+
+.cardBox:nth-child(4) .cardBad .back {
+  background: tomato;
+}
+
+.cardBox:nth-child(2) .cardBad {
+  -webkit-animation: giro 1.5s 1;
+  animation: giro 1.5s 1;
+}
+
+.cardBox:nth-child(3) .cardBad {
+  -webkit-animation: giro 2s 1;
+  animation: giro 2s 1;
+}
+
+.cardBox:nth-child(4) .cardBad {
+  -webkit-animation: giro 2.5s 1;
+  animation: giro 2.5s 1;
+}
+
+/* fin */
+
+/* cardFirst */
+
+.cardFirst p {
+  margin-bottom: 1.8em;
+}
+
+.cardFirst .front,
+.cardFirst .back {
+  backface-visibility: hidden;
+  box-sizing: border-box;
+  color: rgb(0, 0, 0);
+  /* color: white; */
+  display: block;
+  font-size: 1.2em;
+  height: 100%;
+  padding: 0.8em;
+  position: absolute;
+  text-align: center;
+  width: 100%;
+}
+
+.cardFirst .front strong {
+  /* background: #fff; */
+  background: #000000;
+  border-radius: 100%;
+  color: #222;
+  font-size: 1.5em;
+  line-height: 30px;
+  padding: 0 7px 4px 6px;
+}
+
+.cardFirst .back {
+  transform: rotateY( 180deg);
+}
+
+.cardFirst .back a {
+  padding: 0.3em 0.5em;
+  background: #333;
+  /* color: #fff; */
+  color: #000000;
+  text-decoration: none;
+  border-radius: 1px;
+  font-size: 0.9em;
+  transition: all 0.2s ease 0s;
+}
+
+.cardFirst .back a:hover {
+  /* background: #fff; */
+  background: #000000;
+  color: #333;
+  text-shadow: 0 0 1px #333;
+}
+
+.cardBox:nth-child(1) .cardFirst .back {
+  background: rgb(180, 182, 185);
+}
+
+.cardBox:nth-child(2) .cardFirst .back {
+  background: orange;
+}
+
+.cardBox:nth-child(3) .cardFirst .back {
+  background: yellowgreen;
+}
+
+.cardBox:nth-child(4) .cardFirst .back {
+  background: tomato;
+}
+
+.cardBox:nth-child(2) .cardFirst {
+  -webkit-animation: giro 1.5s 1;
+  animation: giro 1.5s 1;
+}
+
+.cardBox:nth-child(3) .cardFirst {
+  -webkit-animation: giro 2s 1;
+  animation: giro 2s 1;
+}
+
+.cardBox:nth-child(4) .cardFirst {
+  -webkit-animation: giro 2.5s 1;
+  animation: giro 2.5s 1;
+}
+
+/* fin */
+
+/* cardSecond */
+
+.cardSecond p {
+  margin-bottom: 1.8em;
+}
+
+.cardSecond .front,
+.cardSecond .back {
+  backface-visibility: hidden;
+  box-sizing: border-box;
+  color: rgb(0, 0, 0);
+  /* color: white; */
+  display: block;
+  font-size: 1.2em;
+  height: 100%;
+  padding: 0.8em;
+  position: absolute;
+  text-align: center;
+  width: 100%;
+}
+
+.cardSecond .front strong {
+  /* background: #fff; */
+  background: #000000;
+  border-radius: 100%;
+  color: #222;
+  font-size: 1.5em;
+  line-height: 30px;
+  padding: 0 7px 4px 6px;
+}
+
+.cardSecond .back {
+  transform: rotateY( 180deg);
+}
+
+.cardSecond .back a {
+  padding: 0.3em 0.5em;
+  background: #333;
+  /* color: #fff; */
+  color: #000000;
+  text-decoration: none;
+  border-radius: 1px;
+  font-size: 0.9em;
+  transition: all 0.2s ease 0s;
+}
+
+.cardSecond .back a:hover {
+  /* background: #fff; */
+  background: #000000;
+  color: #333;
+  text-shadow: 0 0 1px #333;
+}
+
+.cardBox:nth-child(1) .cardSecond .back {
+  background: rgb(180, 182, 185);
+}
+
+.cardBox:nth-child(2) .cardSecond .back {
+  background: orange;
+}
+
+.cardBox:nth-child(3) .cardSecond .back {
+  background: yellowgreen;
+}
+
+.cardBox:nth-child(4) .cardSecond .back {
+  background: tomato;
+}
+
+.cardBox:nth-child(2) .cardSecond {
+  -webkit-animation: giro 1.5s 1;
+  animation: giro 1.5s 1;
+}
+
+.cardBox:nth-child(3) .cardSecond {
+  -webkit-animation: giro 2s 1;
+  animation: giro 2s 1;
+}
+
+.cardBox:nth-child(4) .cardSecond {
+  -webkit-animation: giro 2.5s 1;
+  animation: giro 2.5s 1;
+}
+
+/* fin */
+
+/* cardThird */
+
+.cardThird p {
+  margin-bottom: 1.8em;
+}
+
+.cardThird .front,
+.cardThird .back {
+  backface-visibility: hidden;
+  box-sizing: border-box;
+  color: rgb(0, 0, 0);
+  /* color: white; */
+  display: block;
+  font-size: 1.2em;
+  height: 100%;
+  padding: 0.8em;
+  position: absolute;
+  text-align: center;
+  width: 100%;
+}
+
+.cardThird .front strong {
+  /* background: #fff; */
+  background: #000000;
+  border-radius: 100%;
+  color: #222;
+  font-size: 1.5em;
+  line-height: 30px;
+  padding: 0 7px 4px 6px;
+}
+
+.cardThird .back {
+  transform: rotateY( 180deg);
+}
+
+.cardThird .back a {
+  padding: 0.3em 0.5em;
+  background: #333;
+  /* color: #fff; */
+  color: #000000;
+  text-decoration: none;
+  border-radius: 1px;
+  font-size: 0.9em;
+  transition: all 0.2s ease 0s;
+}
+
+.cardThird .back a:hover {
+  /* background: #fff; */
+  background: #000000;
+  color: #333;
+  text-shadow: 0 0 1px #333;
+}
+
+.cardBox:nth-child(1) .cardThird .back {
+  background: rgb(180, 182, 185);
+}
+
+.cardBox:nth-child(2) .cardThird .back {
+  background: orange;
+}
+
+.cardBox:nth-child(3) .cardThird .back {
+  background: yellowgreen;
+}
+
+.cardBox:nth-child(4) .cardThird .back {
+  background: tomato;
+}
+
+.cardBox:nth-child(2) .cardThird {
+  -webkit-animation: giro 1.5s 1;
+  animation: giro 1.5s 1;
+}
+
+.cardBox:nth-child(3) .cardThird {
+  -webkit-animation: giro 2s 1;
+  animation: giro 2s 1;
+}
+
+.cardBox:nth-child(4) .cardThird {
+  -webkit-animation: giro 2.5s 1;
+  animation: giro 2.5s 1;
+}
+
+/* fin */
+
+@-webkit-keyframes giro {
+  from {
+    transform: rotateY( 180deg);
+  }
+  to {
+    transform: rotateY( 0deg);
+  }
+}
+
+@keyframes giro {
+  from {
+    transform: rotateY( 180deg);
+  }
+  to {
+    transform: rotateY( 0deg);
+  }
+}
+
+/* cardGood */
+
+@media screen and (max-width: 767px) {
+  .cardBox {
+    margin-left: 2.8%;
+    margin-top: 3%;
+    width: 46%;
+  }
+  .cardGood {
+    height: 285px;
+  }
+  .cardBox:last-child {
+    margin-bottom: 3%;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .cardBox {
+    width: 94.5%;
+  }
+  .cardGood {
+    height: 260px;
+  }
+}
+
+/* Fin */
+
+/* cardBad */
+
+@media screen and (max-width: 767px) {
+  .cardBox {
+    margin-left: 2.8%;
+    margin-top: 3%;
+    width: 46%;
+  }
+  .cardBad {
+    height: 285px;
+  }
+  .cardBox:last-child {
+    margin-bottom: 3%;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .cardBox {
+    width: 94.5%;
+  }
+  .cardBad {
+    height: 260px;
+  }
+}
+
+/* Fin */
+
+/* cardFirst */
+
+@media screen and (max-width: 767px) {
+  .cardBox {
+    margin-left: 2.8%;
+    margin-top: 3%;
+    width: 46%;
+  }
+  .cardFirst {
+    height: 285px;
+  }
+  .cardBox:last-child {
+    margin-bottom: 3%;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .cardBox {
+    width: 94.5%;
+  }
+  .cardFirst {
+    height: 260px;
+  }
+}
+
+/* Fin */
+
+/* cardSecond */
+
+@media screen and (max-width: 767px) {
+  .cardBox {
+    margin-left: 2.8%;
+    margin-top: 3%;
+    width: 46%;
+  }
+  .cardSecond {
+    height: 285px;
+  }
+  .cardBox:last-child {
+    margin-bottom: 3%;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .cardBox {
+    width: 94.5%;
+  }
+  .cardSecond {
+    height: 260px;
+  }
+}
+
+/* Fin */
+
+/* cardThird */
+
+@media screen and (max-width: 767px) {
+  .cardBox {
+    margin-left: 2.8%;
+    margin-top: 3%;
+    width: 46%;
+  }
+  .cardThird {
+    height: 285px;
+  }
+  .cardBox:last-child {
+    margin-bottom: 3%;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .cardBox {
+    width: 94.5%;
+  }
+  .cardThird {
+    height: 260px;
+  }
+}
+
+/* Fin */
+
+.image-container {
+  width: 150px; /* Ancho deseado */
+  height: 150px; /* Alto deseado */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden; /* Recorta cualquier parte de la imagen que exceda las dimensiones del contenedor */
+}
+.image-container img {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+}

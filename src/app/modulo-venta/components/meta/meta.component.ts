@@ -8,6 +8,7 @@ import { environment } from 'src/environments/environment';
 import { AppComponent } from 'src/app/app.component';
 import { PeopleLocationMeta, PeopleLocationService, PeopleRank, customColors } from '../../services/people-location.service';
 
+
 @Component({
   selector: 'app-meta',
   templateUrl: './meta.component.html',
@@ -38,7 +39,8 @@ export class MetaComponent {
   prueba: number;
   fisrtp:string;
   secondp:string;
-  unionp:string;
+  unionId:string;
+  unionName:string;
 
   // view: [number,number] = [1090, 850];
   view: [number,number] = [850, 850];
@@ -51,13 +53,13 @@ export class MetaComponent {
   showYAxisLabel = true;
   yAxisLabel = 'Farmacias';
   showlegendPosition = 'left';
-  xScaleMax;
+  xScaleMax = 100;
 
 
 
 
   colorScheme: Color = { 
-    domain: ['#acff7f'], 
+    domain: ['#00ff2a'], 
     group: ScaleType.Ordinal, 
     selectable: true, 
     name: 'Customer Usage', 
@@ -135,7 +137,7 @@ URL = environment.PORT;
 
   
 async VentaGlobal(cash: string, ym: string): Promise<void> {
-  let rank = 0;
+  let rank = 1;
   try {
       this.Venta.host = cash;
       this.Venta.dia = <any>ym;
@@ -153,13 +155,13 @@ async VentaGlobal(cash: string, ym: string): Promise<void> {
 
                     let metaSugerida = (VentaGlobal.dia * 100 /this.noDiasMes);
                     
-                    this.xScaleMax = metaSugerida + 10;
+                    // this.xScaleMax = metaSugerida + 10;
                     
                     if(VentaGlobal.actual < metaSugerida){
                       
                       const nuevoDato: any = {
                         name: VentaGlobal.idlocation.toString(),
-                        value: '#FF7F7F'
+                        value: '#ff0000'
                       };
                       this.customColors.push(nuevoDato);
                     }
@@ -167,7 +169,7 @@ async VentaGlobal(cash: string, ym: string): Promise<void> {
                      
                       const nuevoDato: any = {
                         name: VentaGlobal.idlocation.toString(),
-                        value: '#acff7f'
+                        value: '#00ff2a'
                       };
                       this.customColors.push(nuevoDato);
                     }
@@ -181,14 +183,17 @@ async VentaGlobal(cash: string, ym: string): Promise<void> {
                     if(persona.length === 2){
                     this.fisrtp = persona.slice(0,1).map(item => item.id).toString();
                     this.secondp = persona.slice(1,2).map(item => item.id).toString();
-                    this.unionp = `${this.fisrtp}-${this.secondp}`;
+                    this.unionId = `${this.fisrtp}-${this.secondp}`;
+                    this.fisrtp = persona.slice(0,1).map(item => item.name).toString();
+                    this.secondp = persona.slice(1,2).map(item => item.name).toString();
+                    this.unionName = `${this.fisrtp} y ${this.secondp}`;
 
 
 
                     
                     const nuevoDato: any = {
-                      id: this.unionp,
-                      name: persona.slice(1,2).map(item => item.name).toString(),
+                      id: this.unionId,
+                      name: this.unionName,
                       idlocation: persona.slice(1,2).map(item => item.idlocation).toString(),
                       puesto: rank++,
                       meta: metaSugerida,

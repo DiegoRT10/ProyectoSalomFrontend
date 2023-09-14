@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { MetaFarmacia, DataVentaDiaria, VentaDiariaService, VentaMes, DatosGrafica, DatosVentaGlobal, DatosVentaGlobalMeta, PeopleLocation } from '../../services/venta-diaria.service';
+import { MetaFarmacia, DataVentaDiaria, VentaDiariaService, VentaMes, DatosGrafica, DatosVentaGlobal, DatosVentaGlobalMeta, PeopleLocation, diasMetas, fechaMetas } from '../../services/venta-diaria.service';
 import { Color, ScaleType } from '@swimlane/ngx-charts';
 import * as moment from 'moment';
 import 'moment/locale/es';
@@ -26,7 +26,11 @@ export class MetaComponent {
   totalVentaActual: number = 0;
   totalVentaMeta: number = 0;
   single: DatosGrafica[] = [];
-   customColors: customColors[] = [];
+  customColors: customColors[] = [];
+  fechaMeta:string;
+
+
+
   // customColors: any;
   date: Date = new Date();
   diaRestantes:number = this.date.getDate();
@@ -83,6 +87,12 @@ URL = environment.PORT;
   ListPeopleLocation?: PeopleLocationMeta[];
   ListPeopleLocationRank: PeopleRank[] = [];
   
+
+  fechaMetasFarmacias:fechaMetas = {
+    pay: '',
+    fecha: ''
+  }
+
   Venta: DataVentaDiaria = {
     dia:0,
     host:'',
@@ -100,10 +110,13 @@ URL = environment.PORT;
     mes: ''
   }
 
+  diaMetas: diasMetas = {
+    dia: ''
+  }
 
 
   ngOnInit(): void {
-    
+    this.obtenerFechaActual();
     this.setFechaCard()
     this.PeopleLocations();
     AppComponent.viewBar = false;
@@ -139,12 +152,14 @@ URL = environment.PORT;
 async VentaGlobal(cash: string, ym: string): Promise<void> {
   let rank = 1;
   try {
-      this.Venta.host = cash;
-      this.Venta.dia = <any>ym;
+      this.fechaMetasFarmacias.pay = cash;
+      this.fechaMetasFarmacias.fecha = ym;
+
       await new Promise<void>((resolve, reject) => {
-          this.VentaDiariaService.getVentasGlobalesMeta(this.Venta).subscribe(
+          this.VentaDiariaService.getVentasGlobalesMeta(this.fechaMetasFarmacias).subscribe(
               res => {
                   this.ListaVentaGlobal = <any>res;
+
                   for (const VentaGlobal of this.ListaVentaGlobal) {
                   
                     const nuevoDato: any = {
@@ -319,7 +334,7 @@ DatosCard():void{
 
 setFecha(): string {
   let date: Date = new Date();
-  return moment.utc(date).format('YYYYMM');
+  return moment.utc(date).format('YYYY/MM/DD');
 }
 
 setFechaEvent(): string {
@@ -327,15 +342,41 @@ setFechaEvent(): string {
   return moment.utc(date).format('YYYY-MM');
 }
 
-obtenerFechaActual() {
-  moment.locale('es');
-  const fechaActual = moment();
-  const diaSemana = fechaActual.format('dddd');
-  const dia = fechaActual.format('D');
-  const mes = fechaActual.format('MMMM');
-  const año = fechaActual.format('YYYY');
+obtenerFechaActual(){
+  let fechaMoment;
+  let diaSemana;
+  let dia;
+  let mes;
+  let año;
 
-  return `${diaSemana} ${dia} de ${mes} de ${año}`;
+  this.VentaDiariaService.getDiaMeta().subscribe(res => {
+            this.diaMetas = res[0]
+            moment.locale('es');
+            fechaMoment = moment(this.diaMetas.dia, 'YYYY/MM/DD');
+
+            // Verificar si la fecha es válida
+            if (!fechaMoment.isValid()) {
+              console.log('Fecha inválida');
+            }
+
+            // Formatear la fecha según tus requerimientos
+          diaSemana = fechaMoment.format('dddd');
+
+          
+          dia = fechaMoment.format('D');
+          mes = fechaMoment.format('MMMM');
+          año = fechaMoment.format('YYYY');
+          this.fechaMeta = `${diaSemana} ${dia} de ${mes} de ${año}`;
+     
+  },
+    err => {
+      console.log(err);
+    }
+
+  );
+// Devolver la fecha formateada
+
+
 }
 
 goFarmacia(id:String):void{

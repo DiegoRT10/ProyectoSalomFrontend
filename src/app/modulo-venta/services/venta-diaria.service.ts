@@ -38,6 +38,10 @@ export class VentaDiariaService {
       return this.http.post(`${this.URL}/venta/ventaGlobalMetas`,venta);
     }
 
+    getDiaMeta(){
+      return this.http.get(`${this.URL}/venta/diaMeta`);
+    }
+
     getVentaProductos(venta:any){
       return this.http.post(`${this.URL}/venta/ventaProducto`,venta);
     }
@@ -291,4 +295,13 @@ export interface VentaProductos{
   unidades:number,
   price:number,
   taxid:string
+}
+
+export interface diasMetas{
+  dia:string
+}
+
+export interface fechaMetas{
+  pay: string,
+  fecha: string
 }

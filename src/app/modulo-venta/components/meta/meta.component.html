@@ -5,7 +5,7 @@
         
         <div class="row">
             <div class="col-md-8 ml-auto mr-auto">
-                <h1 class="title">Metas de farmacia correspondientes al dia {{obtenerFechaActual()}}</h1>
+                <h1 class="title">Metas de farmacia correspondientes al dia {{fechaMeta}}</h1>
             </div>
         </div>
         
@@ -22,7 +22,7 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="info">
-
+                  <label>Puedes interactuar con la grafica y los cuadros</label>
                                             <div *ngIf="!loading2 && !loading3" class="chart-container">
                                                 <div class="spectre-line-chart">
                                                     <ngx-charts-bar-horizontal  [view]="view" 

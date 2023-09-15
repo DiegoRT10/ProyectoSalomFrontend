@@ -23,7 +23,7 @@
             <div class="col-md-6">
                 <div class="info">
                   <label>Puedes interactuar con la grafica y los cuadros</label>
-                                            <div *ngIf="!loading2 && !loading3" class="chart-container">
+                                            <div *ngIf="!loading2 && !loading3 " class="chart-container">
                                                 <div class="spectre-line-chart">
                                                     <ngx-charts-bar-horizontal  [view]="view" 
                                                                                 [scheme]="colorScheme" 
@@ -39,7 +39,8 @@
                                                                                 [xAxisLabel]="xAxisLabel"
                                                                                 [yAxisLabel]="yAxisLabel" 
                                                                                 [rotateXAxisTicks]="true"
-                                                                                [trimXAxisTicks]="false"
+                                                                                [roundDomains]="false"
+                                                                                [xAxisTicks]="xAxisTicks"
                                                                                 (select)="onSelect($event)">
                                                     </ngx-charts-bar-horizontal>
                                                 </div>
@@ -54,6 +55,9 @@
                                                             </div>
                                                         </div>
                                             </div>
+                                          
+                                            
+                                          
                                             <br />
                                             <br />
                                 
@@ -96,8 +100,8 @@
                                     </div>
                                     <div class="back">
                                       <p><b>Posicion: </b>{{i.puesto}}</p>
-                                      <p><b>Meta Sugerida: </b>{{i.meta | percent: '2.0-2'}}</p>
-                                      <p><b>Meta Actual: </b>{{i.actual | percent: '2.0-2'}}</p>
+                                      <p><b>Meta Sugerida: </b>{{i.meta | number:'1.2-2'}}%</p>
+                                      <p><b>Meta Actual: </b>{{i.actual | number:'1.2-2'}}%</p>
                                     </div>
                                   </div>
 
@@ -110,8 +114,8 @@
                                     </div>
                                     <div class="back">
                                       <p><b>Posicion: </b>{{i.puesto}}</p>
-                                      <p><b>Meta Sugerida: </b>{{i.meta | percent: '2.0-2'}}</p>
-                                      <p><b>Meta Actual: </b>{{i.actual | percent: '2.0-2'}}</p>
+                                      <p><b>Meta Sugerida: </b>{{i.meta | number:'1.2-2'}}%</p>
+                                      <p><b>Meta Actual: </b>{{i.actual | number:'1.2-2'}}%</p>
                                     </div>
                                   </div>
 
@@ -124,8 +128,8 @@
                                     </div>
                                     <div class="back">
                                       <p><b>Posicion: </b>{{i.puesto}}</p>
-                                      <p><b>Meta Sugerida: </b>{{i.meta | percent: '2.0-2'}}</p>
-                                      <p><b>Meta Actual: </b>{{i.actual | percent: '2.0-2'}}</p>
+                                      <p><b>Meta Sugerida: </b>{{i.meta | number:'1.2-2'}}%</p>
+                                      <p><b>Meta Actual: </b>{{i.actual | number:'1.2-2'}}%</p>
                                     </div>
                                   </div>
 
@@ -138,8 +142,8 @@
                                     </div>
                                     <div class="back">
                                       <p><b>Posicion: </b>{{i.puesto}}</p>
-                                      <p><b>Meta Sugerida: </b>{{i.meta | percent: '2.0-2'}}</p>
-                                      <p><b>Meta Actual: </b>{{i.actual | percent: '2.0-2'}}</p>
+                                      <p><b>Meta Sugerida: </b>{{i.meta | number:'1.2-2'}}%</p>
+                                      <p><b>Meta Actual: </b>{{i.actual | number:'1.2-2'}}%</p>
                                     </div>
                                   </div>
 
@@ -152,8 +156,8 @@
                                     </div>
                                     <div class="back">
                                       <p><b>Posicion </b>{{i.puesto}}</p>
-                                      <p><b>Meta Sugerida: </b>{{i.meta | percent: '2.0-2'}}</p>
-                                      <p><b>Meta Actual: </b>{{i.actual | percent: '2.0-2'}}</p>
+                                      <p><b>Meta Sugerida: </b>{{i.meta | number:'1.2-2'}}%</p>
+                                      <p><b>Meta Actual: </b>{{i.actual | number:'1.2-2'}}%</p>
                                     </div>
                                   </div>
 
@@ -171,9 +175,10 @@
               </div>
           
         </div>
- 
     </div>
 </div>
+
+
 
 
 

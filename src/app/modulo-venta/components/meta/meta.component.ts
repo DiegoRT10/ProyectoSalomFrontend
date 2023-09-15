@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, Renderer2 } from '@angular/core';
 import { Router } from '@angular/router';
 import { MetaFarmacia, DataVentaDiaria, VentaDiariaService, VentaMes, DatosGrafica, DatosVentaGlobal, DatosVentaGlobalMeta, PeopleLocation, diasMetas, fechaMetas } from '../../services/venta-diaria.service';
 import { Color, ScaleType } from '@swimlane/ngx-charts';
@@ -14,7 +14,7 @@ import { PeopleLocationMeta, PeopleLocationService, PeopleRank, customColors } f
   templateUrl: './meta.component.html',
   styleUrls: ['./meta.component.css']
 })
-export class MetaComponent {
+export class MetaComponent implements OnInit, AfterViewInit{
   farmacia?: any;
   pVenta: any = 0;
   pVentaDiaria: any = 0;
@@ -58,7 +58,7 @@ export class MetaComponent {
   yAxisLabel = 'Farmacias';
   showlegendPosition = 'left';
   xScaleMax = 100;
-
+  xAxisTicks:string[]  = ['100']
 
 
 
@@ -74,7 +74,7 @@ export class MetaComponent {
 
 URL = environment.PORT;
 
-  constructor(private router: Router, private VentaDiariaService: VentaDiariaService, private peopleLocationService: PeopleLocationService) { 
+  constructor(private router: Router, private VentaDiariaService: VentaDiariaService, private peopleLocationService: PeopleLocationService, private renderer: Renderer2, private el: ElementRef) { 
     this.loading2=true;
     this.loading3=true;
     this.loading4=true;
@@ -116,24 +116,35 @@ URL = environment.PORT;
 
 
   ngOnInit(): void {
-    this.obtenerFechaActual();
     this.setFechaCard()
     this.PeopleLocations();
     AppComponent.viewBar = false;
     this.carga = true;
     this.ventaMes.mes = this.setFecha();
-    this.VentaGlobal('cash',this.ventaMes.mes);
     this.ventaMes.mes=this.setFechaEvent();
     this.MetaFarmacia();
-
-    
-
 
     // this.setFechaCard();
   }
 
   ngAfterViewInit() {
     this.carga = false;
+    setTimeout(() => {
+      // El código JavaScript que deseas ejecutar después de un retraso.
+      const lineElement = document.getElementsByTagName("line")[1];
+      if (lineElement) {
+        lineElement.style.stroke = "#fbff00";
+        lineElement.style.strokeWidth = "4";
+        
+      }
+
+      const lineElement2 = document.getElementsByTagName("line")[0];
+      if (lineElement2) {
+        lineElement2.style.stroke = "#00ff2a";
+        lineElement2.style.strokeWidth = "4";
+       
+      }
+    }, 3000); // Cambia el valor del temporizador según sea necesario.
   }
 
 
@@ -189,7 +200,8 @@ async VentaGlobal(cash: string, ym: string): Promise<void> {
                       this.customColors.push(nuevoDato);
                     }
 
-                   
+                    this.xAxisTicks.push(`${metaSugerida}`);
+                    
 
                     const persona = this.ListPeopleLocation.filter(item => item.idlocation == VentaGlobal.idlocation).map(item => item);
 
@@ -198,12 +210,21 @@ async VentaGlobal(cash: string, ym: string): Promise<void> {
                     if(persona.length === 2){
                     this.fisrtp = persona.slice(0,1).map(item => item.id).toString();
                     this.secondp = persona.slice(1,2).map(item => item.id).toString();
+
+                    if(this.fisrtp == 'ZUÑIGAR'){
+                      this.fisrtp = 'ZUNIGAR';
+                    }
+
+                    if(this.secondp == 'ZUÑIGAR'){
+                      this.secondp = 'ZUNIGAR'
+                    }
+
                     this.unionId = `${this.fisrtp}-${this.secondp}`;
                     this.fisrtp = persona.slice(0,1).map(item => item.name).toString();
                     this.secondp = persona.slice(1,2).map(item => item.name).toString();
                     this.unionName = `${this.fisrtp} y ${this.secondp}`;
 
-
+                      
 
                     
                     const nuevoDato: any = {
@@ -216,6 +237,7 @@ async VentaGlobal(cash: string, ym: string): Promise<void> {
                     };
 
                   
+                    
 
                     this.ListPeopleLocationRank.push(nuevoDato);
 
@@ -239,6 +261,7 @@ async VentaGlobal(cash: string, ym: string): Promise<void> {
                   resolve();
                   this.loading2 = false;
                   this.loading3 = false;
+                  this.obtenerFechaActual();
                   
               },
               err => {
@@ -280,6 +303,8 @@ async PeopleLocations(): Promise<void> {
               res => {
                   this.ListPeopleLocation = <any>res;
                   resolve();
+                  this.ventaMes.mes = this.setFecha();
+                  this.VentaGlobal('cash',this.ventaMes.mes);
               },
               err => {
                   console.log(err);
@@ -398,7 +423,11 @@ onDeactivate(data:any): void {
   // console.log('Deactivate', JSON.parse(JSON.stringify(data)));
 }
 
-
+settingsChart(){
+  document.getElementsByTagName("line")[0].style.stroke = "#eeff00"
+  document.getElementsByTagName("line")[0].style.strokeWidth = '4'
+  console.log('Hola desde javaScript');
+}
 
 
 }

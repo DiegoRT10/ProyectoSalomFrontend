@@ -303,5 +303,6 @@ export interface diasMetas{
 
 export interface fechaMetas{
   pay: string,
-  fecha: string
+  fecha: string,
+  dia: string
 }

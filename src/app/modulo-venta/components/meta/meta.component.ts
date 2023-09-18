@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, ElementRef, OnInit, Renderer2 } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MetaFarmacia, DataVentaDiaria, VentaDiariaService, VentaMes, DatosGrafica, DatosVentaGlobal, DatosVentaGlobalMeta, PeopleLocation, diasMetas, fechaMetas } from '../../services/venta-diaria.service';
 import { Color, ScaleType } from '@swimlane/ngx-charts';
 import * as moment from 'moment';
@@ -30,7 +30,6 @@ export class MetaComponent implements OnInit, AfterViewInit{
   fechaMeta:string;
 
 
-
   // customColors: any;
   date: Date = new Date();
   diaRestantes:number = this.date.getDate();
@@ -39,6 +38,7 @@ export class MetaComponent implements OnInit, AfterViewInit{
   loading2?:boolean;
   loading3?:boolean;
   loading4?:boolean;
+  loadGrafica?:boolean = true;
   carga?:boolean;
   prueba: number;
   fisrtp:string;
@@ -74,7 +74,7 @@ export class MetaComponent implements OnInit, AfterViewInit{
 
 URL = environment.PORT;
 
-  constructor(private router: Router, private VentaDiariaService: VentaDiariaService, private peopleLocationService: PeopleLocationService, private renderer: Renderer2, private el: ElementRef) { 
+  constructor(private router: Router, private VentaDiariaService: VentaDiariaService, private peopleLocationService: PeopleLocationService, private renderer: Renderer2, private el: ElementRef, private activatedRoute:ActivatedRoute) { 
     this.loading2=true;
     this.loading3=true;
     this.loading4=true;
@@ -90,7 +90,8 @@ URL = environment.PORT;
 
   fechaMetasFarmacias:fechaMetas = {
     pay: '',
-    fecha: ''
+    fecha: '',
+    dia: '0'
   }
 
   Venta: DataVentaDiaria = {
@@ -129,22 +130,43 @@ URL = environment.PORT;
 
   ngAfterViewInit() {
     this.carga = false;
-    setTimeout(() => {
-      // El código JavaScript que deseas ejecutar después de un retraso.
-      const lineElement = document.getElementsByTagName("line")[1];
-      if (lineElement) {
-        lineElement.style.stroke = "#fbff00";
-        lineElement.style.strokeWidth = "4";
-        
-      }
 
-      const lineElement2 = document.getElementsByTagName("line")[0];
-      if (lineElement2) {
-        lineElement2.style.stroke = "#00ff2a";
-        lineElement2.style.strokeWidth = "4";
+    
+    // while(this.loadGrafica){
+    //   const lineElement = document.getElementsByTagName("line")[1];
+    //   const lineElement2 = document.getElementsByTagName("line")[0];
+    //   if (lineElement && lineElement2) {
+    //     lineElement.style.stroke = "#fbff00";
+    //     lineElement.style.strokeWidth = "4";
+
+    //     lineElement2.style.stroke = "#00ff2a";
+    //     lineElement2.style.strokeWidth = "4";
+
+    //     this.loadGrafica = false;
+    //   }
+
+    // }
+    setInterval(() => {
+      this.settingsChart();
+    }, 1000);
+
+
+    // setTimeout(() => {
+    //   // El código JavaScript que deseas ejecutar después de un retraso.
+    //   const lineElement = document.getElementsByTagName("line")[1];
+    //   if (lineElement) {
+    //     lineElement.style.stroke = "#fbff00";
+    //     lineElement.style.strokeWidth = "4";
+        
+    //   }
+
+    //   const lineElement2 = document.getElementsByTagName("line")[0];
+    //   if (lineElement2) {
+    //     lineElement2.style.stroke = "#00ff2a";
+    //     lineElement2.style.strokeWidth = "4";
        
-      }
-    }, 3000); // Cambia el valor del temporizador según sea necesario.
+    //   }
+    // }, 10000); // Cambia el valor del temporizador según sea necesario.
   }
 
 
@@ -165,7 +187,8 @@ async VentaGlobal(cash: string, ym: string): Promise<void> {
   try {
       this.fechaMetasFarmacias.pay = cash;
       this.fechaMetasFarmacias.fecha = ym;
-
+      this.fechaMetasFarmacias.dia = <string>(this.activatedRoute.snapshot.params['d'] == undefined ? '0' : this.activatedRoute.snapshot.params['d'])
+      console.log('esta es la fecha por ruta ', this.fechaMetasFarmacias.dia);
       await new Promise<void>((resolve, reject) => {
           this.VentaDiariaService.getVentasGlobalesMeta(this.fechaMetasFarmacias).subscribe(
               res => {
@@ -377,8 +400,10 @@ obtenerFechaActual(){
   this.VentaDiariaService.getDiaMeta().subscribe(res => {
             this.diaMetas = res[0]
             moment.locale('es');
-            fechaMoment = moment(this.diaMetas.dia, 'YYYY/MM/DD');
-
+            fechaMoment = (this.fechaMetasFarmacias.dia == '0' ? moment(this.diaMetas.dia, 'YYYY/MM/DD'): moment(`${this.diaMetas.dia.slice(0,4)}/${this.diaMetas.dia.slice(5,7)}/${this.fechaMetasFarmacias.dia}`, 'YYYY/MM/DD'));
+            // fechaMoment = moment(this.diaMetas.dia, 'YYYY/MM/DD');
+            console.log(`esta es la fecha que debe de aparcer ${this.diaMetas.dia.slice(0,4)}/${this.diaMetas.dia.slice(5,7)}/${this.fechaMetasFarmacias.dia}`);
+            console.log(`y esta es la fecha que tiene moment ${fechaMoment}`);
             // Verificar si la fecha es válida
             if (!fechaMoment.isValid()) {
               console.log('Fecha inválida');
@@ -387,7 +412,7 @@ obtenerFechaActual(){
             // Formatear la fecha según tus requerimientos
           diaSemana = fechaMoment.format('dddd');
 
-          
+          // dia = (this.fechaMetasFarmacias.dia == '0' ? fechaMoment.format('D'): this.fechaMetasFarmacias.dia);
           dia = fechaMoment.format('D');
           mes = fechaMoment.format('MMMM');
           año = fechaMoment.format('YYYY');
@@ -424,9 +449,17 @@ onDeactivate(data:any): void {
 }
 
 settingsChart(){
-  document.getElementsByTagName("line")[0].style.stroke = "#eeff00"
-  document.getElementsByTagName("line")[0].style.strokeWidth = '4'
-  console.log('Hola desde javaScript');
+  const lineElement = document.getElementsByTagName("line")[1];
+  if (lineElement) {
+    lineElement.style.stroke = "#fbff00";
+    lineElement.style.strokeWidth = "4";  
+  }
+
+  const lineElement2 = document.getElementsByTagName("line")[0];
+  if (lineElement2) {
+    lineElement2.style.stroke = "#00ff2a";
+    lineElement2.style.strokeWidth = "4";
+  }
 }
 
 

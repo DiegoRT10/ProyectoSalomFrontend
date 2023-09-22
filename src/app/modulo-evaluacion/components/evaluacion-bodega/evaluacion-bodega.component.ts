@@ -20,7 +20,8 @@ export class EvaluacionBodegaComponent implements OnInit{
     nombre: '',
     puesto: '',
     observacion: '',
-    estado: ''
+    estado: '',
+    fecha: ''
   }
 
 

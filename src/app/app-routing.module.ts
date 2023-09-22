@@ -56,6 +56,7 @@ import { CalificacionEvaluacionComponent } from './modulo-evaluacion/components/
 import { CatalogoComponent } from './modulo-distribuidora/components/catalogo/catalogo.component';
 import { EvaluacionBodegaComponent } from './modulo-evaluacion/components/evaluacion-bodega/evaluacion-bodega.component';
 import { MetaComponent } from './modulo-venta/components/meta/meta.component';
+import { PagoComponent } from './modulo-nomina/components/pago/pago.component';
 
 
 
@@ -91,7 +92,7 @@ const routes: Routes = [
 {path: 'venta-gerente', component: VentaGerenteComponent, canActivate: [AuthGuard, RoleGuard],  data: {expectedRole: {s:'0', g:'1'}}},//puede acceder sistemas o gerente
 {path: 'venta-administrador', component: VentaAdministradorComponent, canActivate: [AuthGuard, RoleGuard],  data: {expectedRole: {s:'0', g:'2'}}},//puede acceder sistemas o administrador
 {path: 'venta', component: VentaComponent, canActivate: [AuthGuard, RoleGuard],  data: {expectedRole: {s:'0', g:'1'}}},//puede acceder sistemas o gerente
-{path: 'meta/:d', component: MetaComponent},//Puede acceder cualquiera
+{path: 'meta/:d', component: MetaComponent, canActivate: [AuthGuard, RoleGuard],  data: {expectedRole: {s:'0', g:'1'}}},//puede acceder sistemas o gerente
 {path: 'meta', component: MetaComponent},//Puede acceder cualquiera
 {path: 'farmacia', component: FarmaciaComponent, canActivate: [AuthGuard, RoleGuard],  data: {expectedRole: {s:'0', g:'1'}}},//puede acceder sistemas o gerente
 {path: 'estimulo-gerente', component: EstimuloGerenteComponent, canActivate: [AuthGuard, RoleGuard],  data: {expectedRole: {s:'0', g:'1'}}},//puede acceder sistemas o gerente
@@ -117,6 +118,8 @@ const routes: Routes = [
 {path: 'catalogo', component: CatalogoComponent, canActivate: [AuthGuard, RoleGuard],  data: {expectedRole: {s:'0', g:'1'}}},//puede acceder sistemas o gerente
 {path: 'calificacion-evaluacion', component: CalificacionEvaluacionComponent}, //puede acceder sistemas o gerente con la excepcion que solo funciona para el evaluador y gerente de sistemas
 {path: 'evaluacion-bodega', component: EvaluacionBodegaComponent, canActivate: [AuthGuard, ExceptionsGuard],  data: {expectedRole: {s:'0', g:'1'}}}, //puede acceder sistemas o gerente con la excepcion que solo funciona para el evaluador y gerente de sistemas
+{path: 'pago', component: PagoComponent, canActivate: [AuthGuard, RoleGuard],  data: {expectedRole: {s:'0', g:'1'}}},//puede acceder sistemas o gerente
+
 
 {path: '**', pathMatch: 'full', redirectTo: 'login'}
 ];

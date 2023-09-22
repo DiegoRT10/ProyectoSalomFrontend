@@ -44,7 +44,8 @@ export class VistaEvaluacionComponent implements OnInit {
     nombre: '',
     puesto: '',
     observacion: '',
-    estado: ''
+    estado: '',
+    fecha: ''
   };
 
   ObjEvaluacionEnd:Evaluacion ={
@@ -53,7 +54,8 @@ export class VistaEvaluacionComponent implements OnInit {
     nombre: '',
     puesto: '',
     observacion: '',
-    estado: ''
+    estado: '',
+    fecha: ''
   };
  
   ObjId: ID = {

@@ -22,6 +22,7 @@ import { LoadingComponent } from './components/loading/loading.component';
 import { PeopleLocationsComponent } from './components/people-locations/people-locations.component';
 import { ListPeopleLocationsComponent } from './components/list-people-locations/list-people-locations.component';
 import { AboutMeComponent } from './components/about-me/about-me.component';
+import { PagoComponent } from './components/pago/pago.component';
 
 
 
@@ -47,6 +48,7 @@ import { AboutMeComponent } from './components/about-me/about-me.component';
     PeopleLocationsComponent,
     ListPeopleLocationsComponent,
     AboutMeComponent,
+    PagoComponent,
 
   ],
   imports: [

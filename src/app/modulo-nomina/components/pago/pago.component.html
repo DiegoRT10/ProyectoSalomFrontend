@@ -1,0 +1,23 @@
+<div class="main">
+    <div class="section text-center">
+      <div class="container">
+        <h1>Pago de empleados</h1>
+        <br>
+        <form>
+            <div class="mb-3">
+                <label class="form-label">Nombre de la etapa</label>
+             <input [(ngModel)]="dataMessage.number" type="number" class="form-control" name="number">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Descripcion</label>
+            <input [(ngModel)]="dataMessage.message" type="text" class="form-control" name="descripcion">
+            </div>        
+            <div class="mb-3">
+                <button  type="button" class="btn btn-success" (click)="MenssageSend()">Guardar</button>
+            </div>
+        </form>
+      </div>
+    </div>
+</div>
+
+    

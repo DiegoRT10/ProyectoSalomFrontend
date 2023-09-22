@@ -86,7 +86,8 @@ export class StartEvaluacionComponent implements OnInit{
     nombre: '',
     puesto: '',
     observacion: '',
-    estado: ''
+    estado: '',
+    fecha: ''
   };
 
   ObjProductosEvaluacion:ProductosEvaluacion ={

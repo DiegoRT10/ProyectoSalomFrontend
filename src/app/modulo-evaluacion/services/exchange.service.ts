@@ -121,7 +121,8 @@ export class ExchangeService {
       nombre:string,
       puesto:string,
       observacion:string,
-      estado:string
+      estado:string,
+      fecha:string
     }
 
     export interface ProductosEvaluacion{

@@ -4,6 +4,7 @@ import { ExchangeService, ID, ProductosEvaluacion, Evaluacion } from '../../serv
 import { Router } from '@angular/router';
 import { NgbTypeahead } from '@ng-bootstrap/ng-bootstrap';
 import { Observable, OperatorFunction, Subject, debounceTime, distinctUntilChanged, filter, map, merge } from 'rxjs';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-evaluacion',
@@ -23,7 +24,8 @@ export class EvaluacionComponent implements OnInit {
     nombre: '',
     puesto: '',
     observacion: '',
-    estado: ''
+    estado: '',
+    fecha: ''
   }
 
 
@@ -31,6 +33,7 @@ export class EvaluacionComponent implements OnInit {
     id: ''
   }
 
+  date: Date = new Date();
 
   constructor(private router: Router, private exchangeService: ExchangeService){
 
@@ -40,6 +43,7 @@ export class EvaluacionComponent implements OnInit {
 
   ngOnInit(): void {
     // this.getProductsCodeName();
+    console.log('esta es la fecha ', moment.utc(this.date).format('yyyy-MM-DD hh:mm:ss'));
   }
 
 
@@ -70,7 +74,7 @@ export class EvaluacionComponent implements OnInit {
       this.ObjEvaluacion.estado = '0' //creacion de evaluacion  
   
   
-  
+      // this.ObjEvaluacion.fecha = 
       this.exchangeService.setEvaluacion(this.ObjEvaluacion).subscribe(res => {
        
         

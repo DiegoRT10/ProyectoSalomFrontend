@@ -34,7 +34,8 @@ export class CalificacionEvaluacionComponent implements OnInit {
     nombre: '',
     puesto: '',
     observacion: '',
-    estado: ''
+    estado: '',
+    fecha:''
   }
 
   ObjCountProductoEvaluacion: CountProductoEvaluacion = {
@@ -111,6 +112,8 @@ export class CalificacionEvaluacionComponent implements OnInit {
     this.porcentajeExcelente = (this.countExcelente * 100)/this.ObjCountProductoEvaluacion.NoEvaluado;
     this.porcentajeRegular = (this.countRegular * 100)/this.ObjCountProductoEvaluacion.NoEvaluado;
     this.porcentajeErroneo = (this.countErroneo * 100)/this.ObjCountProductoEvaluacion.NoEvaluado;
+
+
 
     console.log('porcenta excelente ', this.porcentajeExcelente);
     console.log('porcenta regular ', this.porcentajeRegular);

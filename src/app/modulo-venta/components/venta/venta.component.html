@@ -136,10 +136,11 @@
                                     <th>{{venta.host}}</th>
                                     <th>{{venta.total/venta.monto | percent: '2.0-2'}} </th>
                                     <th>{{(venta.dia/noDiasMes) | percent: '2.0-2'}} </th>
-                                    <th>{{((venta.total/venta.dia)*(noDiasMes))/venta.monto| percent: '2.0-3'}} </th>
+                                    <th>{{((venta.total/venta.dia)*(noDiasMes)) | percent: '2.0-3'}} </th>
                                     <th>{{venta.total | currency: 'Q'}}</th>
                                     <th>{{venta.monto | currency: 'Q'}}</th>
                                     <th>{{(venta.total/venta.dia)*(noDiasMes)| currency: 'Q'}}</th>
+                                    
 
                                     <th>
                                         <button type="button" class="btn btn-just-icon"><i

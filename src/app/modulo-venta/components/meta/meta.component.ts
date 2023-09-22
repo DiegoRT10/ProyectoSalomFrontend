@@ -187,8 +187,9 @@ async VentaGlobal(cash: string, ym: string): Promise<void> {
   try {
       this.fechaMetasFarmacias.pay = cash;
       this.fechaMetasFarmacias.fecha = ym;
+      console.log('este es el parametro que recibo de la ruta ',this.activatedRoute.snapshot.params['d']);
       this.fechaMetasFarmacias.dia = <string>(this.activatedRoute.snapshot.params['d'] == undefined ? '0' : this.activatedRoute.snapshot.params['d'])
-      console.log('esta es la fecha por ruta ', this.fechaMetasFarmacias.dia);
+      console.log('este es el valor de la fecha ', this.fechaMetasFarmacias.dia);
       await new Promise<void>((resolve, reject) => {
           this.VentaDiariaService.getVentasGlobalesMeta(this.fechaMetasFarmacias).subscribe(
               res => {
@@ -402,8 +403,6 @@ obtenerFechaActual(){
             moment.locale('es');
             fechaMoment = (this.fechaMetasFarmacias.dia == '0' ? moment(this.diaMetas.dia, 'YYYY/MM/DD'): moment(`${this.diaMetas.dia.slice(0,4)}/${this.diaMetas.dia.slice(5,7)}/${this.fechaMetasFarmacias.dia}`, 'YYYY/MM/DD'));
             // fechaMoment = moment(this.diaMetas.dia, 'YYYY/MM/DD');
-            console.log(`esta es la fecha que debe de aparcer ${this.diaMetas.dia.slice(0,4)}/${this.diaMetas.dia.slice(5,7)}/${this.fechaMetasFarmacias.dia}`);
-            console.log(`y esta es la fecha que tiene moment ${fechaMoment}`);
             // Verificar si la fecha es válida
             if (!fechaMoment.isValid()) {
               console.log('Fecha inválida');

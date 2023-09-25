@@ -68,3 +68,24 @@ th {
 .modal-lg {
   max-width: 50% !important;
 }
+
+strong {
+  font-weight: bold!important;
+}
+
+/* CSS personalizado para el modal y su contenido */
+@media screen and (max-width: 600px) {
+  .custom-modal {
+    overflow-y: auto; /* Agrega un scroll vertical si es necesario */
+    max-height: 45rem; /* Establece la altura máxima como el 90% de la altura de la ventana */
+    width: 45rem; /* Establece el ancho del modal como el 90% del ancho de la ventana */
+    margin: auto; /* Centra el modal horizontalmente */
+}
+
+.custom-modal-body {
+    max-height: 70vh; /* Establece la altura máxima del contenido de la tabla */
+    overflow-y: auto; /* Agrega un scroll vertical si es necesario en el contenido de la tabla */
+}
+}
+
+

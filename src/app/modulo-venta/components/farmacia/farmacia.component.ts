@@ -180,22 +180,37 @@ export class FarmaciaComponent implements OnInit {
       this.ListaVenta = <any>res;
 
       this.Venta = res[0];
-      for (const j of this.ListaMetas!) {
-        if (j.idlocation == this.idEntrante) {
-          for (const i of this.ListaVenta!) {
-            if (i.host == j.idlocation) {
-              this.Venta.dia = i.dia;
-              this.Venta.host = i.host;
-              this.Venta.total = i.total;
-              this.metas.monto = j.monto;
-              this.faltante = j.monto - i.total;
 
-              this.diasRestantes = this.noDiasMes - date.getDate();
-              this.ventaNecesaria = this.faltante / this.diasRestantes
-            }
-          }
-        }
-      }
+      const metaa = this.ListaMetas.filter(item => item.idlocation == this.idEntrante).map(item => item);
+      const ventaMeta = this.ListaVenta.filter(item => item.host == metaa.map(item => item.idlocation).toString());
+      this.Venta.dia = Number(ventaMeta.map(item => item.dia));
+      this.Venta.host = ventaMeta.map(item => item.host).toString();
+      this.Venta.total = Number(ventaMeta.map(item => item.total));
+      this.metas.monto = Number(metaa.map(item => item.monto));
+      this.faltante = this.metas.monto - this.Venta.total;
+      this.diasRestantes = this.noDiasMes - date.getDate();
+      this.ventaNecesaria = this.faltante / this.diasRestantes;
+
+      
+      // for (const j of this.ListaMetas!) {
+      //   if (j.idlocation == this.idEntrante) {
+      //     for (const i of this.ListaVenta!) {
+      //       if (i.host == j.idlocation) {
+      //         this.Venta.dia = i.dia;
+      //         this.Venta.host = i.host;
+      //         this.Venta.total = i.total;
+      //         this.metas.monto = j.monto;
+      //         this.faltante = j.monto - i.total;
+
+      //         this.diasRestantes = this.noDiasMes - date.getDate();
+      //         this.ventaNecesaria = this.faltante / this.diasRestantes
+
+      //         console.log('datos de la venta desde el for ',this.Venta, ' metas monto ', this.metas.monto, ' faltante ',this.faltante, ' dias restantes ',this.diasRestantes, ' venta necesaria ',this.ventaNecesaria);
+
+      //       }
+      //     }
+      //   }
+      // }
 
 
     },

@@ -17,7 +17,7 @@
 
         <div class="container">
             <div class="row">
-                <div class="col-4 ml-auto mr-auto">
+                <div class="col-12 col-md-4 ml-auto mr-auto">
                     <div class="card text-bg-light mb-3">
                         <div class="card-header">Sucursal {{idEntrante}}</div>
                         <div class="card-body table-card">
@@ -63,7 +63,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-4 ml-auto mr-auto">
+                <div class="col-12 col-md-4 ml-auto mr-auto">
                     <div class="card text-bg-light mb-3" style="width: 23rem;">
                         <div class="card-header">Venta Diaria</div>
                         <div class="card-body table-card">
@@ -91,7 +91,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-4 ml-auto mr-auto">
+                <div class="col-12 col-md-4 ml-auto mr-auto">
                     <div class="card text-bg-light mb-3 " style="width: 25rem;">
                         <div class="card-header">Cierres</div>
                         <div class="card-body table-card">
@@ -106,7 +106,7 @@
 
                                     <div class="example-accordion-item-header" (click)="accordionItem.toggle()">
                                         <i *ngIf="$any((item.apertura + item.venta + item.gastos + item.ingresos + item.cierre).toFixed(2)) == item.deposito" class="nc-icon nc-check-2"></i> 
-                                        {{'#'+item.seq+' '}}{{ item.dateend | date:"shortDate"}}<strong>{{' '+(item.apertura + item.venta + item.gastos + item.ingresos + item.cierre) |currency: 'Q'}}</strong>
+                                        {{'#'+item.seq+' '}}{{ item.dateend | date:"dd/MM/yyyy"}}<strong>{{' '+(item.apertura + item.venta + item.gastos + item.ingresos + item.cierre) |currency: 'Q'}}</strong>
                                         <span class="example-accordion-item-description">
                                             <!-- Click para {{ accordionItem.expanded ? 'cerrar' : 'abrir' }} -->
                                             <i *ngIf="accordionItem.expanded"
@@ -137,11 +137,11 @@
                                             </tr>
                                             <tr>
                                                 <th>Gastos</th>
-                                                <td>{{item.gastos | currency: 'Q'}}</td>
+                                                <td>{{item.gastos * -1 | currency: 'Q'}}</td>
                                             </tr>
                                             <tr>
                                                 <th>Cierre</th>
-                                                <td>{{item.cierre | currency: 'Q'}}</td>
+                                                <td>{{item.cierre * -1 | currency: 'Q'}}</td>
                                             </tr>
                                             <tr>
                                                 <th>Deposito</th>
@@ -174,17 +174,9 @@
                                     <!-- </ng-container> -->
                                 </cdk-accordion-item>
                             </cdk-accordion>
-
-
-
                         </div>
                     </div>
                 </div>
-
-
-
-
-
             </div>
         </div>
         <div class="container">
@@ -204,9 +196,9 @@
 <!-- dialog -->
 <!-- Button trigger modal -->
 
-
+<!-- style="width: 45rem;" -->
 <!-- Modal -->
-<div class="modal fade " id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
+<div class="modal fade custom-modal " id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
     aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
@@ -216,7 +208,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body custom-modal-body">
 
 
                 

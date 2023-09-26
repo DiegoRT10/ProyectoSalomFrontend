@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { MetaFarmacia, DataVentaDiaria, VentaDiariaService, VentaMes, DatosGrafica, DatosVentaGlobal } from '../../services/venta-diaria.service';
 import { Color, ScaleType } from '@swimlane/ngx-charts';
 import * as moment from 'moment';
+import { of } from 'rxjs';
 
 
 @Component({
@@ -31,6 +32,9 @@ export class VentaComponent implements OnInit {
   loading3?:boolean;
   loading4?:boolean;
   carga?:boolean;
+  proyecccion:number=0;
+  meta:number=0;
+
 
   view: [number,number] = [1090, 850];
   showXAxis = true;
@@ -92,6 +96,7 @@ export class VentaComponent implements OnInit {
     this.MetaFarmacia();
     
     this.setFechaCard();
+    
   }
 
   ngAfterViewInit() {
@@ -102,7 +107,6 @@ export class VentaComponent implements OnInit {
   setMes(event:any):void{
     this.ventaMes.mes = event.target.value;
     this.ventaMes.mes = this.ventaMes.mes.slice(0,4)+this.ventaMes.mes.slice(5);
-    console.log('Este es el mes de venta',this.ventaMes.mes);
     this.VentaDiaria('cash',this.ventaMes.mes);
     this.VentaGlobal('cash', this.ventaMes.mes);
     this.ventaMes.mes=this.setFechaEvent();
@@ -129,21 +133,6 @@ export class VentaComponent implements OnInit {
             );
         });
 
-        // const singlePromise = new Promise<void>((resolve, reject) => {
-        //     this.VentaDiariaService.getDatos(this.Venta).subscribe(
-        //         res => {
-        //             this.single = <any>res;
-        //             this.loading2 = false;
-        //             resolve();
-        //         },
-        //         err => {
-        //             console.log(err);
-        //             reject(err);
-        //         }
-        //     );
-        // });
-
-        // await Promise.all([listaVentaPromise, singlePromise]);
     } catch (error) {
         console.log(error);
     }
@@ -155,8 +144,6 @@ async VentaGlobal(cash: string, ym: string): Promise<void> {
   try {
       this.Venta.host = cash;
       this.Venta.dia = <any>ym;
-      console.log('datos a enviar de Venta Global ',this.Venta.host);
-      console.log('datos a enviar de Venta Global ',this.Venta.dia);
       await new Promise<void>((resolve, reject) => {
           this.VentaDiariaService.getVentasGlobales(this.Venta).subscribe(
               res => {
@@ -172,6 +159,7 @@ async VentaGlobal(cash: string, ym: string): Promise<void> {
                   resolve();
                   this.loading2 = false;
                   this.loading3 = false;
+                  this.dataResumen();
               },
               err => {
                   console.log(err);
@@ -209,22 +197,43 @@ async MetaFarmacia(): Promise<void> {
 
 OneMetaFarmacia(id:string, val:any ):void{
 
+  const metas = this.ListaMetas.filter(item => item.idlocation == id);
+  this.farmacia = metas.map(item => item.idlocation);
+  this.metaActual = metas.map(item => item.monto);
+  this.pVenta = ((val/this.metaActual)*100).toFixed(2);
+
+
+
   //porcentaje venta actual
-  for(let i of this.ListaMetas!){
-    if(id == i.idlocation){
-    this.farmacia=i.idlocation
-    this.metaActual = i.monto;
-    this.pVenta=((val/i.monto)*100).toFixed(2);
-    }
-  }
+  // for(let i of this.ListaMetas!){
+  //   if(id == i.idlocation){
+  //   this.farmacia=i.idlocation
+  //   this.metaActual = i.monto;
+  //   this.pVenta=((val/i.monto)*100).toFixed(2);
+  //   console.log('datos del for this.farmacia = ',this.farmacia, ' this.metaActual = ', this.metaActual,' this.pVenta = ',this.pVenta);
+  //   }
+  // }
+
+  
+
 
   //Porcentaje venta diaria y porcentaja de proyeccion
-  for(let i of this.ListaVenta!){
-   if(id == i.host){
-    this.pVentaDiaria=((i.dia/this.noDiasMes)*100).toFixed(2);
-    this.pProyeccion=((((i.total/i.dia)*this.noDiasMes)/this.metaActual)*100).toFixed(2);
-   }
-  }
+
+  const ventas = this.ListaVenta.filter(item => item.host == id);
+  this.pVentaDiaria = ((Number(ventas.map(item => item.dia))/this.noDiasMes)*100).toFixed(2);
+  this.pProyeccion = ((((Number(ventas.map(item => item.total))/Number(ventas.map(item => item.dia)))*this.noDiasMes)/this.metaActual)*100).toFixed(2);
+  console.log('desde el filter this.pVentaDiaria ',this.pVentaDiaria);
+  console.log('desde el filter this.pProyeccion ',this.pProyeccion);
+
+
+  // for(let i of this.ListaVenta!){
+  //  if(id == i.host){
+  //   this.pVentaDiaria=((i.dia/this.noDiasMes)*100).toFixed(2);
+  //   this.pProyeccion=((((i.total/i.dia)*this.noDiasMes)/this.metaActual)*100).toFixed(2);
+  //   console.log('desde el for this.pVentaDiaria ',this.pVentaDiaria);
+  // console.log('desde el for this.pProyeccion ',this.pProyeccion);
+  //  }
+  // }
 
   
 }
@@ -238,14 +247,6 @@ setFechaCard():void{
 
 DatosCard():void{
  
-  // for(let i of this.ListaMetas!){
-  // for(let j of this.ListaVenta!){
-  //   if(i.idlocation == j.host){
-  //     this.totalVentaActual += j.total;
-  //     this.totalVentaMeta += i.monto;
-  //   }
-  //  }
-  //  }
   for(let i of this.ListaMetas!){
     this.totalVentaMeta += i.monto;
      }
@@ -281,7 +282,6 @@ goFarmacia(id:String):void{
 
 onSelect(data:any): void {
   // console.log('Item clicked', JSON.parse(JSON.stringify(data)));
-  console.log('este es el dato seleccionado de la grafica ', data.value);
   this.OneMetaFarmacia(data.name,data.value);
  
 }
@@ -294,6 +294,13 @@ onDeactivate(data:any): void {
   // console.log('Deactivate', JSON.parse(JSON.stringify(data)));
 }
 
+dataResumen(){
+  for (const venta of this.ListaVentaGlobal) {
+    this.proyecccion+=(venta.total/venta.dia)*(this.noDiasMes);
+    this.meta += venta.monto;
+  }
+
+}
 
 
 }

@@ -60,6 +60,8 @@
                         <th>Mi promedio de venta (diaria)</th>
                         <th>{{sucursal.venta/day! | currency: 'Q'}}</th>
                       </tr>
+                      <ng-container *ngIf="sucursal.idlocation == onPeopleLocation.idlocation">
+
                       <tr>
                         <th>Mi meta</th>
                         <th>{{sucursal.meta | currency: 'Q'}}</th>
@@ -79,8 +81,16 @@
                           'Q'}}</th>
                         <th *ngIf="noDiasMes!-day! == 0">{{(sucursal.meta - sucursal.venta)/1 | currency: 'Q'}}</th>
                       </tr>
+
+                    </ng-container>
+                    <ng-container *ngIf="sucursal.idlocation != onPeopleLocation.idlocation">
+                      <tr>
+                        <th>No cuenta con meta</th>
+                      </tr>
+                    </ng-container>
                     </table>
 
+                    <ng-container *ngIf="sucursal.idlocation == onPeopleLocation.idlocation">
                     <div class="row">
                       <div class="col-md-12">
                         <div class="info">
@@ -93,6 +103,10 @@
                         </div>
                       </div>
                     </div>
+                  </ng-container>
+                  <ng-container *ngIf="sucursal.idlocation != onPeopleLocation.idlocation">
+
+                  </ng-container>
 
                   </div>
                 </div>
@@ -228,11 +242,11 @@
                         </tr>
                         <tr>
                           <th>Gastos</th>
-                          <td>{{item.gastos | currency: 'Q'}}</td>
+                          <td>{{item.gastos * -1 | currency: 'Q'}}</td>
                         </tr>
                         <tr>
                           <th>Cierre</th>
-                          <td>{{item.cierre | currency: 'Q'}}</td>
+                          <td>{{item.cierre * -1 | currency: 'Q'}}</td>
                         </tr>
                         <tr>
                           <th>Deposito</th>

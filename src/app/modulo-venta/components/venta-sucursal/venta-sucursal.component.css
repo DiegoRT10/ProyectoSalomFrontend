@@ -65,3 +65,6 @@ th {
   max-width: 50% !important;
 }
 
+strong {
+  font-weight: bold!important;
+}

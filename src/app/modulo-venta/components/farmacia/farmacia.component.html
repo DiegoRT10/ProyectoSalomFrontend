@@ -146,7 +146,8 @@
                                             <tr>
                                                 <th>Deposito</th>
                                                 <!-- <td>{{item.apertura + item.venta + item.gastos + item.ingresos + item.cierre | currency: 'Q'}}</td> -->
-                                                <td>{{item.deposito | currency: 'Q'}}</td>
+                                                <td *ngIf="idEntrante != 'BD-CENTRAL'">{{item.deposito | currency: 'Q'}}</td>
+                                                <td *ngIf="idEntrante == 'BD-CENTRAL'">{{item.apertura + item.venta + item.gastos + item.ingresos + item.cierre | currency: 'Q'}}</td>
                                                 <!-- {{( i < size-1 ? Transacciones(item.money,true):Transacciones(item.money,false))}} -->
                                                 <td></td>
 

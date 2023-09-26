@@ -152,7 +152,13 @@
                                     </th>
                                 </tr>
                             </ng-container>
-
+                            <tr class='table-primary'>
+                                <th colspan = '6' class="text-center">TOTALES (Segun cierres actuales)</th>
+                               <th>{{proyecccion/meta | percent: '2.0-2'}}</th>
+                               <th>{{meta | currency: 'Q'}}</th>
+                               <th>{{proyecccion | currency: 'Q'}}</th>
+                               <th></th>
+                         </tr>
                         </tbody>
                     </table>
 

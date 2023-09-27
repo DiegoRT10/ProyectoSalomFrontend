@@ -238,8 +238,11 @@ export class VentaSucursalComponent implements OnInit {
   }
 
   totalesVenta():void{
+    console.log('este es el acumulado del titular antes de entrar al for ',this.acumuladoTitular);
+    console.log('este es la Meta Farmacia antes de entrar al for ',this.acumuladoTitular);
   for (const i of this.ListaVentaDiaria!) {
    this.acumuladoTitular += i.titular;
+   console.log('este es el acumulado del titular en el for ',this.acumuladoTitular);
    this.acumuladoApoyo += i.apoyo;
    this.acumuladoRotativo += i.rotativo;  
    this.acumuladoTotal +=   (i.titular + i.apoyo + i.rotativo)
@@ -340,13 +343,19 @@ export class VentaSucursalComponent implements OnInit {
     let date: Date = new Date();
     this.Venta.host = host;
     this.Venta.dia = <any>ym;
-    this.VentaDiariaService.getOneVenta(this.Venta).subscribe(res => {
+    this.VentaDiariaService.getUniVenta(this.Venta).subscribe(res => {
       this.ListaVenta = <any>res;
 
       this.Venta = res[0];
+
+      // const metaa = this.ListaMetas.filter(item => item.idlocation == this.idEntrante).map(item => item);
+
+
       for (const j of this.ListaMetas!) {
           for (const i of this.ListaVenta!) {
+            console.log('este es el host en el for', i.host);
             if (i.host == j.idlocation) {
+              console.log('este es el host en el if', i.host);
               this.Venta.dia = i.dia;
               this.Venta.host = i.host;
               this.Venta.total = i.total;

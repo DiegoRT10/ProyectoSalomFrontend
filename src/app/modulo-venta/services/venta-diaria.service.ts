@@ -26,8 +26,16 @@ export class VentaDiariaService {
       return this.http.post<DataVentaDiaria[]>(`${this.URL}/venta/`,venta);
     }
 
+    getUniVenta(venta:any){
+      return this.http.post<DataVentaDiaria[]>(`${this.URL}/venta/ventaUnica`,venta);
+    }
+
     getMetas(){
       return this.http.get(`${this.URL}/venta/metafarmacia`);
+    }
+
+    getMetasUnica(local:any){
+      return this.http.post<MetaFarmacia[]>(`${this.URL}/venta/metafarmaciaUnica`,local);
     }
 
     getVentasGlobales(venta:any){
@@ -305,4 +313,8 @@ export interface fechaMetas{
   pay: string,
   fecha: string,
   dia: string
+}
+
+export interface Local{
+  host:string
 }

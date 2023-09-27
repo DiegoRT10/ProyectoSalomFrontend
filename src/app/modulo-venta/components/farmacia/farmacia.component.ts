@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
-import { MetaFarmacia, DataVentaDiaria, VentaDiariaService, VentaMes, DatosGrafica, PeopleLocation, VentaPorDia, dataVenta, Cierres, dataCierres, Depositos, dataDepositos } from '../../services/venta-diaria.service';
+import { MetaFarmacia, DataVentaDiaria, VentaDiariaService, VentaMes, DatosGrafica, PeopleLocation, VentaPorDia, dataVenta, Cierres, dataCierres, Depositos, dataDepositos, Local } from '../../services/venta-diaria.service';
 import * as moment from 'moment';
 import { Observable, Subscription, finalize } from 'rxjs';
 
@@ -133,6 +133,9 @@ export class FarmaciaComponent implements OnInit {
     money: ''
   }
 
+  local: Local = {
+    host: ''
+  }
 
 
   setDepositos: any = '';
@@ -176,20 +179,36 @@ export class FarmaciaComponent implements OnInit {
     let date: Date = new Date();
     this.Venta.host = host;
     this.Venta.dia = <any>ym;
-    this.VentaDiariaService.getOneVenta(this.Venta).subscribe(res => {
+    this.VentaDiariaService.getUniVenta(this.Venta).subscribe(res => {
       this.ListaVenta = <any>res;
 
       this.Venta = res[0];
 
+      for (const i of this.ListaVenta) {
+        console.log('estos son datos de lista venta ', i.host);
+      }
+
       const metaa = this.ListaMetas.filter(item => item.idlocation == this.idEntrante).map(item => item);
-      const ventaMeta = this.ListaVenta.filter(item => item.host == metaa.map(item => item.idlocation).toString());
-      this.Venta.dia = Number(ventaMeta.map(item => item.dia));
-      this.Venta.host = ventaMeta.map(item => item.host).toString();
-      this.Venta.total = Number(ventaMeta.map(item => item.total));
+      // const ventaMeta = this.ListaVenta.filter(item => item.host == metaa.map(item => item.idlocation).toString());
+
+      this.Venta.dia = Number(this.ListaVenta.map(item => item.dia));
+      this.Venta.host = this.ListaVenta.map(item => item.host).toString();
+      this.Venta.total = Number(this.ListaVenta.map(item => item.total));
       this.metas.monto = Number(metaa.map(item => item.monto));
       this.faltante = this.metas.monto - this.Venta.total;
       this.diasRestantes = this.noDiasMes - date.getDate();
       this.ventaNecesaria = this.faltante / this.diasRestantes;
+
+
+      // const metaa = this.ListaMetas.filter(item => item.idlocation == this.idEntrante).map(item => item);
+      // const ventaMeta = this.ListaVenta.filter(item => item.host == metaa.map(item => item.idlocation).toString());
+      // this.Venta.dia = Number(ventaMeta.map(item => item.dia));
+      // this.Venta.host = ventaMeta.map(item => item.host).toString();
+      // this.Venta.total = Number(ventaMeta.map(item => item.total));
+      // this.metas.monto = Number(metaa.map(item => item.monto));
+      // this.faltante = this.metas.monto - this.Venta.total;
+      // this.diasRestantes = this.noDiasMes - date.getDate();
+      // this.ventaNecesaria = this.faltante / this.diasRestantes;
 
       
       // for (const j of this.ListaMetas!) {
@@ -223,7 +242,8 @@ export class FarmaciaComponent implements OnInit {
   }
 
   MetaFarmacia(): void {
-    this.VentaDiariaService.getMetas().subscribe(res => {
+    this.local.host = this.idEntrante
+    this.VentaDiariaService.getMetasUnica(this.local).subscribe(res => {
       this.ListaMetas = <any>res;
       //this.Venta = res[0];
       this.VentaDiaria( this.idEntrante, this.setFecha());

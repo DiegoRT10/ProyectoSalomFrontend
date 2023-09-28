@@ -32,8 +32,8 @@
               <tbody>
                 <ng-container *ngFor="let item of ListaDetalleTraslado; let i = index">
                 <tr *ngIf="item.estado == 1">
-                  <th>{{item.id_producto}}</th>
-                  <th>lol</th>
+                  <th>{{item.id}}</th>
+                  <th>{{item.nombre}}</th>
                   <th>{{item.cantidad}}</th>
                 </tr>
                 </ng-container>

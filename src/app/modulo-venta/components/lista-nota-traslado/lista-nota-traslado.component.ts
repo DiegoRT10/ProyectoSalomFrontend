@@ -25,6 +25,7 @@ export class ListaNotaTrasladoComponent {
   ListaNotaTraslado!: Traslado_Detalle[];
   ListaDetalleTraslado?: DetalleTraslado[];
   ListaProductosTraslado?: ProductosTraslado[];
+  ListaTrasladosPendientes: Traslado[];
   listaOp: String[] = ['Creados', 'Pendientes', 'Autorizados', 'Salientes', 'Entrantes','Finalizado'];
 
   ObjectStockDiary: stockDiary = {
@@ -406,5 +407,7 @@ export class ListaNotaTrasladoComponent {
     );
 
   }
+
+ 
 
 }

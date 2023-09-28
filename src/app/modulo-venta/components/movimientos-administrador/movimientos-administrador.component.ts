@@ -114,7 +114,8 @@ export class MovimientosAdministradorComponent implements OnInit{
     id_nota_traslado: '',
     id_producto: '',
     cantidad: 0,
-    estado: 0
+    estado: 0,
+    nombre: 0
   }
 
   ObjectProduct:Products={

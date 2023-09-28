@@ -31,7 +31,9 @@ export class ListaSalidasComponent {
   ListaPeopleLocation2?: PeopleLocation[];
   ListaLocationsId?:LocationsId[];
   ListaProductosTraslado?: ProductosTraslado[];
-
+  ListaTrasladosPendientes: Traslado[];
+  items = ['Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5'];
+  expandedIndex = 0;
 
   searchPeople = [''];
 
@@ -91,6 +93,7 @@ export class ListaSalidasComponent {
   this.carga = true;
   this.getPeopleLocation();
   this.getLocationsId();
+  this.pendienteTraslado();
  }
 
  ngAfterViewInit() {
@@ -286,6 +289,15 @@ getProductosTraslado(id: string) {
 
   );
 
+}
+
+pendienteTraslado(){
+  this.trasladoService.getPendientesTraslados().subscribe(res => {
+    this.ListaTrasladosPendientes = <any>res;
+    console.log('estos son los objetos pendientes: ',this.ListaTrasladosPendientes.map(item => item.id_location_origen));
+  }, err => {
+    console.log(err)
+  });
 }
 
 

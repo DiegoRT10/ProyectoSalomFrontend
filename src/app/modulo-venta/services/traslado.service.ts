@@ -80,6 +80,32 @@ updateStockCurrentDestino(stockCurrent:any){
   return this.http.put(`${this.URL}/traslados/updateStockCurrentDestino`,stockCurrent);
 } 
 
+getPendientesTraslados(){
+  return this.http.get(`${this.URL}/traslados/PendienteTraslado`);
+}
+}
+
+export interface PendienteTraslado{
+  id_pendiente_traslado:string, 
+  id_entrega:string, 
+  id_recibe:string, 
+  id_encargado:string, 
+  id_autorizado:string, 
+  no:number, 
+  fecha:Date, 
+  id_location_origen:string, 
+  id_location_destino:string, 
+  motivo:string, 
+  estado_Traslado:number,
+
+  id_Productos_Traslado:string,
+  id_nota_traslado:string,
+  id_producto:string,
+  cantidad:number,
+  estado:number,
+  codin:number,
+  nombre:string
+
 
 }
 
@@ -103,6 +129,7 @@ export interface DetalleTraslado{
   id_producto:string,
   cantidad:number,
   estado:number,
+  nombre:number
 }
 
 export interface ProductosTraslado{

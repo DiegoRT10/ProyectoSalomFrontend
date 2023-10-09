@@ -33,11 +33,19 @@ export class ProductsService {
         return this.http.get(`${this.URL}/producto/ProductsView`);
       }
 
-
+      
         //Listar vista productos 
-        getViewsProductsCodeName(){
+        // getViewsProductsCodeName(){
+        //   return this.http.get(`${this.URL}/producto/ViewProductsCodeName`);
+        // } 
+
+         getViewsProductsCodeName(){
           return this.http.get(`${this.URL}/producto/ViewProductsCodeName`);
         } 
+
+        getViewsProductsCodeNameFarmacia(host:any){
+          return this.http.post<ViewProducts2[]>(`${this.URL}/producto/ViewProductsCodeNameFarmacia`,host);
+        }
 
          //Listar vista productos 
          getLocationsId(){
@@ -168,4 +176,8 @@ export interface ProductoId{
 export interface PriceSell{
   id:string,
   pricesell:number
+}
+
+export interface Sucursal{
+  host:string
 }

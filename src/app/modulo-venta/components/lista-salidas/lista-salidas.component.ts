@@ -1,5 +1,5 @@
 import { Movimientos2, ProductoCode, productsViewProducts } from './../../services/products.service';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { NgbTypeahead, NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
 import { Observable, Subject, merge, OperatorFunction } from 'rxjs';
 import { debounceTime, distinctUntilChanged, filter, map } from 'rxjs/operators';
@@ -86,7 +86,7 @@ export class ListaSalidasComponent {
   }
   carga?: boolean;
 
- constructor( private products:ProductsService, private trasladoService:TrasladoService, private ventaDiariaService: VentaDiariaService, private router: Router ) {}
+ constructor( private products:ProductsService, private trasladoService:TrasladoService, private ventaDiariaService: VentaDiariaService, private router: Router, private cdr: ChangeDetectorRef ) {}
 
 
  ngOnInit(): void {
@@ -195,12 +195,13 @@ ActualizaInputRecibe2():void{
 }
 
 setRevisado(id:string){
- 
+  location.reload();
   this.ObjectDetalleTrasladoId.id = id;
   this.ObjectDetalleTrasladoId.estado = 2;
 
     this.trasladoService.updateTraslado(this.ObjectDetalleTrasladoId).subscribe(res => {
       this.ActualizaInputRecibe2();
+      this.cdr.detectChanges();
     },
       err => {
         console.log(err);
@@ -280,6 +281,7 @@ getTraslado(data:any){
 
 getProductosTraslado(id: string) {
   this.ObjectDetalleTrasladoId.id = id;
+  console.log('este es el id del traslado que se esta buscabdo ', this.ObjectDetalleTrasladoId.id);
   this.trasladoService.searchProductosTraslado(this.ObjectDetalleTrasladoId).subscribe(res => {
     this.ListaProductosTraslado = res;
   },

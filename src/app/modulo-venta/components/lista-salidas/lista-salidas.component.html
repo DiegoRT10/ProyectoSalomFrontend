@@ -69,24 +69,28 @@
                     <td>{{traslado.id_location_destino}}</td>
                   </tr>
                   <tr>
-                    <th>Estado</th>
                     <th *ngIf="traslado.estado == 0">Creados</th>
                     <th *ngIf="traslado.estado == 1">Pendiente Aprobacion</th>
                     <th *ngIf="traslado.estado == 2">Autorizados</th>
                     <th *ngIf="traslado.estado == 3 && traslado.id_location_origen == ObjectFarmacia.id ">Salientes</th>
                     <th *ngIf="traslado.estado == 3  && traslado.id_location_destino == ObjectFarmacia.id ">Entrantes</th>
                     <th *ngIf="traslado.estado == 4">Finalizado</th>
+                    <th *ngIf="traslado.estado == 1"><button type="button" class="btn btn-outline-success" (click)="setRevisado(traslado.id)">Autorizar</button></th>
                     <th *ngIf="traslado.estado != 1">Sin Accion</th>
                   </tr>
+                  <tr>
+                    <th>Ver productos</th>
+                    <td> <button type="button" class="btn btn-outline-warning" data-toggle="modal" data-target="#exampleModalLong" (click)="getProductosTraslado(traslado.id)"> Ver Productos</button></td>
+                  </tr>
                 </table>
-                <div class="row">
+                <!-- <div class="row">
                 <div class="col-md-6">
                   <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#exampleModalLong" (click)="getProductosTraslado(traslado.id)"> Ver Productos</button>
                 </div>
                 <div *ngIf="traslado.estado == 1" class="col-md-6">
                   <button type="button" class="btn btn-success" (click)="setRevisado(traslado.id)">Autorizar</button>
                 </div>
-              </div>
+              </div> -->
               </div>
             </cdk-accordion-item>
           </cdk-accordion>

@@ -129,6 +129,7 @@ export interface DetalleTraslado{
   id_producto:string,
   cantidad:number,
   estado:number,
+  codin:string,
   nombre:number
 }
 

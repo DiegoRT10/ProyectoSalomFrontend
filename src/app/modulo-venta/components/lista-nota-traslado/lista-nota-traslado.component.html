@@ -12,7 +12,7 @@
 
         <div class="row">
           <div class="col-md-8 ml-auto mr-auto">
-            <h2 class="title">Lista de moviemientos entre farmacias</h2>
+            <h2 class="title">Lista de movimientos entre farmacias</h2>
           </div>
         </div>
         <br/>
@@ -61,7 +61,7 @@
                     <td *ngIf="i.estado == 2"><button type="button" class="btn btn-success" (click)="insertStockDiaryOrigen(i.id,i.id_location_destino)" >Dar Salida</button></td>
                     <td *ngIf="i.estado != 2">Sin Accion</td>
                     <td *ngIf="i.estado == 3 && i.id_location_destino == idFarmacia"><button type="button" class="btn btn-success" (click)="insertStockDiaryDestino(i.id,i.id_location_destino)">Recibido</button></td>
-                    <td> <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#exampleModalLong" (click)="getProductosTraslado(i.id)"> Ver Productos</button></td>
+                    <td> <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#exampleModalLong" (click)="getProductosTraslado(i.id_detalle_traslado)"> Ver Productos</button></td>
                   </tr>
                   </ng-container>
                 </tbody>

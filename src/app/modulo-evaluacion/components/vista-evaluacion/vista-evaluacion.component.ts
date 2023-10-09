@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ProductsService, ViewProducts2 } from 'src/app/modulo-venta/services/products.service';
+import { ProductsService, Sucursal, ViewProducts2 } from 'src/app/modulo-venta/services/products.service';
 import { ExchangeService, Evaluacion, ProductosEvaluacion, ID, CountProductoEvaluacion, CountProductoCalificacion, TipoEvaluacion } from '../../services/exchange.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
@@ -68,6 +68,10 @@ export class VistaEvaluacionComponent implements OnInit {
 
   ObjCountProductoCalificacion: CountProductoCalificacion = {
     NoCalificado: 0
+  }
+
+  sucursal:Sucursal = {
+    host: ''
   }
 
   idEvaluacion:string="";

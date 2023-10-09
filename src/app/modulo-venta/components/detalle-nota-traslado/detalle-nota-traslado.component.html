@@ -24,7 +24,7 @@
             <table class="table" id="detalle">
               <thead>
                 <tr>
-                  <th scope="col">Codigo</th>
+                  <th scope="col">Codin</th>
                   <th scope="col">Producto</th>
                   <th scope="col">Cantidad</th>
                 </tr>
@@ -32,7 +32,7 @@
               <tbody>
                 <ng-container *ngFor="let item of ListaDetalleTraslado; let i = index">
                 <tr *ngIf="item.estado == 1">
-                  <th>{{item.id}}</th>
+                  <th>{{item.codin}}</th>
                   <th>{{item.nombre}}</th>
                   <th>{{item.cantidad}}</th>
                 </tr>

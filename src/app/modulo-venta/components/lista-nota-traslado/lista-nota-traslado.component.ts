@@ -396,9 +396,12 @@ export class ListaNotaTrasladoComponent {
 
 
   getProductosTraslado(id: string) {
+    
     this.ObjectDetalleTrasladoId.id = id;
+    console.log('este es el id del detalle traslado para ver los productos ',this.ObjectDetalleTrasladoId.id);
     this.trasladoService.searchProductosTraslado(this.ObjectDetalleTrasladoId).subscribe(res => {
       this.ListaProductosTraslado = res;
+      console.log('este es el res de getProductosTraslado ',this.ListaProductosTraslado);
     },
       err => {
         console.log(err);

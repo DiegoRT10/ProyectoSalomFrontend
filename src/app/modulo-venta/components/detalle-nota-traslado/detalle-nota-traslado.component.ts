@@ -1,4 +1,4 @@
-import { Movimientos2, ProductoCode, productsViewProducts } from './../../services/products.service';
+import { Movimientos2, ProductoCode, Sucursal, productsViewProducts } from './../../services/products.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgbTypeahead, NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
 import { Observable, Subject, merge, OperatorFunction } from 'rxjs';
@@ -100,6 +100,7 @@ export class DetalleNotaTrasladoComponent {
     id_producto: '',
     cantidad: 0,
     estado: 0,
+    codin: '',
     nombre: 0
   }
 
@@ -193,6 +194,15 @@ export class DetalleNotaTrasladoComponent {
     id: '',
     estado: 0
   }
+
+  ObjHostId:LocationsId={
+    id: ''
+  }
+
+  obSucursal:Sucursal={
+    host: ''
+  }
+
   carga?: boolean;
 
   constructor( private products:ProductsService, private trasladoService:TrasladoService, private ventaDiariaService: VentaDiariaService, private router: Router) { }
@@ -202,7 +212,6 @@ export class DetalleNotaTrasladoComponent {
     // this.getProducts();
     this.fechaDia = moment.utc(this.date).format('yyyy-MM-DD');
     this.ObjectNotaTraslado.fecha = <any>this.fechaDia;
-    this.getProductsCodeName();
     this.getPeopleLocation();
     this.getDetalleTraslado();
   }
@@ -230,7 +239,8 @@ export class DetalleNotaTrasladoComponent {
   }
 
   getProductsCodeName(): void {
-    this.products.getViewsProductsCodeName().subscribe(res => {
+    this.obSucursal.host = this.ObjectFarmacia.id;
+    this.products.getViewsProductsCodeNameFarmacia(this.obSucursal).subscribe(res => {
       this.ListaProductsCodeName = <any>res;
 
       for (const i of this.ListaProductsCodeName!) {
@@ -414,8 +424,9 @@ export class DetalleNotaTrasladoComponent {
     this.ObjectNotaTraslado.id_entrega = decodeToken.id;
     this.ventaDiariaService.PeopleLocation(this.ObjectPeopleLocation).subscribe(res => {
       this.ObjectFarmacia = res[0];
-      
       this.ObjectNotaTraslado.id_location_origen = this.ObjectFarmacia.id;
+      console.log('este es el id de la farmacia ',this.ObjectFarmacia.id);
+      this.getProductsCodeName();
       
     },
       err => {
